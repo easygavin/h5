@@ -1,0 +1,86 @@
+<!--头部-->
+<header>
+  <div>
+    <a class="back"><i class="fm">&#xf035;</i><span class="title"></span></a>
+  </div>
+</header>
+<!--<div class="w45"></div>-->
+<!--内容-->
+<div id="main">
+  <div class="hmBox">
+    <table width="100%" cellspacing="0" cellpadding="0" class="sftab">
+      <tbody>
+      <tr>
+        <td class="tr" style="width:5.5em">方案金额：</td>
+        <td id="projectCount" style="width:5.5em"></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="tr">每份金额：</td>
+        <td id="eachMoney"></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="tr">所选玩法：</td>
+        <td id="playMode"></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="tr">购买金额：</td>
+        <td><input id="projectBuy" type="text" class="inutext c999"></td>
+        <td>元，至少购买1元</td>
+      </tr>
+      <tr>
+        <td class="tr">保底金额：</td>
+        <td><input id="projectHold" type="text" class="inutext c999" value="0"></td>
+        <td>元，可不保底</td>
+      </tr>
+      <tr>
+        <td class="tr">中奖提成：</td>
+        <td>
+          <div class="selectbox">
+            <span id="showPer">5%</span>
+            <i class="fm fr">&#xf004;</i>
+            <select id="selectPer">
+              <option>0%</option>
+              <option>1%</option>
+              <option>2%</option>
+              <option>3%</option>
+              <option>4%</option>
+              <option>5%</option>
+              <option>6%</option>
+              <option>7%</option>
+              <option>8%</option>
+              <option>9%</option>
+              <option>10%</option>
+            </select>
+          </div>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr class="anniu">
+        <td class="tr">保密设置：</td>
+        <td colspan="2">
+          <div class="gmchose">
+            <a id="openState_1" class="hmchose">完全公开</a>
+            <a id="openState_2" class="hmchose">跟单公开</a>
+            <a id="openState_3" class="hmchose">截止公开</a>
+            <a id="openState_4" class="hmchose">不公开</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<div class="w45"></div>
+<footer>
+  <a class="fr a2">确认</a>
+  <i>
+    共<span id="projectCountShow"></span>元
+    认购<span id="projectBuyShow"></span>元
+    保底<span id="projectHoldShow"></span>元
+  </i>
+</footer>
+

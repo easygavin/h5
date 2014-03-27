@@ -1,0 +1,182 @@
+<!--线上充值.-->
+<div id="online_pay" class="wrapper bgf0f0f0">
+  <header>
+    <div>
+      <a class="back"><i class="fm">&#xf035;</i>充值中心</a>
+      <a class="pr0">充值记录</a>
+    </div>
+  </header>
+  <div class="w45"></div>
+  <div class="tabs">
+    <ul>
+      <li><span data-type="online_pay" id="online_option" class="click">线上充值</span></li>
+      <li><span data-type="czk_pay" id="czk_option">充值卡</span></li>
+      <li><span data-type="ztk_pay" id="ztk_option">直通卡</span></li>
+    </ul>
+  </div>
+  <!--在线充值.-->
+  <div class="hidden online">
+    <div class="hmBox">
+      <table width="100%" cellspacing="0" cellpadding="0" class="sftab">
+        <colgroup>
+          <col width="2%">
+          <col width="35%">
+          <col width="">
+          <col width="10%">
+        </colgroup>
+        <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="tr">帐户余额：</td>
+          <td><span id="money"></span>元</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="tr">充值金额：</td>
+          <td><input type="text" class="inutext c999" placeholder="至少充值10元"></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="tr">使用优惠券：</td>
+          <td><input type="text" class="inutext c999" placeholder="请输入优惠券"></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="tr">&nbsp;</td>
+          <td>你还有<span id="couponCount"></span>张优惠券<i class="whbox">?</i></td>
+          <td>&nbsp;</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content bt3">
+      <h2>请选择银行</h2>
+      <ul class="account">
+        <li>
+          <a class="rhj fm">&#xf00a;</a>
+          <a>支付宝</a>
+        </li>
+        <li>
+          <a class="bdyhk fm">&#xf01a;</a>
+          <a>财付通充值</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!--充值卡充值.-->
+  <div class="hidden czk">
+    <!--头部-->
+    <div class="hmBox">
+      <div class="tabs1">
+        <ul>
+          <li>
+            <span class="click"><i></i>神州行充值卡</span>
+          </li>
+          <li>
+            <span><i></i>联通充值卡</span>
+          </li>
+          <li>
+            <span><i></i>电信充值卡</span>
+          </li>
+        </ul>
+      </div>
+      <!-- 移动-->
+      <div id="yd">
+        <ul class="czlist ">
+          <li class="click">10元</li>
+          <li>20元</li>
+          <li>30元</li>
+          <li>50元</li>
+          <li>100元</li>
+          <li>300元</li>
+          <li>500元</li>
+        </ul>
+      </div>
+
+      <!--联通-->
+      <div id="lt">
+        <ul class="czlist hidden ">
+          <li class="click">20元</li>
+          <li>30元</li>
+          <li>50元</li>
+          <li>100元</li>
+          <li>300元</li>
+          <li>500元</li>
+        </ul>
+      </div>
+
+      <!--电信-->
+      <div id="dx">
+        <ul class="czlist hidden">
+          <li class="click">20元</li>
+          <li>10元</li>
+          <li>20元</li>
+          <li>30元</li>
+          <li>50元</li>
+          <li>100元</li>
+          <li>200元</li>
+          <li>300元</li>
+          <li>500元</li>
+        </ul>
+      </div>
+
+      <p class="sure_p">充值100元，到帐96元</p>
+    </div>
+    <div class="login">
+      <ul>
+        <li class="overflow"><input type="text" class="username c999" placeholder="请输入序列号"></li>
+        <li class="overflow"><input type="password" class="password c999" placeholder="请输入密码"></li>
+        <li class="bordern">
+          <button class="loginbtn mt20">立即充值</button>
+        </li>
+      </ul>
+    </div>
+    <div class="smbox">
+      <h2>特别提示</h2>
+
+      <p>1、如果您选择的消费金额与您的充值卡实际面额不符，我们无法给您退还差额损失部分。</p>
+
+      <p>2、充值卡内金额将一次金额扣除，请务必填写与您的充值卡面额相同的充值金额，并确认填写的金额充值卡面额一致。</p>
+
+      <p>3、充值卡服务商收取充值卡面额的4%服务费，在充值卡金额中直接扣除。</p>
+    </div>
+  </div>
+
+  <!--直通卡充值.-->
+  <div class="hidden ztk">
+    <div class="hmBox">
+      <table width="100%" cellspacing="0" cellpadding="0" class="sftab" style="padding:0.3em,BORDER-COLLAPSE: collapse"
+             borderColor=#666 cellSpacing=0 width=300 align=center bgColor=#ffffff border=1">
+        <tr>
+          <td>直通卡号</td>
+          <td colspan="3">x</td>
+        </tr>
+
+        <tr>
+          <td>直通卡密码</td>
+          <td colspan="3">x</td>
+        </tr>
+
+        <tr>
+          <td>手机号码</td>
+          <td colspan="3">x</td>
+        </tr>
+
+        <tr>
+          <td>验证码</td>
+          <td colspan="2">f</td>
+          <td>8888</td>
+        </tr>
+
+        <tr>
+          <td colspan="4">确认支付</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

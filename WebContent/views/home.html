@@ -1,0 +1,156 @@
+<div class="homeTrans">
+  <!--头部-->
+  <header>
+    <div>
+      <span class="return fm">&#xf055;</span>
+
+      <h1 class="f24">彩票直通车</h1>
+        <span class="pr0">
+            <!--barTmp-->
+        </span>
+    </div>
+  </header>
+  <!--<div class="w45"></div>-->
+  <!--广告-->
+  <div class="bunner">
+    <div id="slides" class="ctx">
+      <img src="images/bunner.jpg" width="100%" class="notice"/>
+    </div>
+    <div class="grayBg">
+      <a class="title">彩票直通车</a>
+      <b class="close fm">&#xf064;</b>
+    </div>
+  </div>
+  <!--导航-->
+  <nav>
+    <ul>
+      <!--menuTmp-->
+    </ul>
+  </nav>
+  <!--内容-->
+  <div id="main" class="bt3 tc">
+    <!--lotTmp-->
+  </div>
+</div>
+
+<div class="side">
+  <ul>
+    <li id="short_alias" class="hidden"></li>
+    <li id="short_center" class="hidden"><a><b class="a_grcenter fm">&#x2005;</b>个人中心</a></li>
+    <li id="short_record" class="hidden"><a><b class="a_gcjl fm">&#x200a;</b>购彩记录</a></li>
+    <li id="short_recharge" class="hidden"><a><b class="a_cz fm">&#x2004;</b>充值</a></li>
+    <li id="short_custom" class="hidden"><a class="fr fm right">&#xf036;</a>我的定制</li>
+    <li id="short_award">
+      <a class="fr fm right">&#xf036;</a>开奖信息
+    </li>
+    <li id="short_digit" class="listNav">
+      <p><a class="fr fm up">&#xf005;</a>数字彩</p>
+      <ul>
+        <li id="sub_ssq">双色球</li>
+        <li id="sub_dlt">大乐透</li>
+        <li id="sub_f3d">福彩3D</li>
+        <li id="sub_pl3">排列3</li>
+      </ul>
+    </li>
+    <li id="short_freq" class="listNav">
+      <p><a class="fr fm up">&#xf005;</a>高频彩</p>
+      <ul>
+        <li id="sub_syy">十一运夺金</li>
+        <li id="sub_syx">十一选5</li>
+      </ul>
+    </li>
+    <li id="short_athletics" class="listNav">
+      <p><a class="fr fm up">&#xf005;</a>竞技彩</p>
+      <ul>
+        <li id="sub_gjj">冠军竞猜</li>
+        <li id="sub_jcz">竞彩足球</li>
+        <li id="sub_jcl">竞彩篮球</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+<!--工具条模板-->
+<script type="text/template" id="barTmp">
+  <% if (hasLogin) { %>
+  <a id="p_center">我的彩票</a>
+  <% } else {%>
+  <a id="login">登录</a><a id="register">注册</a>
+  <% } %>
+</script>
+
+<!--菜单模板-->
+<script type="text/template" id="menuTmp">
+  <% _.each(menus.list, function (m) { %>
+  <li id="<%=m.key%>">
+    <% if (m.key == menus.def) { %>
+    <a class="focus"><%=m.title %></a>
+    <% } else { %>
+    <a><%=m.title %></a>
+    <% } %>
+  </li>
+  <% });%>
+</script>
+
+<!--彩种模板-->
+<script type="text/template" id="lotTmp">
+  <ul class="index">
+    <% _.each(lots, function (l) { %>
+    <li>
+      <dl>
+        <dt>
+          <a>
+            <div class="sublogo" id="<%=l.key%>">
+              <img src="<%=l.logo%>"/>
+            </div>
+            <p><%=l.name%></p>
+          </a>
+        </dt>
+        <dd>
+          <p>
+            <a class="gmButton fr"><b class="fm">&#xe000;</b>购买</a>
+            <i class="smbg"><i></i>HOT</i>
+          </p>
+
+          <p class="cf60"><%=l.desc%></p>
+          <% if (l.hasDetail) { %>
+          <p>截止时间：2-19 19:30</p>
+
+          <p><i class="fm fr xq">&#xf065;</i>当期奖池：<i class="cf60">0.00亿</i></p>
+          <% } %>
+        </dd>
+      </dl>
+    </li>
+    <% });%>
+  </ul>
+</script>
+
+<!--未登录或无定制彩种-->
+<script type="text/template" id="customNTmp">
+  <a class="czdz">+</a>
+
+  <p class="f14 pb1">请先
+    <% if (!hasLogin) { %>
+    <a id="toLogin" class="cf60">登录</a>,
+    <% } %>
+    定制属于您的彩种</p>
+</script>
+
+<!--资讯列表-->
+<script type="text/template" id="noticeTmp">
+  <table cellpadding="0" cellspacing="0" width="100%" class="line30 tl">
+    <colgroup>
+      <col width="80%">
+      <col width="20%">
+    </colgroup>
+    <tbody>
+    <% _.each(notices, function (n) { %>
+    <tr id="n_<%=n.noticeId %>">
+      <td class="">&nbsp;&nbsp;&nbsp;&nbsp;<%=n.title %></td>
+      <td><a class="fr fm right">&#xf036;</a></td>
+    </tr>
+    <% });%>
+    </tbody>
+  </table>
+</script>

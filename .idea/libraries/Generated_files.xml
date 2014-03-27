@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/digit/ball_last.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/digit/ball_mode.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/openAll.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/digit/openLott.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/jcz/match.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/jcz/jf.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/digit/detail_issue.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/digit/look.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/digit/detail.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/digit/ball_last.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/digit/ball_mode.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/openAll.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/jcz/match.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/digit/openLott.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/jcz/jf.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/digit/look.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/digit/detail_issue.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/digit/detail.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

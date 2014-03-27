@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+
+    <display-name>h5</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- 客户端充值内嵌.-->
+    <servlet>
+        <servlet-name>clientChargeServlet</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.ClientChargeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!--支付宝充值.-->
+    <servlet>
+        <servlet-name>zfbCharge</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.ZfbChargeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!--财付通充值.-->
+    <servlet>
+        <servlet-name>cftCharge</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.CftChargeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+    <!--充值卡充值.-->
+    <servlet>
+        <servlet-name>czkCharge</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.CzkChargeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!--直通卡充值.-->
+    <servlet>
+        <servlet-name>ztkCharge</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.ZtkChargeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>clientChargeServlet</servlet-name>
+        <url-pattern>/clientCharge</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>zfbCharge</servlet-name>
+        <url-pattern>/zfbPay</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>cftCharge</servlet-name>
+        <url-pattern>/cftPay</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>czkCharge</servlet-name>
+        <url-pattern>/czkPay</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ztkCharge</servlet-name>
+        <url-pattern>/ztkPay</url-pattern>
+    </servlet-mapping>
+
+</web-app>

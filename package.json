@@ -1,0 +1,22 @@
+{
+  "name": "h5",
+  "version": "1.0.0",
+  "description": "彩票直通车",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "*",
+    "grunt-cli": "*",
+    "jpegtran-bin": "~0.2.0",
+    "grunt-contrib-htmlmin": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-imagemin": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-jst": "*"
+  },
+  "author": "Gavin",
+  "license": "MIT"
+}

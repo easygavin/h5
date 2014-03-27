@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="format-detection" content="telephone=no">
+  <title>彩票直通车</title>
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/icon/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icon/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/icon/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="images/icon/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="images/icon/favicon.png">
+  <link rel="stylesheet" type="text/css" href="css/public.css">
+</head>
+<body>
+<!-- Main Content Container -->
+<div id="container"></div>
+
+<!--遮盖层-->
+<div class="cover"></div>
+<!--Toast 提示信息-->
+<div class="toast"></div>
+<!--Tap焦点层-->
+<div class="tapHover"></div>
+<!--对话框-->
+<div class="prompt">
+  <div class="tit"></div>
+  <div class="cxt">
+
+  </div>
+  <div class="btn_group">
+    <a class="btn l_btn" id="prompt_l"></a><a class="btn r_btn" id="prompt_r"></a>
+  </div>
+</div>
+<!--提示框-->
+<div class="dialog">
+  <div class="tit"></div>
+  <div class="cxt">
+
+  </div>
+  <div class="btn_group"><a class="btn" id="dialog_l"></a></div>
+</div>
+<!--加载图标-->
+<div class="load"></div>
+
+<script src="js/lib/sea.js"></script>
+<script src="js/lib/config.js"></script>
+<script>
+  seajs.use('main');
+</script>
+</body>
+</html>
