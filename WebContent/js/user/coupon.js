@@ -45,7 +45,7 @@ define(function (require, exports, module) {
 
     var userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     //优惠券测试..
-    getCouponCount("402881a844be45410144be48f845000e");
+    //getCouponCount("402881a844be45410144be48f845000e");
     //userToken取值测试.
     //getCouponCount("d53b0a31882653c7d10050ad20c73df5");
   };

@@ -409,8 +409,10 @@ define(function (require, exports, module) {
               case "pl3": // 排列三
               case "syx": // 十一选5
               case "syy": // 十一运夺金
-                util.clearLocalData("local_" + key);
-                page.init(key + "/ball", {}, 1);
+                // 彩种配置
+                var lotConfig = config.lotteryMap[key];
+                util.clearLocalData(lotConfig.localKey);
+                page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
                 break;
               case "jcl": // 竞彩篮球
                 break;
@@ -483,8 +485,10 @@ define(function (require, exports, module) {
             case "pl3": // 排列三
             case "syy": // 十一运夺金
             case "syx": // 十一选五
-              util.clearLocalData("local_" + key);
-              page.init(key + "/ball", {}, 1);
+              // 彩种配置
+              var lotConfig = config.lotteryMap[key];
+              util.clearLocalData(lotConfig.localKey);
+              page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
               break;
             case "gjj": // 冠军竞猜
             case "jcz": // 竞彩足球

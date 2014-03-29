@@ -305,7 +305,7 @@ define(function (require, exports, module) {
           page.init("jcz/intro", {}, 1);
           break;
         case 'kj_menu'://开奖信息
-          page.init('jcz/lottery_list', {}, 1);
+          page.init('jcz/lottery_list', {lotteryType: self.lotteryType}, 1);
           break;
         default ://赛事分析
           var $table = $tar.closest('table');

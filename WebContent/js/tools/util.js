@@ -30,12 +30,6 @@ define(function (require, exports, module) {
     LOCAL_USER_INFO_KEY: "local_user_info", // 本地登录用户信息
     LOCAL_TO_HM:"local_to_hm", // 发起合买
     LOCAL_CUSTOM: "local_custom", // 用户定制彩种
-    LOCAL_SSQ: "local_ssq",// 双色球
-    LOCAL_DLT: "local_dlt",// 大乐透
-    LOCAL_F3D: "local_f3d",// 福彩3D
-    LOCAL_PL3: "local_pl3",// 排列3
-    LOCAL_SYX: "local_syx",// 11选5
-    LOCAL_SYY: "local_syy",// 十一运夺金
     LOCAL_JCZ: 'local_jcz' // 竞彩足球
   };
 

@@ -21,7 +21,7 @@ define(function (require, exports, module) {
       self.getData();
       self.events();
       page.setHistoryState(
-        {url: "jcz/analyse", data: this.params},
+        {url: "jcz/analyse", data: self.params},
         "jcz/analyse",
           (JSON.stringify(self.params).length > 2 ?
             "?data=" + encodeURIComponent(JSON.stringify(self.params)) : "") + "#jcz/analyse",

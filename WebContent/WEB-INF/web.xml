@@ -18,36 +18,36 @@
     <!-- 客户端充值内嵌.-->
     <servlet>
         <servlet-name>clientChargeServlet</servlet-name>
-        <servlet-class>com.h5.user.charge.servlet.ClientChargeServlet</servlet-class>
+        <servlet-class>com.h5.user.charge.servlet.client.ClientChargeServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!--支付宝充值.-->
     <servlet>
-        <servlet-name>zfbCharge</servlet-name>
-        <servlet-class>com.h5.user.charge.servlet.ZfbChargeServlet</servlet-class>
+        <servlet-name>zfbWap</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.zfb.ZfbWapServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!--财付通充值.-->
     <servlet>
-        <servlet-name>cftCharge</servlet-name>
-        <servlet-class>com.h5.user.charge.servlet.CftChargeServlet</servlet-class>
+        <servlet-name>cftWap</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.cft.CftWapServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
 
     <!--充值卡充值.-->
     <servlet>
-        <servlet-name>czkCharge</servlet-name>
-        <servlet-class>com.h5.user.charge.servlet.CzkChargeServlet</servlet-class>
+        <servlet-name>czk</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.czk.CzkChargeServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <!--直通卡充值.-->
     <servlet>
-        <servlet-name>ztkCharge</servlet-name>
-        <servlet-class>com.h5.user.charge.servlet.ZtkChargeServlet</servlet-class>
+        <servlet-name>ztk</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.ztk.ZtkChargeServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -58,22 +58,22 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>zfbCharge</servlet-name>
-        <url-pattern>/zfbPay</url-pattern>
+        <servlet-name>zfbWap</servlet-name>
+        <url-pattern>/zfbWapPay</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>cftCharge</servlet-name>
-        <url-pattern>/cftPay</url-pattern>
+        <servlet-name>cftWap</servlet-name>
+        <url-pattern>/cftWapPay</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>czkCharge</servlet-name>
+        <servlet-name>czk</servlet-name>
         <url-pattern>/czkPay</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>ztkCharge</servlet-name>
+        <servlet-name>ztk</servlet-name>
         <url-pattern>/ztkPay</url-pattern>
     </servlet-mapping>
 

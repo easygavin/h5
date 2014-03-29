@@ -73,7 +73,10 @@ define(function (require, exports, module) {
         if (data != "undefined" && data.statusCode == "0") {
           $("#trueName").html(" 用户名:" + userInfo.userName);
           $("#balance").html(parseFloat(data.userBalance).toFixed(2));
+        } else if (data.statusCode == '0007') {
+
         } else {
+          alert(data.statusCode);
           page.toast(data.errorMsg);
         }
 

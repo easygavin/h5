@@ -101,7 +101,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, em, img, strong, sub, sup, tt, dd
   width: 100%;
   z-index: 20;
   display: none;
-  background: rgba(0,0,0,.25);
+  background: rgba(0, 0, 0, .25);
 }
 
 i, em, s {
@@ -653,16 +653,6 @@ a.right {
   text-align: left;
 }
 
-.gmButton {
-  background: #f07e04;
-  width: 6em;
-  height: 2.4em;
-  text-align: center;
-  color: #fff;
-  line-height: 2.4em;
-  border-radius: 3px;
-}
-
 .gmButton:hover, .loginbtn:hover, .surebtn:hover {
   background: #da7304;
 }
@@ -689,6 +679,10 @@ a.right {
 .w45 {
   height: 2.8125em;
 
+}
+
+.w24 {
+  height: 0.5125em;
 }
 
 .wrapper {
@@ -1148,6 +1142,14 @@ footer a {
   color: #fff;
 }
 
+footer em {
+  height: 2.8125em;
+  display: inline-block;
+  font-size: 0.7em;
+  line-height: 1.5em;
+  vertical-align: middle;
+}
+
 footer a.btn1 {
   background: #257ab3;
   height: 2.8125em;
@@ -1185,6 +1187,28 @@ footer a.btn2 {
 #lastNo {
   height: 1.5em;
   overflow: hidden;
+}
+
+#issueNo {
+  height: 2.2em;
+  line-height: 2.2em;
+  vertical-align: middle;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.gmButton {
+  background: #f07e04;
+  width: 6em;
+  height: 2.4em;
+  font-size: 0.8em;
+  text-align: center;
+  color: #fff;
+  line-height: 2.4em;
+  border-radius: 3px;
+  margin-right: 1em;
+  padding: 0;
+  float: right;
 }
 
 .openArrow {
@@ -1233,7 +1257,7 @@ footer a.btn2 {
 }
 
 .bets ul.bp, .bp {
-  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding-top: 1em;
   margin-top: 0.5em
 }
@@ -1888,6 +1912,24 @@ td.click {
 
 .anniu td {
   padding-bottom: 1em
+}
+
+.shoutinp {
+  width: 90%;
+  font: 0.875em/2.5em "微软雅黑";
+  text-align: center;
+  height: 2.5em;
+  border: none;
+  background: #e9e9e9
+}
+
+.zcbox {
+  background: #fff;
+  border-top: 2px solid #2779b5;
+  width: 100%;
+  position: fixed;
+  bottom: 2.8125em;
+  padding: 1em 0
 }
 
 /*篮球开奖*/

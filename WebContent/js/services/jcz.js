@@ -87,15 +87,8 @@ define(function (require, exports, module) {
    * @param lotteryType
    * @param date
    */
-  service.getHistoryAwards = function (lotteryType, date, callback) {
-
-    // 请求参数
-    var data = {
-      lotteryType: lotteryType,
-      date: date
-    };
-
-    // 开奖记录
+  service.getHistoryAwards = function (_data, callback) {
+    var data = $.extend({date: ''}, _data);
     $.ajax({
       type: "GET",
       url: path.JCZQ_LOTTERY_RECORD,
