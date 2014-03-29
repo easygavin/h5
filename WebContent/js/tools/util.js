@@ -19,6 +19,10 @@ define(function (require, exports, module) {
   var nonMark = false;
   // Ajax Request 集合
   var ajaxRequests = [];
+  // Interval 集合
+  var intervals = [];
+  // Timer 集合
+  var timers = [];
   // 登录token
   util.token = "";
   // 关键字Map
@@ -29,6 +33,9 @@ define(function (require, exports, module) {
     LOCAL_SSQ: "local_ssq",// 双色球
     LOCAL_DLT: "local_dlt",// 大乐透
     LOCAL_F3D: "local_f3d",// 福彩3D
+    LOCAL_PL3: "local_pl3",// 排列3
+    LOCAL_SYX: "local_syx",// 11选5
+    LOCAL_SYY: "local_syy",// 十一运夺金
     LOCAL_JCZ: 'local_jcz' // 竞彩足球
   };
 
@@ -357,6 +364,54 @@ define(function (require, exports, module) {
     }
     ajaxRequests = [];
   };
+
+  /**
+   * 添加Interval对象
+   * @param i
+   */
+  util.addInterval = function (i) {
+    intervals.push(i);
+  };
+
+  /**
+   * 清除Interval
+   */
+  util.clearIntervals = function () {
+    for(var i = 0, len = intervals.length; i < len; i++) {
+      clearInterval(intervals[i]);
+      console.log("clear interval!");
+    }
+    intervals = [];
+  };
+
+  /**
+   * 添加timer对象
+   * @param t
+   */
+  util.addTimer = function (t) {
+    timers.push(t);
+  };
+
+  /**
+   * 清除timer
+   */
+  util.clearTimers = function () {
+    for(var i = 0, len = timers.length; i < len; i++) {
+      clearTimeout(timers[i]);
+      console.log("clear timeout!");
+    }
+    timers = [];
+  };
+
+  /**
+   * 清除上一页面占用的资源信息
+   */
+  util.clear = function () {
+    this.clearAjaxRequests();
+    this.clearIntervals();
+    this.clearTimers();
+  };
+
   //将查询字符串解析成一个对象
   util.unParam = function (str) {
     var rs = {};

@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     if (tkn) {
       params.token = tkn;
     }
-    require.async('/views/jcz/intro.html', function (tpl) {
+    require.async('/views/athletics/jcz/intro.html', function (tpl) {
       //初始化显示
       $("#container").html(tpl);
       flag = "intro";

@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     config = require('config'),
     fastClick = require('fastclick'),
     service = require('services/jcz'),
-    betTpl = require('/views/jcz/mix_bet.html');
+    betTpl = require('/views/athletics/jcz/mix_bet.html');
   module.exports = {
     canBack: 0,
     init: function (data, forward) {
@@ -30,14 +30,14 @@ define(function (require, exports, module) {
       this.issueNo = "";// 显示期号
       this.leagueMap = {};// 赛事分类
       this.leagueLength = 0;// 一共有多少对阵
-      this.intElement = null;// 初始焦点元素
+      this.selLeague = null;// 被选中的联赛
       this.initShow(this.canBack);
       this.bindEvent();
       page.setHistoryState(
         {url: "jcz/mix_bet", data: this.params},
         "jcz/mix_bet",
-        (JSON.stringify(this.params).length > 2 ?
-          "?data=" + encodeURIComponent(JSON.stringify(this.params)) : "") + "#jcz/mix_bet",
+          (JSON.stringify(this.params).length > 2 ?
+            "?data=" + encodeURIComponent(JSON.stringify(this.params)) : "") + "#jcz/mix_bet",
         this.canBack);
     },
     //初始化显示
@@ -46,7 +46,6 @@ define(function (require, exports, module) {
         this.getBetList();
       } else {
         // 根据缓存数据判断是否需要重新拉取列表
-        // 缓存的数据
         var bufferData = util.getLocalJson(util.keyMap.LOCAL_JCZ);
         if (bufferData && this.betList && this.betList.datas) {
           this.handleBetList();
@@ -75,14 +74,15 @@ define(function (require, exports, module) {
     //统计赛事场数
     unitTotal: function () {
       var total = 0;
-      $('td[class^="odds"]').each(function (i, item) {
-        total = total + ~~$(item).hasClass("click");
+      $('.match').each(function (i, item) {
+        total = total + ~~!!$(item).find(".click").length;
       });
-      $("#selectNum").text(total);
       this.total = total;
+      $("#selectNum").text(total);
     },
     clearSelect: function () {
       $('td[class^="odds"]').removeClass('click');
+      $('.match').find('.arr').removeClass('f07e04');
       $("#selectNum").text(0);
       this.total = 0;
     },
@@ -194,8 +194,8 @@ define(function (require, exports, module) {
     // 处理数据并显示赛事列表
     showMatchItems: function () {
       var self = this,
-        matchTpl = require('/tpl/jcz/match'),
-        htmlStr = '';
+        htmlStr = '',
+        matchTpl = require('/tpl/athletics/jcz/match');
       _.each(this.betList.datas, function (data) {
         _.each(data['matchArray'], function (m) {
           // 缓存赛事数据
@@ -217,7 +217,7 @@ define(function (require, exports, module) {
       _.map(this.leagueMap, function (value, key) {
         htmlStr += '<li class="item click" data-num="' + value + '">' + key + '[' + value + ']场</li>';
       });
-      $leagueBox.addClass('success').find('.icon').append(htmlStr);
+      $leagueBox.addClass('success').find('.icon').html(htmlStr);
     },
     //更新选择赛事类型中的场数
     updateSelMatLen: function (num, opt) {
@@ -287,7 +287,7 @@ define(function (require, exports, module) {
         $match = $tar.closest('div'),
         matchId = $match.data('matchId'),
         data = this.matchMap[matchId];
-      require.async('/tpl/jcz/more_odds', function (tpl) {
+      require.async('/tpl/athletics/jcz/more_odds', function (tpl) {
         if ($match.find('.showhide').length == 0) {
           $match.toggleClass('on_show').append(tpl(data));
         } else {
@@ -301,12 +301,13 @@ define(function (require, exports, module) {
         $tar = $(e.target),
         id = $tar.prop('id') || $tar.prop('class');
       switch (id) {
-        case 'wf_menu':
-          util.hideCover();
+        case 'wf_menu'://玩法介绍
           page.init("jcz/intro", {}, 1);
           break;
-
-        default :
+        case 'kj_menu'://开奖信息
+          page.init('jcz/lottery_list', {}, 1);
+          break;
+        default ://赛事分析
           var $table = $tar.closest('table');
           var param = {
             issueNo: self.issueNo,
@@ -315,6 +316,7 @@ define(function (require, exports, module) {
           };
           page.init("jcz/analyse", param, 1);
       }
+      util.hideCover();
     },
     //切换玩法
     switchPlay: function (e) {
@@ -332,6 +334,7 @@ define(function (require, exports, module) {
       $playName.text(text);
       $('.menuBox').hide();
       $tar.addClass('click').siblings().removeClass('click');
+      util.hideCover();
     },
     //绑定事件
     bindEvent: function () {
@@ -342,16 +345,18 @@ define(function (require, exports, module) {
       }.bind(this));
       this.$page.on('click', '.menu', function () {
         $('.menuBox').toggle();
-        //util.showCover();
+        util.showCover();
       }.bind(this));
       this.$page.on('click', '.more', function () {
         $('.popup').toggle();
-        //util.showCover();
+        util.showCover();
       }.bind(this));
       //打开赛事筛选
       this.$page.on('click', '#filterBtn', function () {
+        util.showCover();
         var leagueBox = $('.leagueBox');
         leagueBox.toggle().hasClass('success') ? '' : this.addLeagueItems();
+        //this.selLeague = $(".leagueBox .item .click");
       }.bind(this));
       //赛事筛选
       $(".leagueBox").on('click', '.item', function (e) {
@@ -359,6 +364,7 @@ define(function (require, exports, module) {
         $tar.toggleClass('click');
         var num = $tar.hasClass('click') ? $tar.data('num') : -$tar.data('num');
         this.updateSelMatLen(num, true);
+        //this.selLeague = $(".leagueBox .item .click");
       }.bind(this));
       //赛事筛选-全选
       $('.leagueBox').on('click', '.selAll', function (e) {
@@ -380,9 +386,29 @@ define(function (require, exports, module) {
       $('.menuBox').on('click', 'a:not(.click)', this.switchPlay.bind(this));
       //选取赔率
       this.$page.on('click', 'td[class^="odds"]', function (e) {
-        $(e.target).toggleClass('click');
+        var $tar = $(e.target),
+          $div = $tar.closest('.match');
+        $tar.toggleClass('click');
+        if ($div.find('.click').length) {
+          $div.find('.arr').addClass('f07e04');
+        } else {
+          $div.find('.arr').removeClass('f07e04');
+        }
         this.unitTotal();
       }.bind(this));
+      // 关闭显示框
+      $(".cover").on('click', function (e) {
+        util.hideCover();
+        $(".popup").hide();
+        $(".menuBox").hide();
+        if ($(".leagueBox").is(":visible")) {
+          $(".leagueBox").hide();
+          /*this.selLeague.each(function (i, item) {
+           $(item).addClass("click");
+           });*/
+        }
+        return true;
+      });
       //赛事分析
       this.$page.on('click', '.analyse', this.goPage.bind(this));
       //菜单栏事件

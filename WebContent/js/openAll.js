@@ -12,8 +12,8 @@ define(function (require, exports, module) {
     digitService = require('services/digit');
   var canBack = 1;
 
-  // 彩种 双色球|大乐透|十一运夺金|福彩3D|幸运赛车|竞彩篮球|竞彩足球
-  var lotteryTypeArray = "11";
+  // 彩种 双色球|大乐透|福彩3D|排列3|十一运夺金|十一运夺金
+  var lotteryTypeArray = "11|13|12|4|34|31";
 
   /**
    * 初始化
@@ -116,7 +116,10 @@ define(function (require, exports, module) {
           var lotteryType = $fm.attr("id").split("_")[1];
           var lot = config.lotteryIdToStr[lotteryType];
           if (lot !== null && typeof lot != "undefined" && $.trim(lot) != "") {
-            page.init("digit/openLott", {lot: lot}, 1);
+            if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
+              lot == "syx" || lot == "syy") {
+              page.init("digit/openLott", {lot: lot}, 1);
+            }
           }
         }
         return true;

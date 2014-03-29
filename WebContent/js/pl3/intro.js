@@ -1,12 +1,12 @@
 /**
- * 大乐透介绍
+ * 排列3介绍
  */
 define(function (require, exports, module) {
   var page = require('page'),
     events = require('events'),
     util = require('util'),
     $ = require('zepto'),
-    template = require('../../views/dlt/intro.html');
+    template = require('../../views/pl3/intro.html');
 
   var canBack = 1;
 
@@ -29,9 +29,9 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"dlt/intro", data:params},
-      "dlt/intro",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#dlt/intro",
+    page.setHistoryState({url:"pl3/intro", data:params},
+      "pl3/intro",
+      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#pl3/intro",
       canBack ? 1 : 0);
 
     // 隐藏加载标示

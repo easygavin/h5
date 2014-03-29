@@ -19,14 +19,14 @@ define(function (require, exports, module) {
    */
   Page.init = function (url, data, forward) {
     util.showLoading();
-    require.async(url, function (page) {
+    require.async(url, function (pageObj) {
       // 隐藏残留层
       util.hideCover();
       $(".dialog").hide();
       $(".prompt").hide();
-      // 清除上一页面的所有Ajax请求处理
-      util.clearAjaxRequests();
-      page.init(data, forward);
+      // 清除上一页面的占用资源
+      util.clear();
+      pageObj.init(data, forward);
       // 重置滚动条
       window.scrollTo(0, 1);
     });

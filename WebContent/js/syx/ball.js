@@ -1,5 +1,5 @@
 /**
- * 排列3选号
+ * 11选5选号
  */
 define(function (require, exports, module) {
   var page = require('page'),
@@ -7,16 +7,16 @@ define(function (require, exports, module) {
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
-    template = require('../../views/pl3/ball.html'),
+    template = require('../../views/syx/ball.html'),
     config = require('config'),
     digitService = require('services/digit');
   var canBack = 1;
   // 标示符
-  var lot = "pl3";
+  var lot = "syx";
   // 彩种配置
   var lotConfig = {};
   // 初始化显示模式
-  var mode = "0";
+  var mode = "4";
   // 期号
   var issue = {};
   // 上期开奖
@@ -29,6 +29,12 @@ define(function (require, exports, module) {
   var issueCount = 5;
   // 开奖号码列表
   var openNumbers = {};
+  // 计时秒
+  var seconds = 0;
+  // 倒计时定时器
+  var secondInterval = null;
+  // 获取上期信息
+  var lastIssueTimer = null;
   /**
    * 初始化
    */
@@ -88,7 +94,7 @@ define(function (require, exports, module) {
    */
   var readBuffer = function () {
     // 缓存的数据
-    bufferData = util.getLocalJson(util.keyMap.LOCAL_PL3);
+    bufferData = util.getLocalJson(util.keyMap.LOCAL_SYX);
 
     if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
       mode = bufferData[0].mode;
@@ -184,14 +190,49 @@ define(function (require, exports, module) {
    */
   var handleIssue = function () {
 
-    // 13139期截止时间:11-26 19:30
-    var issueTxt = "第" + issue.issueNo + "期 ";
-    if (issue.endTime !== null && typeof issue.endTime != "undefined" &&
-      $.trim(issue.endTime) !== "") {
-      issueTxt += issue.endTime.substring(issue.endTime.indexOf("-") + 1, issue.endTime.lastIndexOf(":"));
-    }
+    if (issue.endTime != null && typeof issue.endTime != "undefined"
+      && $.trim(issue.endTime) != "") {
+      var endDate = new Date(issue.endTime);
+      console.log("endDate:" + endDate.getTime());
+      var serverDate = new Date(issue.serverTime);
+      console.log("serverDate:" + serverDate.getTime());
+      seconds = (endDate.getTime() - serverDate.getTime()) / 1000;
+      console.log("seconds:" + seconds);
 
-    issueTxt += " 截止";
+      // 倒计时
+      clearInterval(secondInterval);
+      util.clearIntervals();
+      secondInterval = setInterval(function () {
+        if (seconds > 0) {
+          seconds--;
+          showIssue();
+        } else {
+          clearInterval(secondInterval);
+          util.clearIntervals();
+          // 重新拉取期号信息
+          getIssue();
+
+          clearTimeout(lastIssueTimer);
+          util.clearTimers();
+          // 5分钟之后重新拉去上期信息
+          lastIssueTimer = setTimeout(function () {
+            getLastIssue();
+          }, 3 * 60 * 1000);
+          util.addTimer(lastIssueTimer);
+        }
+      }, 1000);
+      util.addInterval(secondInterval);
+    }
+  };
+
+  /**
+   * 显示期号，倒计时
+   */
+  var showIssue = function () {
+    var minute = Math.floor(seconds / 60);
+    var second = seconds % 60;
+    var issueTxt = "距第" + issue.issueNo.substring(8) + "期截止:" + minute + ":" +
+      ( second < 10 ? "0" + second : second );
     $("#issueNo").text(issueTxt);
   };
 
@@ -464,18 +505,51 @@ define(function (require, exports, module) {
             $num.removeClass("click");
           } else {
             var count = $("#line_0 .click").length;
-            if (parseInt(mode, 10) > 2) {
+            if (parseInt(mode, 10) > 11) {
               // 胆拖
               switch (mode) {
-                case "3": // 直选胆拖
-                case "5": // 组六胆拖
+                case "12": // 前三直选胆拖
+                case "13": // 前三组选胆拖
+                case "17": // 任三胆拖
                   if (count == 2) {
                     page.toast("所选号码已经达到最大限制");
                     return false;
                   }
                   break;
-                case "4": // 组三胆拖
+                case "14": // 前二直选胆拖
+                case "15": // 前二组选胆拖
+                case "16": // 任二胆拖
                   if (count == 1) {
+                    page.toast("所选号码已经达到最大限制");
+                    return false;
+                  }
+                  break;
+                case "18": // 任四胆拖
+                  if (count == 3) {
+                    page.toast("所选号码已经达到最大限制");
+                    return false;
+                  }
+                  break;
+                case "19": // 任五胆拖
+                  if (count == 4) {
+                    page.toast("所选号码已经达到最大限制");
+                    return false;
+                  }
+                  break;
+                case "20": // 任五胆拖
+                  if (count == 5) {
+                    page.toast("所选号码已经达到最大限制");
+                    return false;
+                  }
+                  break;
+                case "21": // 任六胆拖
+                  if (count == 6) {
+                    page.toast("所选号码已经达到最大限制");
+                    return false;
+                  }
+                  break;
+                case "22": // 任六胆拖
+                  if (count == 7) {
                     page.toast("所选号码已经达到最大限制");
                     return false;
                   }
@@ -503,7 +577,7 @@ define(function (require, exports, module) {
           } else {
             $num.addClass("click");
 
-            if (parseInt(mode, 10) > 2) {
+            if (parseInt(mode, 10) > 11) {
               // 胆拖
               // 移除胆红选中
               $("#line_0 li .num :contains('" + $num.text() + "')").removeClass("click");
@@ -597,7 +671,7 @@ define(function (require, exports, module) {
       }
     }
 
-    util.setLocalJson(util.keyMap.LOCAL_PL3, bufferData);
+    util.setLocalJson(util.keyMap.LOCAL_SYX, bufferData);
 
     if (bufferData.length === 0) {
       page.toast("请至少选择 1 注");
@@ -624,16 +698,46 @@ define(function (require, exports, module) {
     clear();
     var arr0 = [], arr1 = [], arr2 = [];
     switch (mode) {
-      case "0": // 直选
-        arr0 = util.getSrand(0, 9, 1);
-        arr1 = util.getSrand(0, 9, 1);
-        arr2 = util.getSrand(0, 9, 1);
+      case "0": // 任一
+        arr0 = util.getSrand(1, 11, 1);
         break;
-      case "1": // 组三
-        arr0 = util.getSrand(0, 9, 2);
+      case "1": // 任二
+        arr0 = util.getSrand(1, 11, 2);
         break;
-      case "2": // 组六
-        arr0 = util.getSrand(0, 9, 3);
+      case "2": // 任三
+        arr0 = util.getSrand(1, 11, 3);
+        break;
+      case "3": // 任四
+        arr0 = util.getSrand(1, 11, 4);
+        break;
+      case "4": // 任五
+        arr0 = util.getSrand(1, 11, 5);
+        break;
+      case "5": // 任六
+        arr0 = util.getSrand(1, 11, 6);
+        break;
+      case "6": // 任七
+        arr0 = util.getSrand(1, 11, 7);
+        break;
+      case "7": // 任八
+        arr0 = util.getSrand(1, 11, 8);
+        break;
+      case "8": // 前三直选
+        var randoms = util.getSrand(1, 11, 3);
+        arr0.push(randoms[0]);
+        arr1.push(randoms[1]);
+        arr2.push(randoms[2]);
+        break;
+      case "9": // 前三组选
+        arr0 = util.getSrand(1, 11, 3);
+        break;
+      case "10": // 前二直选
+        var randoms = util.getSrand(1, 11, 2);
+        arr0.push(randoms[0]);
+        arr1.push(randoms[1]);
+        break;
+      case "11": // 前二组选
+        arr0 = util.getSrand(1, 11, 2);
         break;
     }
 
@@ -649,15 +753,15 @@ define(function (require, exports, module) {
    */
   var addRedsFocus = function (arr0, arr1, arr2) {
     for (var i = 0; i < arr0.length; i++) {
-      $("#line_0 li .num :contains('" + arr0[i] + "')").addClass("click");
+      $("#line_0 li .num :contains('" + (parseInt(arr0[i], 10) < 10 ? ("0" + parseInt(arr0[i], 10)) : arr0[i]) + "')").addClass("click");
     }
 
     for (var j = 0; j < arr1.length; j++) {
-      $("#line_1 li .num :contains('" + arr1[j] + "')").addClass("click");
+      $("#line_1 li .num :contains('" + (parseInt(arr1[j], 10) < 10 ? ("0" + parseInt(arr1[j], 10)) : arr1[j]) + "')").addClass("click");
     }
 
     for (var k = 0; k < arr2.length; k++) {
-      $("#line_2 li .num :contains('" + arr2[k] + "')").addClass("click");
+      $("#line_2 li .num :contains('" + (parseInt(arr2[k], 10) < 10 ? ("0" + parseInt(arr2[k], 10)) : arr2[k]) + "')").addClass("click");
     }
   };
 
@@ -669,43 +773,140 @@ define(function (require, exports, module) {
     var amount = 0;
 
     switch (mode) {
-      case "0": // 直选
-        var line0Count = $("#line_0 .click").length,
-          line1Count = $("#line_1 .click").length,
-          line2Count = $("#line_2 .click").length;
-        bets = line0Count * line1Count * line2Count;
-        break;
-      case "1": // 组三
+      case "0": // 任一
         var line0Count = $("#line_0 .click").length;
-        if (line0Count >= 2) {
-          bets = util.getFactorial(line0Count, 2) * 2;
+        bets = line0Count;
+        break;
+      case "1": // 任二 - 任八
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+      case "7":
+        var line0Count = $("#line_0 .click").length;
+        var rdmType = parseInt(mode, 10) + 1;
+        if (line0Count >= rdmType) {
+          // rdmType为选择的玩法，比如任二rdmType=2
+          bets = util.getFactorial(line0Count, rdmType);
         }
         break;
-      case "2": // 组六
+      case "8": // 前三直选复式
+        var arr0 = [], arr1 = [], arr2 = [];
+        $("#line_0 .click").each(function (i, item) {
+          arr0.push($(item).text());
+        });
+        $("#line_1 .click").each(function (i, item) {
+          arr1.push($(item).text());
+        });
+        $("#line_2 .click").each(function (i, item) {
+          arr2.push($(item).text());
+        });
+
+        if (arr0.length > 0 && arr1.length > 0 && arr2.length > 0) {
+          for (var i = 0; i < arr0.length; i++) {
+            for (var j = 0; j < arr1.length; j++) {
+              if (arr0[i] == arr1[j]) {
+                if (j == arr1.length - 1) {
+                  break;
+                } else {
+                  continue;
+                }
+              }
+              for (var k = 0; k < arr2.length; k++) {
+                if (arr1[j] == arr2[k]
+                  || arr0[i] == arr2[k]) {
+                  if (k == arr2.length - 1) {
+                    break;
+                  } else {
+                    continue;
+                  }
+                }
+                bets++;
+              }
+            }
+          }
+        }
+
+        break;
+      case "9": // 前三组选复式
         var line0Count = $("#line_0 .click").length;
         if (line0Count >= 3) {
           bets = util.getFactorial(line0Count, 3);
         }
         break;
-      case "3": // 直选胆拖
-        var line0Count = $("#line_0 .click").length,
-          line1Count = $("#line_1 .click").length;
-        if (line0Count >= 1 && line0Count <= 2 && line1Count >= 1) {
+      case "10": // 前二直选复式
+        var arr0 = [], arr1 = [];
+        $("#line_0 .click").each(function (i, item) {
+          arr0.push($(item).text());
+        });
+        $("#line_1 .click").each(function (i, item) {
+          arr1.push($(item).text());
+        });
+
+        if (arr0.length > 0 && arr1.length > 0) {
+          for (var i = 0; i < arr0.length; i++) {
+            for (var j = 0; j < arr1.length; j++) {
+              if (arr0[i] == arr1[j]) {
+                if (j == arr1.length - 1) {
+                  break;
+                } else {
+                  continue;
+                }
+              }
+              bets++;
+            }
+          }
+        }
+
+        break;
+      case "11": // 前二组选复式
+        var line0Count = $("#line_0 .click").length;
+        if (line0Count >= 2) {
+          bets = util.getFactorial(line0Count, 2);
+        }
+        break;
+      case "12": // 前三直选复式胆拖
+        var line0Count = $("#line_0 .click").length;
+        var line1Count = $("#line_1 .click").length;
+        if (line0Count >= 1 && line0Count <= 2) {
           bets = util.getCombineCount(3 - line0Count, line1Count) * 6;
         }
         break;
-      case "4": // 组三胆拖
-        var line0Count = $("#line_0 .click").length,
-          line1Count = $("#line_1 .click").length;
-        if (line0Count == 1 && line1Count >= 1) {
+      case "13": // 前三组选复式胆拖
+        var line0Count = $("#line_0 .click").length;
+        var line1Count = $("#line_1 .click").length;
+        if (line0Count >= 1 && line0Count <= 2) {
+          bets = util.getCombineCount(3 - line0Count, line1Count);
+        }
+        break;
+      case "14": // 前二直选复式胆拖
+        var line0Count = $("#line_0 .click").length;
+        var line1Count = $("#line_1 .click").length;
+        if (line0Count == 1) {
           bets = line1Count * 2;
         }
         break;
-      case "5": // 组六胆拖
-        var line0Count = $("#line_0 .click").length,
-          line1Count = $("#line_1 .click").length;
-        if (line0Count >= 1 && line0Count <= 2 && line1Count >= 1) {
-          bets = util.getCombineCount(3 - line0Count, line1Count);
+      case "15": // 前二组选复式胆拖
+        var line0Count = $("#line_0 .click").length;
+        var line1Count = $("#line_1 .click").length;
+        if (line0Count == 1) {
+          bets = line1Count;
+        }
+        break;
+      case "16": // 任二胆拖 - 任八胆拖
+      case "17":
+      case "18":
+      case "19":
+      case "20":
+      case "21":
+      case "22":
+        var rdmDanType = parseInt(mode, 10) - 14;
+        var line0Count = $("#line_0 .click").length;
+        var line1Count = $("#line_1 .click").length;
+
+        if (line0Count >= 1) {
+          bets = util.getCombineCount((rdmDanType - line0Count), line1Count);
         }
         break;
     }

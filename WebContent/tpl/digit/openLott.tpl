@@ -23,6 +23,8 @@
     break;
   case "f3d": // 福彩3D
   case "pl3": // 排列3
+  case "syx": // 11选5
+  case "syy": // 十一运夺金
     reds = numbers;
     break;
   }

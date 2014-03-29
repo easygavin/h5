@@ -5,7 +5,7 @@ define(function (require, exports, module) {
 
   // 管家服务器地址
   // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.caipiao123.com.cn/";
-  var SERVER_URL = "http://gj.caipiao123.com.cn/";
+  var SERVER_URL = "http://uatjc.ecp888.com/";
 
   // 公告服务器地址
   // 公告测试："" 公告正式："http://gj.caipiao123.com.cn/";

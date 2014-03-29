@@ -407,12 +407,10 @@ define(function (require, exports, module) {
               case "dlt": // 大乐透
               case "f3d": // 福彩3D
               case "pl3": // 排列三
+              case "syx": // 十一选5
+              case "syy": // 十一运夺金
                 util.clearLocalData("local_" + key);
                 page.init(key + "/ball", {}, 1);
-                break;
-              case "syy": // 十一运夺金
-                break;
-              case "syx": // 十一选5
                 break;
               case "jcl": // 竞彩篮球
                 break;
@@ -483,12 +481,10 @@ define(function (require, exports, module) {
             case "dlt": // 大乐透
             case "f3d": // 福彩3D
             case "pl3": // 排列三
-              util.clearLocalData("local_" + key);
-              page.init(key + "/ball", {}, 1);
-              break;
             case "syy": // 十一运夺金
             case "syx": // 十一选五
-
+              util.clearLocalData("local_" + key);
+              page.init(key + "/ball", {}, 1);
               break;
             case "gjj": // 冠军竞猜
             case "jcz": // 竞彩足球

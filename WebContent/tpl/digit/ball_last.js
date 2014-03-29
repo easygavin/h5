@@ -5,7 +5,9 @@ function print() { __p += __j.call(arguments, '') }
 with (obj) {
 
  _.each(data, function (d) {
-var reds = [], blues = [], numbers = d.lotteryNumbers.split(",");
+var reds = [], blues = [],
+numbers = d.lotteryNumbers.split(","),
+issueNo = d.issueNo;
 switch(lot) {
   case "ssq": // 双色球
     if (numbers.length > 6) {
@@ -23,10 +25,15 @@ switch(lot) {
   case "pl3": // 大乐透
     reds = numbers;
     break;
+  case "syx": // 11选5
+  case "syy": // 十一运夺金
+    reds = numbers;
+    issueNo = issueNo.substring(8);
+    break;
 }
 ;
 __p += '\r\n<p>\r\n  第' +
-((__t = (d.issueNo )) == null ? '' : __t) +
+((__t = (issueNo )) == null ? '' : __t) +
 '期开奖:\r\n\r\n  ';
  _.each(reds, function (r) { ;
 __p += '\r\n  <b class="cdd1049">' +

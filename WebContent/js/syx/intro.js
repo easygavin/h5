@@ -1,12 +1,12 @@
 /**
- * 福彩3D介绍
+ * 11选5介绍
  */
 define(function (require, exports, module) {
   var page = require('page'),
     events = require('events'),
     util = require('util'),
     $ = require('zepto'),
-    template = require('../../views/f3d/intro.html');
+    template = require('../../views/syx/intro.html');
 
   var canBack = 1;
 
@@ -29,9 +29,9 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"f3d/intro", data:params},
-      "f3d/intro",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#f3d/intro",
+    page.setHistoryState({url:"dlt/intro", data:params},
+      "dlt/intro",
+      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#dlt/intro",
       canBack ? 1 : 0);
 
     // 隐藏加载标示

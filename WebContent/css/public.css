@@ -101,7 +101,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, em, img, strong, sub, sup, tt, dd
   width: 100%;
   z-index: 20;
   display: none;
-  background: transparent;
+  background: rgba(0,0,0,.25);
 }
 
 i, em, s {
@@ -1681,7 +1681,7 @@ td.click {
 
 .dialog .cxt, .prompt .cxt {
   font-size: 1em;
-  margin: 5% 5% 0;
+  margin: 0 5%;
   line-height: 2em;
   vertical-align: baseline;
 }
@@ -2031,29 +2031,25 @@ body{font-size:90%}
   position: fixed !important;
   top: 85px;
   left: 5%;
-  width: 86%;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px #E3E1DC inset;
-  border: 1px solid #ccc;
-  background: #eee;
+  width: 88%;
+  background: #1E6496;
   padding: 0.192em 0.577em;
   z-index: 30;
   font-size: 0.8em;
+  color: #ffffff;
 }
 
 .leagueBox .icon {
   padding: 10px 0;
   overflow: hidden;
-  color: #998a75;
 }
 
 .leagueBox .icon li {
   width: 7em;
   height: 2em;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #ffffff;
   text-align: center;
   line-height: 2em;
-  border-radius: 3px;
   float: left;
   margin: 0.1em;
   cursor: pointer;
@@ -2061,9 +2057,8 @@ body{font-size:90%}
 }
 
 .leagueBox .icon li.click {
-  background: #07a08d;
-  border: 1px outset #07a08d;
-  color: #fff
+  background: #F07E04;
+  border: 1px solid #ffffff;
 }
 
 .leagueBox .bar {
@@ -2095,7 +2090,6 @@ body{font-size:90%}
 }
 
 .on_show .arr:before {
-  color: #F07E04;
   content: '\f060';
 }
 

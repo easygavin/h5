@@ -1,0 +1,76 @@
+<table class="line50" cellpadding="0" cellspacing="0" width="100%"
+       style="border-top:none;margin-top:0;">
+  <thead>
+  <tr>
+    <td colspan="12"><%=hostName %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>赛</td>
+    <td>胜</td>
+    <td>平</td>
+    <td>负</td>
+    <td>得</td>
+    <td>失</td>
+    <td>净</td>
+    <td>积</td>
+    <td>排</td>
+    <td>胜率</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% for(var i= 0, l=host.length; i < l; i++ ){%>
+  <tr>
+    <td><%=host[i].full%></td>
+    <td><%=host[i].matchCount%></td>
+    <td><%=host[i].matchWin%></td>
+    <td><%=host[i].matchDraw%></td>
+    <td><%=host[i].matchLost%></td>
+    <td><%=host[i].ballGoal%></td>
+    <td><%=host[i].ballLost%></td>
+    <td><%=host[i].ballNet%></td>
+    <td><%=host[i].nowScore%></td>
+    <td><%=host[i].ranking%></td>
+    <td><%=host[i].rateWin%></td>
+  </tr>
+  <%}%>
+  </tbody>
+</table>
+<table class="line50" cellpadding="0" cellspacing="0" width="100%"
+       style="border-top:none;margin-top:0;">
+  <thead>
+  <tr>
+    <td colspan="12"><%=visitName %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>赛</td>
+    <td>胜</td>
+    <td>平</td>
+    <td>负</td>
+    <td>得</td>
+    <td>失</td>
+    <td>净</td>
+    <td>积</td>
+    <td>排</td>
+    <td>胜率</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% for(var i= 0, l=visit.length; i < l; i++ ){%>
+  <tr>
+    <td><%=visit[i].full%></td>
+    <td><%=host[i].matchCount%></td>
+    <td><%=visit[i].matchWin%></td>
+    <td><%=visit[i].matchDraw%></td>
+    <td><%=visit[i].matchLost%></td>
+    <td><%=visit[i].ballGoal%></td>
+    <td><%=visit[i].ballLost%></td>
+    <td><%=visit[i].ballNet%></td>
+    <td><%=visit[i].nowScore%></td>
+    <td><%=visit[i].ranking%></td>
+    <td><%=visit[i].rateWin%></td>
+  </tr>
+  <%}%>
+  </tbody>
+</table>

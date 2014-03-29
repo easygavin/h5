@@ -1,5 +1,5 @@
 /**
- * 排列3列表
+ * 11选5列表
  */
 define(function (require, exports, module) {
   var page = require('page'),
@@ -7,18 +7,18 @@ define(function (require, exports, module) {
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
-    template = require('../../views/pl3/list.html'),
+    template = require('../../views/syx/list.html'),
     config = require('config'),
     digitService = require('services/digit');
   var canBack = 1;
   // 标示符
-  var lot = "pl3";
+  var lot = "syx";
 
   // 彩种配置
   var lotConfig = {};
 
   // 初始化显示模式
-  var mode = "0";
+  var mode = "4";
 
   // 期号
   var issue = {};
@@ -40,6 +40,12 @@ define(function (require, exports, module) {
 
   // 倍数
   var timesInput = 1;
+
+  // 计时秒
+  var seconds = 0;
+
+  // 倒计时定时器
+  var secondInterval = null;
 
   /**
    * 初始化
@@ -98,7 +104,7 @@ define(function (require, exports, module) {
     result = {};
     $(".line30 tbody").empty();
     // 显示投注列表
-    bufferData = util.getLocalJson(util.keyMap.LOCAL_PL3);
+    bufferData = util.getLocalJson(util.keyMap.LOCAL_SYX);
 
     if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
       mode = bufferData[0].mode;
@@ -121,34 +127,14 @@ define(function (require, exports, module) {
     var text = "";
     var $tr = $("<tr></tr>");
     text += "<span class='cdd1049'>";
-    switch (mode) {
-      case "0": // 直选
-        if (item.arr0.length) {
-          text += item.arr0.join("");
-        }
-        if (item.arr1.length) {
-          text += "|" + item.arr1.join("");
-        }
-        if (item.arr2.length) {
-          text += "|" + item.arr2.join("");
-        }
-        break;
-      case "1": // 组三
-      case "2": // 组六
-        if (item.arr0.length) {
-          text += item.arr0.toString();
-        }
-        break;
-      case "3": // 直选胆拖
-      case "4": // 组三胆拖
-      case "5": // 组六胆拖
-        if (item.arr0.length) {
-          text += "[D:" + item.arr0.toString() + "]";
-        }
-        if (item.arr1.length) {
-          text += "[T:" + item.arr1.toString() + "]";
-        }
-        break;
+    if (item.arr0.length) {
+      text += item.arr0.toString();
+    }
+    if (item.arr1.length) {
+      text += ";" + item.arr1.toString();
+    }
+    if (item.arr2.length) {
+      text += ";" + item.arr2.toString();
     }
     text += "</span>";
 
@@ -220,14 +206,49 @@ define(function (require, exports, module) {
    */
   var handleIssue = function () {
 
-    // 13139期截止时间:11-26 19:30
-    var issueTxt = "第" + issue.issueNo + "期 ";
-    if (issue.endTime !== null && typeof issue.endTime != "undefined" &&
-      $.trim(issue.endTime) !== "") {
-      issueTxt += issue.endTime.substring(issue.endTime.indexOf("-") + 1, issue.endTime.lastIndexOf(":"));
-    }
+    if (issue.endTime != null && typeof issue.endTime != "undefined"
+      && $.trim(issue.endTime) != "") {
+      var endDate = new Date(issue.endTime);
+      console.log("endDate:" + endDate.getTime());
+      var serverDate = new Date(issue.serverTime);
+      console.log("serverDate:" + serverDate.getTime());
+      seconds = (endDate.getTime() - serverDate.getTime()) / 1000;
+      console.log("seconds:" + seconds);
 
-    issueTxt += " 截止";
+      // 倒计时
+      clearInterval(secondInterval);
+      util.clearIntervals();
+      secondInterval = setInterval(function () {
+        if (seconds > 0) {
+          seconds--;
+          showIssue();
+        } else {
+          page.dialog(
+            "",
+            issue.issueNo + "期已截止",
+            "确定",
+            function (e) {
+            }
+          );
+
+          clearInterval(secondInterval);
+          util.clearIntervals();
+          // 重新拉取期号信息
+          getIssue();
+        }
+      }, 1000);
+      util.addInterval(secondInterval);
+    }
+  };
+
+  /**
+   * 显示期号，倒计时
+   */
+  var showIssue = function () {
+    var minute = Math.floor(seconds / 60);
+    var second = seconds % 60;
+    var issueTxt = "距第" + issue.issueNo.substring(8) + "期截止:" + minute + ":" +
+      ( second < 10 ? "0" + second : second );
     $("#issueNo").text(issueTxt);
   };
 
@@ -268,7 +289,7 @@ define(function (require, exports, module) {
             && bufferData.length > 0 && !isNaN(index)) {
 
             bufferData.splice(index, 1);
-            util.setLocalJson(util.keyMap.LOCAL_PL3, bufferData);
+            util.setLocalJson(util.keyMap.LOCAL_SYX, bufferData);
 
             // 显示投注列表
             showItems();
@@ -320,10 +341,10 @@ define(function (require, exports, module) {
           if ($.trim(timesInput) != "" && (isNaN(timesInput) || timesInput < 1)) {
             timesInput = 1;
             $timesInput.val(1);
-          } else if (timesInput > 999) {
-            page.toast("亲，最多只能投999倍哦");
-            timesInput = 999;
-            $timesInput.val(999);
+          } else if (timesInput > 9999) {
+            page.toast("亲，最多只能投9999倍哦");
+            timesInput = 9999;
+            $timesInput.val(9999);
           }
         }
 
@@ -364,7 +385,7 @@ define(function (require, exports, module) {
           && bufferData.length > 0) {
 
           bufferData = [];
-          util.setLocalJson(util.keyMap.LOCAL_PL3, bufferData);
+          util.setLocalJson(util.keyMap.LOCAL_SYX, bufferData);
 
           // 显示投注列表
           showItems();
@@ -401,8 +422,8 @@ define(function (require, exports, module) {
 
             // 检查值
             if (checkVal()) {
-              // 购买
-              toHm();
+              // 追号
+
             }
           }
         }
@@ -480,7 +501,7 @@ define(function (require, exports, module) {
               }
             );
             // 删除选号记录
-            util.clearLocalData(util.keyMap.LOCAL_PL3);
+            util.clearLocalData(util.keyMap.LOCAL_SYX);
 
           } else {
             page.codeHandler(data);
@@ -525,9 +546,9 @@ define(function (require, exports, module) {
     var content = "";
     $(".line30 p").each(function (i, item) {
       if (i > 0) {
-        content += "#";
+        content += "/";
       }
-      content += $(item).text();
+      content += "[" + lotConfig.modes.list[mode].ctxKey + "]" + $(item).text();
     });
     params.content = content.replace(/[ ]/g, "");
 
@@ -587,16 +608,46 @@ define(function (require, exports, module) {
 
     var arr0 = [], arr1 = [], arr2 = [];
     switch (mode) {
-      case "0": // 直选
-        arr0 = util.getSrand(0, 9, 1);
-        arr1 = util.getSrand(0, 9, 1);
-        arr2 = util.getSrand(0, 9, 1);
+      case "0": // 任一
+        arr0 = attachZero(util.getSrand(1, 11, 1));
         break;
-      case "1": // 组三
-        arr0 = util.getSrand(0, 9, 2);
+      case "1": // 任二
+        arr0 = attachZero(util.getSrand(1, 11, 2));
         break;
-      case "2": // 组六
-        arr0 = util.getSrand(0, 9, 3);
+      case "2": // 任三
+        arr0 = attachZero(util.getSrand(1, 11, 3));
+        break;
+      case "3": // 任四
+        arr0 = attachZero(util.getSrand(1, 11, 4));
+        break;
+      case "4": // 任五
+        arr0 = attachZero(util.getSrand(1, 11, 5));
+        break;
+      case "5": // 任六
+        arr0 = attachZero(util.getSrand(1, 11, 6));
+        break;
+      case "6": // 任七
+        arr0 = attachZero(util.getSrand(1, 11, 7));
+        break;
+      case "7": // 任八
+        arr0 = attachZero(util.getSrand(1, 11, 8));
+        break;
+      case "8": // 前三直选
+        var randoms = attachZero(util.getSrand(1, 11, 3));
+        arr0.push(randoms[0]);
+        arr1.push(randoms[1]);
+        arr2.push(randoms[2]);
+        break;
+      case "9": // 前三组选
+        arr0 = attachZero(util.getSrand(1, 11, 3));
+        break;
+      case "10": // 前二直选
+        var randoms = attachZero(util.getSrand(1, 11, 2));
+        arr0.push(randoms[0]);
+        arr1.push(randoms[1]);
+        break;
+      case "11": // 前二组选
+        arr0 = attachZero(util.getSrand(1, 11, 2));
         break;
     }
 
@@ -605,10 +656,21 @@ define(function (require, exports, module) {
     data.arr2 = arr2;
 
     bufferData.push(data);
-    util.setLocalJson(util.keyMap.LOCAL_PL3, bufferData);
+    util.setLocalJson(util.keyMap.LOCAL_SYX, bufferData);
 
     addItem(bufferData.length - 1, data);
 
   };
+
+  /**
+   * 补0操作
+   * @param arr
+   */
+  var attachZero = function (arr) {
+    return _.map(arr, function (num) {
+      return num < 10 ? "0" + num : num;
+    });
+  };
+
   return {init: init};
 });
