@@ -335,7 +335,7 @@ define(function (require, exports, module) {
         return true;
       });
 
-    // 返回
+    // 下拉箭头
     $(document).off(events.touchStart(), ".openArrow").
       on(events.touchStart(), ".openArrow", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);

@@ -312,7 +312,7 @@ define(function (require, exports, module) {
               }
             );
             // 删除选号记录
-            util.clearLocalData(util.keyMap.LOCAL_SSQ);
+            util.clearLocalData(lotConfig.localKey);
             util.clearLocalData(util.keyMap.LOCAL_TO_HM);
 
           } else {

@@ -18,12 +18,16 @@ __p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kj
     if (numbers.length > 6) {
       reds = numbers.slice(0, 6);
       blues = numbers.slice(6, 7);
+    } else {
+      reds = numbers;
     }
     break;
   case "dlt": // 大乐透
     if (numbers.length > 6) {
       reds = numbers.slice(0, 5);
       blues = numbers.slice(5, 7);
+    } else {
+      reds = numbers;
     }
     break;
   case "f3d": // 福彩3D

@@ -5,7 +5,6 @@ define(function (require, exports, module) {
   var $ = require('zepto'),
     util = require('util'),
     page = require('page'),
-    _ = require('underscore'),
     service = require('services/jcz'),
     pageTpl = require('/views/athletics/jcz/analyse.html');
 
@@ -31,20 +30,19 @@ define(function (require, exports, module) {
       util.showLoading();
       var self = this;
       service.getJCZQAgainstInfo(self.params, function (data) {
-        if(data){
+        if (data.statusCode == 0) {
           self.data = data;
           self.show();
-          util.hideLoading();
-        }else{
+        } else {
           page.toast('获取数据失败');
         }
+        util.hideLoading();
       });
     },
     show: function () {
       var data = this.data,
         _data ,
-        url = '/tpl/athletics/jcz/oyd',
-        tableHtml = '';
+        url = '/tpl/athletics/jcz/oyd';
       $('#teamInfo').find('.host').html(data.hostName);
       $('#teamInfo').find('.score').html(data.hostAllRank + ':' + data.visitAllRank);
       $('#teamInfo').find('.visit').html(data.visitName);
@@ -79,8 +77,7 @@ define(function (require, exports, module) {
           break;
       }
       require.async(url, function (tpl) {
-        tableHtml = tpl(_data);
-        $('#detail').html(tableHtml);
+        $('#detail').html(tpl(_data));
       });
     },
     switchTab: function (e) {

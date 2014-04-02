@@ -276,7 +276,7 @@ define(function (require, exports, module) {
         if (this.noticeTimer == null) {
           this.noticeTimer = setInterval(function () {
             $("#slides").trigger("swipeLeft");
-          }, 5000);
+          }, 3000);
         }
         itemFocus();
       });
@@ -415,6 +415,8 @@ define(function (require, exports, module) {
                 page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
                 break;
               case "jcl": // 竞彩篮球
+                util.clearLocalData(util.keyMap.LOCAL_JCL);
+                page.init('jcl/bet', {}, 1);
                 break;
               case "jcz": // 竞彩足球
                 util.clearLocalData(util.keyMap.LOCAL_JCZ);

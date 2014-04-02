@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
 
   // 管家服务器地址
-  // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.caipiao123.com.cn/";
+  // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.cpocp.com/";
   var SERVER_URL = "http://uatjc.ecp888.com/";
 
   // 公告服务器地址
@@ -89,6 +89,7 @@ define(function (require, exports, module) {
     AWARD_LIST_ISSUE: SERVER_URL + "gjdigit/lotteryissue!getKjNumberByIsscout.shtml",
     // 竞彩足球对阵接口
     JCZQ_GAME_LIST: SERVER_URL + "gjjczq!betlist.shtml",
+    /*JCZQ_GAME_LIST: 'http://192.168.1.38:8080/middle_web/gjjclq!betbyfootwalllist.shtml',*/
     //竞彩足球购买接口.
     JCZQ_GAME_BUY: SERVER_URL + "gjjczq.shtml",
     // 竞彩足球对阵情报分析
@@ -117,7 +118,7 @@ define(function (require, exports, module) {
 
     // 请求参数
     // 平台类型
-    channelNo: "h5_abc",
+    channelNo: "h5",
     // 渠道号/推荐人
     platform: "e",
     // 手机型号

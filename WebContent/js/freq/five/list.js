@@ -105,6 +105,7 @@ define(function (require, exports, module) {
     showRandomBtn();
 
     // 获取期号
+    issue = {};
     getIssue();
   };
 
@@ -199,7 +200,6 @@ define(function (require, exports, module) {
    * 获取期号
    */
   var getIssue = function () {
-    issue = {};
     $("#issueNo").text("获取期号中...");
     var request = digitService.getCurrLottery(lotConfig.lotteryId, function (data) {
 
@@ -208,6 +208,15 @@ define(function (require, exports, module) {
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode === "0") {
+            if (typeof issue.issueNo != "undefined") {
+              page.dialog(
+                issue.issueNo + "期已截止",
+                "起始期已经更新为" + data.issueNo + "期,请核对期号",
+                "确定",
+                function (e) {
+                }
+              );
+            }
             issue = data;
             handleIssue();
           } else {
@@ -242,14 +251,6 @@ define(function (require, exports, module) {
           seconds--;
           showIssue();
         } else {
-          page.dialog(
-            "",
-            issue.issueNo + "期已截止",
-            "确定",
-            function (e) {
-            }
-          );
-
           clearInterval(secondInterval);
           util.clearIntervals();
           // 重新拉取期号信息
@@ -438,10 +439,23 @@ define(function (require, exports, module) {
             // 检查值
             if (checkVal()) {
               // 追号
-
+              toAppend();
             }
           }
         }
+      });
+
+    // 购彩协议
+    $(document).off(events.touchStart(), ".checked").
+      on(events.touchStart(), ".checked", function (e) {
+        events.handleTapEvent(this, this, events.activate(), e);
+        return true;
+      });
+
+    $(document).off(events.activate(), ".checked").
+      on(events.activate(), ".checked", function (e) {
+        page.init("protocol", {}, 1);
+        return true;
       });
   };
 
@@ -486,6 +500,10 @@ define(function (require, exports, module) {
    * 购买付款
    */
   var toBuy = function () {
+    if (!$("#protocol").attr("checked")) {
+      page.toast("请勾选同意合买代购协议!");
+      return false;
+    }
     var params = getBuyParams();
 
     // 显示遮住层
@@ -530,6 +548,69 @@ define(function (require, exports, module) {
     });
 
     util.addAjaxRequest(request);
+  };
+
+  /**
+   * 进入智能追号
+   */
+  var toAppend = function () {
+    // 检查方案数
+    bufferData = operateToLocal(2);
+
+    if (bufferData.length > 1) {
+      page.toast("暂不支持多种方案计算，请保留一种方案");
+      return false;
+    }
+
+    var item = bufferData[0];
+    var balls = 0, danCount = 0, tuoCount = 0;
+    if (parseInt(mode, 10) > 11) {
+      // 胆拖
+      if (item.arr0.length) {
+        danCount = item.arr0.length;
+      }
+      if (item.arr1.length) {
+        tuoCount = item.arr1.length;
+      }
+      balls = danCount + tuoCount;
+    } else {
+      if (item.arr0.length) {
+        balls  += item.arr0.length;
+      }
+      if (item.arr1.length) {
+        balls += item.arr1.length;
+      }
+      if (item.arr2.length) {
+        balls += item.arr2.length;
+      }
+    }
+
+    var opt = {};
+    opt.bet = item.bets;
+    opt.price = price;
+    opt.money = item.bets * price;
+    opt.bonus = lotConfig.modes.list[mode].bonus;
+    opt.count = 10;
+    opt.sum = 78;
+    opt.mode = mode;
+    opt.balls = balls;
+    opt.dans = danCount;
+    opt.tuos = tuoCount;
+    opt.issueNo = issue.issueNo;
+    opt.lotteryType = lotConfig.lotteryId;
+    opt.content = $(".line30 p").text();
+
+    // 检查返回结果
+    var aResult = digitService.beforeHandler(opt);
+
+    if (typeof aResult.startIssue == "undefined") {
+      page.toast("你太贪心哦，人家满足不了你呢");
+      return false;
+    }
+
+    util.setLocalJson(util.keyMap.LOCAL_FIVE_SMART, opt);
+
+    page.init(lotConfig.paths["smart"].js, {lot: lot}, 1);
   };
 
   /**

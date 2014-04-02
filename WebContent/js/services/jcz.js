@@ -1,6 +1,6 @@
 define(function (require, exports, module) {
   var path = require('path'),
-    config = require('config');
+    util = require('util');
 
   //胆码
   var danNO = {};
@@ -11,11 +11,9 @@ define(function (require, exports, module) {
    */
   var service = {};
   service.getJCZQBetList = function (lotteryType, callback) {
-
     var data = {
       "lotteryType": lotteryType
     };
-
     $.ajax({
       type: "GET",
       url: path.JCZQ_GAME_LIST,
@@ -54,14 +52,14 @@ define(function (require, exports, module) {
    */
   service.getProjectDetails = function (lotteryType, requestType, projectId, callback) {
 
-    if (!appConfig.checkLogin(null)) {
+    if (!util.checkLogin(null)) {
       // 尚未登录
       callback({statusCode: "off"});
       return false;
     }
 
     // 保存登录成功信息
-    var user = appConfig.getLocalJson(appConfig.keyMap.LOCAL_USER_INFO_KEY);
+    var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     var data = {
       lotteryType: lotteryType,
@@ -1439,13 +1437,13 @@ define(function (require, exports, module) {
    * @param callback
    */
   service.toBuy = function (type, params, price, callback) {
-    if (!appConfig.checkLogin(null)) {
+    if (!util.checkLogin(null)) {
       // 尚未登录
       callback({statusCode: "off"});
       return false;
     }
     // 保存登录成功信息
-    var user = appConfig.getLocalJson(appConfig.keyMap.LOCAL_USER_INFO_KEY);
+    var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     params.totalAmount = (parseInt(params.totalBet, 10) * parseInt(params.totalBei, 10) * price) + "";  // 总金额
     // 固定参数
     params.projectDesc = ""; // 方案描述

@@ -230,6 +230,14 @@ define(function (require, exports, module) {
         }
       });
 
+    // 查看本单合买
+    $(document).off(events.tap(), "#hmOrder").
+      on(events.tap(), "#hmOrder", function (e) {
+        // 三个参数 lotteryType,requestType,projectId
+
+        return true;
+      });
+
     // 复活追号
     $(document).off(events.click(), "footer").
       on(events.click(), "footer", function (e) {
@@ -238,10 +246,12 @@ define(function (require, exports, module) {
           return false;
         }
         page.answer(
-          "",
-          "以此选号方案再次购买当期彩种？",
-          "确定",
+          "温馨提示",
+          "以本方案投注内容再次购买当前期彩种？",
           "取消",
+          "确定",
+          function (e) {
+          },
           function (e) {
             // 复活请求
             digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
@@ -261,8 +271,6 @@ define(function (require, exports, module) {
                 }
               }
             });
-          },
-          function (e) {
           }
         );
         return true;

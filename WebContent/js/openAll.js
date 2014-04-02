@@ -118,7 +118,7 @@ define(function (require, exports, module) {
           if (lot !== null && typeof lot != "undefined" && $.trim(lot) != "") {
             if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
               lot == "syx" || lot == "syy") {
-              page.init("digit/openLott", {lot: lot}, 1);
+              page.init("number/openLott", {lot: lot}, 1);
             }
           }
         }

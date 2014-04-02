@@ -230,7 +230,8 @@ define(function (require, exports, module) {
       paths: {
         ball: {js: 'freq/five/ball', tpl: '../../../views/freq/five/ball.html'},
         list: {js: 'freq/five/list', tpl: '../../../views/freq/five/list.html'},
-        intro: {js: 'freq/intro', tpl: '../../views/freq/intro/syy.html'}
+        intro: {js: 'freq/intro', tpl: '../../views/freq/intro/syy.html'},
+        smart: {js: 'freq/five/smart', tpl: '../../../views/freq/five/smart.html'}
       },
       localKey: "local_syy",
       modes: { // 模式
@@ -401,7 +402,8 @@ define(function (require, exports, module) {
       paths: {
         ball: {js: 'freq/five/ball', tpl: '../../../views/freq/five/ball.html'},
         list: {js: 'freq/five/list', tpl: '../../../views/freq/five/list.html'},
-        intro: {js: 'freq/intro', tpl: '../../views/freq/intro/syx.html'}
+        intro: {js: 'freq/intro', tpl: '../../views/freq/intro/syx.html'},
+        smart: {js: 'freq/five/smart', tpl: '../../../views/freq/five/smart.html'}
       },
       localKey: "local_syx",
       modes: { // 模式

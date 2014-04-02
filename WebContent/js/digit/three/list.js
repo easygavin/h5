@@ -422,6 +422,19 @@ define(function (require, exports, module) {
           }
         }
       });
+
+    // 购彩协议
+    $(document).off(events.touchStart(), ".checked").
+      on(events.touchStart(), ".checked", function (e) {
+        events.handleTapEvent(this, this, events.activate(), e);
+        return true;
+      });
+
+    $(document).off(events.activate(), ".checked").
+      on(events.activate(), ".checked", function (e) {
+        page.init("protocol", {}, 1);
+        return true;
+      });
   };
 
   /**
@@ -465,6 +478,10 @@ define(function (require, exports, module) {
    * 购买付款
    */
   var toBuy = function () {
+    if (!$("#protocol").attr("checked")) {
+      page.toast("请勾选同意合买代购协议!");
+      return false;
+    }
     var params = getBuyParams();
 
     // 显示遮住层

@@ -23,6 +23,8 @@ define(function (require, exports, module) {
         token: util.checkLogin(data) || undefined
       };
       this.betList = {};//对阵列表数据
+      this.uadList = {};//上下盘列表数据
+      this.currPlayName = sessionStorage.getItem('jcz_curr_play_name') || 'mix_bet';//当前玩法,默认是混投
       this.matchMap = {};// match Map值
       this.bufferData = {};// 缓存的数据
       this.pay = 0;// 消费金额
@@ -71,6 +73,10 @@ define(function (require, exports, module) {
         }
       });
     },
+    //计算上下盘数据
+    getUadList: function () {
+
+    },
     //统计赛事场数
     unitTotal: function () {
       var total = 0;
@@ -90,7 +96,7 @@ define(function (require, exports, module) {
       if (this.betList && this.betList.datas) {
         if (this.total > 1) {
           this.recordUserSelected();
-          page.init("jcz/list", {}, 1);
+          page.init("jcz/buy", {}, 1);
         } else {
           page.toast("至少选择2场比赛")
         }
@@ -191,24 +197,28 @@ define(function (require, exports, module) {
       $("#JMIssueNo").text(htmlStr);
       this.updateSelMatLen(matchLen, false);
     },
-    // 处理数据并显示赛事列表
+    //处理数据并显示赛事列表
     showMatchItems: function () {
       var self = this,
-        htmlStr = '',
-        matchTpl = require('/tpl/athletics/jcz/match');
-      _.each(this.betList.datas, function (data) {
-        _.each(data['matchArray'], function (m) {
-          // 缓存赛事数据
-          self.matchMap[m.matchId] = m;
-          // 计算联赛map
-          if (!self.leagueMap[m.leagueMatch]) {
-            self.leagueMap[m.leagueMatch] = 1;
-          }
-          self.leagueMap[m.leagueMatch]++;
-          htmlStr += matchTpl(m);
+        url = 'mix_bet' == self.currPlayName ?
+          '/tpl/athletics/jcz/match' : '/tpl/athletics/jcz/uad',
+        htmlStr = '';
+      console.log(self.currPlayName);
+      require.async(url, function (tpl) {
+        _.each(self.betList.datas, function (data) {
+          _.each(data['matchArray'], function (m) {
+            // 缓存赛事数据
+            self.matchMap[m.matchId] = m;
+            // 计算联赛map
+            if (!self.leagueMap[m.leagueMatch]) {
+              self.leagueMap[m.leagueMatch] = 1;
+            }
+            self.leagueMap[m.leagueMatch]++;
+            htmlStr += tpl(m);
+          });
         });
+        $("#matchList").html(htmlStr);
       });
-      $("#matchList").html(htmlStr);
     },
     //添加赛事种类列表
     addLeagueItems: function () {
@@ -301,6 +311,19 @@ define(function (require, exports, module) {
         $tar = $(e.target),
         id = $tar.prop('id') || $tar.prop('class');
       switch (id) {
+        case 'hm_menu':
+          break;
+        case 'gc_menu'://购彩记录
+          if (!util.checkLogin(null)) {
+            // 尚未登录，弹出提示框
+            $(".popup").hide();
+            page.answer('', "您还未登录，请先登录!", "登录", "取消", function () {
+              page.init("login", {}, 1)
+            }, null);
+          } else {
+            page.init("user/buyRecord", {lotteryId: 46}, 1);
+          }
+          break;
         case 'wf_menu'://玩法介绍
           page.init("jcz/intro", {}, 1);
           break;
@@ -324,13 +347,9 @@ define(function (require, exports, module) {
         $playName = $('#playName'),
         type = $tar.data('type'),
         text = $tar.data('text');
-      switch (type) {
-        case 1:
-          break;
-        case 2:
-
-          break;
-      }
+      this.currPlayName = type;
+      sessionStorage.setItem('jcz_curr_play_name',type);
+      this.showMatchItems();
       $playName.text(text);
       $('.menuBox').hide();
       $tar.addClass('click').siblings().removeClass('click');
@@ -350,6 +369,7 @@ define(function (require, exports, module) {
       this.$page.on('click', '.more', function () {
         $('.popup').toggle();
         util.showCover();
+        return false;
       }.bind(this));
       //打开赛事筛选
       this.$page.on('click', '#filterBtn', function () {

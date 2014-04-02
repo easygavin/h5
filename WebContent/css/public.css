@@ -545,10 +545,7 @@ a.right {
 }
 
 .select {
-
   height: 2.8125em;
-  width: 2em;
-
 }
 
 .caList i {
@@ -1114,8 +1111,8 @@ html.mm-opened .side {
 }
 
 .line30 td {
-  border-bottom: 1px solid #e9e9e9;
   padding: 1.07142857em 0;
+  border-bottom: 1px solid #e9e9e9;
 }
 
 .checked {
@@ -1529,6 +1526,7 @@ footer a.btn2 {
 }
 
 /*竞彩*/
+/*竞彩*/
 .line50 {
   border: 1px solid #e9e9e9;
   line-height: 3.57142857em;
@@ -1536,17 +1534,56 @@ footer a.btn2 {
   font-size: 0.875em;
   border-top: 3px solid #2779b5;
   margin-top: 0.625em;
-  border-collapse: collapse;
+  border-collapse: collapse
 }
 
 .line50 td {
   border-bottom: 1px solid #e9e9e9;
-  border-left: 1px solid #e9e9e9;
+  border-left: 1px solid #e9e9e9
 }
 
-.line50 td.more_odds_btn {
+.line50 td.first {
   line-height: 2.3em;
-  background: #f8f8f8;
+  background: #f8f8f8
+}
+
+.line50 td.bnone {
+  border-left: none;
+}
+
+.line50 td.bnone div.lqkj {
+  border: 1px solid #E9E9E9;
+  font: 0.875em/2.2857em "微软雅黑";
+}
+
+td.tztd, .showhide table tbody td {
+  cursor: pointer
+}
+
+td.click {
+  background: #f07e04;
+  color: #fff
+}
+
+.showhide table {
+  text-align: center;
+  border-collapse: collapse;
+  line-height: 1.5em;
+  font-size: 0.875em
+}
+
+.showhide table thead td {
+  border: none
+}
+
+.showhide table td {
+  padding: 0.3em 0;
+  border: 1px solid #e9e9e9
+}
+
+.line50 img {
+  width: 5.7em;
+  margin-top: 1em
 }
 
 td.tztd, .showhide table tbody td {
@@ -1701,6 +1738,7 @@ td.click {
   line-height: 2.5em;
   vertical-align: bottom;
   display: none;
+  text-align: center;
 }
 
 .dialog .cxt, .prompt .cxt {
@@ -1933,15 +1971,6 @@ td.click {
 }
 
 /*篮球开奖*/
-.line50 td.bnone {
-  border-left: none;
-}
-
-.line50 td.bnone div.lqkj {
-  border: 1px solid #E9E9E9;
-  font: 0.875em/2.2857em "微软雅黑";
-}
-
 .bgf17e56 {
   background: #f17e56;
   color: #fff
@@ -2067,6 +2096,10 @@ body{font-size:90%}
 }
 
 /*竞彩足球*/
+.panel {
+  margin-top: 10px;
+}
+
 .leagueBox {
   display: none;
   overflow: hidden;
@@ -2127,6 +2160,42 @@ body{font-size:90%}
 
 }
 
+.ath_lot_tab thead td {
+  padding: 0.5em 0;
+  background: #1E6496;
+  color: #ffffff;
+}
+
+.ath_lot_tab thead td:first-child {
+  border-right: 1px solid #e9e9e9;
+}
+
+.ath_lot_tab tbody td {
+  text-align: center;
+  border-top: 2px solid #1E6496;
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 3px;
+}
+
+.ath_lot_list {
+}
+
+.rs_s {
+  background-color: #FFD7BD;
+}
+
+.rs_p {
+  background-color: #E0FFB3;
+}
+
+.rs_f {
+  background-color: #FFF9B3;
+}
+
+.rs_u {
+  background-color: #cccccc;
+}
+
 .arr:before {
   content: '\f003';
 }
@@ -2145,4 +2214,40 @@ body{font-size:90%}
 
 #ztk_pay .ztk {
   display: block;
+}
+
+.smartModBox {
+  position: fixed;
+  left: 1%;
+  bottom: 3.164em;
+  width: 98%;
+  line-height: 1.5em;
+  background: #fff;
+  color: #666;
+  display: none;
+  z-index: 10;
+  font-size: 1em;
+  border: 2px solid #2779b5;
+  border-bottom: none;
+}
+
+.smartModBox .shoutinp{
+  width: 6em;
+}
+
+.smartModBox .m{
+  margin:0.5em;
+}
+
+.lCover {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  display: none;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity:50);
+  -moz-opacity: .5;
 }

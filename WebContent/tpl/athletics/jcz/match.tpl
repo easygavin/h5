@@ -1,4 +1,4 @@
-<!--竞彩足球对阵模板-->
+<!--竞彩篮球对阵模板-->
 <div data-match-id="<%=matchId%>" class="match">
   <table width="100%" cellspacing="0" cellpadding="0" class="line50"
     data-number="<%=number%>" data-live-id="<%=gliveId%>">

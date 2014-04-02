@@ -3,7 +3,7 @@ obj || (obj = {});
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<!--竞彩足球对阵模板-->\r\n<div data-match-id="' +
+__p += '<!--竞彩篮球对阵模板-->\r\n<div data-match-id="' +
 ((__t = (matchId)) == null ? '' : __t) +
 '" class="match">\r\n  <table width="100%" cellspacing="0" cellpadding="0" class="line50"\r\n    data-number="' +
 ((__t = (number)) == null ? '' : __t) +

@@ -35,7 +35,10 @@ define(function (require, exports, module) {
       var parameterValues = {};
 
       //充值卡,三种运行商发行卡序列号,密码,长度
-      var serialNumberMap ={};
+      var serialNumberMap = {};
+
+      //直通卡充值[随机生成的四位验证码]
+      var randomNum = '';
 
       /**
        * 初始化
@@ -208,9 +211,11 @@ define(function (require, exports, module) {
        *在线冲值(支付宝,财付通)输入校验.
        */
       var zftCftWapInput = function () {
-        var money = $("#money").val(), coupon = $("#couponCode").val();
+        parameterValues = {};
+        //充值金额.
+        var money = $("#money").val(), couponNo = $("#couponCode").val();
         var pattern = /^[1-9]\d*$/;
-        if (money == '') {
+        if (money == '至少充值10元' || money == '') {
           page.toast("请输入充值金额");
           return false;
         } else if (isNaN(money) || !pattern.test(money)) {
@@ -219,54 +224,141 @@ define(function (require, exports, module) {
         } else if (parseInt(money) < 10) {
           page.toast("至少充值10元");
           return false;
+        } else if (parseInt(money) > 100000000) {
+          page.toast("超出最大充值金额");
+          return false;
         }
-
-        /*  var str = "[@/'\"#$%&^*]+";
-         var reg = new RegExp(str);
-         if (coupon != '' && reg.test(coupon)) {
-         page.toast("请输入有效的优惠券编号");
-         return false;
-         } else if (coupon != '' && couponCount == 0) {
-         page.toast("您尚未获得有效的优惠券");
-         return false;
-         }else if(coupon!=''&&coupon.length!=21){
-         page.toast("您输入的优惠券号不正确");
-         }*/
-        parameterValues = {};
-        parameterValues.amount = money;
-        parameterValues.couponNo = coupon;
+        //优惠券编号校验.
+        var str = "[@/'\"#$%&^*]+";
+        var reg = new RegExp(str);
+        if (couponNo == '请输入优惠券编号' || couponNo == '') {
+          parameterValues.couponNo = ''; //优惠券编号.
+        } else {
+          if (couponNo != '' && couponCount == 0) {
+            page.toast("您尚未获得有效的优惠券");
+            return false;
+          } else if (couponNo != '' && reg.test(couponNo)) {
+            page.toast("请输入有效的优惠券编号");
+            return false;
+          } else if (couponNo != '' && couponNo.length != 21) {
+            page.toast("您输入的优惠券号不正确");
+            return false;
+          }
+          parameterValues.couponNo = couponNo; //优惠券编号.
+        }
+        parameterValues.amount = money;             //充值金额.
+        parameterValues.userId = userInfo.userId;   //用户Id
+        parameterValues.token = userInfo.userKey;   //登录令牌,默认是userKey
+        parameterValues.canalNo = userInfo.platform;//渠道号.
         return true;
       };
 
       /**
-       *充值卡充值,(移动,联通,电信)输入校验
+       *充值卡充值,(移动,联通,电信)输入校验.
        */
       var czkInput = function () {
         //充值卡序列号.
-        var serialNumber  = $('#serialNumber').val();
+        var serialNumber = $('#serialNumber').val();
         //充值卡密码.
-        var serialPassWord  = $('#serialPassWord').val();
+        var serialPassWord = $('#serialPassWord').val();
+        //充值类型[神州行,联通,电信]
         var chargeType = $('.tabs1').find('span.click').data('type');
-        var szkType  =serialNumberMap[chargeType];
-        if(serialNumber==''){
-          page.toast("请填写充值卡卡号");
-        }else if(serialNumber>szkType.serialNumberLen){
-          page.toast("请输入正确的充值卡卡号");
+        //根据充值类型,来得到充值号码,密码,最大长度,以及支付通道对应编码
+        var szkType = serialNumberMap[chargeType];
+        if (serialNumber == '请输入充值卡序列号' || serialNumber == '') {
+          page.toast('请填写充值卡序列号');
+          return false;
+        } else if (isNaN(serialNumber) || serialNumber.length > szkType.serialNumberLen) {
+          page.toast('请输入正确的充值序列号');
+          return false;
         }
+        //充值卡密码校验..
+        if (serialPassWord == '请输入充值卡密码' || serialPassWord == '') {
+          page.toast('请输入充值卡密码');
+          return false;
+        } else if (serialPassWord.length > szkType.passwordLen) {
+          page.toast('请输入正确的充值卡密码');
+          return false;
+        }
+        //设置参数..
         var amount = $('#' + chargeType + '_panel').find('li.click').data('num');
         parameterValues = {};
-        parameterValues.amount = amount;
+        parameterValues.amount = amount;           //支付金额.
+        parameterValues.userId = userInfo.userId;   //用户Id
+        parameterValues.token = userInfo.userKey;   //token登录令牌 默认是userKey
+        parameterValues.couponNo = '';             //充值卡充值,暂时没有优惠券选项.
+        parameterValues.canalNo = userInfo.platform;//canalNo 渠道编号.
+        parameterValues.cardNo = serialNumber;     //充值卡号.
+        parameterValues.cardPwd = serialPassWord;  //充值卡密码.
+        parameterValues.payCode = szkType.type;    //支付通道编码
+        return true;
       };
+
+      /**
+       *直通卡充值输入校验.
+       */
+      var ztkInput = function () {
+        //直通卡,卡号,密码,手机号码,验证码 校验.
+        var ztkNum = $('#ztkNum').val(),
+            ztkPass = $('#ztkPass').val(),
+            zktTele = $('#zktTele').val(),
+            ztkICode = $('#ztkICode').val();
+
+        //直通卡卡号校验.
+        var regZtkNum = /^[A-Za-z0-9]+$/;
+        if (ztkNum == '请输入卡号' || ztkNum == '') {
+          page.toast('请输入直通卡卡号');
+          return false;
+        } else if (!regZtkNum.test(ztkNum)) {//卡号,只能是字母或者数字组合.
+          page.toast('您输入的直通卡号不正确');
+          return false;
+        }
+
+        //直通卡密码校验.
+        if (ztkPass == '请输入密码' || ztkPass == '') {
+          page.toast('请输入直通卡密码');
+          return false;
+        }
+
+        //手机号码校验.
+        if (zktTele == '请输入手机号' || zktTele == '') {
+          page.toast('请输入手机号码');
+          return false;
+        } else if (zktTele.length != 11 || isNaN(zktTele)) {
+          page.toast('您输入的手机号码不正确');
+          return false;
+        }
+
+        //验证码校验.
+        var random = randomNum.join("");
+        if (ztkICode == '请输入验证码' || ztkICode == '') {
+          page.toast('请输入验证码');
+          return false;
+        } else if (isNaN(ztkICode) || ztkICode.length != 4) {
+          page.toast('验证码不正确');
+          return false;
+        } else if (parseInt(random) != parseInt(ztkICode)) {
+          page.toast('验证码不正确');
+          return false;
+        }
+        parameterValues = {};
+        parameterValues.userId = userInfo.userId;   //用户Id
+        parameterValues.token = userInfo.userKey;   //登录令牌(默认是userKey)
+        parameterValues.cardNo = ztkNum;            //直通卡号
+        parameterValues.password = ztkPass;         //直通卡密码
+        parameterValues.mobile = zktTele;           //手机号
+        parameterValues.canalNo = userInfo.platform;//渠道编号
+        return true;
+
+      };
+
       /**
        * 支付宝WAP充值.
        */
-      var zftWapPay = function () {
+      var zfbWapPay = function () {
         //校验文本输入.
         var flag = zftCftWapInput();
         if (flag) {
-          parameterValues.userId = userInfo.userId;
-          parameterValues.token = userInfo.userKey;
-          parameterValues.canalNo = path.platform;//渠道号.
           util.showLoading();
           charge.zfbWap(parameterValues, function (data) {
             util.hideLoading();
@@ -290,9 +382,7 @@ define(function (require, exports, module) {
         //校验文本输入.
         var flag = zftCftWapInput();
         if (flag) {
-          parameterValues.userId = userInfo.userId;
-          parameterValues.token = userInfo.userKey;
-          parameterValues.canalNo = path.platform;//渠道号.
+
           util.showLoading();
           charge.cftWap(parameterValues, function (data) {
             util.hideLoading();
@@ -312,11 +402,68 @@ define(function (require, exports, module) {
       /**
        * 充值卡充值.
        */
-      var ckzPay =function(){
-        czkInput();
-        parameterValues.userId = userInfo.userId;
-        parameterValues.token = userInfo.userKey;
-        parameterValues.canalNo = userInfo.platform;
+      var ckzPay = function () {
+        //输入校验.
+        var flag = czkInput();
+        if (flag) {
+          util.showLoading();
+          charge.czk(parameterValues, function (data) {
+            util.hideLoading();
+            if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
+              if (data.statusCode == '0') {
+                page.answer(
+                    "支付请求提交成功",
+                    "充值卡支付请求提交成功，请2分钟后查询账户余额！",
+                    "个人中心",
+                    "确定",
+                    function (e) {
+                      page.init("user/person", {}, 0);
+                    },
+                    function (e) {
+                    }
+                );
+              } else {
+                page.toast(data.errorMsg);
+              }
+
+            } else {
+              page.toast("充值失败,请联系客服.");
+            }
+          });
+        }
+      };
+
+      /**
+       * 直通卡充值.
+       */
+      var ztkPay = function () {
+        var flag = ztkInput();
+        if (flag) {
+          util.showLoading();
+          charge.ztk(parameterValues, function (data) {
+            util.hideLoading();
+            if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
+              if (data.statusCode == '1') {
+                page.answer(
+                    "充值成功",
+                    "充值成功",
+                    "个人中心",
+                    "确定",
+                    function (e) {
+                      page.init("user/person", {}, 0);
+                    },
+                    function (e) {
+                    }
+                );
+              } else {
+                page.toast(data.errorMsg);
+              }
+
+            } else {
+              page.toast("充值失败,请联系客服.");
+            }
+          });
+        }
       };
 
       /**
@@ -325,16 +472,14 @@ define(function (require, exports, module) {
       var bindEvent = function () {
 
         //返回.
-        $(document).off(events.touchStart(), ".back").
-            on(events.touchStart(), ".back", function (e) {
-              events.handleTapEvent(this, this, events.activate(), e);
-              return true;
-            });
-        $(document).off(events.activate(), ".back").
-            on(events.activate(), ".back", function (e) {
-              page.goBack();
-              return true;
-            });
+        $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
+          events.handleTapEvent(this, this, events.activate(), e);
+          return true;
+        });
+        $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+          page.goBack();
+          return true;
+        });
 
         //优惠券说明.
         $(document).off(events.touchStart(), ".whbox").on(events.touchStart(), ".whbox", function (e) {
@@ -360,7 +505,7 @@ define(function (require, exports, module) {
           var showId = $(e.target).attr("id").split("_")[0];
           //切换到直通卡后,页面当中需要用到4位验证码.
           if (showId == 'ztk') {
-            var randomNum = util.getSrand(0, 9, 4);
+            randomNum = util.getSrand(1, 9, 4);
             $('.nzmbtn').text(randomNum.join(" "));
           }
         });
@@ -427,7 +572,7 @@ define(function (require, exports, module) {
           var targetId = $(this).attr("id");
           switch (targetId) {
             case "zfb_charge":
-              zftWapPay();
+              zfbWapPay();
               break;
             case "cft_charge":
               cftWapPay();
@@ -437,21 +582,34 @@ define(function (require, exports, module) {
         });
 
         //充值卡充值[移动,联通,电信]
-        //返回.
         $(document).off(events.touchStart(), ".loginbtn").on(events.touchStart(), ".loginbtn", function (e) {
           events.handleTapEvent(this, this, events.activate(), e);
           return true;
         });
-        $(document).off(events.activate(), ".loginbtn").on(events.activate(), ".loginbtn", function (e) {
 
+        $(document).off(events.activate(), ".loginbtn").on(events.activate(), ".loginbtn", function (e) {
+          ckzPay();
           return true;
         });
+
+
+        //直通卡充值.
+        $(document).off(events.touchStart(), ".surebtn").on(events.touchStart(), ".surebtn", function (e) {
+          events.handleTapEvent(this, this, events.activate(), e);
+          return true;
+        });
+
+        $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
+          ztkPay();
+          return true;
+        });
+
       };
-      serialNumberMap={
+      serialNumberMap = {
         //分别对应,充值方式: 序列号码支持长度,密码长度,支付通道对应编码.
-        "yd_pay":{"serialNumberLen":17,"passwordLen":21,"type":"SZX"},
-        "lt_pay":{"serialNumberLen":15,"passwordLen":19,"type":"UNICOM"},
-        "dx_pay":{"serialNumberLen":19,"passwordLen":18,"type":"TELECOM"}
+        "yd_pay": {"serialNumberLen": 17, "passwordLen": 21, "type": "SZX"},
+        "lt_pay": {"serialNumberLen": 15, "passwordLen": 19, "type": "UNICOM"},
+        "dx_pay": {"serialNumberLen": 19, "passwordLen": 18, "type": "TELECOM"}
       };
       return {init: init};
     }

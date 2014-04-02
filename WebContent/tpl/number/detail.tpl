@@ -9,7 +9,11 @@
 
   <p>认购金额：<%=oneAmount %>元</p>
 
-  <p>方案状态：<%=projectState %></p>
+  <p>方案状态：<%=projectState %>
+    <% if (projectType == "1") { %>
+      <a id="hmOrder" class="clearall fr">查看本单合买</a>
+    <% } %>
+  </p>
 
   <p>方案奖金：<%=bonus + (isNaN(bonus) ? "" : "元") %></p>
 </div>
