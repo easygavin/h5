@@ -134,7 +134,7 @@ define(function (require, exports, module) {
         lots.push(item);
 
         // 收集需要获取截止时间，奖池的彩种编号
-        if (menuId === "digit" || menuId === "freq") {
+        if (item.type === "digit" || item.type === "freq") {
           lotsInfo.push(item.lotteryId);
         }
       }
@@ -322,12 +322,22 @@ define(function (require, exports, module) {
       if (customLott !== null && typeof customLott != "undefined" && $.trim(customLott) !== "") {
         var cusArr = []; // 定制列表
         var localArr = customLott.split(",");
-        var lottMap = config.lotteryMap;
+        var lottMap = config.lotteryMap, lotsInfo = [];
         for (var i = 0; i < localArr.length; i++) {
-          cusArr.push(lottMap[localArr[i]]);
+          var item = lottMap[localArr[i]];
+          cusArr.push(item);
+          // 收集需要获取截止时间，奖池的彩种编号
+          if (item.type === "digit" || item.type === "freq") {
+            lotsInfo.push(item.lotteryId);
+          }
         }
         // 显示定制彩种列表
         showLots(cusArr);
+
+        // 数字彩还需要去获取截止时间，奖池
+        if (lotsInfo.length) {
+          getLotteryInfoByIds(lotsInfo);
+        }
       } else {
         showNoCustomLott();
       }
