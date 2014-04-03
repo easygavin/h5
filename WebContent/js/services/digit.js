@@ -12,17 +12,17 @@ define(function (require, exports, module) {
   var getCurrLottery = function (lotteryType, callback) {
 
     var data = {
-      lotteryType:lotteryType
+      lotteryType: lotteryType
     };
 
     // 请求登录
     var request = $.ajax({
-      type:"GET",
-      url:path.GET_CURRENT_LOTTERY,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.GET_CURRENT_LOTTERY,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -35,17 +35,17 @@ define(function (require, exports, module) {
   var getLastLottery = function (lotteryType, callback) {
 
     var data = {
-      lotteryType:lotteryType
+      lotteryType: lotteryType
     };
 
     // 请求登录
     var request = $.ajax({
-      type:"GET",
-      url:path.GET_LAST_ISSUE_MSG,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.GET_LAST_ISSUE_MSG,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -58,18 +58,18 @@ define(function (require, exports, module) {
   var getRacingPosAward = function (lotteryType, playType, callback) {
 
     var data = {
-      lotteryType:lotteryType,
-      playType:playType
+      lotteryType: lotteryType,
+      playType: playType
     };
 
     // 请求登录
     var request = $.ajax({
-      type:"GET",
-      url:path.GET_RACING_POS_AWARD,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.GET_RACING_POS_AWARD,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -84,7 +84,7 @@ define(function (require, exports, module) {
 
     if (!util.checkLogin(null)) {
       // 尚未登录
-      callback({statusCode:"off"});
+      callback({statusCode: "off"});
       return false;
     }
 
@@ -146,12 +146,12 @@ define(function (require, exports, module) {
 
     // 购买登录
     var request = $.ajax({
-      type:"GET",
-      url:path.DIGIT_BUY,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.DIGIT_BUY,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -168,7 +168,7 @@ define(function (require, exports, module) {
 
     if (!util.checkLogin(null)) {
       // 尚未登录
-      callback({statusCode:"off"});
+      callback({statusCode: "off"});
       return false;
     }
 
@@ -176,21 +176,21 @@ define(function (require, exports, module) {
     var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     var data = {
-      lotteryType:lotteryType,
-      requestType:requestType,
-      projectId:projectId,
-      userKey:user.userKey,
-      userId:user.userId + ""
+      lotteryType: lotteryType,
+      requestType: requestType,
+      projectId: projectId,
+      userKey: user.userKey,
+      userId: user.userId + ""
     };
 
     // 请求登录
     var request = $.ajax({
-      type:"GET",
-      url:path.SUBSCRIBE_ORDER,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.SUBSCRIBE_ORDER,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -207,7 +207,7 @@ define(function (require, exports, module) {
 
     if (!util.checkLogin(null)) {
       // 尚未登录
-      callback({statusCode:"off"});
+      callback({statusCode: "off"});
       return false;
     }
 
@@ -215,19 +215,19 @@ define(function (require, exports, module) {
     var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     var data = {
-      lotteryType:lotteryType,
-      projectId:projectId,
-      userId:user.userId + ""
+      lotteryType: lotteryType,
+      projectId: projectId,
+      userId: user.userId + ""
     };
 
     // 请求登录
     var request = $.ajax({
-      type:"GET",
-      url:path.ALL_ISSUE,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.ALL_ISSUE,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -244,7 +244,7 @@ define(function (require, exports, module) {
 
     if (!util.checkLogin(null)) {
       // 尚未登录
-      callback({statusCode:"off"});
+      callback({statusCode: "off"});
       return false;
     }
 
@@ -252,20 +252,20 @@ define(function (require, exports, module) {
     var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     var data = {
-      lotteryType:lotteryType,
-      projectId:projectId,
-      userKey:user.userKey,
-      userId:user.userId + ""
+      lotteryType: lotteryType,
+      projectId: projectId,
+      userKey: user.userKey,
+      userId: user.userId + ""
     };
 
     // 请求登录
     var request = $.ajax({
-      type:"GET",
-      url:path.ADD_BUY_DIGIT,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.ADD_BUY_DIGIT,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -280,18 +280,18 @@ define(function (require, exports, module) {
 
     // 请求参数
     var data = {
-      lotteryType:lottery,
-      issueCount:size
+      lotteryType: lottery,
+      issueCount: size
     };
 
     // 开奖记录
     var request = $.ajax({
-      type:"GET",
-      url:path.AWARD_LIST_ISSUE,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.AWARD_LIST_ISSUE,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -305,18 +305,18 @@ define(function (require, exports, module) {
    */
   var getDigitDetailsByIssue = function (lottery, issueNo, callback) {
     var data = {
-      lotteryId:lottery,
-      issueNo:issueNo
+      lotteryId: lottery,
+      issueNo: issueNo
     };
 
     // 数字彩某期开奖详情
     var request = $.ajax({
-      type:"GET",
-      url:path.GET_DIGIT_NB,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.GET_DIGIT_NB,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
@@ -329,22 +329,93 @@ define(function (require, exports, module) {
    */
   var getAwardInfoList = function (lotteryTypeArray, callback) {
     var data = {
-      lotteryTypeArray:lotteryTypeArray
+      lotteryTypeArray: lotteryTypeArray
     };
 
     // 数字彩某期开奖详情
     var request = $.ajax({
-      type:"GET",
-      url:path.AWARD_LIST,
-      data:{data:JSON.stringify(data)},
-      dataType:"jsonp",
-      success:callback,
-      error:callback
+      type: "GET",
+      url: path.AWARD_LIST,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
     });
 
     return request;
   };
 
+  /**
+   * 根据彩种ID查询用户中奖信息
+   * @param lotteryId 彩种ID
+   * @param days 多少天内
+   * @param count 数据条数
+   * @param callback
+   */
+  var getUserAwardByLotteryId = function (lotteryId, days, count, callback) {
+    var data = {
+      lotteryId: lotteryId,
+      days: days,
+      count: count
+    };
+
+    var request = $.ajax({
+      type: "GET",
+      url: path.USER_AWARD_INFO,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
+    });
+
+    return request;
+  };
+
+  /**
+   * 根据彩种ID数组查询彩票信息集合
+   * @param lotteryTypeArray
+   * @param callback
+   * @returns {*}
+   */
+  var getLotteryInfoByLotteryIds = function (lotteryTypeArray, callback) {
+    var data = {
+      lotteryTypeArray: lotteryTypeArray
+    };
+
+    var request = $.ajax({
+      type: "GET",
+      url: path.GET_LOTTERY_INFO,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
+    });
+
+    return request;
+  };
+
+  /**
+   * 根据彩种ID获取彩票上期开奖等级信息
+   * @param lotteryId
+   * @param callback
+   * @returns {*}
+   */
+  var getLotteryLevelByLotteryId = function (lotteryId, callback) {
+    var data = {
+      lotteryId: lotteryId
+    };
+
+    var request = $.ajax({
+      type: "GET",
+      url: path.GET_LOTTERY_LEVEL_INFO,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
+    });
+
+    return request;
+  };
 
   /**
    * 11选5智能追号前处理
@@ -591,6 +662,9 @@ define(function (require, exports, module) {
     getHistoryAwardsByTypes: getHistoryAwardsByTypes,
     getDigitDetailsByIssue: getDigitDetailsByIssue,
     getAwardInfoList: getAwardInfoList,
+    getUserAwardByLotteryId: getUserAwardByLotteryId,
+    getLotteryInfoByLotteryIds: getLotteryInfoByLotteryIds,
+    getLotteryLevelByLotteryId: getLotteryLevelByLotteryId,
     beforeHandler: beforeHandler,
     getAppendList: getAppendList,
     calcPayIncome: calcPayIncome

@@ -72,7 +72,7 @@
 
 
 <!--工具条模板-->
-<script type="text/template" id="barTmp">
+<script type="text/template" id="barTpl">
   <% if (hasLogin) { %>
   <a id="p_center">我的彩票</a>
   <% } else {%>
@@ -81,7 +81,7 @@
 </script>
 
 <!--菜单模板-->
-<script type="text/template" id="menuTmp">
+<script type="text/template" id="menuTpl">
   <% _.each(menus.list, function (m) { %>
   <li id="<%=m.key%>">
     <% if (m.key == menus.def) { %>
@@ -94,14 +94,14 @@
 </script>
 
 <!--彩种模板-->
-<script type="text/template" id="lotTmp">
+<script type="text/template" id="lotTpl">
   <ul class="index">
     <% _.each(lots, function (l) { %>
-    <li>
+    <li id="<%=l.key%>">
       <dl>
         <dt>
           <a>
-            <div class="sublogo" id="<%=l.key%>">
+            <div class="sublogo">
               <img src="<%=l.logo%>"/>
             </div>
             <p><%=l.name%></p>
@@ -115,9 +115,9 @@
 
           <p class="cf60"><%=l.desc%></p>
           <% if (l.hasDetail) { %>
-          <p>截止时间：2-19 19:30</p>
+          <p>截止时间：<span class="endTime"></span></p>
 
-          <p><i class="fm fr xq">&#xf065;</i>当期奖池：<i class="cf60">0.00亿</i></p>
+          <p><i class="fm fr xq">&#xf065;</i>当期奖池：<i class="cf60"><span class="pool">0</span>元</i></p>
           <% } %>
         </dd>
       </dl>
@@ -127,7 +127,7 @@
 </script>
 
 <!--未登录或无定制彩种-->
-<script type="text/template" id="customNTmp">
+<script type="text/template" id="customNTpl">
   <a class="czdz">+</a>
 
   <p class="f14 pb1">请先
@@ -138,7 +138,7 @@
 </script>
 
 <!--资讯列表-->
-<script type="text/template" id="noticeTmp">
+<script type="text/template" id="noticeTpl">
   <table cellpadding="0" cellspacing="0" width="100%" class="line30 tl">
     <colgroup>
       <col width="80%">
@@ -153,4 +153,31 @@
     <% });%>
     </tbody>
   </table>
+</script>
+
+<!--资讯列表-->
+<script type="text/template" id="openLotTpl">
+    <table cellpadding="0" cellspacing="0" width="100%">
+      <tbody>
+      <tr>
+        <td>
+          <a class="chose click"><%=issueNo %> 期开奖</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="kjBall">
+          <% _.each(reds, function (r) { %>
+          <span class="red"><%=r %></span>
+          <% });%>
+          <% _.each(blues, function (b) { %>
+          <span class="blue"><%=b %></span>
+          <% });%>
+        </td>
+      </tr>
+      <tr class="min">
+        <td>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 </script>

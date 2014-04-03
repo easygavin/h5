@@ -1,6 +1,3 @@
-/**
- * 双色球介绍
- */
 define(function (require, exports, module) {
   var page = require('page'),
     events = require('events'),

@@ -1,4 +1,4 @@
-<!--竞彩足球对阵模板-->
+<!--竞彩篮球对阵模板-->
 <div id="<%=matchId%>" data-match-id="<%=matchId%>" class="betContain">
   <table cellpadding="0" cellspacing="0" width="100%" class="line50" data-number="<%=number%>">
     <colgroup>
@@ -20,14 +20,14 @@
     <tr class="footballTz">
       <% var sfOdds = spDatas.sf.split(','); %>
       <td class="tab">0</td>
-      <td><%=sfOdds[0]%></td>
-      <td><%=sfOdds[1]%></td>
+      <td id="sf_0-<%=matchId%>"><%=sfOdds[0]||'--'%></td>
+      <td id="sf_1-<%=matchId%>"><%=sfOdds[1]||'--'%></td>
     </tr>
     <tr class="lYTable">
       <% var rfsfOdds = spDatas.rfsf.split(','); %>
       <td class="tab"><%=rfsfOdds[0]%></td>
-      <td><%=rfsfOdds[1]%></td>
-      <td><%=rfsfOdds[2]%></td>
+      <td id="rfsf_1-<%=matchId%>"><%=rfsfOdds[1]%></td>
+      <td id="rfsf_2-<%=matchId%>"><%=rfsfOdds[2]%></td>
     </tr>
   </table>
 </div>

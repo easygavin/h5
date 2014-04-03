@@ -86,6 +86,33 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, em, img, strong, sub, sup, tt, dd
   transform: scale(0);
 }
 
+.grayToast{
+  position: fixed;
+  bottom: 8em;
+  left: 10%;
+  width: 80%;
+  font-size: 1em;
+  line-height: 2em;
+  color: #fff;
+  background: #999;
+  vertical-align: middle;
+  text-align: center;
+  z-index: 30;
+  display: block;
+  box-shadow: -2px -2px 3px #c00 inset;
+  border-radius: 3px;
+  word-break: break-all;
+  -moz-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  -moz-transform: scale(0);
+  -webkit-transform: scale(0);
+  -o-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+}
+
 .itoast {
   -moz-transform: scale(1);
   -webkit-transform: scale(1);
@@ -586,12 +613,6 @@ a.right {
   right: -2.5em;
   top: 0;
 }
-
-#main {
-  overflow: hidden;
-  width: 100%;
-}
-
 .bt3 {
   border-top: 0.1875em solid #257ab3;
 }
@@ -674,8 +695,8 @@ a.right {
 }
 
 .w45 {
-  height: 2.8125em;
-
+  height: 3.4em;
+  width: 100%;
 }
 
 .w24 {
@@ -737,6 +758,17 @@ a.right {
   box-shadow: 0 3px 0 #257ab3;
   white-space: nowrap;
   overflow: hidden;
+}
+
+#main .openLot {
+  border-top: 1px solid #ccc;
+  padding: 1em 3.1125%;
+  line-height: 2.8em;
+}
+
+#main .openLot .min{
+  line-height: 1.5em;
+  font-size: 0.8em;
 }
 
 .addbox {
@@ -1277,20 +1309,9 @@ footer a.btn2 {
 .gmList {
   padding: 0 0.5em;
 }
-
-.delete {
-  font-size: 1.5em;
-  color: #257ab3;
-}
-
-.delete:hover {
-  color: #f07e04;
-}
-
 .gmchose {
   padding: 1em 0.5em 0.5em 0.5em
 }
-
 .chose {
   width: 7.142857em;
   height: 2.7142857em;
@@ -1299,6 +1320,7 @@ footer a.btn2 {
   text-align: center;
   border: 2px solid #2779b5;
   margin-right: 0.5em;
+  overflow: hidden;
 }
 
 .hmchose {
@@ -1311,7 +1333,7 @@ footer a.btn2 {
   margin-right: 0.5em;
 }
 
-.gmchose .click {
+.chose.click {
   background: #2779b5;
   color: #fff;
 }
@@ -1668,10 +1690,9 @@ td.click {
 }
 
 .spftab {
-  line-height: 2.5em;
+  margin-top: .2em;
   text-align: center;
   border-collapse: collapse;
-  font-size: 0.875em;
 }
 
 .spftab thead {
@@ -1679,7 +1700,7 @@ td.click {
 }
 
 .spftab tbody td {
-  line-height: 3.57142857em;
+  line-height: 2.2em;
   border-bottom: 1px solid #e9e9e9;
 }
 

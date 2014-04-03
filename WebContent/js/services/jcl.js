@@ -127,14 +127,9 @@ define(function (require, exports, module) {
    * @param lotteryType
    * @param date
    */
-  var getHistoryAwards = function (lotteryType, date, callback) {
-
+  var getHistoryAwards = function (_data, callback) {
     // 请求参数
-    var data = {
-      lotteryType: lotteryType,
-      date: date
-    };
-
+    var data = $.extend({date: ''}, _data);
     // 开奖记录
     $.ajax({
       type: "GET",
@@ -151,12 +146,10 @@ define(function (require, exports, module) {
    * @param matchId
    */
   var getAwardDetailSP = function (matchId, callback) {
-
     // 请求参数
     var data = {
       matchId: matchId
     };
-
     // 开奖记录
     $.ajax({
       type: "GET",

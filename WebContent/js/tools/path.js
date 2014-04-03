@@ -87,6 +87,12 @@ define(function (require, exports, module) {
     AWARD_LIST: SERVER_URL + "gjkj!allkj.shtml",
     // 彩种历史开奖列表接口
     AWARD_LIST_ISSUE: SERVER_URL + "gjdigit/lotteryissue!getKjNumberByIsscout.shtml",
+    // 用户中奖信息
+    USER_AWARD_INFO: MIDDLEWARE + "middle_web/gjkj!getzjuser.shtml",
+    // 当前期彩种的销售信息
+    GET_LOTTERY_INFO: MIDDLEWARE + "middle_web/gjkj!allkjbyhtml5.shtml",
+    // 彩种的开奖等级信息
+    GET_LOTTERY_LEVEL_INFO: MIDDLEWARE + "middle_web/gjkj!getzjlevel.shtml",
     // 竞彩足球对阵接口
     JCZQ_GAME_LIST: SERVER_URL + "gjjczq!betlist.shtml",
     /*JCZQ_GAME_LIST: 'http://192.168.1.38:8080/middle_web/gjjclq!betbyfootwalllist.shtml',*/

@@ -51,7 +51,7 @@ define(function (require, exports, module) {
         });
         htmlStr += matchTpl({data: rs});
       });
-      $('#lotteryName').html('竞彩足球');
+      $('#lotteryName').html('竞彩篮球');
       htmlStr ? $('#main').html(htmlStr) : page.toast('该日期内没有开奖数据');
     },
     getDateList: function () {

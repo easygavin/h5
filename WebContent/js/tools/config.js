@@ -38,6 +38,7 @@ define(function (require, exports, module) {
       desc: "2元能中1000万", // 说明
       logo: "images/ssq.png", // 图标
       hasDetail: true, // 需要显示上期开奖号码
+      hasLevels: true, // 是否有中奖等级
       paths: {
         ball: {js: 'digit/ssq/ball', tpl: '../../../views/digit/ssq/ball.html'},
         list: {js: 'digit/ssq/list', tpl: '../../../views/digit/ssq/list.html'},
@@ -72,6 +73,7 @@ define(function (require, exports, module) {
       desc: "2元能中500万",
       logo: "images/dlt.png",
       hasDetail: true,
+      hasLevels: true, // 是否有中奖等级
       paths: {
         ball: {js: 'digit/dlt/ball', tpl: '../../../views/digit/dlt/ball.html'},
         list: {js: 'digit/dlt/list', tpl: '../../../views/digit/dlt/list.html'},
@@ -107,6 +109,7 @@ define(function (require, exports, module) {
       desc: "天天开奖",
       logo: "images/f3d.png",
       hasDetail: true,
+      hasLevels: true, // 是否有中奖等级
       paths: {
         ball: {js: 'digit/three/ball', tpl: '../../../views/digit/three/ball.html'},
         list: {js: 'digit/three/list', tpl: '../../../views/digit/three/list.html'},
@@ -167,6 +170,7 @@ define(function (require, exports, module) {
       desc: "好玩易中",
       logo: "images/pl3.png",
       hasDetail: true,
+      hasLevels: true, // 是否有中奖等级
       paths: {
         ball: {js: 'digit/three/ball', tpl: '../../../views/digit/three/ball.html'},
         list: {js: 'digit/three/list', tpl: '../../../views/digit/three/list.html'},
@@ -227,6 +231,7 @@ define(function (require, exports, module) {
       desc: "10分钟一期",
       logo: "images/syy.png",
       hasDetail: true,
+      hasLevels: false, // 是否有中奖等级
       paths: {
         ball: {js: 'freq/five/ball', tpl: '../../../views/freq/five/ball.html'},
         list: {js: 'freq/five/list', tpl: '../../../views/freq/five/list.html'},
@@ -399,6 +404,7 @@ define(function (require, exports, module) {
       desc: "10分钟一期",
       logo: "images/syx.png",
       hasDetail: true,
+      hasLevels: true, // 是否有中奖等级
       paths: {
         ball: {js: 'freq/five/ball', tpl: '../../../views/freq/five/ball.html'},
         list: {js: 'freq/five/list', tpl: '../../../views/freq/five/list.html'},

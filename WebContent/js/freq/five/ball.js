@@ -79,6 +79,9 @@ define(function (require, exports, module) {
     // 显示title信息
     showTitle();
 
+    // 获取用户中奖信息
+    getUserAwardInfo();
+
     // 获取期号
     getIssue();
 
@@ -177,6 +180,20 @@ define(function (require, exports, module) {
 
     // 显示遗留号
     showOmitData();
+  };
+
+  /**
+   * 获取用户中奖信息
+   */
+  var getUserAwardInfo = function () {
+    var request = digitService.getUserAwardByLotteryId(lotConfig.lotteryId, "10", "1", function (data) {
+      if (typeof data != "undefined" && data.length > 0) {
+        var userName = data[0].username, awardMoney = data[0].awardmoney;
+        page.grayToast("恭喜！" + userName + lotConfig.modes.list[mode].name + "，喜中" + awardMoney + "元");
+      }
+    });
+
+    util.addAjaxRequest(request);
   };
 
   /**

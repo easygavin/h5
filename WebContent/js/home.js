@@ -9,7 +9,8 @@ define(function (require, exports, module) {
     _ = require('underscore'),
     template = require("../views/home.html"),
     config = require('config'),
-    path = require('path');
+    path = require('path'),
+    digitService = require('services/digit');
 
   var canBack = 1;
   // 是否登录
@@ -26,6 +27,8 @@ define(function (require, exports, module) {
   var menuId = "";
   // 登录返回
   var from = "";
+  // 上期开奖Map
+  var openLotMap = {};
   /**
    * 初始化
    */
@@ -51,7 +54,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"home", data:params},
+    page.setHistoryState({url: "home", data: params},
       "home",
       (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#home",
       canBack ? 1 : 0);
@@ -89,7 +92,7 @@ define(function (require, exports, module) {
    * 显示工具条
    */
   var showBar = function () {
-    var tmp = $("#barTmp").html();
+    var tmp = $("#barTpl").html();
     // compile our template
     var cmp = _.template(tmp);
     var data = {};
@@ -102,7 +105,7 @@ define(function (require, exports, module) {
    * 显示菜单
    */
   var showMenu = function () {
-    var tmp = $("#menuTmp").html();
+    var tmp = $("#menuTpl").html();
     // compile our template
     var cmp = _.template(tmp);
     var data = {};
@@ -125,13 +128,23 @@ define(function (require, exports, module) {
     if (menuId === "digit" || menuId === "athletics" || menuId === "freq") {
       // 彩票
       var menusLottery = config.menusLottery[menuId];
-      var lots = [];
+      var lots = [], lotsInfo = [];
       for (var i = 0; i < menusLottery.length; i++) {
         var item = config.lotteryMap[menusLottery[i]];
         lots.push(item);
+
+        // 收集需要获取截止时间，奖池的彩种编号
+        if (menuId === "digit" || menuId === "freq") {
+          lotsInfo.push(item.lotteryId);
+        }
       }
       // 显示彩种列表
       showLots(lots);
+
+      // 数字彩还需要去获取截止时间，奖池
+      if (lotsInfo.length) {
+        getLotteryInfoByIds(lotsInfo);
+      }
     } else if (menuId === "custom") {
       // 定制
       showCustomLott();
@@ -143,10 +156,154 @@ define(function (require, exports, module) {
   };
 
   /**
+   * 获取彩票信息集合
+   * @param arr
+   */
+  var getLotteryInfoByIds = function (arr) {
+    var lotteryTypeArray = arr.join("|");
+    var request = digitService.getLotteryInfoByLotteryIds(lotteryTypeArray, function (data) {
+      if (typeof data != "undefined") {
+        if (typeof data.statusCode != "undefined") {
+          if (data.statusCode === "0") {
+            var items = data.data;
+            if (typeof items != "undefined" && items.length > 0) {
+              for (var i = 0; i < items.length; i++) {
+                var key = config.lotteryIdToStr[items[i].lotteryId];
+                openLotMap[key] = items[i];
+
+                var pool = 0, endTime = "";
+                // 奖池
+                if (items[i].bonuspoolAmount != null && typeof items[i].bonuspoolAmount != "undefined" &&
+                  items[i].bonuspoolAmount != "") {
+                  pool = items[i].bonuspoolAmount;
+                }
+
+                // 截止时间
+                if (items[i].endTime != null && typeof items[i].endTime != "undefined" &&
+                  items[i].endTime != "") {
+                  endTime = items[i].endTime;
+                }
+
+                var $li = $("#" + key);
+                $li.find(".pool").text(pool);
+                $li.find(".endTime").text(endTime);
+              }
+            }
+          }
+        }
+      }
+    });
+
+    util.addAjaxRequest(request);
+  };
+
+
+  /**
+   * 显示上期开奖信息
+   * @param lot
+   */
+  var showLottOpenInfo = function (lot) {
+    if (openLotMap[lot] !== null && typeof openLotMap[lot] != "undefined") {
+      var $li = $("#" + lot), $openLot = $li.find(".openLot");
+
+      // 已经存在，并在显示的状态，隐藏显示
+      if ($openLot.length && $openLot.is(":visible")) {
+        $openLot.hide();
+        return false;
+      }
+
+      var data = openLotMap[lot];
+      var lotteryId = data.lotteryId;
+      var numbers = (data.winnumber != null && typeof data.winnumber != "undefined") ? data.winnumber.split(",") : [];
+      var reds = [], blues = [];
+      switch (lotteryId) {
+        case "11": // 双色球
+          if (numbers.length > 6) {
+            reds = numbers.slice(0, 6);
+            blues = numbers.slice(6, 7);
+          } else {
+            reds = numbers;
+          }
+          break;
+        case "13": // 大乐透
+          if (numbers.length > 6) {
+            reds = numbers.slice(0, 5);
+            blues = numbers.slice(5, 7);
+          } else {
+            reds = numbers;
+          }
+          break;
+        case "12": // 福彩3D
+          reds = numbers;
+          break;
+        case "4": // 排列3
+          reds = numbers;
+          break;
+        case "34": // 11选5
+          data.issueNo = data.issueNo.substring(8);
+          reds = numbers;
+          break;
+        case "31": // 十一运夺金
+          data.issueNo = data.issueNo.substring(8);
+          reds = numbers;
+          break;
+      }
+      data.reds = reds;
+      data.blues = blues;
+
+      // 删除原有已经存在的开奖信息
+      $openLot.remove();
+      // 创建节点
+      var tmp = $("#openLotTpl").html();
+      // compile our template
+      var cmp = _.template(tmp);
+      var $dl = $("<dl class='openLot tl'></dl>");
+
+      $li.append($dl.html(cmp(data)));
+
+      var lotConfig = config.lotteryMap[lot];
+      if (lotConfig.hasLevels) {
+        // 获取开奖等级信息
+        getLottOpenLevel(lotteryId);
+      }
+    }
+  };
+
+  /**
+   * 获取开奖等级信息
+   * @param lotteryId
+   */
+  var getLottOpenLevel = function (lotteryId) {
+    var request = digitService.getLotteryLevelByLotteryId(lotteryId, function (data) {
+      if (typeof data != "undefined" && data != "" &&
+        typeof data.lotteryId != "undefined" && data.lotteryId != "") {
+        var key = config.lotteryIdToStr[data.lotteryId];
+        var $openLot = $("#" + key).find(".openLot");
+        if ($openLot.length) {
+          var levels = data.data;
+          if (typeof levels != "undefined" && levels.length) {
+            var str = "";
+            for (var i = 0; i < levels.length; i++) {
+              var level = levels[i];
+              str += "<p>" + level.awardtype + ": "
+                + level.awardbetnum + " 注" +
+                "&nbsp;&nbsp;&nbsp;&nbsp;" +
+                "<i class='cf60'>" + level.awardmoney + "元</i></p>";
+            }
+            $openLot.find(".min").html(str);
+          }
+        }
+      }
+    });
+
+    util.addAjaxRequest(request);
+  };
+
+  /**
    * 显示彩种列表
    */
   var showLots = function (lots) {
-    var tmp = $("#lotTmp").html();
+    var tmp = $("#lotTpl").html();
     // compile our template
     var cmp = _.template(tmp);
     var data = {};
@@ -166,7 +323,7 @@ define(function (require, exports, module) {
         var cusArr = []; // 定制列表
         var localArr = customLott.split(",");
         var lottMap = config.lotteryMap;
-        for (var i = 0; i < localArr.length; i++ ) {
+        for (var i = 0; i < localArr.length; i++) {
           cusArr.push(lottMap[localArr[i]]);
         }
         // 显示定制彩种列表
@@ -181,7 +338,7 @@ define(function (require, exports, module) {
    * 显示未登录或无定制彩种
    */
   var showNoCustomLott = function () {
-    var tmp = $("#customNTmp").html();
+    var tmp = $("#customNTpl").html();
 
     // compile our template
     var cmp = _.template(tmp);
@@ -256,14 +413,14 @@ define(function (require, exports, module) {
     }
 
     if (imageNotices.length) {
-      $(".bunner").css({"height":"8em"});
+      $(".bunner").css({"height": "8em"});
     } else {
       return false;
     }
 
     slider = null;
     $("#slides").empty();
-    for (var i = 0, len = notices.length; i < len; i++) {
+    for (var i = 0, len = imageNotices.length; i < len; i++) {
       $("#slides").append("<img id='img_" + notices[i].noticeId + "' src='" + path.NOTICE_SERVER_URL + notices[i].htmlUrl + "' width='100%' class='notice' style='top:0;left:" + (i * 100) + "%;'>");
       $(".grayBg .next").append($("<dd></dd>"));
     }
@@ -271,7 +428,7 @@ define(function (require, exports, module) {
     if (notices.length > 1) {
       require.async("tools/slider", function () {
         // 滑动
-        slider = new Slider({items:$(".notice").toArray(), width:100, duration:300});
+        slider = new Slider({items: $(".notice").toArray(), width: 100, duration: 300});
         // 轮播
         if (this.noticeTimer == null) {
           this.noticeTimer = setInterval(function () {
@@ -289,14 +446,14 @@ define(function (require, exports, module) {
    */
   var itemFocus = function () {
     var index = slider == null ? 0 : slider.getIndex();
-    $(".grayBg .title").text(notices[index].title);
+    $(".grayBg .title").text(imageNotices[index].title);
   };
 
   /**
    * 显示资讯列表
    */
   var showNoticeItems = function () {
-    var tmp = $("#noticeTmp").html();
+    var tmp = $("#noticeTpl").html();
 
     // compile our template
     var cmp = _.template(tmp);
@@ -311,20 +468,18 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
 
-
-
     // 返回
     $(document).off(events.touchStart(), "#p_center").
-        on(events.touchStart(), "#p_center", function (e) {
-          page.Event.handleTapEvent(this, this, page.Event.activate(), e);
-          return true;
-        });
+      on(events.touchStart(), "#p_center", function (e) {
+        page.Event.handleTapEvent(this, this, page.Event.activate(), e);
+        return true;
+      });
 
     $(document).off(events.activate(), "#p_center").
-        on(events.activate(), "#p_center", function (e) {
-          page.init("user/person",{},1);
-          return true;
-        });
+      on(events.activate(), "#p_center", function (e) {
+        page.init("user/person", {}, 1);
+        return true;
+      });
 
 
     // 登录
@@ -338,9 +493,9 @@ define(function (require, exports, module) {
       on(events.activate(), ".pr0", function (e) {
         var id = e.target.id;
         if (id === "login") {
-          page.init("login", {from:"home"}, 1);
+          page.init("login", {from: "home"}, 1);
         } else if (id === "register") {
-          page.init("register", {from:"home"}, 1);
+          page.init("register", {from: "home"}, 1);
         }
         return true;
       });
@@ -398,10 +553,12 @@ define(function (require, exports, module) {
         var $target = $(e.target);
         var $a = $target.closest("a");
         var $gmButton = $target.closest(".gmButton");
+        var $xq = $target.closest(".xq");
         if ($a.length || $gmButton.length) {
-          var $sublogo = $target.closest("li").find(".sublogo");
-          if ($sublogo.length) {
-            var key = $sublogo.attr("id");
+          // 进入彩种选号
+          var $li = $target.closest("li");
+          if ($li.length) {
+            var key = $li.attr("id");
             switch (key) {
               case "ssq": // 双色球
               case "dlt": // 大乐透
@@ -423,6 +580,13 @@ define(function (require, exports, module) {
                 page.init('jcz/mix_bet', {}, 1);
                 break;
             }
+          }
+        } else if ($xq.length) {
+          // 上期开奖详情
+          var $li = $target.closest("li");
+          if ($li.length) {
+            var key = $li.attr("id");
+            showLottOpenInfo(key);
           }
         }
         return true;
@@ -511,7 +675,7 @@ define(function (require, exports, module) {
     $(document).off(events.tap(), ".close").
       on(events.tap(), ".close", function (e) {
         clearInterval(this.noticeTimer);
-        $(".bunner").css({"height":"0"});
+        $(".bunner").css({"height": "0"});
         return true;
       });
 
@@ -541,7 +705,7 @@ define(function (require, exports, module) {
         if ($img.length) {
           var noticeId = $img.attr("id").split("_")[1];
           if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
-            page.init("notice/detail", {noticeId:noticeId}, 1);
+            page.init("notice/detail", {noticeId: noticeId}, 1);
           }
         }
         return true;
@@ -554,11 +718,11 @@ define(function (require, exports, module) {
         if ($tr.length) {
           var noticeId = $tr.attr("id").split("_")[1];
           if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
-            page.init("notice/detail", {noticeId:noticeId}, 1);
+            page.init("notice/detail", {noticeId: noticeId}, 1);
           }
         }
         return true;
       });
   };
-  module.exports = {init:init};
+  module.exports = {init: init};
 });

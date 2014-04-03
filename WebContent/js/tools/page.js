@@ -10,6 +10,8 @@ define(function (require, exports, module) {
   };
   // toast 定时器
   var TOAST_TIMER = null;
+  // 灰色提示定时器
+  var GRAY_TOAST_TIMER = null;
 
   /**
    * 启动页面
@@ -117,6 +119,24 @@ define(function (require, exports, module) {
           $(".toast").text("");
         });
     }, 1500);
+  };
+
+  /**
+   * 显示灰色toast
+   * @param title
+   */
+  Page.grayToast = function (title) {
+    $(".grayToast").text(title).
+      off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd").
+      addClass("itoast");
+    clearTimeout(GRAY_TOAST_TIMER);
+    GRAY_TOAST_TIMER = setTimeout(function () {
+      $(".grayToast").removeClass("itoast").
+        off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd").
+        on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function () {
+          $(".grayToast").text("");
+        });
+    }, 2500);
   };
 
   /**

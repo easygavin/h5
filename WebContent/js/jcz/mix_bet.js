@@ -321,7 +321,7 @@ define(function (require, exports, module) {
               page.init("login", {}, 1)
             }, null);
           } else {
-            page.init("user/buyRecord", {lotteryId: 46}, 1);
+            page.init("user/buyRecord", {lotteryId: self.lotteryType}, 1);
           }
           break;
         case 'wf_menu'://玩法介绍

@@ -286,6 +286,11 @@ define(function (require, exports, module) {
           if (bufferData !== null && typeof bufferData != "undefined"
             && bufferData.length > 0 && !isNaN(index)) {
 
+            if (bufferData.length == 1) {
+              page.toast("请至少选择 1 注");
+              return false;
+            }
+
             bufferData.splice(index, 1);
             // 保存本地数据
             operateToLocal(1);
@@ -377,12 +382,18 @@ define(function (require, exports, module) {
         if (bufferData !== null && typeof bufferData != "undefined"
           && bufferData.length > 0) {
 
-          bufferData = [];
-          // 保存本地数据
-          operateToLocal(1);
+          if (bufferData.length == 1) {
+            page.toast("请至少选择 1 注");
+            return false;
+          } else {
 
-          // 显示投注列表
-          showItems();
+            bufferData.splice(1, bufferData.length - 1);
+            // 保存本地数据
+            operateToLocal(1);
+
+            // 显示投注列表
+            showItems();
+          }
         }
         return true;
       });

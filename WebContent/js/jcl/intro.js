@@ -1,106 +1,81 @@
-/**
- * 竞彩篮球玩法介绍
- */
-define([
-    "text!../../views/jclq/intro.html",
-    "../util/Page",
-    "util/PageEvent",
-    "util/AppConfig",
-    "util/Util"
-], function (template, page, pageEvent, appConfig, util) {
+define(function (require, exports, module) {
+  var page = require('page'),
+    events = require('events'),
+    util = require('util'),
+    $ = require('zepto');
+  var canBack = 1;
+  var flag = "intro";
+  /**
+   * 初始化
+   */
+  var init = function (data, forward) {
+    canBack = forward;
+    // 参数设置
+    var params = {};
+    var tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
+    require.async('/views/athletics/jcl/intro.html', function (tpl) {
+      //初始化显示
+      $("#container").html(tpl);
+      flag = "intro";
+      showZone();
+    });
+    bindEvent();
+    // 处理返回
+    page.setHistoryState({url: "jcl/intro", data: params},
+      "jcl/intro",
+        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/intro",
+      canBack ? 1 : 0);
+    // 隐藏加载标示
+    util.hideLoading();
+  };
 
-    /**
-     * 当期显示区域
-     * @type {String}
-     */
-
-    var flag = "intro";
-    /**
-     * 初始化
-     */
-    var init = function (data, forward) {
-        // 加载模板内容
-        $("#container").empty().append($(template));
-
-        // 参数设置
-        var params = {};
-        var tkn = appConfig.checkLogin(data);
-        if (tkn) {
-            params.token = tkn;
+  //显示区域
+  var showZone = function () {
+    $("#m_" + flag).addClass("click");
+    $("#" + flag).show();
+  };
+  /**
+   * 隐藏区域
+   */
+  var hideZone = function () {
+    $("#m_" + flag).removeClass("click");
+    $("#" + flag).hide();
+  };
+  /**
+   * 绑定事件
+   */
+  var bindEvent = function () {
+    // 返回
+    $(document).off(events.touchStart(), ".back").
+      on(events.touchStart(), ".back", function (e) {
+        events.handleTapEvent(this, this, events.activate(), e);
+        return true;
+      });
+    $(document).off(events.activate(), ".back").
+      on(events.activate(), ".back", function (e) {
+        page.goBack();
+        return true;
+      });
+    // 菜单切换
+    $(document).off(events.tap(), ".jsBox").
+      on(events.tap(), ".jsBox", function (e) {
+        var $target = $(e.target);
+        var $a = null;
+        if (e.target.tagName.toLocaleLowerCase() === "a") {
+          $a = $target;
+        } else {
+          $a = $target.find("a");
         }
-
-        // 初始化显示
-        initShow(data);
-
-        // 绑定事件
-        bindEvent();
-
-        // 处理返回
-        page.setHistoryState({url:"jclq/intro", data:{}},
-            "jclq/intro", "#jclq/intro" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-            forward ? 1 : 0);
-
-        // 隐藏加载标示
-        util.hideLoading();
-    };
-
-    /**
-     * 初始化显示
-     */
-    var initShow = function (data) {
-        flag = "intro";
-        showZone();
-    };
-
-    /**
-     * 显示区域
-     */
-    var showZone = function () {
-        $("#m_" + flag).addClass("click");
-        $("#" + flag).show();
-    };
-
-    /**
-     * 隐藏区域
-     */
-    var hideZone = function () {
-        $("#m_" + flag).removeClass("click");
-        $("#" + flag).hide();
-    };
-    /**
-     * 绑定事件
-     */
-    var bindEvent = function () {
-
-        // 返回
-        $(".back").on(pageEvent.touchStart, function (e) {
-            pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-            return true;
-        });
-
-        $(".back").on(pageEvent.activate, function (e) {
-            page.goBack();
-            return true;
-        });
-
-        // Tab 切换
-        $(".btnMenu a").on(pageEvent.touchStart, function (e) {
-            pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-            return true;
-        });
-
-        $(".btnMenu a").on(pageEvent.activate, function (e) {
-            var $target = $(this);
-            if ($target.hasClass("click")) {
-                return false;
-            }
-            hideZone();
-            flag = $target.attr("id").split("_")[1];
-            showZone();
-            return true;
-        });
-
-    };
-
-    return {init:init};
+        if ($a.length && !$a.hasClass("click")) {
+          hideZone();
+          flag = $a.attr("id").split("_")[1];
+          showZone();
+        }
+        return true;
+      });
+  };
+  return {init: init};
 });

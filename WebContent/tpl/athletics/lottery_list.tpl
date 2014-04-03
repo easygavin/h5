@@ -6,11 +6,18 @@
   <tbody>
   <%
     var arr= data.matchArray,classArr=['rs_s','rs_p','rs_f','rs_u'],rsArr=['胜','平','负','未开售'];
+    if(data.matchArray[0].result[0].sf){
+      rsArr=['主胜','客胜'];
+    }
     for(var i=0, l=arr.length; i < l; i++ ){
-      var player=arr[i].playAgainst.split('|'), rs=arr[i].result[0].spf;
+      var player=arr[i].playAgainst.split('|'), rs=arr[i].result[0].spf || arr[i].result[0].sf;
   %>
   <tr class="match" data-match-id="<%=arr[i].matchId%>">
-    <td class="first"><%=arr[i].number%><br><%=arr[i].leagueMatch%><br><%=arr[i].time%></td>
+    <td class="first">
+      <%=arr[i].number%><br>
+      <%=arr[i].leagueMatch%><br>
+      <%=arr[i].time%>
+    </td>
     <td class="bnone"><b class="f16 c257ab3"><%=player[0]%></b></td>
     <td class="bnone">
       <div class="lqkj">
@@ -18,7 +25,7 @@
         <p><%=arr[i].goalscore%></p>
       </div>
     </td>
-    <td class="bnone"><b class="f16 c257ab3"><%=player[0]%></b></td>
+    <td class="bnone"><b class="f16 c257ab3"><%=player[1]%></b></td>
   </tr>
   <%}%>
   </tbody>

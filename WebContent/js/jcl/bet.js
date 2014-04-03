@@ -37,7 +37,7 @@ define(function (require, exports, module) {
   var init = function (data, forward) {
     canBack = forward ? 1 : 0;
     // 加载模板内容
-    $("#container").empty().append(view);
+    $("#container").html(view);
     // 参数设置
     var params = {};
     var tkn = util.checkLogin(data);
@@ -68,13 +68,9 @@ define(function (require, exports, module) {
       // 根据缓存数据判断是否需要重新拉取列表
       // 缓存的数据
       bufferData = util.getLocalJson(util.keyMap.LOCAL_JCL);
-      if (bufferData != null && typeof bufferData != "undefined"
-        && betList != null && typeof betList != "undefined"
-        && betList.datas != null && typeof betList.datas != "undefined") {
-
+      if (bufferData && betList && betList && betList.datas) {
         // 处理对阵列表
         handleBetList();
-
         // 显示缓存数据
         showBuffer();
       } else {
@@ -302,6 +298,7 @@ define(function (require, exports, module) {
             page.init("login", {}, 1);
           },
           function (e) {
+            $(".popup").hide();
           }
         );
         return false;
@@ -317,10 +314,9 @@ define(function (require, exports, module) {
     });
 
     // 玩法介绍
-    $(".wfBg").on(pageEvent.click(), function (e) {
+    $("#wf_menu").on(pageEvent.click(), function (e) {
       util.hideCover();
       page.init("jcl/intro", {}, 1);
-      return true;
     });
 
     // 关闭显示框
@@ -422,44 +418,31 @@ define(function (require, exports, module) {
     });
 
     // 确认
-    $(".sure").on(pageEvent.touchStart(), function (e) {
+    $("footer .btn2").on(pageEvent.touchStart(), function (e) {
       pageEvent.handleTapEvent(this, this, pageEvent.activate(), e);
       return true;
     });
 
-    $(".sure").on(pageEvent.activate(), function (e) {
-      if (betList != null && typeof betList != "undefined"
-        && betList.datas != null && typeof betList.datas != "undefined"
-        && betList.datas.length) {
+    $("footer .btn2").on(pageEvent.activate(), function (e) {
+      if (typeof betList && typeof betList.datas && betList.datas.length) {
         if (total > 1) {
           // 赛事数据
           bufferData = {};
           // 期号
           bufferData.issueNo = issueNo;
-
           // 标题对象
           var titleMap = {};
-
           // 赛事对阵列表
           var matchBetList = [];
-
-
           $(".betContain").each(function (i, item) {
             var $item = $(item);
             if ($item.find(".click").length) {
-
-              // 每场赛事数据
-              var data = {};
-
-              // 获取matchId
-              var matchId = getMatchId($item);
+              var data = {};// 每场赛事数据
+              var matchId = $item.closest('.betContain').data('matchId');// 获取matchId
               data.matchId = matchId;
               data.match = matchMap[matchId];
-
-              if ($.trim(matchId) != "") {
-
+              if (matchId) {
                 // 胜负
-                // 选中胜负
                 var sfIds = [];
                 var $sf = $item.find(".footballTz .click");
                 if ($sf.length) {
@@ -470,9 +453,7 @@ define(function (require, exports, module) {
                   titleMap["sf"] = "1";
                 }
                 data.sfIds = sfIds;
-
                 // 让分
-                // 选中让分
                 var rfsfIds = [];
                 var $rfsf = $item.find(".lYTable .click");
                 if ($rfsf.length) {
@@ -483,9 +464,7 @@ define(function (require, exports, module) {
                   titleMap["rfsf"] = "1";
                 }
                 data.rfsfIds = rfsfIds;
-
                 // 大小分
-                // 选中大小分
                 var dxfIds = [];
                 var $dxf = $item.find(".lBTable .click");
                 if ($dxf.length) {
@@ -496,9 +475,7 @@ define(function (require, exports, module) {
                   titleMap["dxf"] = "1";
                 }
                 data.dxfIds = dxfIds;
-
                 // 胜负差
-                // 选中大胜负差
                 var sfcIds = [];
                 var $sfc = $item.find(".lRTable .click");
                 if ($sfc.length) {
@@ -509,7 +486,6 @@ define(function (require, exports, module) {
                   titleMap["sfc"] = "1";
                 }
                 data.sfcIds = sfcIds;
-
                 matchBetList.push(data);
               }
             }
@@ -517,6 +493,7 @@ define(function (require, exports, module) {
           bufferData.matchBetList = matchBetList;
           bufferData.titleMap = titleMap;
           util.setLocalJson(util.keyMap.LOCAL_JCL, bufferData);
+          util.getLocalJson(util.keyMap.LOCAL_JCL);
           page.init("jcl/list", {}, 1);
         } else {
           page.toast("至少选择2场比赛");
@@ -606,19 +583,6 @@ define(function (require, exports, module) {
   var hideLeagueBox = function () {
     $(".leagueBox").hide();
     util.hideCover();
-  };
-
-  /**
-   * 获取matchId
-   * @param $target
-   */
-  var getMatchId = function ($target) {
-    var matchId = "";
-    var $betContain = $target.closest(".betContain");
-    if ($betContain.length) {
-      matchId = $betContain.attr("id");
-    }
-    return matchId;
   };
 
   /**
