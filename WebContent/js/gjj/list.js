@@ -343,17 +343,11 @@ define(function (require, exports, module) {
     util.showLoading();
 
     // 请求接口
-    /*var request = gjjService.toBuy(params, function (data) {
-     handleBuyResult(data);
-     });
+    var request = gjjService.toBuy(params, function (data) {
+      handleBuyResult(data);
+    });
 
-     util.addAjaxRequest(request);*/
-    var data = {
-      statusCode: "0",
-      userBalance: "8957727.0000",
-      projectNo: "GJZ14041114035263060"
-    };
-    handleBuyResult(data);
+    util.addAjaxRequest(request);
 
   };
 

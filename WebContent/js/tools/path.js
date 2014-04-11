@@ -4,17 +4,15 @@
 define(function (require, exports, module) {
 
   // 管家服务器地址
-  // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.cpocp.com/" uat环境:"http://uatjc.ecp888.com/";
+  // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.cpocp.com/"
   var SERVER_URL = "http://uatjc.ecp888.com/";
 
   // 公告服务器地址
   // 公告测试："" 公告正式："http://gj.caipiao123.com.cn/";
   var NOTICE_SERVER_URL = "http://gj.caipiao123.com.cn/";
 
-  //优惠券中间件接口地址.
-
+  // 中间件接口地址.
   var MIDDLEWARE = "http://mw.cpocp.com/";
-  //var MIDDLEWARE = "http://192.168.1.38:8080/";
 
   module.exports = {
     // 用于设置图片路径
@@ -94,11 +92,11 @@ define(function (require, exports, module) {
     // 彩种历史开奖列表接口
     AWARD_LIST_ISSUE: SERVER_URL + "gjdigit/lotteryissue!getKjNumberByIsscout.shtml",
     // 用户中奖信息
-    USER_AWARD_INFO: MIDDLEWARE + "middle_web/gjkj!getzjuser.shtml",
+    USER_AWARD_INFO: MIDDLEWARE + "gjkj!getzjuser.shtml",
     // 当前期彩种的销售信息
-    GET_LOTTERY_INFO: MIDDLEWARE + "middle_web/gjkj!allkjbyhtml5.shtml",
+    GET_LOTTERY_INFO: MIDDLEWARE + "gjkj!allkjbyhtml5.shtml",
     // 彩种的开奖等级信息
-    GET_LOTTERY_LEVEL_INFO: MIDDLEWARE + "middle_web/gjkj!getzjlevel.shtml",
+    GET_LOTTERY_LEVEL_INFO: MIDDLEWARE + "gjkj!getzjlevel.shtml",
     // 竞彩足球对阵接口
     //JCZQ_GAME_LIST: SERVER_URL + "gjjczq!betlist.shtml",
     JCZQ_GAME_LIST: MIDDLEWARE + 'gjjclq!betbyfootwalllist.shtml',

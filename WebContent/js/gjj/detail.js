@@ -56,25 +56,21 @@ define(function (require, exports, module) {
    * 获取方案详情
    */
   var getDetails = function () {
-    /*var request = gjjService.getProjectDetail(projectno, function (data) {
-     // 隐藏加载标示
-     util.hideLoading();
-     if (typeof data != "undefined") {
-     if (typeof data.statusCode != "undefined") {
-     if (data.statusCode == "0") {
-     showDetails(data);
-     } else {
-     page.codeHandler(data);
-     }
-     }
-     }
-     });
+    var request = gjjService.getProjectDetail(projectno, function (data) {
+      // 隐藏加载标示
+      util.hideLoading();
+      if (typeof data != "undefined") {
+        if (typeof data.statusCode != "undefined") {
+          if (data.statusCode == "0") {
+            showDetails(data);
+          } else {
+            page.codeHandler(data);
+          }
+        }
+      }
+    });
 
-     util.addAjaxRequest(request);*/
-
-    // 隐藏加载标示
-    util.hideLoading();
-    showDetails(resultData);
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -114,96 +110,5 @@ define(function (require, exports, module) {
       });
   };
 
-  // 模拟返回数据
-  var resultData = {
-    statusCode: 0,
-    matchInfo: [
-      {
-        promul: 28,
-        champion: "巴西",
-        sp: "2.65",
-        event: "世界杯",
-        gameId: "1",
-        team: "巴西",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 17,
-        champion: "巴西",
-        sp: "4.35",
-        event: "世界杯",
-        gameId: "2",
-        team: "德国",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 19,
-        champion: "巴西",
-        sp: "4.00",
-        event: "世界杯",
-        gameId: "3",
-        team: "阿根廷",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 15,
-        champion: "巴西",
-        sp: "5.00",
-        event: "世界杯",
-        gameId: "4",
-        team: "西班牙",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 4,
-        champion: "巴西",
-        sp: "17.00",
-        event: "世界杯",
-        gameId: "5",
-        team: "比利时",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 4,
-        champion: "巴西",
-        sp: "17.00",
-        event: "世界杯",
-        gameId: "6",
-        team: "荷兰",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 5,
-        champion: "巴西",
-        sp: "16.00",
-        event: "世界杯",
-        gameId: "7",
-        team: "意大利",
-        playType: "冠军竞猜"
-      },
-      {
-        promul: 4,
-        champion: "巴西",
-        sp: "18.00",
-        event: "世界杯",
-        gameId: "8",
-        team: "法国",
-        playType: "冠军竞猜"
-      }
-    ],
-    projectInfo: {
-      awardAmount: 0,
-      percent: 0,
-      totalAmout: 192,
-      projectState: "未开奖",
-      oneAmount: 192,
-      userId: 2796204,
-      openStatus: "4",
-      userName: "test101",
-      projectType: "0",
-      projectNo: "GJZ14041112053245722",
-      projectDate: "2014-04-11 12:05"
-    }
-  };
   return {init: init};
 });
