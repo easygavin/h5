@@ -497,6 +497,64 @@ define(function (require, exports, module) {
   };
 
   /**
+   * 进入二级页面
+   * @param key
+   */
+  var goSubPage = function (key) {
+    switch (key) {
+      case "login": // 登录
+        page.init("login", {from: "home"}, 1);
+        break;
+      case "register": // 注册
+        page.init("register", {from: "home"}, 1);
+        break;
+      case "center": // 个人中心
+        page.init("user/person", {}, 1);
+        break;
+      case "record": // 购彩记录
+
+        break;
+      case "recharge": // 充值
+
+        break;
+      case "custom": // 我的定制
+        // 去定制彩种页面
+        page.init("cusLott", {}, 1);
+        break;
+      case "award": // 开奖信息
+        page.init("openAll", {}, 1);
+        break;
+      case "hmHal": // 合买大厅
+
+        break;
+      case "ssq": // 双色球
+      case "dlt": // 大乐透
+      case "f3d": // 福彩3D
+      case "pl3": // 排列三
+      case "syx": // 十一选5
+      case "syy": // 十一运夺金
+        // 彩种配置
+        var lotConfig = config.lotteryMap[key];
+        util.clearLocalData(lotConfig.localKey);
+        page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
+        break;
+      case "gjj": // 冠军竞猜
+        var lotConfig = config.lotteryMap[key];
+        util.clearLocalData(lotConfig.localKey);
+        page.init("gjj/bet", {}, 1);
+        break;
+      case "jcl": // 竞彩篮球
+        util.clearLocalData(util.keyMap.LOCAL_JCL);
+        page.init('jcl/bet', {}, 1);
+        break;
+      case "jcz": // 竞彩足球
+        util.clearLocalData(util.keyMap.LOCAL_JCZ);
+        page.init('jcz/mix_bet', {}, 1);
+        break;
+    }
+  };
+
+  /**
    * 绑定事件
    */
   var bindEvent = function () {
@@ -514,21 +572,24 @@ define(function (require, exports, module) {
     // 个人中心
     $(document).off(events.activate(), "#p_center").
       on(events.activate(), "#p_center", function (e) {
-        page.init("user/person", {}, 1);
+        // 进入二级页面
+        goSubPage("center");
         return true;
       });
 
     // 登录
     $(document).off(events.activate(), "#login").
       on(events.activate(), "#login", function (e) {
-        page.init("login", {from: "home"}, 1);
+        // 进入二级页面
+        goSubPage("login");
         return true;
       });
 
     // 注册
     $(document).off(events.activate(), "#register").
       on(events.activate(), "#register", function (e) {
-        page.init("register", {from: "home"}, 1);
+        // 进入二级页面
+        goSubPage("register");
         return true;
       });
 
@@ -585,32 +646,8 @@ define(function (require, exports, module) {
           var $li = $target.closest("li");
           if ($li.length) {
             var key = $li.attr("id");
-            switch (key) {
-              case "ssq": // 双色球
-              case "dlt": // 大乐透
-              case "f3d": // 福彩3D
-              case "pl3": // 排列三
-              case "syx": // 十一选5
-              case "syy": // 十一运夺金
-                // 彩种配置
-                var lotConfig = config.lotteryMap[key];
-                util.clearLocalData(lotConfig.localKey);
-                page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
-                break;
-              case "gjj": // 冠军竞猜
-                var lotConfig = config.lotteryMap[key];
-                util.clearLocalData(lotConfig.localKey);
-                page.init("gjj/bet", {}, 1);
-                break;
-              case "jcl": // 竞彩篮球
-                util.clearLocalData(util.keyMap.LOCAL_JCL);
-                page.init('jcl/bet', {}, 1);
-                break;
-              case "jcz": // 竞彩足球
-                util.clearLocalData(util.keyMap.LOCAL_JCZ);
-                page.init('jcz/mix_bet', {}, 1);
-                break;
-            }
+            // 进入二级页面
+            goSubPage(key);
           }
         } else if ($xq.length) {
           // 上期开奖详情
@@ -628,10 +665,10 @@ define(function (require, exports, module) {
       on(events.tap(), ".czdz", function (e) {
         if (hasLogin) {
           // 去定制彩种页面
-          page.init("cusLott", {}, 1);
+          goSubPage("custom");
         } else {
           // 登录
-          page.init("login", {}, 1);
+          goSubPage("login");
         }
         return true;
       });
@@ -640,7 +677,7 @@ define(function (require, exports, module) {
     $(document).off(events.tap(), "#toLogin").
       on(events.tap(), "#toLogin", function (e) {
         // 登录
-        page.init("login", {}, 1);
+        goSubPage("login");
         return true;
       });
 
@@ -650,59 +687,8 @@ define(function (require, exports, module) {
         var $li = $(e.target).closest("li");
         if ($li.length) {
           var key = $li.attr("id").split("_")[1];
-          switch (key) {
-            case "center": // 个人中心
-
-              break;
-            case "record": // 购彩记录
-
-              break;
-            case "recharge": // 充值
-
-              break;
-            case "custom": // 我的定制
-              // 去定制彩种页面
-              page.init("cusLott", {}, 1);
-              break;
-            case "award": // 开奖信息
-              page.init("openAll", {}, 1);
-              break;
-            case "hmHal": // 合买大厅
-
-              break;
-            case "digit": // 数字彩
-            case "freq": // 高频彩
-            case "athletics": // 竞彩
-              var $ul = $li.find("ul");
-              if ($ul.is(":visible")) {
-                $ul.hide();
-                $li.find("a").addClass("down").html("&#xf004;");
-              } else {
-                $ul.show();
-                $li.find("a").addClass("up").html("&#xf005;");
-              }
-              break;
-            case "ssq": // 双色球
-            case "dlt": // 大乐透
-            case "f3d": // 福彩3D
-            case "pl3": // 排列三
-            case "syy": // 十一运夺金
-            case "syx": // 十一选五
-              // 彩种配置
-              var lotConfig = config.lotteryMap[key];
-              util.clearLocalData(lotConfig.localKey);
-              page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
-              break;
-            case "gjj": // 冠军竞猜
-              var lotConfig = config.lotteryMap[key];
-              util.clearLocalData(lotConfig.localKey);
-              page.init("gjj/bet", {lot: lotConfig.key}, 1);
-              break;
-            case "jcz": // 竞彩足球
-            case "jcl": // 竞彩篮球
-
-              break;
-          }
+          // 进入二级页面
+          goSubPage(key);
         }
       });
 
