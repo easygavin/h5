@@ -16,7 +16,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -34,8 +34,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "cusLott", data: params},
       "cusLott",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#cusLott",
-      canBack ? 1 : 0);
+      "#cusLott" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
 
     // 隐藏加载标示
     util.hideLoading();

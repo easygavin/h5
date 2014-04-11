@@ -18,7 +18,6 @@ define(function (require, exports, module) {
       var data = {
         "amount": params.amount,    //支付金额
         "userId": params.userId,    //会员ID
-        "token": params.token,      //登录令牌
         "couponNo": params.couponNo,//优惠券号
         "canalNo": params.canalNo   //渠道编号
       };
@@ -44,7 +43,6 @@ define(function (require, exports, module) {
       var data = {
         "amount": params.amount,      //支付金额
         "userId": params.userId,      //会员ID
-        "token": params.token,        //登录令牌
         "couponNo": params.couponNo,  //优惠券号
         "canalNo": params.canalNo    //渠道编号
       };
@@ -107,7 +105,7 @@ define(function (require, exports, module) {
 
       return $.ajax({
           type:"GET",
-          url:"/zktPay",
+          url:"/ztkPay",
           data:{data:JSON.stringify(data)},
           dataType:"json",
           success:callback,

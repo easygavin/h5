@@ -13,9 +13,9 @@ seajs.config({
     'md5': 'tools/md5',
     'path': 'tools/path'
   },
-  map: [
+/*  map: [
     [/^(.*\.(?:css|js|tpl))(.*)$/i, '$1?v=' + +new Date]
-  ],
+  ],*/
   preload: [
     'lib/seajs-text'
   ]

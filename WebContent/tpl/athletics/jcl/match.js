@@ -3,7 +3,7 @@ obj || (obj = {});
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
-__p += '<!--竞彩足球对阵模板-->\r\n<div id="' +
+__p += '<!--竞彩篮球对阵模板-->\r\n<div id="' +
 ((__t = (matchId)) == null ? '' : __t) +
 '" data-match-id="' +
 ((__t = (matchId)) == null ? '' : __t) +
@@ -19,18 +19,26 @@ __p += '<!--竞彩足球对阵模板-->\r\n<div id="' +
 ((__t = (playAgainst.split('|').join('</b>vs<b class="f16">'))) == null ? '' : __t) +
 '</b>\r\n      </td>\r\n    </tr>\r\n    <tr class="footballTz">\r\n      ';
  var sfOdds = spDatas.sf.split(','); ;
-__p += '\r\n      <td class="tab">0</td>\r\n      <td>' +
-((__t = (sfOdds[0])) == null ? '' : __t) +
-'</td>\r\n      <td>' +
-((__t = (sfOdds[1])) == null ? '' : __t) +
+__p += '\r\n      <td class="tab">0</td>\r\n      <td id="sf_0-' +
+((__t = (matchId)) == null ? '' : __t) +
+'">' +
+((__t = (sfOdds[0]||'--')) == null ? '' : __t) +
+'</td>\r\n      <td id="sf_1-' +
+((__t = (matchId)) == null ? '' : __t) +
+'">' +
+((__t = (sfOdds[1]||'--')) == null ? '' : __t) +
 '</td>\r\n    </tr>\r\n    <tr class="lYTable">\r\n      ';
  var rfsfOdds = spDatas.rfsf.split(','); ;
 __p += '\r\n      <td class="tab">' +
-((__t = (rfsfOdds[0])) == null ? '' : __t) +
-'</td>\r\n      <td>' +
-((__t = (rfsfOdds[1])) == null ? '' : __t) +
-'</td>\r\n      <td>' +
-((__t = (rfsfOdds[2])) == null ? '' : __t) +
+((__t = (rfsfOdds[0]||'--')) == null ? '' : __t) +
+'</td>\r\n      <td id="rfsf_1-' +
+((__t = (matchId)) == null ? '' : __t) +
+'">' +
+((__t = (rfsfOdds[1]||'--')) == null ? '' : __t) +
+'</td>\r\n      <td id="rfsf_2-' +
+((__t = (matchId)) == null ? '' : __t) +
+'">' +
+((__t = (rfsfOdds[2]||'--')) == null ? '' : __t) +
 '</td>\r\n    </tr>\r\n  </table>\r\n</div>';
 
 }

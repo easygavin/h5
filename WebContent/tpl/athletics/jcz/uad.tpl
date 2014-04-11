@@ -1,7 +1,7 @@
-<!--竞彩足球对阵模板-->
+<!--竞彩足球[上下盘]模板-->
 <div data-match-id="<%=matchId%>" class="match">
-  <table width="100%" cellspacing="0" cellpadding="0" class="line50"
-         data-number="<%=number%>" data-live-id="<%=gliveId%>">
+  <table width="100%" cellspacing="0" cellpadding="0" class="line50" data-number="<%=number%>"
+         data-live-id="<%=gliveId%>">
     <colgroup>
       <col width="">
       <col width="10%">
@@ -14,7 +14,7 @@
         <%=leagueMatch%>
         <br><%=number%><br><%=time%> <br>
       </td>
-      <td class="" colspan="3">
+      <td class="analyse" colspan="3">
         <b class="f16"><%=playAgainst.split('|').join('</b>vs<b class="f16">')%></b>
         <b class="fr">>&nbsp;&nbsp;</b>
       </td>

@@ -1,8 +1,8 @@
     <!--头部-->
     <header>
-        <a class="return1"><i class="fm">&#xf035;</i>绑定银行卡</a>
+        <a class="back"><i class="fm">&#xf035;绑定银行卡</i></a>
     </header>
-    <div class="w45"></div>
+    <div class="w24"></div>
     <!--内容-->
     <div id="main" class="f14">
         <table cellpadding="0" cellspacing="0" width="100%" class="sftab">
@@ -21,16 +21,10 @@
                 <td>&nbsp;</td>
                 <td class="tr">提款银行：</td>
                 <td>
-                    <div class="selectbox">
-                        <span>513701151515151515</span>
+                    <div id="bankShow" class="selectbox">
+                        <span id="selectedBank">请选择提款银行</span>
                         <i class="fm fr">&#xf004;</i>
-                        <select>
-                            <option>52322515646254621648</option>
-                            <option>52322515644655245648</option>
-                            <option>52322512124655245648</option>
-                            <option>5232251124655245648</option>
-                            <option>52322515624655245648</option>
-                            <option>52322515646655245648</option>
+                        <select id="bankList">
                         </select>
                     </div>
                 </td>
@@ -41,16 +35,9 @@
                 <td class="tr">开户省市：</td>
                 <td>
                     <div class="selectbox">
-                        <span>513701151515151515</span>
+                        <span id="province">请选择</span>
                         <i class="fm fr">&#xf004;</i>
-                        <select>
-                            <option>52322515646254621648</option>
-                            <option>52322515644655245648</option>
-                            <option>52322512124655245648</option>
-                            <option>5232251124655245648</option>
-                            <option>52322515624655245648</option>
-                            <option>52322515646655245648</option>
-                        </select>
+                        <select id="selectProvince"> </select>
                     </div>
                 </td>
                 <td>省(市)</td>
@@ -60,15 +47,9 @@
                 <td class="tr">&nbsp;</td>
                 <td>
                     <div class="selectbox">
-                        <span>513701151515151515</span>
+                        <span id="city">请选择</span>
                         <i class="fm fr">&#xf004;</i>
-                        <select>
-                            <option>52322515646254621648</option>
-                            <option>52322515644655245648</option>
-                            <option>52322512124655245648</option>
-                            <option>5232251124655245648</option>
-                            <option>52322515624655245648</option>
-                            <option>52322515646655245648</option>
+                        <select id="selectCity">
                         </select>
                     </div>
                 </td>
@@ -77,31 +58,31 @@
             <tr>
                 <td>&nbsp;</td>
                 <td class="tr">开户行名称：</td>
-                <td><input type="text" class="inutext" /></td>
+                <td><input id="bankAccount" type="text" class="inutext" /></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td class="tr">银行卡号：</td>
-                <td><input type="text" class="inutext" /></td>
+                <td><input id="bankNum" type="text" class="inutext" /></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td class="tr">提款密码：</td>
-                <td><input type="text" class="inutext" /></td>
+                <td><input id="bankPass" type="password" maxlength="15" class="inutext" /></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td class="tr">确认提款密码：</td>
-                <td><input type="text" class="inutext" /></td>
+                <td><input id="bankPassConf" type="password" maxlength="15" class="inutext" /></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><button class="surebtn mt20">立即绑定</button></td>
+                <td><button class="surebtn mt20"></button></td>
                 <td>&nbsp;</td>
             </tr>
         </table>

@@ -12,14 +12,14 @@ define(function (require, exports, module) {
     digitService = require('services/digit');
   var canBack = 1;
 
-  // 彩种 双色球|大乐透|福彩3D|排列3|十一运夺金|十一运夺金
-  var lotteryTypeArray = "11|13|12|4|34|31";
+  // 彩种 双色球|大乐透|福彩3D|排列3|十一运夺金|十一运夺金|竞彩足球|竞彩篮球
+  var lotteryTypeArray = "11|13|12|4|34|31|46|36";
 
   /**
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -34,8 +34,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "openAll", data: params},
       "openAll",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#openAll",
-      canBack ? 1 : 0);
+      "#openAll" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -86,8 +86,8 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
+    $(document).off(events.touchStart(), ".back, .kjList tr").
+      on(events.touchStart(), ".back, .kjList tr", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
@@ -102,12 +102,6 @@ define(function (require, exports, module) {
         return true;
       });
 
-    $(document).off(events.touchStart(), ".kjList tr").
-      on(events.touchStart(), ".kjList tr", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".kjList tr").
       on(events.activate(), ".kjList tr", function (e) {
         var $fm = $(this).find(".fm");
@@ -119,6 +113,12 @@ define(function (require, exports, module) {
             if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
               lot == "syx" || lot == "syy") {
               page.init("number/openLott", {lot: lot}, 1);
+            } else if (lot == "jcl") {
+              // 竞彩篮球
+              console.log("[open all] : to jcl");
+            } else if (lot == "jcz") {
+              // 竞彩足球
+              console.log("[open all] : to jcz");
             }
           }
         }

@@ -22,7 +22,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -50,8 +50,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "number/look", data: params},
       "number/look",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#number/look",
-      canBack ? 1 : 0);
+      "#number/look" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -130,8 +130,8 @@ define(function (require, exports, module) {
       });
 
     // 去投注
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
+    $(document).off(events.click(), "#toBuyNo").
+      on(events.click(), "#toBuyNo", function (e) {
         util.clearLocalData(lotConfig.localKey);
         page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
       });

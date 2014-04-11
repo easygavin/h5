@@ -63,20 +63,17 @@ define(function (require, exports, module) {
 
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
-    if (userInfo != null && userInfo.userId != "undefined" && userInfo.userKey != "undefined") {
-
+    if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
+      util.showLoading();
       var request = account.getUserBalance(requestType, userInfo.userId, userInfo.userKey, function (data) {
-
-        util.hideCover();
         util.hideLoading();
-
-        if (data != "undefined" && data.statusCode == "0") {
-          $("#trueName").html(" 用户名:" + userInfo.userName);
-          $("#balance").html(parseFloat(data.userBalance).toFixed(2));
+        if (!_.isEmpty(data) && data.statusCode == '0') {
+          $("#trueName").html("账户名:" + userInfo.userName);
+          var balance = parseFloat(data.userBalance).toFixed(2);
+          $("#balance").html(balance > 0 ? balance : 0);
         } else if (data.statusCode == '0007') {
 
         } else {
-          alert(data.statusCode);
           page.toast(data.errorMsg);
         }
 
@@ -85,6 +82,37 @@ define(function (require, exports, module) {
     } else {
       page.init("login", {}, 1);
     }
+  };
+
+  /**
+   * 查询是否绑定身份证(当点击绑定银行卡的时候).
+   */
+  var idState = function () {
+    // 显示遮住层
+    util.showLoading();
+    if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
+      account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
+        util.hideLoading();
+        if (!_.isEmpty(data)) {
+          if (data.statusCode && data.statusCode == '0') {
+            //存储用户的真实姓名.在绑定银行卡页面需要.
+            util.setLocalJson(util.keyMap.USER_TRUE_NAME,data.name);
+            page.init('user/bindBankCard', {}, 1);
+          } else if (data.statusCode == '0007') {
+            page.toast('暂未进行身份认证');
+            page.init('user/authenticate', {}, 1);
+          } else {
+            page.toast(data.errorMsg);
+          }
+          return true;
+        } else {
+          page.toast('查询失败,请稍后重试!');
+        }
+      });
+    } else {
+      page.init('login', {}, 1);
+    }
+
   };
 
   /**
@@ -134,7 +162,8 @@ define(function (require, exports, module) {
               break;
             //绑定银行卡.
             case "bindBankCard":
-              page.init("user/bindBankCard", {}, 1);
+              //先查询是否绑定身份证.
+              idState();
               break;
             //手机绑定.
             case "bindMobile":

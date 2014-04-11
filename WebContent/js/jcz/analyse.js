@@ -5,6 +5,7 @@ define(function (require, exports, module) {
   var $ = require('zepto'),
     util = require('util'),
     page = require('page'),
+    _ = require('underscore'),
     service = require('services/jcz'),
     pageTpl = require('/views/athletics/jcz/analyse.html');
 

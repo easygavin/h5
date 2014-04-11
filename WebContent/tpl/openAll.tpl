@@ -3,7 +3,7 @@
   <%
   var lotteryType = d.lotteryType + "", lotteryName = "";
   var numbers = d.lotteryNumbers.split(","),
-  reds = [], blues = [];
+  reds = [], blues = [], desc = "";
   switch (lotteryType) {
     case "11": // 双色球
       lotteryName = "双色球";
@@ -39,6 +39,14 @@
       lotteryName = "十一运夺金";
       reds = numbers;
       break;
+    case "46": // 竞彩足球
+      lotteryName = "竞彩足球";
+      desc = "查看开奖详情";
+      break;
+    case "36": // 竞彩篮球
+      lotteryName = "竞彩足球";
+      desc = "查看开奖详情";
+      break;
   }
   %>
   <tr>
@@ -55,6 +63,9 @@
       <% _.each(blues, function (b) { %>
       <span class="blue"><%=b %></span>
       <% });%>
+      <% if (desc != "") { %>
+        <i class="cdd1049"><%=desc %></i>
+      <% } %>
     </td>
   </tr>
 </table>

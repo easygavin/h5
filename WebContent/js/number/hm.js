@@ -34,7 +34,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -49,8 +49,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "number/hm", data: params},
       "number/hm",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#number/hm",
-      canBack ? 1 : 0);
+      "#number/hm" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -228,18 +228,13 @@ define(function (require, exports, module) {
         showPayInfo();
       });
 
-    // footer
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
-        var $a = $(e.target).closest("a");
-        if ($a.length) {
-          if ($a.hasClass("fr")) {
-            // 检查值
-            if (checkVal()) {
-              // 购买
-              toBuy();
-            }
-          }
+    // 发起合买
+    $(document).off(events.click(), ".btn2").
+      on(events.click(), ".btn2", function (e) {
+        // 检查值
+        if (checkVal()) {
+          // 购买
+          toBuy();
         }
       });
   };

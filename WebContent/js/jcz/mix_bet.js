@@ -11,20 +11,25 @@ define(function (require, exports, module) {
     fastClick = require('fastclick'),
     service = require('services/jcz'),
     betTpl = require('/views/athletics/jcz/mix_bet.html');
+  var canBack = 0;
+  var betList = {};//对阵列表数据
   module.exports = {
-    canBack: 0,
     init: function (data, forward) {
+      canBack = forward ? 1 : 0;
       this.lotteryType = 46;
       // 加载模板内容
       $("#container").html(betTpl);
       this.$page = $('#jczMixedView');
-      this.canBack = forward || 0;
       this.params = {
         token: util.checkLogin(data) || undefined
       };
-      this.betList = {};//对阵列表数据
+      this.playNameMap = {
+        'mix_bet': '混投',
+        'uad_bet': '上下盘'
+      };
+
       this.uadList = {};//上下盘列表数据
-      this.currPlayName = sessionStorage.getItem('jcz_curr_play_name') || 'mix_bet';//当前玩法,默认是混投
+      this.currPlayName = sessionStorage.getItem('jcz_curr_play_name') || 'mix_bet';//当前玩法,默认是混投[混投、上下盘]
       this.matchMap = {};// match Map值
       this.bufferData = {};// 缓存的数据
       this.pay = 0;// 消费金额
@@ -33,23 +38,25 @@ define(function (require, exports, module) {
       this.leagueMap = {};// 赛事分类
       this.leagueLength = 0;// 一共有多少对阵
       this.selLeague = null;// 被选中的联赛
-      this.initShow(this.canBack);
+      this.initShow(canBack);
       this.bindEvent();
       page.setHistoryState(
         {url: "jcz/mix_bet", data: this.params},
         "jcz/mix_bet",
           (JSON.stringify(this.params).length > 2 ?
             "?data=" + encodeURIComponent(JSON.stringify(this.params)) : "") + "#jcz/mix_bet",
-        this.canBack);
+        canBack);
     },
     //初始化显示
     initShow: function (forward) {
+      $('#playName').html(this.playNameMap[this.currPlayName] || '混投');
+      $('.menuBox').find('a[data-type=' + this.currPlayName + ']').addClass('click');
       if (forward) {
         this.getBetList();
       } else {
         // 根据缓存数据判断是否需要重新拉取列表
-        var bufferData = util.getLocalJson(util.keyMap.LOCAL_JCZ);
-        if (bufferData && this.betList && this.betList.datas) {
+        this.bufferData = util.getLocalJson(util.keyMap.LOCAL_JCZ);
+        if (this.bufferData && !_.isEmpty(betList)) {
           this.handleBetList();
           this.showBuffer();
         } else {
@@ -64,7 +71,7 @@ define(function (require, exports, module) {
       service.getJCZQBetList(this.lotteryType, function (data) {
         if (typeof data && typeof data.statusCode) {
           if (0 == data.statusCode) {
-            self.betList = data;
+            betList = data;
             self.handleBetList();
             util.hideLoading();
           } else {
@@ -93,7 +100,7 @@ define(function (require, exports, module) {
       this.total = 0;
     },
     goBuy: function () {
-      if (this.betList && this.betList.datas) {
+      if (betList && betList.datas) {
         if (this.total > 1) {
           this.recordUserSelected();
           page.init("jcz/buy", {}, 1);
@@ -128,7 +135,7 @@ define(function (require, exports, module) {
             // 球胜平负
             var spfIds = [], $spf = $item.find(".spf_bet .click");
             $spf.length && $spf.each(function (j, spf) {
-              var spfId = $(spf).attr("id").split("-")[0];
+              var spfId = $(spf).attr("id");
               spfIds.push(spfId);
             });
             titleMap["spf"] = $spf.length;
@@ -137,7 +144,7 @@ define(function (require, exports, module) {
             // 让球胜平负
             var rqspfIds = [], $rqspf = $item.find(".rqspf_bet .click");
             $rqspf.length && $rqspf.each(function (k, rqspf) {
-              var rqspfId = $(rqspf).attr("id").split("-")[0];
+              var rqspfId = $(rqspf).attr("id");
               rqspfIds.push(rqspfId);
             });
             titleMap["rqspf"] = $rqspf.length;
@@ -146,7 +153,7 @@ define(function (require, exports, module) {
             // 总进球
             var zjqIds = [], $zjq = $item.find(".zjq_bet .click");
             $zjq.length && $zjq.each(function (d, zjq) {
-              var zjqId = $(zjq).attr("id").split("-")[0];
+              var zjqId = $(zjq).attr("id");
               zjqIds.push(zjqId);
             });
             titleMap["zjq"] = $zjq.length;
@@ -156,16 +163,16 @@ define(function (require, exports, module) {
             // 半全场
             var bqcIds = [], $bqc = $item.find(".bqc_bet .click");
             $bqc.length && $bqc.each(function (c, bqc) {
-              var bqcId = $(bqc).attr("id").split("-")[0];
+              var bqcId = $(bqc).attr("id");
               bqcIds.push(bqcId);
             });
             titleMap["bqc"] = $bqc.length;
             data.bqcIds = bqcIds;
 
             //比分
-            var bfIds = [], $bf = $item.find(".lRTable .click");
+            var bfIds = [], $bf = $item.find(".bf_bet .click");
             $bf.length && $bf.each(function (c, bf) {
-              var bfId = $(bf).attr("id").split("-")[0];
+              var bfId = $(bf).attr("id");
               bfIds.push(bfId);
 
             });
@@ -178,13 +185,12 @@ define(function (require, exports, module) {
       this.bufferData.matchBetList = matchBetList;
       this.bufferData.titleMap = titleMap;
       util.setLocalJson(util.keyMap.LOCAL_JCZ, this.bufferData);
-
     },
     //处理对阵列表
     handleBetList: function () {
       var matchLen = 0;
-      this.issueNo = this.betList.datas[0].issueNo;
-      _.each(this.betList.datas, function (data) {
+      this.issueNo = betList.datas[0].issueNo;
+      _.each(betList.datas, function (data) {
         matchLen += data['matchArray'].length;
       });
       this.showIssueNo(matchLen);
@@ -205,7 +211,7 @@ define(function (require, exports, module) {
         htmlStr = '';
       console.log(self.currPlayName);
       require.async(url, function (tpl) {
-        _.each(self.betList.datas, function (data) {
+        _.each(betList.datas, function (data) {
           _.each(data['matchArray'], function (m) {
             // 缓存赛事数据
             self.matchMap[m.matchId] = m;
@@ -214,7 +220,9 @@ define(function (require, exports, module) {
               self.leagueMap[m.leagueMatch] = 1;
             }
             self.leagueMap[m.leagueMatch]++;
-            htmlStr += tpl(m);
+            if ('mix_bet' == self.currPlayName || 1 == Math.abs(m.transfer)) {
+              htmlStr += tpl(m);
+            }
           });
         });
         $("#matchList").html(htmlStr);
@@ -245,6 +253,7 @@ define(function (require, exports, module) {
     },
     //显示缓存数据
     showBuffer: function () {
+      var self = this;
       var matchBetList = this.bufferData.matchBetList;
       for(var i = 0, len = matchBetList.length; i < len; i++) {
         var item = matchBetList[i];
@@ -254,56 +263,59 @@ define(function (require, exports, module) {
           zjqIds = item.zjqIds,
           bqcIds = item.bqcIds,
           bfIds = item.bfIds;
-
+        var $match = $('.match[ data-match-id=' + matchId + ']');
         if (rqspfIds.length > 0 || zjqIds.length > 0 || bqcIds.length > 0 || bfIds.length > 0) {
           // 显示SP层
-          showSPOptions(matchId);
+          self.showMoreOdds(matchId);
         }
-
         // 胜平负
         for(var j = 0, jLen = spfIds.length; j < jLen; j++) {
-          $("#" + spfIds[j] + "-" + matchId).addClass("click");
+          $match.find('#' + spfIds[j]).addClass("click");
         }
-
         // 让球胜平负
         for(var k = 0, kLen = rqspfIds.length; k < kLen; k++) {
-          $("#" + rqspfIds[k] + "-" + matchId).addClass("click");
+          $match.find('#' + rqspfIds[k]).addClass("click");
         }
-
         // 总进球
         for(var d = 0, dLen = zjqIds.length; d < dLen; d++) {
-          $("#" + zjqIds[d] + "-" + matchId).addClass("click");
+          $match.find('#' + zjqIds[d]).addClass("click");
         }
-
         // 半全场
         for(var c = 0, cLen = bqcIds.length; c < cLen; c++) {
-          $("#" + bqcIds[c] + "-" + matchId).addClass("click");
+          $match.find('#' + bqcIds[c]).addClass("click");
         }
-
         // 比分
         for(var f = 0, bLen = bfIds.length; f < bLen; f++) {
-          $("#" + bfIds[f] + "-" + matchId).addClass("click");
+          $match.find('#' + bfIds[f]).addClass("click");
         }
-
-        if (spfIds.length > 0 || rqspfIds.length > 0 || zjqIds.length > 0 || bqcIds.length > 0 || bfIds.length > 0) {
-          // 焦点样式
-          switchArrow(matchId, 0);
+        if (spfIds.length || rqspfIds.length || zjqIds.length || bqcIds.length || bfIds.length) {
+          $match.addClass('on_show');
+          $match.find('.arr').addClass('f07e04');
         }
+        util.hideLoading();
       }
     },
     //显示更多赔率
     showMoreOdds: function (e) {
-      var $tar = $(e.target),
-        $match = $tar.closest('div'),
-        matchId = $match.data('matchId'),
-        data = this.matchMap[matchId];
-      require.async('/tpl/athletics/jcz/more_odds', function (tpl) {
-        if ($match.find('.showhide').length == 0) {
+      var $match = '',
+        matchId = '',
+        data = {};
+      if ('string' == typeof e) {
+        $match = $('.match[ data-match-id=' + e + ']');
+        matchId = e;
+      } else {
+        $match = $(e.target).closest('div');
+        matchId = $match.data('matchId');
+      }
+      data = this.matchMap[matchId];
+      if ($match.find('.showhide').length == 0) {
+        require.async('/tpl/athletics/jcz/more_odds', function (tpl) {
           $match.toggleClass('on_show').append(tpl(data));
-        } else {
-          $match.toggleClass('on_show').find('.showhide').toggle();
-        }
-      });
+        });
+      } else {
+        $match.toggleClass('on_show').find('.showhide').toggle();
+      }
+
     },
     //页面跳转
     goPage: function (e) {
@@ -337,6 +349,7 @@ define(function (require, exports, module) {
             teamNo: $table.data('number'),
             gliveId: $table.data('liveId')
           };
+          self.recordUserSelected();
           page.init("jcz/analyse", param, 1);
       }
       util.hideCover();
@@ -348,7 +361,7 @@ define(function (require, exports, module) {
         type = $tar.data('type'),
         text = $tar.data('text');
       this.currPlayName = type;
-      sessionStorage.setItem('jcz_curr_play_name',type);
+      sessionStorage.setItem('jcz_curr_play_name', type);
       this.showMatchItems();
       $playName.text(text);
       $('.menuBox').hide();
@@ -358,7 +371,7 @@ define(function (require, exports, module) {
     //绑定事件
     bindEvent: function () {
       //fastclick events
-      fastClick.attach(document.body);
+      fastClick.attach(document);
       this.$page.on('click', '.back', function () {
         this.callback ? page.goBack() : page.init('home', {}, 1);
       }.bind(this));
@@ -374,9 +387,7 @@ define(function (require, exports, module) {
       //打开赛事筛选
       this.$page.on('click', '#filterBtn', function () {
         util.showCover();
-        var leagueBox = $('.leagueBox');
-        leagueBox.toggle().hasClass('success') ? '' : this.addLeagueItems();
-        //this.selLeague = $(".leagueBox .item .click");
+        $('.leagueBox').toggle().hasClass('success') ? '' : this.addLeagueItems();
       }.bind(this));
       //赛事筛选
       $(".leagueBox").on('click', '.item', function (e) {
@@ -423,9 +434,6 @@ define(function (require, exports, module) {
         $(".menuBox").hide();
         if ($(".leagueBox").is(":visible")) {
           $(".leagueBox").hide();
-          /*this.selLeague.each(function (i, item) {
-           $(item).addClass("click");
-           });*/
         }
         return true;
       });
@@ -439,5 +447,4 @@ define(function (require, exports, module) {
       $('footer').on('click', '.btn2', this.goBuy.bind(this));
     }
   };
-})
-;
+});

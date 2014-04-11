@@ -7,11 +7,14 @@
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/ball_last.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/openAll.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcl/more_odds.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/result.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/gjj/ball_match.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/gjj/ball_mode.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/uad.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/oyd.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/more_odds.js" />
-        <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/lottery_list.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/freq/five/smart.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/lottery_list.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/ball_mode.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/history.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/jf.js" />
@@ -19,6 +22,7 @@
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/detail.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/look.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/gjj/detail.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -43,11 +47,14 @@
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/ball_last.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcl/more_odds.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/openAll.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/gjj/ball_match.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/result.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/gjj/ball_mode.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/uad.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/oyd.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/more_odds.js" />
-      <root url="file://$PROJECT_DIR$/WebContent/tpl/freq/five/smart.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/lottery_list.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/freq/five/smart.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/history.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/ball_mode.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/jf.js" />
@@ -55,6 +62,7 @@
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/detail.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/look.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/gjj/detail.js" />
     </CLASSES>
     <SOURCES />
   </library>

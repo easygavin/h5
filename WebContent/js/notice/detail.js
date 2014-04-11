@@ -9,7 +9,8 @@ define(function (require, exports, module) {
     _ = require("underscore"),
     template = require("../../views/notice/detail.html"),
     noticeService = require('services/notice'),
-    path = require('path');
+    path = require('path'),
+    config = require('config');
 
   var canBack = 1;
   // 公告ID
@@ -22,7 +23,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -44,8 +45,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url:"notice/detail", data:params},
       "notice/detail",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#notice/detail",
-      canBack ? 1 : 0);
+      "#notice/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -64,7 +65,7 @@ define(function (require, exports, module) {
   var getNoticeDetail = function () {
 
     // 请求数据
-    noticeService.getNoticeDetail(noticeId, function (data) {
+    var request = noticeService.getNoticeDetail(noticeId, function (data) {
 
       // 隐藏加载标示
       util.hideLoading();
@@ -76,6 +77,8 @@ define(function (require, exports, module) {
         }
       }
     });
+
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -144,8 +147,8 @@ define(function (require, exports, module) {
       });
 
     // 立即参与
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
+    $(document).off(events.click(), "#noticeJoin").
+      on(events.click(), "#noticeJoin", function (e) {
       switch (result.type) {
         case "0": // 普通活动
           switch (result.lotteryId) {
@@ -164,17 +167,23 @@ define(function (require, exports, module) {
           break;
         case "2": // 购彩
           switch (result.lotteryId) {
+            case "4": // 排列3
             case "11": // 双色球
-              util.clearLocalData(util.keyMap.LOCAL_SSQ);
-              page.init("ssq/ball", {}, 1);
-              break;
-            case "13": // 大乐透
-              break;
-            case "31": // 十一运夺金
-              break;
             case "12": // 福彩3D
+            case "13": // 大乐透
+            case "31": // 十一运夺金
+            case "34": // 十一选5
+              var key = config.lotteryIdToStr[result.lotteryId];
+              var lotConfig = config.lotteryMap[key];
+              util.clearLocalData(lotConfig.localKey);
+              page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
+
               break;
-            case "14": // 幸运赛车
+            case "46": // 竞彩足球
+              console.log("[notice detail] : to jcz");
+              break;
+            case "36": // 竞彩篮球
+              console.log("[notice detail] : to jcl");
               break;
           }
           break;

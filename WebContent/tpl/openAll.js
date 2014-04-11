@@ -9,7 +9,7 @@ __p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kj
 
   var lotteryType = d.lotteryType + "", lotteryName = "";
   var numbers = d.lotteryNumbers.split(","),
-  reds = [], blues = [];
+  reds = [], blues = [], desc = "";
   switch (lotteryType) {
     case "11": // 双色球
       lotteryName = "双色球";
@@ -45,6 +45,14 @@ __p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kj
       lotteryName = "十一运夺金";
       reds = numbers;
       break;
+    case "46": // 竞彩足球
+      lotteryName = "竞彩足球";
+      desc = "查看开奖详情";
+      break;
+    case "36": // 竞彩篮球
+      lotteryName = "竞彩足球";
+      desc = "查看开奖详情";
+      break;
   }
   ;
 __p += '\r\n  <tr>\r\n    <td>\r\n      <i class="fl">' +
@@ -65,6 +73,12 @@ __p += '\r\n      <span class="blue">' +
 ((__t = (b )) == null ? '' : __t) +
 '</span>\r\n      ';
  });;
+__p += '\r\n      ';
+ if (desc != "") { ;
+__p += '\r\n        <i class="cdd1049">' +
+((__t = (desc )) == null ? '' : __t) +
+'</i>\r\n      ';
+ } ;
 __p += '\r\n    </td>\r\n  </tr>\r\n</table>\r\n';
  });;
 

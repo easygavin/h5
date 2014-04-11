@@ -155,15 +155,13 @@ define(function (require, exports, module) {
     $(".dialog .cxt").html(ctx);
     var $btn = $("#dialog_l");
     $btn.text(button);
-    $btn.off(events.touchStart()).off(events.activate());
-    $btn.on(events.touchStart(),function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    }).on(events.activate(), function (e) {
-        util.hideCover();
-        $(".dialog").hide();
-        callback(e);
-      });
+    $btn.off(events.click()).on(events.click(), function (e) {
+      $(".dialog").hide();
+      callback(e);
+      util.hideCover();
+      return false;
+    });
+
     util.showCover();
     $(".dialog").show();
   };
@@ -189,26 +187,19 @@ define(function (require, exports, module) {
     $l_btn.text(l_btn);
     $r_btn.text(r_btn);
 
-    $l_btn.off(events.touchStart()).off(events.activate());
-    $r_btn.off(events.touchStart()).off(events.activate());
+    $l_btn.off(events.click()).on(events.click(), function (e) {
+      $(".prompt").hide();
+      l_callback(e);
+      util.hideCover();
+      return false;
+    });
 
-    $l_btn.on(events.touchStart(),function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    }).on(events.activate(), function (e) {
-        util.hideCover();
-        $(".prompt").hide();
-        l_callback(e);
-      });
-
-    $r_btn.on(events.touchStart(),function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    }).on(events.activate(), function (e) {
-        util.hideCover();
-        $(".prompt").hide();
-        r_callback(e);
-      });
+    $r_btn.off(events.click()).on(events.click(), function (e) {
+      $(".prompt").hide();
+      r_callback(e);
+      util.hideCover();
+      return false;
+    });
 
     util.showCover();
     $(".prompt").show();

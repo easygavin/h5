@@ -1,6 +1,8 @@
 package com.h5.user.charge.servlet.czk;
 
 import com.h5.user.charge.impl.czk.CzkChargeServiceImpl;
+import com.h5.user.charge.utils.Common;
+import com.h5.user.charge.utils.Util;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -28,6 +30,10 @@ public class CzkChargeServlet extends HttpServlet {
         if (null != requestParameter && !"".equals(requestParameter)) {
             CzkChargeServiceImpl czkWapImpl = new CzkChargeServiceImpl();
             JSONObject jsonObject = JSONObject.fromObject(requestParameter);
+            //sign=md5(amount+userId+cardNo+cardPwd＋key)
+            String args[] = {"amount", "userId","cardNo","cardPwd"};
+            String key = Common.getCommonKey();
+            jsonObject = Util.getSign(jsonObject, args, key);
             JSONObject object = czkWapImpl.czkCharge(jsonObject);
             resp.getWriter().write(object.toString());
         } else {

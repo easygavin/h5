@@ -12,7 +12,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     from = "";
@@ -30,8 +30,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "register", data: params},
       "register",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#register",
-      canBack ? 1 : 0);
+      "#register" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-    $("#container").empty().html(template);
+    $("#container").html(template);
   };
 
   /**
@@ -50,12 +50,13 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
+    $(document).off(events.touchStart(), ".back, .pr0, .checked").
+      on(events.touchStart(), ".back, .pr0, .checked", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
 
+    // 返回
     $(document).off(events.activate(), ".back").
       on(events.activate(), ".back", function (e) {
         if (canBack) {
@@ -67,15 +68,9 @@ define(function (require, exports, module) {
       });
 
     // 登录
-    $(document).off(events.touchStart(), ".pr0").
-      on(events.touchStart(), ".pr0", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".pr0").
       on(events.activate(), ".pr0", function (e) {
-        if (canBack) {
+        if (canBack && from == "login") {
           page.goBack();
         } else {
           page.init("login", {}, 1);
@@ -84,12 +79,6 @@ define(function (require, exports, module) {
       });
 
     // 购彩协议
-    $(document).off(events.touchStart(), ".checked").
-      on(events.touchStart(), ".checked", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".checked").
       on(events.activate(), ".checked", function (e) {
         page.init("protocol", {}, 1);

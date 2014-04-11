@@ -32,7 +32,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -61,8 +61,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: lotConfig.paths["ball"].js, data: params},
       lotConfig.paths["ball"].js,
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#" + lotConfig.paths["ball"].js,
-      canBack ? 1 : 0);
+      "#" + lotConfig.paths["ball"].js + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -285,7 +285,7 @@ define(function (require, exports, module) {
   var getOpenNumbers = function () {
     $(".f16").text("获取开奖号码中...");
     // 请求数据
-    digitService.getHistoryAwardsByTypes(lotConfig.lotteryId, issueCount, function (data) {
+    var request = digitService.getHistoryAwardsByTypes(lotConfig.lotteryId, issueCount, function (data) {
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
@@ -296,6 +296,8 @@ define(function (require, exports, module) {
         }
       }
     });
+
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -339,13 +341,14 @@ define(function (require, exports, module) {
         });
     }
 
-    // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
+    // 返回, 模式, 右菜单, 机选一注
+    $(document).off(events.touchStart(), ".back, .caList, .pr0, .gmButton").
+      on(events.touchStart(), ".back, .caList, .pr0, .gmButton", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
 
+    // 返回
     $(document).off(events.activate(), ".back").
       on(events.activate(), ".back", function (e) {
         page.init("home", {}, 0);
@@ -353,19 +356,14 @@ define(function (require, exports, module) {
       });
 
     // 下拉箭头
-    $(document).off(events.touchStart(), ".openArrow").
-      on(events.touchStart(), ".openArrow", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".openArrow").
-      on(events.activate(), ".openArrow", function (e) {
-        if ($(this).hasClass("down")) {
-          $(this).removeClass("down").addClass("up").html("&#xf060;");
+    $(document).off(events.tap(), ".openArrow, #lastNo").
+      on(events.tap(), ".openArrow, #lastNo", function (e) {
+        var $openArrow = $(".openArrow");
+        if ($openArrow.hasClass("down")) {
+          $openArrow.removeClass("down").addClass("up").html("&#xf060;");
           toOpenNumbers(1);
         } else {
-          $(this).removeClass("up").addClass("down").html("&#xf003;");
+          $openArrow.removeClass("up").addClass("down").html("&#xf003;");
           toOpenNumbers(0);
         }
         return true;
@@ -380,12 +378,6 @@ define(function (require, exports, module) {
       });
 
     // 模式
-    $(document).off(events.touchStart(), ".caList").
-      on(events.touchStart(), ".caList", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".caList").
       on(events.activate(), ".caList", function (e) {
         if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
@@ -398,12 +390,6 @@ define(function (require, exports, module) {
       });
 
     // 右菜单
-    $(document).off(events.touchStart(), ".pr0").
-      on(events.touchStart(), ".pr0", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".pr0").
       on(events.activate(), ".pr0", function (e) {
         $(".popup").show();
@@ -478,12 +464,6 @@ define(function (require, exports, module) {
       });
 
     // 机选一注
-    $(document).off(events.touchStart(), ".gmButton").
-      on(events.touchStart(), ".gmButton", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".gmButton").
       on(events.activate(), ".gmButton", function (e) {
         showRdmNo();
@@ -591,21 +571,20 @@ define(function (require, exports, module) {
         return true;
       });
 
-    // footer
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
-        var $a = $(e.target).closest("a");
-        if ($a.length) {
-          if ($a.hasClass("fr")) {
-            // 确定
-            toList();
-          } else if ($a.hasClass("fl")) {
-            // 清除
-            clear();
-            // 统计注数
-            unitBets();
-          }
-        }
+    // 确定
+    $(document).off(events.click(), ".btn2").
+      on(events.click(), ".btn2", function (e) {
+        toList();
+        return true;
+      });
+
+    // 清除
+    $(document).off(events.click(), ".btn1").
+      on(events.click(), ".btn1", function (e) {
+        // 清除
+        clear();
+        // 统计注数
+        unitBets();
         return true;
       });
   };

@@ -2,15 +2,16 @@
  * 竞彩篮球列表
  */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/jcl/list.html'),
+  var view = require('/views/athletics/buy.html'),
     page = require('page'),
     util = require('util'),
-    pageEvent = require('events'),
+    events = require('events'),
     service = require('services/jcl');
 
   // 彩种
   var lotteryType = "36";
-
+  var title = "竞篮";
+  var mode = '0';
   // 显示投注列表
   var bufferData = null;
 
@@ -75,7 +76,7 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "jcl/list", data: {}},
       "jcl/list",
-        "#jcl/list" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/list",
       forward ? 1 : 0);
 
     // 隐藏加载标示
@@ -94,25 +95,62 @@ define(function (require, exports, module) {
 
     // 显示投注列表
     bufferData = util.getLocalJson(util.keyMap.LOCAL_JCL);
+    showTitle();
     // 显示投注列表
     showItems();
 
     // 获取过关方式
-    //getCrossWayArr();
+    getCrossWayArr();
 
     // 初始化显示文本
-    //initShowTxt();
+    initShowTxt();
 
     // 获取总注数
-    //getTotalBet();
+    getTotalBet();
 
     // 获取最小最大奖金
-    //getMinMaxPrize();
+    getMinMaxPrize();
 
     // 显示付款信息
-    //showPayInfo();
+    showPayInfo();
   };
-
+  /**
+   * 显示标题
+   */
+  var showTitle = function () {
+    types = [];
+    var count = 0;
+    titleFlag = "";
+    if (bufferData != null && typeof bufferData != "undefined"
+      && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined"
+      && bufferData.matchBetList.length) {
+      for(var t in bufferData.titleMap) {
+        count++;
+        titleFlag = t;
+        types.push(t);
+      }
+      if (count == 1) {
+        switch (titleFlag) {
+          case "sf":
+            title += "胜负";
+            break;
+          case "rfsf":
+            title += "让分胜负";
+            break;
+          case "dxf":
+            title += "大小分";
+            break;
+          case "sfc":
+            title += "胜分差";
+            break;
+        }
+      } else {
+        title += "混合投注";
+        titleFlag = "mix";
+      }
+    }
+    $("#title").text(title);
+  };
   /**
    * 显示投注列表
    */
@@ -137,8 +175,7 @@ define(function (require, exports, module) {
   var addItem = function (index, item) {
     var matchId = item.matchId;
     var match = item.match;
-    var $tr = $("<tr align='left'></tr>");
-    $tr.attr("id", "m_" + matchId);
+    var $tr = $('<tr id="m_' + matchId + '" align="left"></tr>');
     var str = "";
     var teams = match.playAgainst.split("|");
     str += "<td>" + match.number + "&nbsp;&nbsp;" +
@@ -158,11 +195,10 @@ define(function (require, exports, module) {
         var sp = handleSPValue(sfIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(1);
-        var mode = spModeMap[sfIds[i]];
-        str += "<i id='sf_" + mode.flag + "|" + sp + "'>" + mode.title + "</i>&nbsp;&nbsp;";
+        mode = spModeMap[sfIds[i]];
+        str += "<span id='sf_" + mode.flag + "|" + sp + "'>" + mode.title + "</span>&nbsp;&nbsp;";
       }
     }
-
     if (rfsfIds.length) {
       spCount += rfsfIds.length;
       for(var i = 0, len = rfsfIds.length; i < len; i++) {
@@ -171,8 +207,8 @@ define(function (require, exports, module) {
         itemSPArr.push(sp);
         agcgArr.push(2);
 
-        var mode = spModeMap[rfsfIds[i]];
-        str += "<i id='rfsf_" + mode.flag + "|" + sp + "'>" + mode.title + "</i>&nbsp;&nbsp;";
+        mode = spModeMap[rfsfIds[i]];
+        str += "<span id='rfsf_" + mode.flag + "|" + sp + "'>" + mode.title + "</span>&nbsp;&nbsp;";
       }
     }
 
@@ -184,7 +220,7 @@ define(function (require, exports, module) {
         itemSPArr.push(sp);
         agcgArr.push(3);
 
-        var mode = spModeMap[dxfIds[i]];
+        mode = spModeMap[dxfIds[i]];
         str += "<i id='dxf_" + mode.flag + "|" + sp + "'>" + mode.title + "</i>&nbsp;&nbsp;";
       }
     }
@@ -192,12 +228,10 @@ define(function (require, exports, module) {
     if (sfcIds.length) {
       spCount += sfcIds.length;
       for(var i = 0, len = sfcIds.length; i < len; i++) {
-
         var sp = handleSPValue(sfcIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(4);
-
-        var mode = spModeMap[sfcIds[i]];
+        mode = spModeMap[sfcIds[i]];
         str += "<i id='sfc_" + mode.flag + "|" + sp + "'>" + mode.title + "</i>&nbsp;&nbsp;";
       }
     }
@@ -211,7 +245,10 @@ define(function (require, exports, module) {
     // 保存SP数组
     spArr[matchId] = itemSPArr;
     str += "</p></td>";
-
+    // 竞彩篮球混投无胆
+    str += "<td>";
+    str += (titleFlag != "mix" ? "<a class='dan'>胆</a>" : "&nbsp;");
+    str += "</td>";
     $tr.html(str);
     $(".zckjTab tbody").append($tr);
   };
@@ -253,7 +290,7 @@ define(function (require, exports, module) {
    * 获取过关方式
    */
   var getCrossWayArr = function () {
-    normalWays = [], manyWays = [];
+    normalWays = [] , manyWays = [];
     if (bufferData != null && typeof bufferData != "undefined"
       && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined"
       && bufferData.matchBetList.length) {
@@ -261,24 +298,21 @@ define(function (require, exports, module) {
       var danCount = $(".zckjTab .click").length;
       // 场数
       var matchLen = bufferData.matchBetList.length;
-
       // 普通过关
       normalWays = service.getNormalWays(matchLen, danCount, types);
       if (normalWays.length > 0) {
         for(var i = 0, len = normalWays.length; i < len; i++) {
-          $("#way_0").append("<li id='" + normalWays[i] + "'>" + normalWays[i].replace('-', '串') + "</li>");
+          $("#way_0").append("<a id='" + normalWays[i] + "'>" + normalWays[i].replace('-', '串') + "</a>");
         }
       }
-
       if (titleFlag != "mix") {
         // 多串过关
         manyWays = service.getManyWay(matchLen, types);
         if (manyWays.length > 0) {
           for(var i = 0, len = manyWays.length; i < len; i++) {
-            $("#way_1").append("<li id='" + manyWays[i] + "'>" + manyWays[i].replace('-', '串') + "</li>");
+            $("#way_1").append("<a id='" + manyWays[i] + "'>" + manyWays[i].replace('-', '串') + "</a>");
           }
-
-          $("#tab_1").show();
+          $('#tab_1').show();
         }
       }
     }
@@ -292,27 +326,24 @@ define(function (require, exports, module) {
     var initWay = normalWays[normalWays.length - 1];
     $("#" + initWay).addClass("click");
     $("#way_0").show();
-
     showCrossTxt();
   };
-
   /**
    * 显示过关方式文本
    */
   var showCrossTxt = function () {
-    var txt = "", clicks = $(".ggbox .tabcon .click");
+    var txt = "", clicks = $(".ggbox .tabcontent .click");
     if (clicks.length) {
       clicks.each(function (i, item) {
         if (i != 0) {
           txt += ",";
         }
-
-        txt += $(item).text();
+        txt += $(item).text().replace(/串/g, '-');
       });
     } else {
       txt = "过关方式";
     }
-    $("#crossTxt").text(txt);
+    $(".ggbox").data('passType', txt);
   };
 
   /**
@@ -320,36 +351,32 @@ define(function (require, exports, module) {
    */
   var getTotalBet = function () {
     totals = 0;
-    var ways = $("#crossTxt").text().replace(/串/g, '-').split(",");
-    console.log(ways.toString());
-
-    if (ways != "过关方式") {
-      // 胆数据
-      var danNOs = {};
-      var danBtn = $(".zckjTab .click");
-      if (danBtn.length) {
-        danBtn.each(function (i, item) {
-          var matchId = $(item).closest("tr").attr("id").split("_")[1];
-          danNOs[matchId] = matchId;
-        });
-      }
-      totals = service.getBetByCrossWay(ways, optArr, danNOs);
+    var type = $(".ggbox").data('passType').split(",");
+    // 胆数据
+    var danNOs = {};
+    var danBtn = $(".zckjTab .click");
+    if (danBtn.length) {
+      danBtn.each(function (i, item) {
+        var matchId = $(item).closest("tr").attr("id").split("_")[1];
+        danNOs[matchId] = matchId;
+      });
     }
+    totals = service.getBetByCrossWay(type, optArr, danNOs);
   };
 
   /**
    * 获取最小最大奖金
    */
   var getMinMaxPrize = function () {
-    var ways = $("#crossTxt").text().replace(/串/g, '-').split(",");
-    console.log(ways.toString());
+    var type = $(".ggbox").data('passType').split(",");
+    console.log(type.toString());
 
     prizes = {
       min: "0.00",
       max: "0.00"
     };
 
-    if (ways != "过关方式") {
+    if (type != "过关方式") {
       // 胆数据
       var danNOs = {};
       var danBtn = $(".zckjTab .click");
@@ -359,17 +386,13 @@ define(function (require, exports, module) {
           danNOs[matchId] = matchId;
         });
       }
-
       if (titleFlag == "mix") {
-        prizes = service.getMixMinMaxPrize(ways, optArr, spArr, agcg, timesUnit);
+        prizes = service.getMixMinMaxPrize(type, optArr, spArr, agcg, timesUnit);
       } else {
-        prizes = service.getMinMaxPrize(ways, optArr, danNOs, spArr, timesUnit);
+        prizes = service.getMinMaxPrize(type, optArr, danNOs, spArr, timesUnit);
       }
-      console.log("min: " + prizes.min + ", max: " + prizes.max);
-
     }
-
-    $("#guessBonus").html("奖金:" + prizes.min + "~" + (prizes.max > 10000 ? "<br>" : "") + prizes.max + "元");
+    $("#guessBonus").html("奖金:" + prizes.min + "~" + (prizes.max > 10000 ? "<br>" : "") + prizes.max);
   };
 
   /**
@@ -377,21 +400,15 @@ define(function (require, exports, module) {
    * @param flag
    */
   var showDan = function (flag) {
-    if (flag) {
-      $(".zckjTab .danBtn").show();
-    } else {
-      $(".zckjTab .danBtn").removeClass("click").hide();
-    }
+    $(".zckjTab .dan").toggle(flag);
   };
 
   /**
    * 付款信息
    */
   var showPayInfo = function () {
-
     // 倍数
     $("#times").text(timesUnit);
-
     // 注数
     $("#totals").text(totals);
 
@@ -400,21 +417,6 @@ define(function (require, exports, module) {
     $("#pays").text(pays);
   };
 
-  var showCrossBox = function () {
-
-    var $tab0 = $("#tab_0");
-    if ($tab0.hasClass("click")) {
-      // 普通投注，需要过滤小于胆数的过关方式
-      // 胆数
-      var danCount = $(".zckjTab .click").length;
-      for(var i = 2; i < danCount + 1; i++) {
-        $("#way_0 li[id^='" + i + "-']").hide();
-      }
-    }
-
-    $(".ggbox").show();
-    showLCover();
-  };
 
   var hideCrossBox = function () {
     $(".ggbox").hide();
@@ -425,70 +427,58 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(".back").on(pageEvent.touchStart, function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
+    // 点击效果
+    $(document).off(events.touchStart(), ".back, .btn2").on(events.touchStart(), ".back, .menu", function (e) {
+      events.handleTapEvent(this, this, events.click(), e);
       return true;
     });
-
-    $(".back").on(pageEvent.activate, function (e) {
+    // 返回
+    $(document).off(events.click(), ".back").on(events.click(), ".back", function () {
       page.goBack();
       return true;
     });
-
-    // 协议
-    $("#protocolA").on(pageEvent.touchStart, function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
+    // 购彩协议
+    $(document).off(events.click(), ".checked").on(events.click(), ".checked", function () {
+      events.handleTapEvent(this, this, events.click(), e);
       return true;
     });
-
-    $("#protocolA").on(pageEvent.activate, function (e) {
+    $(document).off(events.click(), ".checked").on(events.click(), ".checked", function () {
       page.init("protocol", {}, 1);
       return true;
     });
-
     // 胆
-    $(".zckjTab").on(pageEvent.tap, function (e) {
-      var $target = $(e.target);
-      var $danBtn = $target.closest(".danBtn");
-      if ($danBtn.length) {
-        if ($danBtn.hasClass("click")) {
-          $danBtn.removeClass("click");
-          // 获取总注数
-          getTotalBet();
-          // 获取最小最大奖金
-          getMinMaxPrize();
-          // 显示付款信息
-          showPayInfo();
-        } else {
-          // 最大胆数
-          var danCount = $(".zckjTab .click").length;
-          var ways = $("#crossTxt").text().split(",");
-          var prev = ways[0].split("串")[0];
+    $(document).off(events.click(), ".dan").on(events.click(), ".dan", function (e) {
+      var $dan = $(e.currentTarget);
+      // 最大胆数
+      var danCount = $(".dan.click").length;
+      var ways = $('.ggbox').data('passType').split(",");
+      var prev = ways[0].split("-")[0];
 
-          if ((danCount + 1) == parseInt(prev, 10)) {
-            util.toast("当前最多只能设" + danCount + "个胆");
-          } else {
-            $danBtn.addClass("click");
-            // 获取总注数
-            getTotalBet();
-            // 获取最小最大奖金
-            getMinMaxPrize();
-            // 显示付款信息
-            showPayInfo();
+      if (danCount == prev - 1 && !$dan.hasClass('click')) {
+        page.toast("当前最多只能设" + danCount + "个胆");
+      } else {
+        $dan.toggleClass("click");
+        if ($('#tab_0').hasClass("click")) {
+          // 普通投注，需要过滤小于胆数的过关方式
+          $("#way_0 a").show();
+          var danCount = $(".dan.click").length;
+          for(var i = 2; i < danCount + 1; i++) {
+            $("#way_0 a[id^='" + i + "-']").hide();
           }
         }
+        // 获取总注数
+        getTotalBet();
+        // 获取最小最大奖金
+        getMinMaxPrize();
+        // 显示付款信息
+        showPayInfo();
       }
-      return true;
     });
-
     // 倍数
-    $("#timesUnit").on("keyup", function (e) {
-      this.value = this.value.replace(/\D/g, '');
+    $(document).off("change keyup", "#timesUnit").on("change keyup", "#timesUnit", function () {
+      $(this).value = this.value.replace(/\D/g, '');
       var $timesUnit = $(this);
       timesUnit = $timesUnit.val();
-
       if ($.trim(timesUnit) == "") {
         timesUnit = 0;
       } else {
@@ -496,99 +486,71 @@ define(function (require, exports, module) {
           timesUnit = 1;
           $timesUnit.val(1);
         } else if (timesUnit > 999) {
-          util.toast("亲，最多只能投999倍哦");
+          page.toast("亲，最多只能投999倍哦");
           timesUnit = 999;
           $timesUnit.val(999);
         }
       }
-
       // 获取最小最大奖金
       getMinMaxPrize();
       // 显示付款信息
       showPayInfo();
       return true;
-    }).on("blur", function (e) {
-      this.value = this.value.replace(/\D/g, '');
-    });
-
-    // 过关
-    $("#crossWay").on(pageEvent.click, function (e) {
-      if ($(".ggbox").is(":visible")) {
-        hideCrossBox();
-      } else {
-        showCrossBox();
-      }
-      return true;
     });
 
     // 关闭显示层
-    $(".lCover").on(pageEvent.click, function (e) {
+    $(".lCover").on(events.click(), function (e) {
       hideCrossBox();
       return true;
     });
 
     // tab 切换
-    $(".tabopition").on(pageEvent.click, function (e) {
-      var $target = $(e.target);
-      var $li = $target.closest("li");
-      if ($li.length) {
-        if (!$li.hasClass("click")) {
-          var tabId = $li.attr("id").split("_")[1];
+    $(document).off(events.click(), ".tabopition span:not(.click)")
+      .on(events.click(), ".tabopition span:not(.click)", function (e) {
+        var $span = $(e.currentTarget);
+        var tabId = $span.attr("id").split("_")[1];
+        $(".tabopition li").removeClass("click");
+        $("#tab_" + tabId).addClass("click");
+        $span.addClass('click').siblings().removeClass('click');
 
-          $(".tabopition li").removeClass("click");
-          $("#tab_" + tabId).addClass("click");
-
-          $(".tabcon").hide();
-          $("#way_" + tabId).show();
-
-          if (tabId == "0") {
-            // 普通过关
-            showDan(1);
-
-            // 显示所有的过关方式
-            $("#way_0 li").show();
-
-            // 清除多串过关焦点
-            $("#way_1 li").removeClass("click");
-          } else if (tabId == "1") {
-            // 多串过关
-            showDan(0);
-
-            // 清除普通过关焦点
-            $("#way_0 li").removeClass("click");
-          }
-
-          showCrossTxt();
-
-          // 获取总注数
-          getTotalBet();
-          // 获取最小最大奖金
-          getMinMaxPrize();
-          // 显示付款信息
-          showPayInfo();
+        if (tabId == "0") {
+          // 普通过关
+          showDan(1);
+          $("#way_0").show().next('div').hide();
+          // 清除多串过关焦点
+          $("#way_1 a").removeClass("click");
+        } else {
+          // 多串过关
+          showDan(0);
+          $("#way_1").show().prev('div').hide();
+          // 清除普通过关焦点
+          $("#way_0 a").removeClass("click");
         }
-      }
-    });
+        showCrossTxt();
+        // 获取总注数
+        getTotalBet();
+        // 获取最小最大奖金
+        getMinMaxPrize();
+        // 显示付款信息
+        showPayInfo();
+      });
 
     // 普通过关点击
-    $("#way_0").on(pageEvent.tap, function (e) {
-      var $li = $(e.target).closest("li");
-      if ($li.length) {
-        if ($li.hasClass("click")) {
-          $li.removeClass("click");
+    $("#way_0").on(events.tap(), function (e) {
+      var $passType = $(e.target).closest("a");
+      if ($passType.length) {
+        if ($passType.hasClass("click")) {
+          $passType.removeClass("click");
         } else {
-
           // 最多只能选5种过关方式
           var wayLen = $("#way_0 .click").length;
           if (wayLen == 5) {
             util.toast("组合过关的方式最多选5种");
           } else {
-            $li.addClass("click");
+            $passType.addClass("click");
           }
         }
-
         showCrossTxt();
-
         // 获取总注数
         getTotalBet();
         // 获取最小最大奖金
@@ -598,20 +560,17 @@ define(function (require, exports, module) {
       }
       return true;
     });
-
     // 多串过关点击
-    $("#way_1").on(pageEvent.tap, function (e) {
-      var $li = $(e.target).closest("li");
-      if ($li.length) {
-        if ($li.hasClass("click")) {
-          $li.removeClass("click");
+    $("#way_1").on(events.tap(), function (e) {
+      var $passType = $(e.target).closest("a");
+      if ($passType.length) {
+        if ($passType.hasClass("click")) {
+          $passType.removeClass("click");
         } else {
-          $li.addClass("click");
+          $passType.addClass("click");
         }
-        $li.siblings().removeClass("click");
-
+        $passType.siblings().removeClass("click");
         showCrossTxt();
-
         // 获取总注数
         getTotalBet();
         // 获取最小最大奖金
@@ -619,18 +578,21 @@ define(function (require, exports, module) {
         // 显示付款信息
         showPayInfo();
       }
-
       return true;
     });
-
+    //合买
+    $(document).off(events.click(), ".btn1").on(events.click(), ".btn1", function (e) {
+      // 检查值
+      if (bufferData != null && typeof bufferData != "undefined"
+        && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined"
+        && bufferData.matchBetList.length && checkVal()) {
+        // 合买
+        goHm();
+      }
+      return true;
+    });
     // 付款
-    $(".gmBtn").on(pageEvent.touchStart, function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-      return true;
-    });
-
-    $(".gmBtn").on(pageEvent.activate, function (e) {
-
+    $(document).off(events.click(), ".btn2").on(events.click(), ".btn2", function (e) {
       // 检查值
       if (bufferData != null && typeof bufferData != "undefined"
         && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined"
@@ -647,11 +609,13 @@ define(function (require, exports, module) {
    * 检查有效值
    */
   var checkVal = function () {
-
+    if (!$("#protocol").attr("checked")) {
+      page.toast("请勾选同意合买代购协议!");
+      return false;
+    }
     // 倍数
     var $timesUnit = $("#timesUnit");
     timesUnit = $timesUnit.val();
-
     if ($.trim(timesUnit) == "" || isNaN(timesUnit) || timesUnit < 1) {
       timesUnit = 0;
       util.toast("请至少选择 1 注");
@@ -662,11 +626,9 @@ define(function (require, exports, module) {
       showPayInfo();
       return false;
     }
-
-    var ways = $("#crossTxt").text();
-
+    var ways = $('.ggbox').data('passType');
     if (ways == "过关方式") {
-      util.toast("请至少选择 1 注");
+      page.toast("请至少选择 1 注");
       return false;
     }
     return true;
@@ -679,8 +641,7 @@ define(function (require, exports, module) {
     var detailArr = [],
       matchArr = [],
       buySPArr = [],
-      danArr = [],
-      passway = "";
+      danArr = [];
     $(".zckjTab tr").each(function (i, item) {
       var $item = $(item);
       var mid = $item.attr("id").split("_");
@@ -691,7 +652,7 @@ define(function (require, exports, module) {
         var sf = [], rfsf = [], sfc = [], dxf = [];
         // SP 值
         var sfV = [], rfsfV = [], sfcV = [], dxfV = [];
-        $item.find(".red").each(function (j, p) {
+        $item.find("span").each(function (j, p) {
           var spFlagV = $(p).attr("id").split("_");
           if (spFlagV.length > 1) {
             var flagV = spFlagV[1].split("|");
@@ -752,8 +713,7 @@ define(function (require, exports, module) {
       }
     });
     // 投注方式
-    passway = $("#crossTxt").text().replace(/串/g, '-');
-
+    var passway = $('.ggbox').data('passType');
     return {
       detail: detailArr.join("\/"),
       matchIds: matchArr.join(","),
@@ -763,7 +723,33 @@ define(function (require, exports, module) {
       passway: passway
     };
   };
+  /**
+   * 进入合买页面
+   */
+  var goHm = function () {
+    var params = getBuyParams();
+    params.title = title;
+    params.mode = mode;
+    params.eachMoney = 1;
+    params.issueNo = bufferData.issueNo; // 期号
+    params.lotteryId = lotteryMap[titleFlag].lotteryId; //彩种
+    // 1 竞彩，2 单场
+    params.passType = "1";
+    // 默认2，奖金优化10，上下盘12
+    params.playType = "2";
+    // 理论最大奖金
+    params.prevMoney = prizes.max;
+    // 客户端默认1
+    params.betType = "1";
 
+    params.totalBet = totals.toString(); // 总注数
+    params.totalBei = timesUnit; // 总倍数
+    params.projectCount = +totals * +timesUnit * +price;//方案总金额
+    params.totalAmount = params.projectCount;
+    console.log('-----', params.totalBei);
+    util.setLocalJson(util.keyMap.LOCAL_TO_HM, params);
+    page.init("jcl/hm", {}, 1);
+  };
   /**
    * 购买付款
    */
@@ -799,29 +785,27 @@ define(function (require, exports, module) {
 
     params.totalBet = totals + ""; // 总注数
     params.totalBei = timesUnit + ""; // 总倍数
-
+    params.totalAmount = totals * timesUnit * price;//方案总金额
     // 显示遮住层
     util.showCover();
     util.showLoading();
 
     // 请求接口
     service.toBuy("1", params, price, function (data) {
-
       // 隐藏遮住层
       util.hideCover();
       util.hideLoading();
-
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
-          if (data.statusCode == "0") {
+          if (data.statusCode == 0) {
             result = data;
-            util.prompt(
+            page.answer(
                 $("#title").text() + " 投注成功",
                 "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元",
               "查看方案",
               "确定",
               function (e) {
-                page.init("jcl/details", {lotteryType: lotteryType, requestType: "0", projectId: result.projectId}, 0);
+                page.init("jcl/result", {lotteryType: lotteryType, requestType: "0", projectId: result.projectId}, 0);
               },
               function (e) {
                 page.goBack();

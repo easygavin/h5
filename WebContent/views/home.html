@@ -14,7 +14,7 @@
   <!--广告-->
   <div class="bunner">
     <div id="slides" class="ctx">
-      <img src="images/bunner.jpg" width="100%" class="notice"/>
+
     </div>
     <div class="grayBg">
       <a class="title">彩票直通车</a>
@@ -42,6 +42,9 @@
     <li id="short_custom" class="hidden"><a class="fr fm right">&#xf036;</a>我的定制</li>
     <li id="short_award">
       <a class="fr fm right">&#xf036;</a>开奖信息
+    </li>
+    <li id="short_hmHal">
+      <a class="fr fm right">&#xf036;</a>合买大厅
     </li>
     <li id="short_digit" class="listNav">
       <p><a class="fr fm up">&#xf005;</a>数字彩</p>
@@ -76,7 +79,7 @@
   <% if (hasLogin) { %>
   <a id="p_center">我的彩票</a>
   <% } else {%>
-  <a id="login">登录</a><a id="register">注册</a>
+  <a id="login" class="select">登录</a><a id="register" class="select">注册</a>
   <% } %>
 </script>
 
@@ -112,11 +115,9 @@
             <a class="gmButton fr"><b class="fm">&#xe000;</b>购买</a>
             <i class="smbg"><i></i>HOT</i>
           </p>
-
           <p class="cf60"><%=l.desc%></p>
           <% if (l.hasDetail) { %>
           <p>截止时间：<span class="endTime"></span></p>
-
           <p><i class="fm fr xq">&#xf065;</i>当期奖池：<i class="cf60"><span class="pool">0</span>元</i></p>
           <% } %>
         </dd>
@@ -139,45 +140,38 @@
 
 <!--资讯列表-->
 <script type="text/template" id="noticeTpl">
-  <table cellpadding="0" cellspacing="0" width="100%" class="line30 tl">
-    <colgroup>
-      <col width="80%">
-      <col width="20%">
-    </colgroup>
-    <tbody>
+  <ul class="zx_list tl">
     <% _.each(notices, function (n) { %>
-    <tr id="n_<%=n.noticeId %>">
-      <td class="">&nbsp;&nbsp;&nbsp;&nbsp;<%=n.title %></td>
-      <td><a class="fr fm right">&#xf036;</a></td>
-    </tr>
+    <li id="n_<%=n.noticeId %>">
+      <i class="fm">&#xf059;</i><b><%=n.type %></b><a><% if (n.lottName != "") { %>【<%=n.lottName %>】<% } %><%=n.title %></a>
+    </li>
     <% });%>
-    </tbody>
-  </table>
+  </ul>
 </script>
 
 <!--资讯列表-->
 <script type="text/template" id="openLotTpl">
-    <table cellpadding="0" cellspacing="0" width="100%">
-      <tbody>
-      <tr>
-        <td>
-          <a class="chose click"><%=issueNo %> 期开奖</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="kjBall">
-          <% _.each(reds, function (r) { %>
-          <span class="red"><%=r %></span>
-          <% });%>
-          <% _.each(blues, function (b) { %>
-          <span class="blue"><%=b %></span>
-          <% });%>
-        </td>
-      </tr>
-      <tr class="min">
-        <td>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+  <table cellpadding="0" cellspacing="0" width="100%">
+    <tbody>
+    <tr>
+      <td>
+        <a class="chose click"><%=issueNo %> 期开奖</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="kjBall">
+        <% _.each(reds, function (r) { %>
+        <span class="red"><%=r %></span>
+        <% });%>
+        <% _.each(blues, function (b) { %>
+        <span class="blue"><%=b %></span>
+        <% });%>
+      </td>
+    </tr>
+    <tr class="min">
+      <td>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </script>

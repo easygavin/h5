@@ -1,6 +1,8 @@
 package com.h5.user.charge.servlet.cft;
 
 import com.h5.user.charge.impl.cft.CftChargeServiceImpl;
+import com.h5.user.charge.utils.Common;
+import com.h5.user.charge.utils.Util;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -29,6 +31,10 @@ public class CftWapServlet extends HttpServlet {
         if (null != requestParameter && !"".equals(requestParameter)) {
             CftChargeServiceImpl cftWapImpl = new CftChargeServiceImpl();
             JSONObject jsonObject = JSONObject.fromObject(requestParameter);
+            //sign=md5(amount + userId + key)
+            String args[] = {"amount", "userId"};
+            String key = Common.getCommonKey();
+            jsonObject = Util.getSign(jsonObject, args, key);
             JSONObject object = cftWapImpl.cftWapCharge(jsonObject);
             resp.getWriter().write(object.toString());
         } else {

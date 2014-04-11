@@ -26,7 +26,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
     step = -1;
 
     // 参数设置
@@ -68,8 +68,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url:"number/detail", data:params},
       "number/detail",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#number/detail",
-      canBack ? 1 : 0);
+      "#number/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -86,7 +86,7 @@ define(function (require, exports, module) {
    * 获取方案详情
    */
   var getDetails = function () {
-    digitService.getProjectDetails(lotteryType, requestType, projectId, function (data) {
+    var request = digitService.getProjectDetails(lotteryType, requestType, projectId, function (data) {
       // 隐藏加载标示
       util.hideLoading();
       if (typeof data != "undefined") {
@@ -99,6 +99,8 @@ define(function (require, exports, module) {
         }
       }
     });
+
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -106,7 +108,7 @@ define(function (require, exports, module) {
    */
   var getAllIssue = function () {
     util.showLoading();
-    digitService.getProjectAllIssue(lotteryType, projectId, function (data) {
+    var request = digitService.getProjectAllIssue(lotteryType, projectId, function (data) {
       util.hideLoading();
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
@@ -119,6 +121,8 @@ define(function (require, exports, module) {
         }
       }
     });
+
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -239,8 +243,8 @@ define(function (require, exports, module) {
       });
 
     // 复活追号
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
+    $(document).off(events.click(), "#appendPrj").
+      on(events.click(), "#appendPrj", function (e) {
         if ($.trim(projectId) == "") {
           page.toast("方案无效");
           return false;
@@ -254,7 +258,7 @@ define(function (require, exports, module) {
           },
           function (e) {
             // 复活请求
-            digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
+            var request = digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
               if (typeof data != "undefined") {
                 if (typeof data.statusCode != "undefined") {
                   if (data.statusCode == "0") {
@@ -271,6 +275,8 @@ define(function (require, exports, module) {
                 }
               }
             });
+
+            util.addAjaxRequest(request);
           }
         );
         return true;

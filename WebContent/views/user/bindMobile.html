@@ -1,9 +1,9 @@
     <!--头部-->
     <header>
-        <a class="return1"><i class="fm">&#xf035;</i>手机绑定</a>
-        <!-- <a href="#" class="pr0">跳过</a>-->
+        <a class="back"><i class="fm">&#xf035;</i>手机绑定</a>
+        <a id="pass" class="pr0">跳过</a>
     </header>
-    <div class="w45"></div>
+    <div class="45"></div>
     <!--内容-->
     <div id="main" class="f14">
         <table cellpadding="0" cellspacing="0" width="100%" class="sftab">
@@ -22,14 +22,14 @@
             <tr>
                 <td>&nbsp;</td>
                 <td class="tr">手机号码：</td>
-                <td><input type="text" class="inutext mt20" /></td>
-                <td><a class="nzmbtn fr mt20">发送验证码</a></td>
+                <td><input id="mobileNo" type="text" class="inutext mt20" maxlength="11" /></td>
+                <td><a id="sendCaptcha" class="nzmbtn fr mt20">发送验证码</a></td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td class="tr">验证码：</td>
-                <td><input type="text" class="inutext mt10" /></td>
+                <td><input id="captcha" type="text" class="inutext mt10" /></td>
                 <td></td>
                 <td>&nbsp;</td>
             </tr>

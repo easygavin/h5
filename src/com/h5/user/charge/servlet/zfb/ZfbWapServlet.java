@@ -1,6 +1,8 @@
 package com.h5.user.charge.servlet.zfb;
 
 import com.h5.user.charge.impl.zfb.ZfbChargeServiceImpl;
+import com.h5.user.charge.utils.Common;
+import com.h5.user.charge.utils.Util;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -11,7 +13,8 @@ import java.io.IOException;
 
 /**
  * Title 支付宝充值Servlet
- * @author  heming
+ *
+ * @author heming
  */
 public class ZfbWapServlet extends HttpServlet {
     @Override
@@ -29,6 +32,10 @@ public class ZfbWapServlet extends HttpServlet {
         if (null != requestParameter && !"".equals(requestParameter)) {
             ZfbChargeServiceImpl zfbWapImpl = new ZfbChargeServiceImpl();
             JSONObject jsonObject = JSONObject.fromObject(requestParameter);
+            //sign=md5(amount + userId + key);
+            String args[] = {"amount", "userId"};
+            String key = Common.getZfbWapKey();
+            jsonObject = Util.getSign(jsonObject, args, key);
             JSONObject object = zfbWapImpl.zfbWapCharge(jsonObject);
             resp.getWriter().write(object.toString());
         } else {

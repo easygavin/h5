@@ -104,10 +104,10 @@ define(function (require, exports, module) {
    * @returns {*}
    */
 
-  var getCouponInfo = function (userId, beginTime, endTime,callback) {
+  var getCouponInfo = function (userId, beginTime, endTime, callback) {
 
     var data = {
-      "userId":userId,
+      "userId": userId,
       "beginTime": beginTime,
       "endTime": endTime
     };
@@ -129,10 +129,10 @@ define(function (require, exports, module) {
    * @param callback
    * @returns {*}
    */
-  var getUserInfoByToken = function (token,callback) {
+  var getUserInfoByToken = function (token, callback) {
 
     var data = {
-      "token":token
+      "token": token
     };
 
     var request = $.ajax({
@@ -213,7 +213,7 @@ define(function (require, exports, module) {
       "userId": userId
     };
 
-    $.ajax({
+   var request= $.ajax({
       type: "GET",
       url: path.SEND_MSG_TO_PHONE,
       data: {data: JSON.stringify(data)},
@@ -221,6 +221,7 @@ define(function (require, exports, module) {
       success: callback,
       error: callback
     });
+    return request;
   };
 
   /**
@@ -256,7 +257,7 @@ define(function (require, exports, module) {
    */
   var getBankLists = function (callback) {
 
-    $.ajax(
+    var request = $.ajax(
         {
           type: "POST",
           url: path.GET_BANKS,
@@ -265,6 +266,8 @@ define(function (require, exports, module) {
           success: callback,
           error: callback
         });
+
+    return request;
   };
 
   /**
@@ -273,7 +276,7 @@ define(function (require, exports, module) {
    */
   var getBankLocus = function (callback) {
 
-    $.ajax(
+  return $.ajax(
         {
           type: "POST",
           url: path.GET_BANK_LOCUS,
@@ -299,24 +302,25 @@ define(function (require, exports, module) {
    * @param   bankCode    银行代码
    * @param   callback    回调
    */
-  var bindUserBankCard = function (userId, userKey, name, cardNo, bankInfo, bankName, province, city, password, confirmPassword, bankCode, callback) {
+ // var bindUserBankCard = function (userId, userKey, name, cardNo, bankInfo, bankName, province, city, password, confirmPassword, bankCode, callback) {
+  var bindUserBankCard = function (paramValues, callback) {
 
     var data =
     {
-      "userId": userId,
-      "userKey": userKey,
-      "name": encodeURIComponent(name),
-      "cardNo": cardNo,
-      "bankInfo": encodeURIComponent(bankInfo),
-      "bankName": encodeURIComponent(bankName),
-      "province": encodeURIComponent(province),
-      "city": encodeURIComponent(city),
-      "password": password,
-      "confirmPassword": confirmPassword,
-      "bankCode": bankCode
+      "userId":paramValues.userId,
+      "userKey": paramValues.userKey,
+      "name": encodeURIComponent(paramValues.name),
+      "cardNo": paramValues.cardNo,
+      "bankInfo": encodeURIComponent(paramValues.bankInfo),
+      "bankName": encodeURIComponent(paramValues.bankName),
+      "province": encodeURIComponent(paramValues.province),
+      "city": encodeURIComponent(paramValues.city),
+      "password": paramValues.password,
+      "confirmPassword": paramValues.confirmPassword,
+      "bankCode": paramValues.bankCode
     };
 
-    $.ajax(
+   var request = $.ajax(
         {
           type: "GET",
           url: path.BIND_BANK_CARD,
@@ -325,6 +329,7 @@ define(function (require, exports, module) {
           success: callback,
           error: callback
         });
+    return request;
   };
 
   /**
@@ -452,8 +457,8 @@ define(function (require, exports, module) {
     goRegister: goRegister,
     bindIDCard: bindIDCard,
     getUserBalance: getUserBalance,
-    getCouponInfo:getCouponInfo,
-    getUserInfoByToken:getUserInfoByToken,
+    getCouponInfo: getCouponInfo,
+    getUserInfoByToken: getUserInfoByToken,
     inspectUserIDCardState: inspectUserIDCardState,
     editLoginPassword: editLoginPassword,
     logout: logout,

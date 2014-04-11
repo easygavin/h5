@@ -578,6 +578,7 @@ define(function (require, exports, module) {
     },
     jcl: { // 竞彩篮球
       key: "jcl",
+      lotteryId: '',
       name: "竞彩篮球",
       desc: "简单易玩，2串1易中奖",
       logo: "images/jcl.png",
@@ -598,7 +599,65 @@ define(function (require, exports, module) {
       desc: "返奖率高达69%",
       logo: "images/gjj.png",
       hasDetail: false,
-      type: "jc" // 彩种类型
+      type: "jc", // 彩种类型
+      localKey: "local_gjj",
+      modes: { // 模式
+        def: "0", // 默认模式
+        list: { // 模式列表
+          "0": {key: "0", name: "世界杯", endTime: "2014-07-14 02:55:00", event: "S", issueNo: "2014"},
+          "1": {key: "1", name: "欧冠杯", endTime: "2014-05-25 02:40:00", event: "O", issueNo: "2014"}
+        }
+      },
+      flags:{
+        "巴西": "images/flags/lm_flag9.png",
+        "德国": "images/flags/lm_flag2.png",
+        "阿根廷": "images/flags/lm_flag24.png",
+        "西班牙": "images/flags/lm_flag8.png",
+        "比利时": "images/flags/lm_flag3.png",
+        "荷兰": "images/flags/lm_flag22.png",
+        "意大利": "images/flags/lm_flag21.png",
+        "法国": "images/flags/lm_flag20.png",
+        "葡萄牙": "images/flags/lm_flag31.png",
+        "哥伦比亚": "images/flags/lm_flag15.png",
+        "乌拉圭": "images/flags/lm_flag12.png",
+        "英格兰": "images/flags/lm_flag11.png",
+        "智利": "images/flags/lm_flag16.png",
+        "俄罗斯": "images/flags/lm_flag30.png",
+        "科特迪瓦": "images/flags/lm_flag19.png",
+        "瑞士": "images/flags/lm_flag7.png",
+        "日本": "images/flags/lm_flag1.png",
+        "波黑": "images/flags/lm_flag18.png",
+        "克罗地亚": "images/flags/lm_flag14.png",
+        "厄瓜多尔": "images/flags/lm_flag25.png",
+        "墨西哥": "images/flags/lm_flag29.png",
+        "美国": "images/flags/lm_flag10.png",
+        "加纳": "images/flags/lm_flag26.png",
+        "尼日利亚": "images/flags/lm_flag13.png",
+        "希腊": "images/flags/lm_flag4.png",
+        "韩国": "images/flags/lm_flag6.png",
+        "喀麦隆": "images/flags/lm_flag17.png",
+        "澳大利亚": "images/flags/lm_flag5.png",
+        "哥斯达黎加": "images/flags/lm_flag32.png",
+        "洪都拉斯": "images/flags/lm_flag27.png",
+        "伊朗": "images/flags/lm_flag28.png",
+        "阿尔及利亚": "images/flags/lm_flag23.png",
+        "拜仁慕尼黑": "images/flags/lm_flag36.png",
+        "巴塞罗那": "images/flags/lm_flag33.png",
+        "皇家马德里": "images/flags/lm_flag35.png",
+        "多特蒙德": "images/flags/lm_flag37.png",
+        "切尔西": "images/flags/lm_flag38.png",
+        "巴黎圣日尔曼": "images/flags/lm_flag39.png",
+        "马德里竞技": "images/flags/lm_flag34.png",
+        "曼彻斯特联": "images/flags/lm_flag40.png",
+        "曼彻斯特城": "images/flags/lm_flag41.png",
+        "奥林匹亚科斯": "images/flags/lm_flag42.png",
+        "阿森纳": "images/flags/lm_flag43.png",
+        "AC米兰": "images/flags/lm_flag44.png",
+        "加拉塔萨雷": "images/flags/lm_flag45.png",
+        "圣彼得堡泽尼特": "images/flags/lm_flag46.png",
+        "勒沃库森": "images/flags/lm_flag47.png",
+        "沙尔克04": "images/flags/lm_flag48.png"
+      }
     }
   };
   // 彩种ID映射字符标示
@@ -608,7 +667,9 @@ define(function (require, exports, module) {
     12: "f3d", // 福彩3D
     13: "dlt", // 大乐透
     31: "syy", // 十一运夺金
-    34: "syx" // 十一选5
+    34: "syx", // 十一选5
+    46: "jcz", // 竞彩足球
+    36: "jcl" // 竞彩篮球
   };
   module.exports = config;
 });

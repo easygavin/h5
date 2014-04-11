@@ -403,6 +403,9 @@ define(function (require, exports, module) {
    * 清除上一页面占用的资源信息
    */
   util.clear = function () {
+    // 防止android 3.0 以下侧边栏出现时，无法滑动问题
+    $("html").removeClass("mm-opened");
+
     this.clearAjaxRequests();
     this.clearIntervals();
     this.clearTimers();

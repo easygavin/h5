@@ -22,7 +22,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -45,8 +45,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "number/openLott", data: params},
       "number/openLott",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#number/openLott",
-      canBack ? 1 : 0);
+      "#number/openLott" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -111,8 +111,8 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
+    $(document).off(events.touchStart(), ".back, .kjList tr").
+      on(events.touchStart(), ".back, .kjList tr", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
@@ -120,12 +120,6 @@ define(function (require, exports, module) {
     $(document).off(events.activate(), ".back").
       on(events.activate(), ".back", function (e) {
         page.goBack();
-        return true;
-      });
-
-    $(document).off(events.touchStart(), ".kjList tr").
-      on(events.touchStart(), ".kjList tr", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
 

@@ -30,6 +30,7 @@ define(function (require, exports, module) {
         "user/editPassword",
             (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/editPassword",
         forward ? 1 : 0);
+    util.hideLoading();
   };
 
   /**
@@ -49,21 +50,30 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-        on(events.touchStart(), ".back", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
+    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
+      events.handleTapEvent(this, this, events.activate(), e);
+      return true;
+    });
 
-    $(document).off(events.activate(), ".back").
-        on(events.activate(), ".back", function (e) {
-          if (forward) {
-            page.goBack();
-          } else {
-            page.init("home", {}, 0);
-          }
-          return true;
-        });
+    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
+
+    // 修改信息.
+    $(document).off(events.touchStart(), "#main surebtn").on(events.touchStart(), ".main", function (e) {
+      events.handleTapEvent(this, this, events.activate(), e);
+      return true;
+    });
+
+    $(document).off(events.activate(), "#main surebtn").on(events.activate(), ".main", function (e) {
+
+      return true;
+    });
   };
   return {init: init};
 });

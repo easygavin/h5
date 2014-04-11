@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
 
   // 管家服务器地址
-  // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.cpocp.com/";
+  // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.cpocp.com/" uat环境:"http://uatjc.ecp888.com/";
   var SERVER_URL = "http://uatjc.ecp888.com/";
 
   // 公告服务器地址
@@ -13,8 +13,8 @@ define(function (require, exports, module) {
 
   //优惠券中间件接口地址.
 
- //var  MIDDLEWARE="http://mw.cpocp.com/";
-  var  MIDDLEWARE="http://192.168.1.38:8080/";
+  var MIDDLEWARE = "http://mw.cpocp.com/";
+  //var MIDDLEWARE = "http://192.168.1.38:8080/";
 
   module.exports = {
     // 用于设置图片路径
@@ -29,14 +29,20 @@ define(function (require, exports, module) {
     USER_REG: SERVER_URL + "gjuser/reg/0/reg.shtml",
     // 修改登录密码接口
     CHANG_PWD: SERVER_URL + "gjuser/reg/0/changePw.shtml",
+    //修改昵称接口
+    UPDATE_NICK_NAME:SERVER_URL+"gjuser/setNickName.shtml",
+    //修改提款密码
+    UPDATE_WITHDRAWAL:SERVER_URL+"gjuser/changeDrawPw.shtml",
     // 获取账户余额/提款资料接口
     GET_BALANCE: SERVER_URL + "gjuser/blance/0/getBlance.shtml",
     // 获取银行列表接口
     GET_BANKS: SERVER_URL + "gjuser/bindbankcard/3/getBanks.shtml",
     //优惠券接口
-    GET_COUPONS:MIDDLEWARE+"middle_web/coupon/getCouponList.shtml",
+    GET_COUPONS:SERVER_URL+"coupon/getCouponList.shtml",
+
     //通过token查找用户信息接口
-    GET_USER_BY_TOKEN:MIDDLEWARE+"middle_web/gjuser/getUserInfoByToken.shtml",
+    GET_USER_BY_TOKEN: SERVER_URL + "gjuser/getUserInfoByToken.shtml",
+
     // 获取银行卡省市列表接口
     GET_BANK_LOCUS: SERVER_URL + "gjuser/bindbankcard/3/getBankLocus.shtml",
     // 绑定银行卡接口
@@ -94,12 +100,12 @@ define(function (require, exports, module) {
     // 彩种的开奖等级信息
     GET_LOTTERY_LEVEL_INFO: MIDDLEWARE + "middle_web/gjkj!getzjlevel.shtml",
     // 竞彩足球对阵接口
-    JCZQ_GAME_LIST: SERVER_URL + "gjjczq!betlist.shtml",
-    /*JCZQ_GAME_LIST: 'http://192.168.1.38:8080/middle_web/gjjclq!betbyfootwalllist.shtml',*/
+    //JCZQ_GAME_LIST: SERVER_URL + "gjjczq!betlist.shtml",
+    JCZQ_GAME_LIST: MIDDLEWARE + 'gjjclq!betbyfootwalllist.shtml',
     //竞彩足球购买接口.
     JCZQ_GAME_BUY: SERVER_URL + "gjjczq.shtml",
     // 竞彩足球对阵情报分析
-    JCZQ_AGAINST: SERVER_URL + "gjdata/gjdata!index.shtml",
+    JCZQ_AGAINST: MIDDLEWARE + "gjdata/gjdata!index.shtml",
     // 竞彩足球购彩记录
     JCZQ_DETAIL: SERVER_URL + "gjjczq!detail.shtml",
     // 竞彩足球开奖结果接口
@@ -116,6 +122,12 @@ define(function (require, exports, module) {
     JCLQ_AWARD_LIST_ISSUE: NOTICE_SERVER_URL + "gjjclq!kjlist.shtml",
     // 竞彩篮球历史开奖详情SP值
     JCLQ_AWARD_DETAIL_SP: NOTICE_SERVER_URL + "gjjclq!kjsp.shtml",
+    // 获取冠军竞猜对阵列表
+    GJJ_GET_MATCH_LIST: SERVER_URL + "sportsfootballguanjun/gj/getGjMatch.shtml",
+    // 冠军竞猜投注
+    GJJ_TO_BUY: SERVER_URL + "sportsfootballguanjun/gjgg/createGuanjunProject.shtml",
+    // 冠军竞猜方案详情
+    GJJ_GET_PROJECT_DETAIL: SERVER_URL + "sportsfootballguanjun/gj/getProjectDetail.shtml",
 
     // 活动公告列表接口
     NOTICE_LIST: NOTICE_SERVER_URL + "gjgonggao/app/notic_app!index.shtml",
@@ -124,7 +136,7 @@ define(function (require, exports, module) {
 
     // 请求参数
     // 平台类型
-    channelNo: "h5",
+    channelNo: "h5_abc",
     // 渠道号/推荐人
     platform: "e",
     // 手机型号

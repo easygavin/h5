@@ -33,25 +33,25 @@
     <tbody>
     <tr>
       <td rowspan="2" class="tab">主胜</td>
-      <td id="sf_0-<%=matchId%>">1-5<br/><%=sfcOdds[0]%></td>
-      <td id="sf_1-<%=matchId%>">6-10<br/><%=sfcOdds[1]%></td>
-      <td id="sf_2-<%=matchId%>">11-15<br/><%=sfcOdds[2]%></td>
+      <td id="sfc_0-<%=matchId%>">1-5<br/><%=sfcOdds[0]%></td>
+      <td id="sfc_1-<%=matchId%>">6-10<br/><%=sfcOdds[1]%></td>
+      <td id="sfc_2-<%=matchId%>">11-15<br/><%=sfcOdds[2]%></td>
     </tr>
     <tr>
-      <td id="sf_3-<%=matchId%>">16-20<br/><%=sfcOdds[3]%></td>
-      <td id="sf_4-<%=matchId%>">21-25<br/><%=sfcOdds[4]%></td>
-      <td id="sf_5-<%=matchId%>">26+<br/><%=sfcOdds[5]%></td>
+      <td id="sfc_3-<%=matchId%>">16-20<br/><%=sfcOdds[3]%></td>
+      <td id="sfc_4-<%=matchId%>">21-25<br/><%=sfcOdds[4]%></td>
+      <td id="sfc_5-<%=matchId%>">26+<br/><%=sfcOdds[5]%></td>
     </tr>
     <tr>
       <td rowspan="2" class="tab">客胜</td>
-      <td id="sf_6-<%=matchId%>">1-5<br/><%=sfcOdds[6]%></td>
-      <td id="sf_7-<%=matchId%>">6-10<br/><%=sfcOdds[7]%></td>
-      <td id="sf_8-<%=matchId%>">11-15<br/><%=sfcOdds[8]%></td>
+      <td id="sfc_6-<%=matchId%>">1-5<br/><%=sfcOdds[6]%></td>
+      <td id="sfc_7-<%=matchId%>">6-10<br/><%=sfcOdds[7]%></td>
+      <td id="sfc_8-<%=matchId%>">11-15<br/><%=sfcOdds[8]%></td>
     </tr>
     <tr>
-      <td id="sf_9-<%=matchId%>">16-20<br/><%=sfcOdds[9]%></td>
-      <td id="sf_10-<%=matchId%>">21-25<br/><%=sfcOdds[10]%></td>
-      <td id="sf_11-<%=matchId%>">26+<br/><%=sfcOdds[11]%></td>
+      <td id="sfc_9-<%=matchId%>">16-20<br/><%=sfcOdds[9]%></td>
+      <td id="sfc_10-<%=matchId%>">21-25<br/><%=sfcOdds[10]%></td>
+      <td id="sfc_11-<%=matchId%>">26+<br/><%=sfcOdds[11]%></td>
     </tr>
     </tbody>
   </table>

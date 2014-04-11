@@ -36,7 +36,6 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-
     <!--充值卡充值.-->
     <servlet>
         <servlet-name>czk</servlet-name>
@@ -51,6 +50,30 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+
+    <!--支付宝充值回调-->
+    <servlet>
+        <servlet-name>zfbWapCallBack</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.zfb.ZfbWapCallBackServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!--财付通充值回调-->
+    <servlet>
+        <servlet-name>cftWapCallBack</servlet-name>
+        <servlet-class>com.h5.user.charge.servlet.cft.CftWapCallBackServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>cftWapCallBack</servlet-name>
+        <url-pattern>/cftWapCallBack</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>zfbWapCallBack</servlet-name>
+        <url-pattern>/zfbWapCallBack</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>clientChargeServlet</servlet-name>

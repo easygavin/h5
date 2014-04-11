@@ -44,7 +44,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -73,8 +73,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: lotConfig.paths["list"].js, data: params},
       lotConfig.paths["list"].js,
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#" + lotConfig.paths["list"].js,
-      canBack ? 1 : 0);
+      "#" + lotConfig.paths["list"].js + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -232,13 +232,14 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
 
-    // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
+    // 返回， 购彩协议
+    $(document).off(events.touchStart(), ".back, .checked").
+      on(events.touchStart(), ".back, .checked", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
 
+    // 返回
     $(document).off(events.activate(), ".back").
       on(events.activate(), ".back", function (e) {
         page.goBack();
@@ -378,37 +379,37 @@ define(function (require, exports, module) {
     // 移除cover的click事件，防止重复提交订单
     $(".cover").off(events.click());
 
-    // footer
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
-        var $a = $(e.target).closest("a");
-        if ($a.length) {
-          if ($a.hasClass("fr")) {
-            // 购买
-            if (typeof issue.issueNo == "undefined") {
-              page.toast("无法获取到彩票期号");
-              return false;
-            }
-
-            // 检查值
-            if (checkVal()) {
-              // 购买
-              toBuy();
-            }
-          } else if ($a.hasClass("fl")) {
-            // 发起合买
-            if (typeof issue.issueNo == "undefined") {
-              page.toast("无法获取到彩票期号");
-              return false;
-            }
-
-            // 检查值
-            if (checkVal()) {
-              // 购买
-              toHm();
-            }
-          }
+    // 购买
+    $(document).off(events.click(), ".btn2").
+      on(events.click(), ".btn2", function (e) {
+        if (typeof issue.issueNo == "undefined") {
+          page.toast("无法获取到彩票期号");
+          return false;
         }
+
+        // 检查值
+        if (checkVal()) {
+          // 购买
+          toBuy();
+        }
+        return true;
+      });
+
+    // 发起合买
+    $(document).off(events.click(), ".btn1").
+      on(events.click(), ".btn1", function (e) {
+        // 发起合买
+        if (typeof issue.issueNo == "undefined") {
+          page.toast("无法获取到彩票期号");
+          return false;
+        }
+
+        // 检查值
+        if (checkVal()) {
+          // 购买
+          toHm();
+        }
+        return true;
       });
 
     // 是否追加
@@ -423,12 +424,6 @@ define(function (require, exports, module) {
     });
 
     // 购彩协议
-    $(document).off(events.touchStart(), ".checked").
-      on(events.touchStart(), ".checked", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".checked").
       on(events.activate(), ".checked", function (e) {
         page.init("protocol", {}, 1);

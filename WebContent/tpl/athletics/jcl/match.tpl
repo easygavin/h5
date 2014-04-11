@@ -25,9 +25,9 @@
     </tr>
     <tr class="lYTable">
       <% var rfsfOdds = spDatas.rfsf.split(','); %>
-      <td class="tab"><%=rfsfOdds[0]%></td>
-      <td id="rfsf_1-<%=matchId%>"><%=rfsfOdds[1]%></td>
-      <td id="rfsf_2-<%=matchId%>"><%=rfsfOdds[2]%></td>
+      <td class="tab"><%=rfsfOdds[0]||'--'%></td>
+      <td id="rfsf_1-<%=matchId%>"><%=rfsfOdds[1]||'--'%></td>
+      <td id="rfsf_2-<%=matchId%>"><%=rfsfOdds[2]||'--'%></td>
     </tr>
   </table>
 </div>

@@ -221,7 +221,7 @@ define(function (require, exports, module) {
 
     $(".zckjTab").find("tr").each(function (key) {
       var gameid = $(this).attr("id").substring(2);   //对阵Id,"tzxxF20140301008" m_F20140301008
-      var cc = $(this).find(".red");             //对象 <em ltype="spf" xxsort="1" id="F20140301008spf_3" sp="2.04" onclick="clickxx(this)">胜</em>
+      var cc = $(this).find("span");             //对象 <em ltype="spf" xxsort="1" id="F20140301008spf_3" sp="2.04" onclick="clickxx(this)">胜</em>
       var idx = gameid.substring(1);                     //       id   20140301008  <tr sort="20140301008" class="matchinfo" id="tzxxF20140301008"/>
       var item = [], sfp_ = [], jqs_ = [], cbf_ = [], bqc_ = [], rqspf_ = [];
       var sfp_Play = [], jqs_Play = [], cbf_Play = [], bqc_Play = [], rqspf_Play = [];
@@ -253,7 +253,7 @@ define(function (require, exports, module) {
         } else if (type == 'bqc') {
           bqc_.push(sp);
           bqc_Play.push(str);
-        } else if (type == "spfrq") {
+        } else if (type == "rqspf") {
           rqspf_.push(sp);
           rqspf_Play.push(str);
         }
@@ -314,7 +314,7 @@ define(function (require, exports, module) {
           var pass = gg[0].split("-")[0];
           var danSize = danMinArr.length;
           var undanSize = minArr.length;
-          danMinArr.sort(asc);
+          danMinArr.sort(service.asc);
           /*模糊定胆*/
           var danMinHit = danSize;
           var temp2Array = [];
@@ -327,7 +327,7 @@ define(function (require, exports, module) {
             min_arr.push(danMinArr[i]);
           }
           min_arr = min_arr.concat(minArr);
-          min_arr.sort(asc);
+          min_arr.sort(service.asc);
           var len = pass - danMinHit;
           for(var i = 0; i < len; i++) {
             var spz = min_arr[i].toString();
@@ -344,7 +344,7 @@ define(function (require, exports, module) {
           }
           var danSize = danMinArr.length;
           var undanSize = minArr.length;
-          danMinArr.sort(asc);
+          danMinArr.sort(service.asc);
           /*模糊定胆*/
           var danMinHit = danSize;
           var temp2Array = [];
@@ -357,7 +357,7 @@ define(function (require, exports, module) {
             min_arr.push(danMinArr[i]);
           }
           min_arr = min_arr.concat(minArr);
-          min_arr.sort(asc);
+          min_arr.sort(service.asc);
           var len = pass - danMinHit;
           for(var i = 0; i < len; i++) {
             var spz = min_arr[i].toString();
@@ -412,7 +412,6 @@ define(function (require, exports, module) {
         }
         for(var m = 0, l = array.length; m < l; m++) {//第一次过滤个从复
           var v = cl(array[m]);
-
           arr = arr.concat(v);
         }
         for(var j = 0, jj = fs.length; j < jj; j++) {
@@ -474,7 +473,6 @@ define(function (require, exports, module) {
         }
       }
     }
-
     return array;
   };
 
@@ -531,7 +529,7 @@ define(function (require, exports, module) {
     ggTypes: null,//过关方式
     min_gg: 0,
     isdan: false,//false该方案未定胆，ture定胆
-    'maxMinBonus': function (passtypes) {
+    maxMinBonus: function (passtypes) {
       var minBonus = [], MaxBonus = [], pass = [], maxChuan = [], minChuan = [], isDC = false;
 
       function sortMaxCon(a, b) {
@@ -573,9 +571,8 @@ define(function (require, exports, module) {
      * passway 传入过关方式数组
      * kjtz  胜平负投注就传这个"spfgg"，混合投注页面就传“mixbet”，各个页面传不同的字符串过来
      */
-    'getDTG_wl': function (passway, kjtz) {
+    getDTG_wl: function (passway, kjtz) {
       //list
-
       if (getDan() != "") {
         Handle.isdan = true;
       }
@@ -588,15 +585,13 @@ define(function (require, exports, module) {
       /* if (isMixbet) {
        itembody = $("#itembody").find(".matchinfo");
        }*/
-      // var itembody = $(".zckjTab").find("tr").find(".red");
       var itembody = $(".zckjTab").find("tr");
       itembody.each(function (i, item) {
-
         var sps = [], bonusRec, bonusMinRec, rqbtn = [], nrqbtn = [];
         var isan = false, rqs = 0, sort = null, gameid = null, isdan = false;
         //danNOs[matchId] = matchId 数据保存时的结构...
         //要得到几个属性..
-        $(item).find(".red").each(function (j, item_i) {
+        $(item).find("span").each(function (j, item_i) {
           var data = $(item_i).attr("id").split("_");//F20140301008_spf_3_2.11_-1
           gameid = data[0]; //1.是否选中胆码..
           if (danNO[gameid]) {
@@ -613,8 +608,6 @@ define(function (require, exports, module) {
             gameid: gameid, isrpf: (rq ? "rqspf" : "spf")
           });
         });
-
-
         bonusRec = {isdan: isdan, rq: rqbtn.slice(), nrq: nrqbtn.slice()};
         bonusMinRec = {isdan: isdan, rq: rqbtn.slice(), nrq: nrqbtn.slice()};
         if (isdan) {
@@ -791,11 +784,10 @@ define(function (require, exports, module) {
       var _has = {}.hasOwnProperty;
       return _has.call(o, k);
     },
-    'parseSingle': function (list, min) {//从中奖单注集内统计n串1的个数和奖金和
+    parseSingle: function (list, min) {//从中奖单注集内统计n串1的个数和奖金和
       function sortMaxCon(a, b) {
         return parseFloat(a.sumsp > parseFloat(b.sumsp) ? 1 : -1);
       }
-
       var cl = {}, sum = 0, info = [], bs = this.bs, content = [], content_s = [], sp_con = [];
       for(var i = 0, j = list.length; i < j; i++) {
         var code = list[i], b = 1, len = code.length, con = [];
@@ -1353,7 +1345,7 @@ define(function (require, exports, module) {
 
   var combineArray = function (arr, len) {
     var re = new Array();
-    arr.sort(asc);
+    arr.sort(service.asc);
     if (arr.length < len || len < 1) {
       return re;
     } else if (arr.length == len) {
@@ -1378,7 +1370,7 @@ define(function (require, exports, module) {
           for(var k in s) {
             var p = s[k];
             p[p.length] = arr[i];
-            p.sort(asc);
+            p.sort(service.asc);
             re[re.length] = p;
           }
         }

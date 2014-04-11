@@ -29,42 +29,31 @@ define(function (require, exports, module) {
    * @param callback
    */
   var toBuy = function (type, params, price, callback) {
-
     if (!util.checkLogin(null)) {
       // 尚未登录
       callback({statusCode: "off"});
       return false;
     }
-
     // 保存登录成功信息
     var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
-    params.totalAmount = (parseInt(params.totalBet, 10) * parseInt(params.totalBei, 10) * price) + "";  // 总金额
-
     // 固定参数
     params.projectDesc = ""; // 方案描述
-
     switch (type) {
       case "1": // 复式 胆拖
-        params.projectType = "0"; // 自购
+        params.projectType = "0";
         params.projectHold = "0";  // 方案保底份数 0 为不保底
         params.projectOpenState = "2";  // 方案公开方式 0公开，1跟单后，2截止后，3不公开
         params.projectBuy = "1";  // 方案认购份数 至少总份数的5%
-
         params.projectCount = "1";  // 合买方案总份数
         params.projectCommissions = "5";  // 合买方案提成百分比0-10
-
         break;
-
       case "2":  // 合买
-        params.projectType = "1"; // 自购
+        params.projectType = "1";
         params.projectHold = params.projectHold;  // 方案保底份数 0 为不保底
         params.projectOpenState = params.projectOpenState;  // 方案公开方式 0公开，1跟单后，2截止后，3不公开
         params.projectBuy = params.projectBuy;  // 方案认购份数 至少总份数的5%
-
         params.projectCount = params.projectCount;  // 合买方案总份数
         params.projectCommissions = params.projectCommissions;  // 合买方案提成百分比0-10
-
         break;
     }
 
@@ -73,7 +62,7 @@ define(function (require, exports, module) {
     params.userKey = user.userKey;
     params.userId = user.userId + "";
     params.userName = user.userName;
-
+    console.log('buy param:',params);
     // 购买登录
     $.ajax({
       type: "GET",
@@ -108,7 +97,7 @@ define(function (require, exports, module) {
       requestType: requestType,
       projectId: projectId,
       userKey: user.userKey,
-      userId: user.userId + ""
+      userId: user.userId
     };
 
     // 请求登录
@@ -145,11 +134,7 @@ define(function (require, exports, module) {
    * 获取竞彩篮球开奖详情SP值
    * @param matchId
    */
-  var getAwardDetailSP = function (matchId, callback) {
-    // 请求参数
-    var data = {
-      matchId: matchId
-    };
+  var getAwardDetailSP = function (data, callback) {
     // 开奖记录
     $.ajax({
       type: "GET",
@@ -281,7 +266,6 @@ define(function (require, exports, module) {
    */
   var getBetByCrossWay = function (ways, optArr, danNOs) {
     var bet = 0, wagerType = "1", sa = [], sb = [];
-
     for(var k in optArr) {
       if (danNOs[k]) {
         sb.push(optArr[k]);
@@ -289,7 +273,6 @@ define(function (require, exports, module) {
         sa.push(optArr[k]);
       }
     }
-
     var minAbs = sb.length;
     var maxAbs = sb.length;
 

@@ -39,7 +39,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -68,8 +68,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: lotConfig.paths["smart"].js, data: params},
       lotConfig.paths["smart"].js,
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#" + lotConfig.paths["smart"].js,
-      canBack ? 1 : 0);
+      "#" + lotConfig.paths["smart"].js + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
   };
 
   /**
@@ -375,26 +375,25 @@ define(function (require, exports, module) {
         }
       });
 
-    // footer
-    $(document).off(events.click(), "footer").
-      on(events.click(), "footer", function (e) {
-        var $a = $(e.target).closest("a");
-        if ($a.length) {
-          if ($a.hasClass("fr")) {
-            // 购买
-            toBuy();
-          } else if ($a.hasClass("fl")) {
-            if ($(".smartModBox").is(":visible")) {
-              // 收起
-              hideModBox();
-            } else {
-              // 设置
-              showModBox();
-            }
-          }
+    // 购买
+    $(document).off(events.click(), ".btn2").
+      on(events.click(), ".btn2", function (e) {
+        toBuy();
+        return true;
+      });
+
+    $(document).off(events.click(), ".btn1").
+      on(events.click(), ".btn1", function (e) {
+        if ($(".smartModBox").is(":visible")) {
+          // 收起
+          hideModBox();
+        } else {
+          // 设置
+          showModBox();
         }
         return true;
       });
+
   };
 
   /**
@@ -544,7 +543,7 @@ define(function (require, exports, module) {
    */
   var showModBox = function () {
     $(".smartModBox").show();
-    $("footer .fl").text("收起");
+    $("footer .btn1").text("收起");
     // 显示参数值
     // 追期数
     $("#issueUnit").val(handleResult.count);
@@ -570,7 +569,7 @@ define(function (require, exports, module) {
    */
   var hideModBox = function () {
     $(".smartModBox").hide();
-    $("footer .fl").text("设置");
+    $("footer .btn1").text("设置");
     var needCal = false;
     // 追期数
     count = parseInt(count, 10);

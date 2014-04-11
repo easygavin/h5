@@ -1,0 +1,67 @@
+<div id="wrapper">
+  <!--头部-->
+  <header>
+    <a class="back"><span class="fm">&#xf035;</span><span id="title"></span></a>
+  </header>
+  <!--内容-->
+  <div id="main" class="plr8">
+    <table cellpadding="0" cellspacing="0" width="100%" class="spftab zckjTab">
+      <colgroup>
+        <col width="90%" />
+        <col width="10%" />
+      </colgroup>
+      <tbody></tbody>
+    </table>
+    <table cellpadding="0" cellspacing="0" width="100%" class="sftab mt10">
+      <colgroup>
+        <col width="2%"/>
+        <col width="26%"/>
+        <col width=""/>
+        <col width="20%"/>
+      </colgroup>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="tr">方案倍数：</td>
+        <td><input id="timesUnit" type="number" class="inutext" value="1"/></td>
+        <td>倍</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="tr">方案金额：</td>
+        <td><b class="cf60" id="pays">4</b>元</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="tr">奖金范围：</td>
+        <td><span id="guessBonus" class="red"></span>元</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <div class="ggbox" data-pass-type="">
+            <div class="tab tabopition">
+              <span id="tab_0" class="click">普通过关</span>
+              <span id="tab_1" style="display: none;">多串过关</span>
+            </div>
+            <div id="way_0" class="tabcontent" style="display: none;"></div>
+            <div id="way_1" class="tabcontent" style="display: none;"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="3" class="pl8">
+          <input id="protocol" type="checkbox" checked class="checkbox"/>
+          <label for="protocol" class="checked">同意合买代购协议</label>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="w45"></div>
+</div>
+<footer>
+  <a class="fl btn1">合买</a>
+  <span id="totals">1</span>注 <span id="times">1</span>倍
+  <a class="fr btn2">确认</a>
+</footer>

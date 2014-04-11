@@ -24,14 +24,12 @@ public class ZfbChargeServiceImpl implements ZfbChargeService {
 
         //本地接口请求url.
         String localRequestUrl = Common.getZfbWapUrl();
-        //本地接口返回数据.
-        String localResponse = "";
         //以jason数据返回到前台.
         JSONObject returnResult = new JSONObject();
         try {
             String requestUrl = localRequestUrl +"?data="+ URLEncoder.encode(jsonObject.toString(), "UTF-8");
-            //本地响应请求,返回结果.
-            localResponse = TransportUrl.getLocalResponse(requestUrl).toString();
+            //本地响应请求,返回结果.(先转换为string,在object.fromObject.)
+            String localResponse = TransportUrl.getLocalResponse(requestUrl).toString();
             if (null != localResponse && !"".equals(localResponse)) {
                 //解析返回的json格式的数据.
                 return JSONObject.fromObject(localResponse);

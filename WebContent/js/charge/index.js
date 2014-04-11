@@ -11,6 +11,7 @@ define(function (require, exports, module) {
           template = require("../../views/charge/index.html"),
           charge = require('services/charge'),
           account = require('services/account'),
+          md5=require('tools/md5');
           path = require('path');
 
       // 处理返回参数
@@ -20,7 +21,7 @@ define(function (require, exports, module) {
       var userInfo = null;
 
       //优惠券编号.从优惠券界面跳转,传递.
-      var couponCode = "";
+      var couponCode = '';
 
       //.1表示包含可提款余额姓名等信息，0表示只须提供可用余额
       var requestType = 0;
@@ -28,8 +29,8 @@ define(function (require, exports, module) {
       //优惠券总张数..
       var couponCount = 0;
 
-      //客户端内嵌传值userToken.
-      var userToken = "";
+      //客户端过来的userToken，平台号,渠道号.
+      var userToken, client_channelNo, client_platform;
 
       //调用充值接口所需的参数.
       var parameterValues = {};
@@ -40,42 +41,27 @@ define(function (require, exports, module) {
       //直通卡充值[随机生成的四位验证码]
       var randomNum = '';
 
+
       /**
        * 初始化
        */
       var init = function (data, forward) {
 
         canBack = forward ? 1 : 0;
-        //客户端请求带userToken,转换.
-        var clientParam = window.location.search.substring(1);
-        var from = util.unParam(clientParam);
-
-        if (typeof from.userToken != "undefined") {
-          userToken = from.userToken;
-        } else if ((typeof from.data != "undefined" && typeof JSON.parse(from.data).userToken != "undefined")) {
-          userToken = JSON.parse(from.data).userToken;
-        }
 
         // 参数设置
         var params = {};
-
-        if (data != null && typeof data != "undefined") {
-          if (typeof data.couponCode != "undefined" && $.trim(data.couponCode) != '') {
-            couponCode = data.couponCode;
-            params.couponCode = couponCode;
-          }
-        }
 
         var tkn = util.checkLogin(data);
         if (tkn) {
           params.token = tkn;
         }
 
-        if (userToken != '') {
-          params.userToken = userToken;
-        }
-
         userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
+        //参数设定,包括客户端传递,或者H5其他页面传递..
+
+        browserParameterSettings(data, params);
 
         initShow();
 
@@ -106,11 +92,11 @@ define(function (require, exports, module) {
        */
       var loginByWhich = function () {
         //userInfo 不等于空,来自H5自有用户.
-        if (typeof userInfo.userId != "undefined" && typeof userInfo.userKey != "undefined") {
+        if (userInfo != null && userInfo.userId != null && userInfo.userKey != null && typeof userInfo.userId != "undefined" && typeof userInfo.userKey != "undefined") {
           loginByH5();
-        } else if (userToken != '') {
-          //如果有userToken则表明来自客户端内嵌.
-          loginByToken(userToken);
+        } else if (userToken != '' && client_channelNo != '' && client_platform != '') {
+          //如果有userToken,client_channelNo,client_platform则表明来自客户端内嵌.
+          loginByToken();
         } else {
           //未登录用户.
           page.init("login", {}, 1);
@@ -124,32 +110,37 @@ define(function (require, exports, module) {
         util.showLoading();
         var request = account.getUserBalance(requestType, userInfo.userId, userInfo.userKey, function (data) {
           util.hideLoading();
-          if (data != "undefined" && data.statusCode == '0') {
+          if (data != "undefined" && typeof data.statusCode != "undefined" && data.statusCode == '0') {
             $("#balance").html(parseFloat(data.userBalance).toFixed(2));
             //设置 userInfo 的平台号,渠道号.
             userInfo.channelNo = path.channelNo;
             userInfo.platform = path.platform;
             util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
-            // getCouponCount(userId);
+            getCouponCount(userInfo.userId);
           } else {
             page.toast(data.errorMsg);
           }
         });
-
+        util.addAjaxRequest(request);
       };
 
       /**
        * 根据token得到用户信息,来自客户端.
        */
       var loginByToken = function () {
+        util.showLoading();
         var request = account.getUserInfoByToken(userToken, function (data) {
+          util.hideLoading();
+          alert(JSON.stringify(data));
           if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
             if (data.status == '0') {
               $("#balance").html(parseFloat(data.userBalance).toFixed(2));
               getCouponCount(data.userId);
-              //保存登录成功信息
-              userInfo.channelNo = data.channelNo;
-              userInfo.platform = data.platform;
+              //保存登录成功信息,并且设置设它的渠道号,平台号,token信息.
+              data.channelNo = client_channelNo;
+              data.platform = client_platform;
+              data.token = new Date().getTime() + "";
+              userInfo = data;
               util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
             } else {
               page.toast(data.errorMsg);
@@ -165,7 +156,9 @@ define(function (require, exports, module) {
        */
       var getCouponCount = function (userId) {
         var time = getTime();
+        util.showLoading();
         var request = account.getCouponInfo(userId, time.beginTime, time.endTime, function (data) {
+          util.hideLoading();
           //得到优惠券总张数
           if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
             couponCount = typeof data.unUsed == "undefined" ? 0 : data.unUsed;
@@ -210,7 +203,7 @@ define(function (require, exports, module) {
       /**
        *在线冲值(支付宝,财付通)输入校验.
        */
-      var zftCftWapInput = function () {
+      var zfbCftWapInput = function () {
         parameterValues = {};
         //充值金额.
         var money = $("#money").val(), couponNo = $("#couponCode").val();
@@ -224,10 +217,8 @@ define(function (require, exports, module) {
         } else if (parseInt(money) < 10) {
           page.toast("至少充值10元");
           return false;
-        } else if (parseInt(money) > 100000000) {
-          page.toast("超出最大充值金额");
-          return false;
         }
+
         //优惠券编号校验.
         var str = "[@/'\"#$%&^*]+";
         var reg = new RegExp(str);
@@ -248,7 +239,6 @@ define(function (require, exports, module) {
         }
         parameterValues.amount = money;             //充值金额.
         parameterValues.userId = userInfo.userId;   //用户Id
-        parameterValues.token = userInfo.userKey;   //登录令牌,默认是userKey
         parameterValues.canalNo = userInfo.platform;//渠道号.
         return true;
       };
@@ -266,10 +256,10 @@ define(function (require, exports, module) {
         //根据充值类型,来得到充值号码,密码,最大长度,以及支付通道对应编码
         var szkType = serialNumberMap[chargeType];
         if (serialNumber == '请输入充值卡序列号' || serialNumber == '') {
-          page.toast('请填写充值卡序列号');
+          page.toast('请输入充值卡序列号');
           return false;
         } else if (isNaN(serialNumber) || serialNumber.length > szkType.serialNumberLen) {
-          page.toast('请输入正确的充值序列号');
+          page.toast('请输入正确的充值卡序列号');
           return false;
         }
         //充值卡密码校验..
@@ -298,6 +288,7 @@ define(function (require, exports, module) {
        *直通卡充值输入校验.
        */
       var ztkInput = function () {
+
         //直通卡,卡号,密码,手机号码,验证码 校验.
         var ztkNum = $('#ztkNum').val(),
             ztkPass = $('#ztkPass').val(),
@@ -357,16 +348,17 @@ define(function (require, exports, module) {
        */
       var zfbWapPay = function () {
         //校验文本输入.
-        var flag = zftCftWapInput();
+        var flag = zfbCftWapInput();
         if (flag) {
           util.showLoading();
           charge.zfbWap(parameterValues, function (data) {
             util.hideLoading();
             if (typeof  data != "undefined" && typeof data.statusCode != "undefined") {
-              if (data.status == '0') {
+              if (data.statusCode == '0') {
+                //跳转到支付宝页面.
                 $("#zftWapHref").attr("target", "_parent").attr("href", data.reqUrl).trigger("click");
               } else {
-                util.toast(data.errorMsg);
+                page.toast(data.errorMsg);
               }
             } else {
               util.toast("充值出错,请联系客服");
@@ -380,14 +372,15 @@ define(function (require, exports, module) {
        */
       var cftWapPay = function () {
         //校验文本输入.
-        var flag = zftCftWapInput();
+        var flag = zfbCftWapInput();
         if (flag) {
-
           util.showLoading();
           charge.cftWap(parameterValues, function (data) {
+            alert(JSON.stringify(data));
             util.hideLoading();
             if (typeof  data != "undefined" && typeof data.statusCode != "undefined") {
-              if (data.status == '0') {
+              alert(JSON.stringify(data));
+              if (data.statusCode == '0') {
                 $("#cftWapHref").attr("target", "_parent").attr("href", data.reqUrl).trigger("click");
               } else {
                 page.toast(data.errorMsg);
@@ -412,20 +405,14 @@ define(function (require, exports, module) {
             if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '0') {
                 page.answer(
-                    "支付请求提交成功",
-                    "充值卡支付请求提交成功，请2分钟后查询账户余额！",
-                    "个人中心",
-                    "确定",
-                    function (e) {
-                      page.init("user/person", {}, 0);
-                    },
-                    function (e) {
-                    }
+                    "支付请求提交成功", "充值卡支付请求提交成功，请2分钟后查询账户余额！",
+                    "个人中心", "确定",
+                    function (e) {page.init("user/person", {}, 0);},
+                    function (e) { }
                 );
               } else {
                 page.toast(data.errorMsg);
               }
-
             } else {
               page.toast("充值失败,请联系客服.");
             }
@@ -445,20 +432,14 @@ define(function (require, exports, module) {
             if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '1') {
                 page.answer(
-                    "充值成功",
-                    "充值成功",
-                    "个人中心",
-                    "确定",
-                    function (e) {
-                      page.init("user/person", {}, 0);
-                    },
-                    function (e) {
-                    }
+                    "充值成功","恭喜您充值成功",
+                    "个人中心","确定",
+                    function (e) { page.init("user/person", {}, 0);},
+                    function (e) {}
                 );
               } else {
                 page.toast(data.errorMsg);
               }
-
             } else {
               page.toast("充值失败,请联系客服.");
             }
@@ -605,11 +586,64 @@ define(function (require, exports, module) {
         });
 
       };
+
       serialNumberMap = {
         //分别对应,充值方式: 序列号码支持长度,密码长度,支付通道对应编码.
         "yd_pay": {"serialNumberLen": 17, "passwordLen": 21, "type": "SZX"},
         "lt_pay": {"serialNumberLen": 15, "passwordLen": 19, "type": "UNICOM"},
         "dx_pay": {"serialNumberLen": 19, "passwordLen": 18, "type": "TELECOM"}
+      };
+
+      var browserParameterSettings = function (data, params) {
+
+        //客户端请求带userToken,转换.
+        var clientParam = window.location.search.substring(1);
+        var from = util.unParam(clientParam);
+
+        //客户端过来的userToken.
+        if (typeof from.userToken != "undefined") {
+          userToken = from.userToken;
+        } else if ((typeof from.data != "undefined" && typeof JSON.parse(from.data).userToken != "undefined")) {
+          userToken = JSON.parse(from.data).userToken;
+        }
+
+        //客户端过来的平台号.
+        if (typeof from.client_channelNo != "undefined") {
+          client_channelNo = from.client_channelNo;
+        } else if ((typeof from.data != "undefined" && typeof JSON.parse(from.data).client_channelNo != "undefined")) {
+          client_channelNo = JSON.parse(from.data).client_channelNo;
+        }
+
+        //客户端过来的渠道号.
+        if (typeof from.client_platform != "undefined") {
+          client_platform = from.client_platform;
+        } else if ((typeof from.data != "undefined" && typeof JSON.parse(from.data).client_platform != "undefined")) {
+          client_platform = JSON.parse(from.data).client_platform;
+        }
+
+        //从我的优惠券传递过来的优惠券号码.
+        if (data != null && typeof data != "undefined") {
+          if (typeof data.couponCode != "undefined" && $.trim(data.couponCode) != '') {
+            couponCode = data.couponCode;
+          }
+        }
+
+        if (userToken) {
+          params.userToken = userToken;
+        }
+
+        if (client_platform) {
+          params.client_platform = client_platform;
+        }
+
+        if (client_channelNo) {
+          params.client_channelNo = client_channelNo;
+        }
+
+        if (couponCode) {
+          params.couponCode = couponCode;
+        }
+
       };
       return {init: init};
     }

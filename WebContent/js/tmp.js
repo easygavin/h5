@@ -15,7 +15,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -26,8 +26,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url:"home", data:params},
       "home",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#home",
-      canBack ? 1 : 0);
+      "#home" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
     // compile our template
     var tmp = _.template(template);
 
-    $("#container").empty().html(tmp());
+    $("#container").html(tmp());
   };
 
   /**

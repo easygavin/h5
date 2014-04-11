@@ -86,7 +86,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, em, img, strong, sub, sup, tt, dd
   transform: scale(0);
 }
 
-.grayToast{
+.grayToast {
   position: fixed;
   bottom: 8em;
   left: 10%;
@@ -238,7 +238,7 @@ a:not(href) {
 }
 
 .f24 {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .ml10 {
@@ -471,6 +471,8 @@ nav li .focus {
 .xq {
   color: #c16505;
   background-color: #fff;
+  width: 3em;
+  text-align: center;
 }
 
 .back {
@@ -573,6 +575,8 @@ a.right {
 
 .select {
   height: 2.8125em;
+  width: 2.5em;
+  text-align: right;
 }
 
 .caList i {
@@ -613,6 +617,7 @@ a.right {
   right: -2.5em;
   top: 0;
 }
+
 .bt3 {
   border-top: 0.1875em solid #257ab3;
 }
@@ -766,7 +771,7 @@ a.right {
   line-height: 2.8em;
 }
 
-#main .openLot .min{
+#main .openLot .min {
   line-height: 1.5em;
   font-size: 0.8em;
 }
@@ -1204,7 +1209,7 @@ footer a.btn2 {
 .lotteryNum {
   background: #eee;
   border-bottom: 1px dashed #ccc;
-  line-height: 1.5em;
+  line-height: 2em;
   position: relative;
   padding: 0.5em 0.625em;
 }
@@ -1309,9 +1314,11 @@ footer a.btn2 {
 .gmList {
   padding: 0 0.5em;
 }
+
 .gmchose {
   padding: 1em 0.5em 0.5em 0.5em
 }
+
 .chose {
   width: 7.142857em;
   height: 2.7142857em;
@@ -1684,7 +1691,7 @@ td.click {
   background: #fff;
 }
 
-.danclick {
+.dan.click {
   background: #257ab3;
   color: #fff;
 }
@@ -2002,6 +2009,47 @@ td.click {
   color: #fff
 }
 
+/*资讯*/
+.zx_list {
+  border-top: 0.1875em solid #257AB3
+}
+
+.zx_list li {
+  font: 0.875em/4em "微软雅黑";
+  border-bottom: 1px solid #e9e9e9;
+  height: 4em;
+}
+
+.zx_list li b {
+  height: 3em;
+  display: inline-block;
+  background: #f27755;
+  color: #fff;
+  width: 0.875em;
+  line-height: 1.2em;
+  float: left;
+  padding: 0.5em 1em;
+  font-weight: normal;
+}
+
+.zx_list li a {
+  display: inline-block;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zx_list li:hover {
+  background: #f8f8f8
+}
+
+.zx_list li i {
+  float: right;
+  line-height: 3.3333333em;
+  padding: 0 0.5em
+}
+
 @media screen and (min-width: 1366px) {
   body {
     font-size: 210%
@@ -2252,12 +2300,12 @@ body{font-size:90%}
   border-bottom: none;
 }
 
-.smartModBox .shoutinp{
+.smartModBox .shoutinp {
   width: 6em;
 }
 
-.smartModBox .m{
-  margin:0.5em;
+.smartModBox .m {
+  margin: 0.5em;
 }
 
 .lCover {

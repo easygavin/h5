@@ -38,16 +38,14 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
 
-    // compile our template
     var tmp = _.template(template);
 
     $("#container").empty().html(tmp());
 
     var userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-    //优惠券测试..
-    //getCouponCount("402881a844be45410144be48f845000e");
-    //userToken取值测试.
-    //getCouponCount("d53b0a31882653c7d10050ad20c73df5");
+
+    getCouponCount(userInfo.userId);
+
   };
 
   /**
@@ -56,21 +54,19 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-        on(events.touchStart(), ".back", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
+    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
+      events.handleTapEvent(this, this, events.activate(), e);
+      return true;
+    });
 
-    $(document).off(events.activate(), ".back").
-        on(events.activate(), ".back", function (e) {
-          if (canBack) {
-            page.goBack();
-          } else {
-            page.init("home", {}, 0);
-          }
-          return true;
-        });
+    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
   };
 
   /**
@@ -81,21 +77,28 @@ define(function (require, exports, module) {
   var getCouponCount = function (userId) {
     //获取优惠券
     var time = getTime();
+    util.showLoading();
     var request = account.getCouponInfo(userId, time.beginTime, time.endTime, function (data) {
-      if (data != "undefined" && data.statusCode == "0") {
-        console.log(JSON.stringify(data))
+      util.hideLoading();
+      if (data != "undefined" && typeof  data.statusCode != "undefined" ) {
+        if(data.statusCode=='0'){
+
+        }else{
+          page.toast(data.errorMsg);
+        }
+      } else {
+        page.toast("查询优惠券失败,请稍候重试!");
       }
-      //得到优惠券总张数
-      //couponCount = data.count
+      util.addAjaxRequest(request);
     });
 
     //获取token..
-   /* var request =account.getUserInfoByToken("d53b0a31882653c7d10050ad20c73df5",function(data){
-      console.log("efg");
-      if (data != "undefined") {
-        console.log("abc:"+JSON.stringify(data));
-      }
-    });*/
+    /* var request =account.getUserInfoByToken("d53b0a31882653c7d10050ad20c73df5",function(data){
+     console.log("efg");
+     if (data != "undefined") {
+     console.log("abc:"+JSON.stringify(data));
+     }
+     });*/
   };
 
   /**

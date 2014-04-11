@@ -14,7 +14,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     var params = {};
@@ -29,8 +29,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url:"protocol", data:{}},
       "protocol",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#protocol",
-      canBack ? 1 : 0);
+      "#protocol" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -40,7 +40,7 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-    $("#container").empty().html(template);
+    $("#container").html(template);
   };
 
   /**

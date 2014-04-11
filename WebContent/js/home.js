@@ -33,7 +33,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
     // 参数设置
     var params = {};
     var tkn = util.checkLogin(data);
@@ -56,8 +56,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url: "home", data: params},
       "home",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#home",
-      canBack ? 1 : 0);
+      "#home" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -85,7 +85,7 @@ define(function (require, exports, module) {
    */
   var slideInit = function () {
     $("html").removeClass("mm-opened");
-    $(".homeTrans").removeClass("home_swipe")
+    $(".homeTrans").removeClass("home_swipe");
   };
 
   /**
@@ -470,6 +470,29 @@ define(function (require, exports, module) {
     var data = {};
     data.notices = notices;
 
+    // 设置文字显示内容
+    for (var i = 0, len = data.notices.length; i < len; i++) {
+      if (typeof data.notices[i].lotteryId != "undefined" && data.notices[i].lotteryId != "") {
+        var lottId = data.notices[i].lotteryId, key = config.lotteryIdToStr[lottId];
+        var lotConfig = config.lotteryMap[key];
+        data.notices[i].lottName = lotConfig.name;
+        switch (lotConfig.type) {
+          case "digit":
+            data.notices[i].type = "数字彩";
+            break;
+          case "freq":
+            data.notices[i].type = "高频彩";
+            break;
+          case "jc":
+            data.notices[i].type = "竞彩";
+            break;
+        }
+      } else {
+        data.notices[i].lottName = "资讯";
+        data.notices[i].type = "资讯";
+      }
+    }
+
     $("#main").html(cmp(data));
   };
 
@@ -478,45 +501,38 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
 
-    // 返回
-    $(document).off(events.touchStart(), "#p_center").
-      on(events.touchStart(), "#p_center", function (e) {
-        page.Event.handleTapEvent(this, this, page.Event.activate(), e);
+    // 防止异常跳转
+    $(document).off(events.touchStart(), ".pr0").off(events.activate(), ".pr0");
+
+    // 个人中心, 登录, 注册, 快捷图标
+    $(document).off(events.touchStart(), "#p_center, #login, #register, .return").
+      on(events.touchStart(), "#p_center, #login, #register, .return", function (e) {
+        events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
 
+    // 个人中心
     $(document).off(events.activate(), "#p_center").
       on(events.activate(), "#p_center", function (e) {
         page.init("user/person", {}, 1);
         return true;
       });
 
-
     // 登录
-    $(document).off(events.touchStart(), ".pr0").
-      on(events.touchStart(), ".pr0", function (e) {
-        events.handleTapEvent(e.target, e.target, events.activate(), e);
+    $(document).off(events.activate(), "#login").
+      on(events.activate(), "#login", function (e) {
+        page.init("login", {from: "home"}, 1);
         return true;
       });
 
-    $(document).off(events.activate(), ".pr0").
-      on(events.activate(), ".pr0", function (e) {
-        var id = e.target.id;
-        if (id === "login") {
-          page.init("login", {from: "home"}, 1);
-        } else if (id === "register") {
-          page.init("register", {from: "home"}, 1);
-        }
+    // 注册
+    $(document).off(events.activate(), "#register").
+      on(events.activate(), "#register", function (e) {
+        page.init("register", {from: "home"}, 1);
         return true;
       });
 
     // 快捷图标
-    $(document).off(events.touchStart(), ".return").
-      on(events.touchStart(), ".return", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".return").
       on(events.activate(), ".return", function (e) {
         var $html = $("html"),
@@ -581,6 +597,11 @@ define(function (require, exports, module) {
                 util.clearLocalData(lotConfig.localKey);
                 page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
                 break;
+              case "gjj": // 冠军竞猜
+                var lotConfig = config.lotteryMap[key];
+                util.clearLocalData(lotConfig.localKey);
+                page.init("gjj/bet", {}, 1);
+                break;
               case "jcl": // 竞彩篮球
                 util.clearLocalData(util.keyMap.LOCAL_JCL);
                 page.init('jcl/bet', {}, 1);
@@ -643,6 +664,12 @@ define(function (require, exports, module) {
               // 去定制彩种页面
               page.init("cusLott", {}, 1);
               break;
+            case "award": // 开奖信息
+              page.init("openAll", {}, 1);
+              break;
+            case "hmHal": // 合买大厅
+
+              break;
             case "digit": // 数字彩
             case "freq": // 高频彩
             case "athletics": // 竞彩
@@ -667,15 +694,13 @@ define(function (require, exports, module) {
               page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
               break;
             case "gjj": // 冠军竞猜
+              var lotConfig = config.lotteryMap[key];
+              util.clearLocalData(lotConfig.localKey);
+              page.init("gjj/bet", {lot: lotConfig.key}, 1);
+              break;
             case "jcz": // 竞彩足球
             case "jcl": // 竞彩篮球
 
-              break;
-            case "info": // 资讯
-
-              break;
-            case "award": // 开奖信息
-              page.init("openAll", {}, 1);
               break;
           }
         }
@@ -722,11 +747,11 @@ define(function (require, exports, module) {
       });
 
     // 公告列表点击
-    $(document).off(events.tap(), ".line30").
-      on(events.tap(), ".line30", function (e) {
-        var $tr = $(e.target).closest("tr");
-        if ($tr.length) {
-          var noticeId = $tr.attr("id").split("_")[1];
+    $(document).off(events.tap(), ".zx_list").
+      on(events.tap(), ".zx_list", function (e) {
+        var $li = $(e.target).closest("li");
+        if ($li.length) {
+          var noticeId = $li.attr("id").split("_")[1];
           if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
             page.init("notice/detail", {noticeId: noticeId}, 1);
           }

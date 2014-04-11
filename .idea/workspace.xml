@@ -22,94 +22,7 @@
     <favorites_list name="h5" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/views/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="64" selection-start="3036" selection-end="3040" vertical-scroll-proportion="-6.254237" vertical-offset="2606" max-vertical-offset="4725">
-              <folding>
-                <marker date="1396513052359" expanded="true" signature="2201:2340" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2437:3152" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2500:3131" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2511:3121" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2524:2690" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2538:2676" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2572:2630" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2703:3109" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="2717:2843" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3273:3372" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3513:3838" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3528:3592" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3604:3827" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3678:3801" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3964:4452" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3978:4439" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="3989:4083" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="4002:4071" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="4094:4362" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="4122:4350" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="4385:4424" placeholder="..." />
-                <marker date="1396513052359" expanded="true" signature="4398:4412" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="openAll.tpl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/tpl/openAll.tpl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="23" selection-start="1189" selection-end="1189" vertical-scroll-proportion="-7.352941" vertical-offset="975" max-vertical-offset="1650">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="public.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/css/public.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="771" column="18" selection-start="11480" selection-end="11480" vertical-scroll-proportion="-28.68" vertical-offset="18558" max-vertical-offset="57425">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/WebContent/js/home.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="292" column="44" selection-start="7519" selection-end="7519" vertical-scroll-proportion="0.8079585" vertical-offset="6833" max-vertical-offset="18325">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/js/tools/config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="406" column="15" selection-start="15614" selection-end="15623" vertical-scroll-proportion="0.0" vertical-offset="9797" max-vertical-offset="15275">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ball.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/js/freq/five/ball.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="269" column="52" selection-start="5787" selection-end="5808" vertical-scroll-proportion="0.0" vertical-offset="6375" max-vertical-offset="24025">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="digit.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WebContent/js/services/digit.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="402" column="32" selection-start="8666" selection-end="8692" vertical-scroll-proportion="0.0" vertical-offset="9734" max-vertical-offset="16950">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -119,57 +32,57 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/WebContent/js/f3d/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/pl3/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/ssq/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/syx/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/syy/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/ssq/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/dlt/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/f3d/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/pl3/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/syx/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/syy/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/ssq/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/openLott.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/freq/five/ball.html" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/intro.js" />
         <option value="$PROJECT_DIR$/WebContent/js/freq/intro.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/look.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/three/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/hm.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/tools/util.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/freq/five/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/digit/three/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/tpl/freq/five/smart.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/views/freq/five/smart.html" />
+        <option value="$PROJECT_DIR$/WebContent/js/number/openLott.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/cusLott.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/login.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/openAll.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/protocol.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/register.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/main.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/dlt/ball.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/tmp.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/list.js" />
         <option value="$PROJECT_DIR$/WebContent/js/freq/five/smart.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/number/hm.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/freq/five/ball.js" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/ssq/list.js" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/three/list.js" />
         <option value="$PROJECT_DIR$/WebContent/js/freq/five/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/base/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/openAll.js" />
-        <option value="$PROJECT_DIR$/WebContent/tpl/openAll.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/tpl/number/openLott.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/tpl/number/detail.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/detail.js" />
-        <option value="$PROJECT_DIR$/WebContent/index.html" />
-        <option value="$PROJECT_DIR$/WebContent/js/tools/page.js" />
-        <option value="$PROJECT_DIR$/WebContent/tpl/number/ball_last.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/js/services/digit.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/digit/ssq/ball.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/dlt/list.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/ssq/list.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/three/list.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/freq/five/list.html" />
-        <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/tools/path.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/home.html" />
-        <option value="$PROJECT_DIR$/WebContent/css/public.css" />
+        <option value="$PROJECT_DIR$/WebContent/js/tools/util.js" />
+        <option value="$PROJECT_DIR$/WebContent/views/notice/detail.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/number/detail.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/number/look.html" />
+        <option value="$PROJECT_DIR$/WebContent/js/number/look.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/services/account.js" />
+        <option value="D:/Program Files/Apache Software Foundation/Apache2.2/htdocs/pages/login.html" />
         <option value="$PROJECT_DIR$/WebContent/js/tools/config.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/tools/path.js" />
+        <option value="$PROJECT_DIR$/WebContent/css/public.css" />
+        <option value="$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/digit/ssq/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/digit/three/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/freq/five/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/gjj/bet.html" />
         <option value="$PROJECT_DIR$/WebContent/js/home.js" />
+        <option value="$PROJECT_DIR$/WebContent/tpl/gjj/ball_match.tpl" />
+        <option value="$PROJECT_DIR$/WebContent/views/gjj/intro.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/gjj/list.html" />
+        <option value="$USER_HOME$/桌面/DPX/buy.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/services/gjj.js" />
+        <option value="$PROJECT_DIR$/WebContent/views/gjj/detail.html" />
+        <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/ball.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/digit/ssq/ball.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/digit/three/ball.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/notice/detail.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/number/detail.js" />
+        <option value="$PROJECT_DIR$/WebContent/tpl/gjj/detail.tpl" />
+        <option value="$PROJECT_DIR$/WebContent/js/tools/page.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/gjj/bet.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/gjj/detail.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/gjj/intro.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/gjj/list.js" />
       </list>
     </option>
   </component>
@@ -179,6 +92,22 @@
   <component name="ProjectFrameBounds">
     <option name="width" value="1280" />
     <option name="height" value="770" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -271,135 +200,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tpl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="freq" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="freq" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="five" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="h5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -411,7 +212,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.sourceCode.Yaml" />
+    <property name="options.lastSelected" value="settings" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -425,11 +226,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\html5App\Trunk\Source\h5\WebContent\tpl\gjj" />
+      <recent name="E:\html5App\Trunk\Source\h5\WebContent\views\gjj" />
+      <recent name="E:\html5App\Trunk\Source\h5\WebContent\js\gjj" />
       <recent name="E:\html5App\Trunk\Source\h5\WebContent\views" />
       <recent name="E:\html5App\Trunk\Source\h5\WebContent\js" />
-      <recent name="E:\html5App\Trunk\Source\h5\WebContent\js\dlt" />
-      <recent name="E:\html5App\Trunk\Source\h5\WebContent\views\dlt" />
-      <recent name="E:\html5App\Trunk\Source\h5\WebContent\tpl" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\html5App\Trunk\Source\h5\WebContent\views\freq\intro" />
@@ -469,7 +270,47 @@
       <setting name="preferredDebugBrowser" value="CHROME" />
       <method />
     </configuration>
+    <configuration default="true" type="NodeunitConfigurationType" factoryName="Nodeunit">
+      <setting name="nodePath" value="D:/nodejs/node" />
+      <envs />
+      <setting name="passParentEnvVars" value="true" />
+      <setting name="nodeunitModuleDir" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="testType" value="JS_FILE" />
+      <setting name="jsFile" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
+      <node-js-remote-debug />
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <test-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>BDD</ui>
+      <require />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="true" type="XSLT" factoryName="XSLT">
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
       <method />
     </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="$PROJECT_DIR$">
@@ -544,13 +385,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="770" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495935" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2894309" sideWeight="0.670418" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3195122" sideWeight="0.670418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39910978" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -566,27 +407,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39910978" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32937685" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495935" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2894309" sideWeight="0.670418" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USERS">
@@ -604,359 +424,364 @@
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="h5" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="h5" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/three/ball.js">
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcl/match.tpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="471" column="17" selection-start="11205" selection-end="11214" vertical-scroll-proportion="0.33217993" vertical-offset="11583" max-vertical-offset="18575" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/freq/five/ball.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="92" selection-start="173" selection-end="173" vertical-scroll-proportion="0.21968366" vertical-offset="0" max-vertical-offset="5300">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="950">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/number/openLott.html">
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcl/more_odds.tpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1575" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/athletics/buy.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1800">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/number/hm.html">
+    <entry file="file://$PROJECT_DIR$/WebContent/js/tmp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="2300">
-          <folding />
-        </state>
+        <state line="11" column="18" selection-start="0" selection-end="1393" vertical-scroll-proportion="0.45605308" vertical-offset="0" max-vertical-offset="1900" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/number/detail.html">
+    <entry file="file://$PROJECT_DIR$/WebContent/views/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="15" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="550">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/number/openLott.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="53" selection-start="2984" selection-end="3027" vertical-scroll-proportion="0.53733766" vertical-offset="3069" max-vertical-offset="3800" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/number/look.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/number/look.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="49" selection-start="2849" selection-end="2849" vertical-scroll-proportion="0.0" vertical-offset="1125" max-vertical-offset="3650">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/look.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="17" selection-start="576" selection-end="576" vertical-scroll-proportion="-3.6764705" vertical-offset="750" max-vertical-offset="2100" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../abc/lotteryOfHtml5/WebContent/views/luck/append.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="10" selection-start="2274" selection-end="2306" vertical-scroll-proportion="-11.323529" vertical-offset="1540" max-vertical-offset="2100" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/number/hm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="310" column="28" selection-start="7703" selection-end="7715" vertical-scroll-proportion="0.6633499" vertical-offset="7350" max-vertical-offset="8475" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../abc/lotteryOfHtml5/WebContent/js/luck/append.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="20" selection-start="458" selection-end="493" vertical-scroll-proportion="0.45605308" vertical-offset="375" max-vertical-offset="12025" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/freq/five/smart.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="22" selection-start="384" selection-end="384" vertical-scroll-proportion="0.48330405" vertical-offset="0" max-vertical-offset="600" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/freq/five/smart.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="22" selection-start="267" selection-end="273" vertical-scroll-proportion="0.5584192" vertical-offset="0" max-vertical-offset="1725">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/lib/zepto.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="44" selection-start="2119" selection-end="2125" vertical-scroll-proportion="0.33217993" vertical-offset="1108" max-vertical-offset="49575">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/freq/five/smart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="260" column="20" selection-start="5863" selection-end="5863" vertical-scroll-proportion="0.42951906" vertical-offset="6241" max-vertical-offset="15250">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/protocol.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1000">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="70" selection-start="673" selection-end="689" vertical-scroll-proportion="-7.352941" vertical-offset="375" max-vertical-offset="975">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="9" selection-start="1994" selection-end="1994" vertical-scroll-proportion="-4.68" vertical-offset="1958" max-vertical-offset="5050">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="460" column="5" selection-start="10499" selection-end="10499" vertical-scroll-proportion="0.59038144" vertical-offset="11144" max-vertical-offset="16050">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/three/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="483" column="5" selection-start="10903" selection-end="10903" vertical-scroll-proportion="0.3416252" vertical-offset="11869" max-vertical-offset="16775">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/freq/five/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="505" column="5" selection-start="11515" selection-end="11515" vertical-scroll-proportion="0.0" vertical-offset="12359" max-vertical-offset="19900">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/events.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.4199656" vertical-offset="825" max-vertical-offset="3875" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/jcz/intro.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2225" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/jcz/mix_bet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="20" selection-start="390" selection-end="408" vertical-scroll-proportion="0.5389718" vertical-offset="0" max-vertical-offset="11200">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/cusLott.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-6.91874" vertical-offset="4172" max-vertical-offset="4775">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/openAll.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="30" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="3400">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="11" selection-start="443" selection-end="443" vertical-scroll-proportion="0.6443299" vertical-offset="0" max-vertical-offset="1375" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/services/jcl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="6" selection-start="2309" selection-end="2309" vertical-scroll-proportion="0.33333334" vertical-offset="2149" max-vertical-offset="35975" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="29" selection-start="289" selection-end="289" vertical-scroll-proportion="-5.882353" vertical-offset="0" max-vertical-offset="11750">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/detail.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="20" selection-start="259" selection-end="266" vertical-scroll-proportion="-7.352941" vertical-offset="75" max-vertical-offset="1325">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/number/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="232" column="13" selection-start="5627" selection-end="5627" vertical-scroll-proportion="0.37810946" vertical-offset="5572" max-vertical-offset="7150" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="30" selection-start="272" selection-end="272" vertical-scroll-proportion="0.5389718" vertical-offset="0" max-vertical-offset="6475">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="407" column="23" selection-start="8358" selection-end="8358" vertical-scroll-proportion="11.542289" vertical-offset="3215" max-vertical-offset="11000">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="25" selection-start="1137" selection-end="1137" vertical-scroll-proportion="-9.558824" vertical-offset="300" max-vertical-offset="1575">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/ball_last.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="1" selection-start="663" selection-end="663" vertical-scroll-proportion="0.77319586" vertical-offset="300" max-vertical-offset="1225">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/ball.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="25" selection-start="4049" selection-end="4049" vertical-scroll-proportion="0.0" vertical-offset="4800" max-vertical-offset="17925">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/freq/five/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="11" selection-start="1723" selection-end="1723" vertical-scroll-proportion="0.43760985" vertical-offset="1351" max-vertical-offset="2350">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/three/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="11" selection-start="1948" selection-end="1948" vertical-scroll-proportion="0.6924429" vertical-offset="1381" max-vertical-offset="2350">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/ssq/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="13" selection-start="1990" selection-end="1990" vertical-scroll-proportion="0.7363796" vertical-offset="1356" max-vertical-offset="2350">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/dlt/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="24" selection-start="1886" selection-end="1898" vertical-scroll-proportion="0.62565905" vertical-offset="1344" max-vertical-offset="2350">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/path.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="68" selection-start="3565" selection-end="3565" vertical-scroll-proportion="0.24350649" vertical-offset="2100" max-vertical-offset="3650">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/ball.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="686" column="4" selection-start="16940" selection-end="16940" vertical-scroll-proportion="0.36981758" vertical-offset="16927" max-vertical-offset="18950">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="361" column="39" selection-start="8423" selection-end="8423" vertical-scroll-proportion="0.33665007" vertical-offset="8822" max-vertical-offset="16600">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-3.5588753" vertical-offset="2025" max-vertical-offset="4575">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/tpl/openAll.tpl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="23" selection-start="1189" selection-end="1189" vertical-scroll-proportion="-7.352941" vertical-offset="975" max-vertical-offset="1650">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1925">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/ball_mode.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="191" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="300">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/gjj/ball_mode.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="182" selection-end="191" vertical-scroll-proportion="0.25773194" vertical-offset="0" max-vertical-offset="582">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../abc/lotteryOfHtml5/WebContent/views/jclq/mixed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="56" selection-start="596" selection-end="602" vertical-scroll-proportion="0.43936732" vertical-offset="300" max-vertical-offset="1500" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/services/digit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="402" column="32" selection-start="8666" selection-end="8692" vertical-scroll-proportion="0.0" vertical-offset="9734" max-vertical-offset="16950">
+        <state line="144" column="34" selection-start="3460" selection-end="3631" vertical-scroll-proportion="0.0" vertical-offset="3300" max-vertical-offset="16950">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/css/public.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="771" column="18" selection-start="11480" selection-end="11480" vertical-scroll-proportion="-28.68" vertical-offset="18558" max-vertical-offset="57425">
+        <state line="240" column="19" selection-start="4112" selection-end="4112" vertical-scroll-proportion="0.3633218" vertical-offset="5790" max-vertical-offset="58175">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/freq/five/ball.js">
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="269" column="52" selection-start="5787" selection-end="5808" vertical-scroll-proportion="0.0" vertical-offset="6375" max-vertical-offset="24025">
+        <state line="466" column="30" selection-start="10276" selection-end="10276" vertical-scroll-proportion="-13.1470585" vertical-offset="11203" max-vertical-offset="11850">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/home.html">
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/dlt/list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="64" selection-start="3036" selection-end="3040" vertical-scroll-proportion="-6.254237" vertical-offset="2606" max-vertical-offset="4725">
-          <folding>
-            <marker date="1396513052359" expanded="true" signature="2201:2340" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2437:3152" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2500:3131" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2511:3121" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2524:2690" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2538:2676" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2572:2630" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2703:3109" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="2717:2843" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3273:3372" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3513:3838" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3528:3592" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3604:3827" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3678:3801" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3964:4452" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3978:4439" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="3989:4083" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="4002:4071" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="4094:4362" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="4122:4350" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="4385:4424" placeholder="..." />
-            <marker date="1396513052359" expanded="true" signature="4398:4412" placeholder="..." />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="53.02941" vertical-offset="1803" max-vertical-offset="2350">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/ssq/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="409" column="2" selection-start="8986" selection-end="8986" vertical-scroll-proportion="-13.882353" vertical-offset="9753" max-vertical-offset="10400">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/three/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="199" column="2" selection-start="4973" selection-end="4973" vertical-scroll-proportion="-13.882353" vertical-offset="4503" max-vertical-offset="5150">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/freq/five/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="209" column="2" selection-start="5283" selection-end="5283" vertical-scroll-proportion="0.8295255" vertical-offset="4753" max-vertical-offset="5400">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.233677" vertical-offset="718" max-vertical-offset="1375">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/tools/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="406" column="15" selection-start="15614" selection-end="15623" vertical-scroll-proportion="0.0" vertical-offset="9797" max-vertical-offset="15275">
+        <state line="602" column="28" selection-start="23730" selection-end="23730" vertical-scroll-proportion="0.0" vertical-offset="14797" max-vertical-offset="17025">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../abc/lotteryOfHtml5/WebContent/js/jclq/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="136" column="9" selection-start="2300" selection-end="2699" vertical-scroll-proportion="0.0" vertical-offset="3000" max-vertical-offset="24425" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../abc/lotteryOfHtml5/WebContent/js/jclq/mixed.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="260" column="51" selection-start="6431" selection-end="6474" vertical-scroll-proportion="-1.0364842" vertical-offset="7125" max-vertical-offset="23475" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/freq/intro/syx.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2200" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/gjj/intro.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="10" selection-start="2260" selection-end="2260" vertical-scroll-proportion="-15.264706" vertical-offset="1156" max-vertical-offset="1900">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/services/jcl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="6" selection-start="549" selection-end="549" vertical-scroll-proportion="0.33333334" vertical-offset="549" max-vertical-offset="35375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Apache Software Foundation/Apache2.2/htdocs/pages/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="15" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0" vertical-offset="581" max-vertical-offset="1450">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/gjj/bet.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="8" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="975">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/gjj/ball_match.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="24" selection-start="60" selection-end="60" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="550">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/gjj/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="0" selection-start="1166" selection-end="1166" vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="2125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/桌面/DPX/buy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2180" column="2" selection-start="55246" selection-end="55246" vertical-scroll-proportion="0.0" vertical-offset="53947" max-vertical-offset="54650">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/path.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="127" column="14" selection-start="4941" selection-end="4951" vertical-scroll-proportion="0.0" vertical-offset="2837" max-vertical-offset="3950">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/freq/five/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="20050">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/services/gjj.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="22" selection-start="1908" selection-end="1924" vertical-scroll-proportion="77.24" vertical-offset="4131" max-vertical-offset="4700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/gjj/detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="28" selection-start="260" selection-end="268" vertical-scroll-proportion="-11.029411" vertical-offset="0" max-vertical-offset="550">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="292" column="44" selection-start="7519" selection-end="7519" vertical-scroll-proportion="0.8079585" vertical-offset="6833" max-vertical-offset="18325">
+        <state line="602" column="44" selection-start="16201" selection-end="16229" vertical-scroll-proportion="0.0" vertical-offset="14725" max-vertical-offset="19200">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/ball.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="299" column="33" selection-start="6677" selection-end="6677" vertical-scroll-proportion="0.0" vertical-offset="17844" max-vertical-offset="18425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="520" column="0" selection-start="11941" selection-end="11941" vertical-scroll-proportion="0.0" vertical-offset="12659" max-vertical-offset="16475">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/ball.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="299" column="33" selection-start="6677" selection-end="6677" vertical-scroll-proportion="0.0" vertical-offset="16819" max-vertical-offset="17400">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-19.651741" vertical-offset="11850" max-vertical-offset="16200">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/three/ball.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.223881" vertical-offset="3150" max-vertical-offset="18475">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/notice/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="33" selection-start="1717" selection-end="1717" vertical-scroll-proportion="0.0" vertical-offset="4519" max-vertical-offset="5100">
+          <folding>
+            <marker date="1397198576562" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1397198576562" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1397198576562" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/number/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="278" column="41" selection-start="6983" selection-end="6983" vertical-scroll-proportion="0.0" vertical-offset="6719" max-vertical-offset="7300">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/number/hm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8350">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/number/look.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3650">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/number/openLott.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.053068" vertical-offset="3047" max-vertical-offset="3650">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/detail.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="24" selection-start="669" selection-end="687" vertical-scroll-proportion="0.5704467" vertical-offset="443" max-vertical-offset="1325">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/detail_issue.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="9" selection-start="170" selection-end="170" vertical-scroll-proportion="0.25773194" vertical-offset="0" max-vertical-offset="582">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/gjj/detail.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="6" selection-start="336" selection-end="336" vertical-scroll-proportion="-10.294118" vertical-offset="0" max-vertical-offset="1500">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="240" column="32" selection-start="5964" selection-end="5964" vertical-scroll-proportion="0.5854063" vertical-offset="5647" max-vertical-offset="6250">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/bet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="832" column="5" selection-start="17397" selection-end="17397" vertical-scroll-proportion="0.6268657" vertical-offset="20422" max-vertical-offset="21025">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="205" column="5" selection-start="4242" selection-end="4242" vertical-scroll-proportion="0.6268657" vertical-offset="4747" max-vertical-offset="5350">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/intro.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="9" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.5854063" vertical-offset="2147" max-vertical-offset="2750">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="447" column="14" selection-start="9952" selection-end="9952" vertical-scroll-proportion="0.7097844" vertical-offset="10747" max-vertical-offset="11425">
           <folding />
         </state>
       </provider>

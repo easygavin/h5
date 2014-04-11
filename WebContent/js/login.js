@@ -13,7 +13,7 @@ define(function (require, exports, module) {
    * 初始化
    */
   var init = function (data, forward) {
-    canBack = forward;
+    canBack = forward || 0;
 
     // 参数设置
     from = "";
@@ -32,8 +32,8 @@ define(function (require, exports, module) {
     // 处理返回
     page.setHistoryState({url:"login", data:params},
       "login",
-      (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#login",
-      canBack ? 1 : 0);
+      "#login" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+      canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -43,7 +43,7 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-    $("#container").empty().html(template);
+    $("#container").html(template);
   };
 
   /**
@@ -52,8 +52,8 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
+    $(document).off(events.touchStart(), ".back, .pr0").
+      on(events.touchStart(), ".back, .pr0", function (e) {
         events.handleTapEvent(this, this, events.activate(), e);
         return true;
       });
@@ -69,12 +69,6 @@ define(function (require, exports, module) {
       });
 
     // 注册
-    $(document).off(events.touchStart(), ".pr0").
-      on(events.touchStart(), ".pr0", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     $(document).off(events.activate(), ".pr0").
       on(events.activate(), ".pr0", function (e) {
         page.init("register", {from:"login"}, 1);

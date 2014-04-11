@@ -20,10 +20,10 @@ public class ClientChargeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
-        String token = request.getParameter("token");
+        String userToken = request.getParameter("userToken");
        // if (token == null && !"".equals(token)) {
             //response.sendRedirect("#charge/index?userToken=" + 124);
-            response.sendRedirect("?userToken=124#charge/index");
+            response.sendRedirect("?userToken="+userToken+"#charge/index");
         //}
     }
 }

@@ -10,7 +10,7 @@ import java.net.URLEncoder;
 
 /**
  * Title  财付通充值业务类.
- * @author heming
+ *
  */
 public class CftChargeServiceImpl implements CftChargeService {
 
