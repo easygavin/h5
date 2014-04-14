@@ -68,7 +68,6 @@ define(function (require, exports, module) {
       var data = {
         "amount": params.amount,       //支付金额
         "userId": params.userId,       //会员ID
-        "token": params.token,         //登录令牌
         "couponNo": params.couponNo,   //优惠券号
         "canalNo": params.canalNo,    //渠道编号
         "cardNo": params.cardNo,      //充值卡号
@@ -96,10 +95,9 @@ define(function (require, exports, module) {
 
       var data = {
         "userId": params.userId,      //会员ID
-        "token": params.token,        //登录令牌
         "cardNo": params.cardNo,      //直通卡号
         "password": params.password,  //直通卡密码
-        "mobile": params.mobile,      //手机号
+        "mobile":params.mobile,       //手机号码
         "canalNo": params.canalNo     //渠道编号
       };
 

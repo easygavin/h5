@@ -2,6 +2,7 @@
  * 优惠券
  */
 define(function (require, exports, module) {
+
   var page = require('page'),
       events = require('events'),
       util = require('util'),
@@ -13,6 +14,17 @@ define(function (require, exports, module) {
   // 处理返回参数
   var canBack = 0;
 
+  var userInfo;
+
+  //页码.
+  var pageNo = 1;
+
+  //总页数.
+  var pages = 0;
+
+  //页行数{每页显示10行.}
+  var pageSize = 10;
+
   /**
    * 初始化
    */
@@ -20,17 +32,25 @@ define(function (require, exports, module) {
 
     canBack = forward ? 1 : 0;
 
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     initShow();
 
     bindEvent();
 
     // 参数设置
     var params = {};
+    var tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
+
     // 处理返回
     page.setHistoryState({url: "user/coupon", data: params},
         "user/coupon",
-            (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/coupon",
+            "#user/coupon" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
+    util.hideLoading();
   };
 
   /**
@@ -38,14 +58,9 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
 
-    var tmp = _.template(template);
+    $("#container").html(template);
 
-    $("#container").empty().html(tmp());
-
-    var userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
-    getCouponCount(userInfo.userId);
-
+    getCouponCount();
   };
 
   /**
@@ -60,6 +75,7 @@ define(function (require, exports, module) {
     });
 
     $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+      offBind();
       if (canBack) {
         page.goBack();
       } else {
@@ -67,23 +83,69 @@ define(function (require, exports, module) {
       }
       return true;
     });
+
+    //当点击加载更多按钮的时候.触发
+    $(document).off(events.touchStart(), ".loadText").on(events.touchStart(), ".loadText", function (e) {
+      events.handleTapEvent(this, this, events.activate(), e);
+      return true;
+    });
+
+    $(document).off(events.activate(), ".loadText").on(events.activate(), ".loadText", function (e) {
+      var intRequestPage = parseInt(pageNo, 10);
+      if (intRequestPage < pages) {
+        pageNo = (intRequestPage + 1) + "";
+        getCouponCount();
+      }
+      return true;
+    });
+
+
+    //点击尚未使用的优惠券编号时,跳转到充值页.自动填充优惠券选项卡.
+    $(document).off(events.touchStart(), ".hmBox i").on(events.touchStart(), ".hmBox i", function (e) {
+      events.handleTapEvent(this, this, events.activate(), e);
+      return true;
+    });
+
+    $(document).off(events.activate(), ".hmBox i").on(events.activate(), ".hmBox i", function (e) {
+      var targetId = $(e.target).attr('id');
+      if (targetId != 'undefined' && targetId != '') {
+        var couponCode = targetId.split('_')[1];
+        page.init('charge/index', {"couponCode": couponCode}, 1);
+      }
+      return true;
+    });
+
+    var timer = 0;
+    $(window).on("scroll", function () {
+      if (!timer) {
+        timer = setTimeout(function () {
+          checkScrollPosition();
+          timer = 0;
+        }, 250);
+      }
+    });
+
   };
 
   /**
-   * 获取优惠券总数
-   * @param userId   用户userId.
+   * 获取优惠券列表.
    */
 
-  var getCouponCount = function (userId) {
+  var getCouponCount = function () {
+
+    if (_.isEmpty(userInfo)) {
+      page.init('login', {}, 1);
+    }
     //获取优惠券
     var time = getTime();
-    util.showLoading();
-    var request = account.getCouponInfo(userId, time.beginTime, time.endTime, function (data) {
-      util.hideLoading();
-      if (data != "undefined" && typeof  data.statusCode != "undefined" ) {
-        if(data.statusCode=='0'){
-
-        }else{
+    // 显示加载图标
+    loadingShow(1);
+    var request = account.getCouponInfo(userInfo.userId, time.beginTime, time.endTime, pageNo, pageSize, function (data) {
+      if (!_.isEmpty(data) && typeof  data.statusCode != "undefined") {
+        if (data.statusCode == '0') {
+          //data = JSON.parse('{"statusCode":"0","unUsed":3,"count":3,"list":[{"createTime":"2014-03-22","couponName":"充1000.0送10.0充值优惠券","couponNo":"20140322191","updateTime":"","couponType":"1","statusView":"已使用","realDepositMoney":"null","facePresentMoney":"10.0","id":"8a8b818c44e3d11c0144e943b7280018","flag":"0","realPresentMoney":"null","userId":"ff80808144c543a20144dd3d96c00054","useFlag":"0","expiredTime":"2014-06-23","receiveTime":"2014-03-27","faceDepositMoney":"1000.0"},{"createTime":"2014-03-22","couponName":"充1000.0送10.0充值优惠券","couponNo":"20140322192","updateTime":"","couponType":"1","statusView":"未使用","realDepositMoney":"null","facePresentMoney":"10.0","id":"8a8b818c44e3d11c0144e943b72b0019","flag":"0","realPresentMoney":"null","userId":"ff80808144c543a20144dd3d96c00054","useFlag":"0","expiredTime":"2014-06-23","receiveTime":"2014-03-27","faceDepositMoney":"1000.0"},{"createTime":"2014-03-22","couponName":"充1000.0送10.0充值优惠券","couponNo":"20140322193","updateTime":"","couponType":"1","statusView":"未使用","realDepositMoney":"null","facePresentMoney":"10.0","id":"8a8b818c44e3d11c0144e943b72d001a","flag":"0","realPresentMoney":"null","userId":"ff80808144c543a20144dd3d96c00054","useFlag":"0","expiredTime":"2014-06-23","receiveTime":"2014-03-27","faceDepositMoney":"1000.0"}],"errorMsg":"成功"} ');
+          showCouponItem(data);
+        } else {
           page.toast(data.errorMsg);
         }
       } else {
@@ -91,15 +153,56 @@ define(function (require, exports, module) {
       }
       util.addAjaxRequest(request);
     });
-
-    //获取token..
-    /* var request =account.getUserInfoByToken("d53b0a31882653c7d10050ad20c73df5",function(data){
-     console.log("efg");
-     if (data != "undefined") {
-     console.log("abc:"+JSON.stringify(data));
-     }
-     });*/
+    loadingShow(0);
   };
+
+  /**
+   * 优惠券页面模版.
+   */
+  var showCouponItem = function (data) {
+    pages = (parseInt(data.count) + pageSize - 1) / pageSize;
+    if (pageNo < pages) {
+      $(".loadText").text("查看更多");
+    } else {
+      $(".loadText").text("");
+    }
+    var tmp = $("#couponTpl").html();
+    var cmp = _.template(tmp);
+    var beforeContent = $('.bb1').html();
+    $('.bb1').html(beforeContent + cmp(data));
+  };
+
+  /**
+   * 加载图片的显示
+   */
+  var loadingShow = function (flag) {
+    if (flag) {
+      $(".loadIcon").css({"visibility": "visible"});
+    } else {
+      $(".loadIcon").css({"visibility": "hidden"});
+    }
+  };
+  /**
+   * 检查滚动的位置
+   */
+  var checkScrollPosition = function () {
+    var distance = $(window).scrollTop() + $(window).height();
+    if ($("#couponDiv").height() <= distance) {
+      var intRequestPage = parseInt(pageNo, 10);
+      if (intRequestPage < pages) {
+        pageNo = (intRequestPage + 1) + "";
+        getCouponCount();
+      }
+    }
+  };
+
+  /**
+   * 解除绑定
+   */
+  var offBind = function () {
+    $(window).off("scroll");
+  };
+
 
   /**
    *获取当前时间,结束时间.

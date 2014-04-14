@@ -880,7 +880,9 @@ a.right {
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-
+.buyInformation{font-size:0.875em}
+.buyInformation td{border-bottom:1px solid #ccc;line-height: 1.5em;padding:0.5em 0}
+.buyInformation .f16{font-size: 1.2em;color:#333}
 .jlList b {
   width: 3.57142857em;
   height: 3.57142857em;
@@ -903,21 +905,51 @@ a.right {
   width: 20%
 }
 
+/**已中奖**/
 .bg1 {
-  background: #ffa1b3;
-}
-
-.bg2 {
   background: #ffd201;
 }
 
-.bg3 {
-  background: #b1b0b0;
+/**未满员**/
+.bg2 {
+  background: #e88524;
 }
 
-.bg4 {
-  background: #e67d17;
+/**未开奖**/
+.bg3 {
+  background: #74c465;
 }
+
+/**出票中**/
+.bg4 {
+  background: #ff9bae;
+}
+
+/**失败**/
+.bg5 {
+  background: #7e2491;
+}
+
+/**中奖后撤单**/
+.bg6 {
+    background: #b49adb;
+}
+
+/**追号中**/
+.bg7 {
+    background: #e67d17;
+}
+
+/**未中奖**/
+.bg8 {
+    background: #b1b0b0;
+}
+
+/**已撤单**/
+.bg9 {
+    background: #6c94b9;
+}
+
 
 .jlList li {
   border-bottom: 1px solid #e9e9e9;
@@ -1117,7 +1149,7 @@ html.mm-opened .side {
 }
 
 .inutext {
-  width: 90%;
+  width: 100%;
   font: 0.875em/2.7142857em "微软雅黑";
   height: 2.7142857em;
   background: #e9e9e9;
@@ -1127,7 +1159,7 @@ html.mm-opened .side {
 }
 
 .surebtn {
-  width: 100%;
+  width: 85%;
   border: none;
   background: #f07e04;
   color: #fff;
@@ -1968,8 +2000,8 @@ td.click {
   float: right;
   position: absolute;
   font-size: 4em;
-  right: 0.2em;
-  top: 1em
+  right: 0.123em;
+  top: 1.3em
 }
 
 .anniu .gmchose {
@@ -2284,7 +2316,9 @@ body{font-size:90%}
 #ztk_pay .ztk {
   display: block;
 }
-
+#yd_pay .yd,#lt_pay .lt ,#dx_pay .dxx{
+    display: block;
+}
 .smartModBox {
   position: fixed;
   left: 1%;
@@ -2307,6 +2341,19 @@ body{font-size:90%}
 .smartModBox .m {
   margin: 0.5em;
 }
+.loadIcon {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto;
+    background: url(../images/loading.gif) repeat-x;
+}
+
+.loadText {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    font-size: 18px;
+}
 
 .lCover {
   position: absolute;
@@ -2320,3 +2367,50 @@ body{font-size:90%}
   filter: alpha(opacity:50);
   -moz-opacity: .5;
 }
+/*奖金优化*/
+.inputNum {
+    width:8em;
+    text-align:center;
+    font:0.875em/2.7142857em "微软雅黑";
+    height:2.7142857em;
+    background:#e9e9e9;
+    border:none;
+    margin:0.5em 0.5em 0.5em 0;
+}
+.bat3 {
+    display:inline-block;
+    font:0.875em/2.7142857em "微软雅黑";
+    width:4em;
+    height:2.7142857em;
+    background-color:#fefab3;
+    color:#989061;
+    text-align:center;
+    margin-top:0.5em;
+}
+.bat3.cur {
+    background-color:#b3db95;
+    color:#fff;
+}
+.optList li {
+    border-top:1px solid #eee;
+    padding-bottom:0.625em;
+}
+.decre,.incre {
+    font-size:1em;
+    font-weight:bolder;
+    color:#fff;
+    background-color:#f00;
+    width:1.5em;
+    text-align:center;
+}
+.idn {
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+    width:6em;
+}
+.optList {
+    display:none;
+}
+.space{padding: 0 0.2em;}
+.jbox_div{text-align:center;padding:1em 0 2em 0;border-bottom:1px solid #ccc;margin-bottom:1em}
+.tc_content{font:1.5em/2em "微软雅黑";color:red}

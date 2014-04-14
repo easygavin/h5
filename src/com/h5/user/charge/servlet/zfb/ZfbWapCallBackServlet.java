@@ -55,14 +55,14 @@ public class ZfbWapCallBackServlet extends HttpServlet {
             System.out.println("result="+result);
             if (!verified || !result.equals("success")) {
                 System.out.println("支付宝WAP手机支付验证签名失败！");
-                response.sendRedirect("#charge/index");
+                response.sendRedirect("#charge/callback?type=0&result=0");
             } else {
                 System.out.println("支付宝WAP手机支付验证签名成功！");
-                response.sendRedirect("#charge/index");
+                response.sendRedirect("#charge/callback?type=0&result=1");
             }
         } catch (Exception e) {
             System.out.println("支付宝WAP手机支付校验异常");
-            response.sendRedirect("#charge/index");
+            response.sendRedirect("#charge/callback?type=0&result=0");
         }
 
     }

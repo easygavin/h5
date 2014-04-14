@@ -1,35 +1,36 @@
 /**
- * 修改密码.
+ * 提款须知
  */
 define(function (require, exports, module) {
   var page = require('page'),
-      util = require('util'),
-      zepto = require('zepto'),
-      _ = require('underscore'),
       events = require('events'),
-      template = require('../../views/user/editPassword.html');
+      util = require('util'),
+      $ = require('zepto'),
+      _ = require('underscore'),
+      template = require("../../views/user/drawalnotes.html");
 
-  // 处理返回参数
-  var canBack = 0;
+  var canBack = 1;
 
   /**
    * 初始化
    */
   var init = function (data, forward) {
+    canBack = forward || 0;
 
-    canBack = forward ? 1 : 0;
+    // 参数设置
+    var params = {};
 
     initShow();
 
     bindEvent();
 
-    // 参数设置
-    var params = {};
     // 处理返回
-    page.setHistoryState({url: "user/editPassword", data: params},
-        "user/editPassword",
-            (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/editPassword",
-        forward ? 1 : 0);
+    page.setHistoryState({url: "user/drawalnotes", data: params},
+        "user/drawalnotes",
+            "#user/drawalnotes" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+        canBack);
+
+    // 隐藏加载标示
     util.hideLoading();
   };
 
@@ -56,24 +57,22 @@ define(function (require, exports, module) {
     });
 
     $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
-      if (canBack) {
-        page.goBack();
-      } else {
-        page.init("home", {}, 0);
-      }
+      page.goBack();
       return true;
     });
 
-    // 修改信息.
-    $(document).off(events.touchStart(), "#main surebtn").on(events.touchStart(), ".main", function (e) {
+
+    // 我已阅读.
+    $(document).off(events.touchStart(), "#haveRead").on(events.touchStart(), "#haveRead", function (e) {
       events.handleTapEvent(this, this, events.activate(), e);
       return true;
     });
 
-    $(document).off(events.activate(), "#main surebtn").on(events.activate(), ".main", function (e) {
-
+    $(document).off(events.activate(), "#haveRead").on(events.activate(), "#haveRead", function (e) {
+      page.goBack();
       return true;
     });
   };
+
   return {init: init};
 });

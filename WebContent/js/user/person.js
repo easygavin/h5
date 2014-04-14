@@ -13,6 +13,9 @@ define(function (require, exports, module) {
   // 处理返回参数
   var canBack = 0;
 
+  //从callback到个人中心,传递过来的result &type
+  var result, type;
+
   //用户信息.
   var userInfo = null;
 
@@ -30,6 +33,8 @@ define(function (require, exports, module) {
 
     bindEvent();
 
+    getBalance();
+
     // 参数设置
     var params = {};
     var tkn = util.checkLogin(data);
@@ -37,9 +42,12 @@ define(function (require, exports, module) {
       params.token = tkn;
     }
 
+    type = data.type;
+    result = data.result;
+
     // 处理返回
     page.setHistoryState({url: "user/person", data: params},
-        "user/person", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/person",
+        "user/person", "#user/person" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
 
     // 隐藏加载标示
@@ -53,7 +61,6 @@ define(function (require, exports, module) {
 
     $("#container").html(template);
 
-    getBalance();
   };
 
   /**
@@ -72,11 +79,9 @@ define(function (require, exports, module) {
           var balance = parseFloat(data.userBalance).toFixed(2);
           $("#balance").html(balance > 0 ? balance : 0);
         } else if (data.statusCode == '0007') {
-
         } else {
           page.toast(data.errorMsg);
         }
-
       });
       util.addAjaxRequest(request);
     } else {
@@ -86,25 +91,29 @@ define(function (require, exports, module) {
 
   /**
    * 查询是否绑定身份证(当点击绑定银行卡的时候).
+   * @param flag 如果参数 flag =withdrawal 则表明,用户点击提款.
    */
-  var idState = function () {
+  var idState = function (flag) {
     // 显示遮住层
-    util.showLoading();
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
-        util.hideLoading();
         if (!_.isEmpty(data)) {
-          if (data.statusCode && data.statusCode == '0') {
+          if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
             //存储用户的真实姓名.在绑定银行卡页面需要.
-            util.setLocalJson(util.keyMap.USER_TRUE_NAME,data.name);
-            page.init('user/bindBankCard', {}, 1);
+            util.setLocalJson(util.keyMap.USER_TRUE_NAME, data.name);
+            //如果flag=1则代表用户是点击提款,则接下来判断是否绑定银行卡.
+            if (flag == 'withdrawal') {
+              bankCardState();
+            } else {
+              //否则直接跳转到绑定银行卡界面.
+              page.init('user/bindBankCard', {}, 1);
+            }
           } else if (data.statusCode == '0007') {
             page.toast('暂未进行身份认证');
             page.init('user/authenticate', {}, 1);
           } else {
             page.toast(data.errorMsg);
           }
-          return true;
         } else {
           page.toast('查询失败,请稍后重试!');
         }
@@ -112,7 +121,26 @@ define(function (require, exports, module) {
     } else {
       page.init('login', {}, 1);
     }
+  };
 
+  /**
+   * 查询是否绑定银行卡.
+   */
+  var bankCardState = function () {
+    if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
+      var userId = userInfo.userId, userKey = userInfo.userKey;
+      account.getUserBalance('1', userId, userKey, function (data) {
+        if (!_.isEmpty(data)) {
+          if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
+            page.init('user/withdrawal');
+          } else {
+            page.toast(data.errorMsg);
+          }
+        } else {
+          page.toast('查询失败,请稍后重试');
+        }
+      });
+    }
   };
 
   /**
@@ -121,21 +149,23 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-        on(events.touchStart(), ".back", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
+    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
+      events.handleTapEvent(this, this, events.activate(), e);
+      return true;
+    });
 
-    $(document).off(events.activate(), ".back").
-        on(events.activate(), ".back", function (e) {
-          if (canBack) {
-            page.goBack();
-          } else {
-            page.init("home", {}, 0);
-          }
-          return true;
-        });
+    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+      if (type != '' && type != 'undefined' && result != '' && result != 'undefined') {
+        page.init('home',{},0);
+      }else {
+        if (canBack) {
+          page.goBack();
+        } else {
+          page.init("home", {}, 0);
+        }
+      }
+      return true;
+    });
 
     //选项.
     $(document).off(events.touchStart(), ".account li").
@@ -163,15 +193,15 @@ define(function (require, exports, module) {
             //绑定银行卡.
             case "bindBankCard":
               //先查询是否绑定身份证.
-              idState();
+              idState('');
               break;
             //手机绑定.
             case "bindMobile":
               page.init("user/bindMobile", {}, 1);
               break;
             //密码修改.
-            case "editPassword":
-              page.init("user/editPassword", {}, 1);
+            case "editinfo":
+              page.init("user/editinfo", {}, 1);
               break;
             //身份认证.
             case "authenticate":
@@ -196,7 +226,7 @@ define(function (require, exports, module) {
               page.init("charge/index", {}, 1);
               break;
             case "withdrawal":
-              page.init("charge/withdrawal", {}, 1);
+              idState('withdrawal');
               break;
           }
           return true;

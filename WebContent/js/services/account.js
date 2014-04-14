@@ -100,16 +100,20 @@ define(function (require, exports, module) {
    * @param userId   用户key.
    * @param beginTime  开始时间.
    * @param endTime    结束时间.
+   * @param pageNo     页码
+   * @param pageSize   行数
    * @param callback   回调.
    * @returns {*}
    */
 
-  var getCouponInfo = function (userId, beginTime, endTime, callback) {
+  var getCouponInfo = function (userId, beginTime, endTime, pageNo, pageSize, callback) {
 
     var data = {
       "userId": userId,
       "beginTime": beginTime,
-      "endTime": endTime
+      "endTime": endTime,
+      "pageNo": pageNo,
+      "pageSize": pageSize
     };
 
     var request = $.ajax({
@@ -213,7 +217,7 @@ define(function (require, exports, module) {
       "userId": userId
     };
 
-   var request= $.ajax({
+    var request = $.ajax({
       type: "GET",
       url: path.SEND_MSG_TO_PHONE,
       data: {data: JSON.stringify(data)},
@@ -276,7 +280,7 @@ define(function (require, exports, module) {
    */
   var getBankLocus = function (callback) {
 
-  return $.ajax(
+    return $.ajax(
         {
           type: "POST",
           url: path.GET_BANK_LOCUS,
@@ -302,12 +306,12 @@ define(function (require, exports, module) {
    * @param   bankCode    银行代码
    * @param   callback    回调
    */
- // var bindUserBankCard = function (userId, userKey, name, cardNo, bankInfo, bankName, province, city, password, confirmPassword, bankCode, callback) {
+  // var bindUserBankCard = function (userId, userKey, name, cardNo, bankInfo, bankName, province, city, password, confirmPassword, bankCode, callback) {
   var bindUserBankCard = function (paramValues, callback) {
 
     var data =
     {
-      "userId":paramValues.userId,
+      "userId": paramValues.userId,
       "userKey": paramValues.userKey,
       "name": encodeURIComponent(paramValues.name),
       "cardNo": paramValues.cardNo,
@@ -320,7 +324,7 @@ define(function (require, exports, module) {
       "bankCode": paramValues.bankCode
     };
 
-   var request = $.ajax(
+    var request = $.ajax(
         {
           type: "GET",
           url: path.BIND_BANK_CARD,
@@ -333,27 +337,32 @@ define(function (require, exports, module) {
   };
 
   /**
-   * 提款
-   * @param userId      用户id
-   * @param userKey     用户userKey
-   * @param userName    用户名
-   * @param drawMoney   提款金额
-   * @param drawPwd     密码.
-   * @param callback    回调函数
+   *
+   * @param userId
+   * @param userKey
+   * @param drawMoney
+   * @param mobile
+   * @param drawPwd 是否短信提示 0不需要，1需要
+   * @param smsMsg
+   * @param platform
+   * @param channelNo
+   * @param userName
+   * @param callback
    */
-  var withdrawal = function (userId, userKey, userName, drawMoney, drawPwd, callback) {
-
-    var afterMd5drawPwd = hex_md5(drawPwd).substring(8, 24);
-
+  var withdrawal = function (userId, userKey, drawMoney, mobile, drawPwd, smsMsg, platform, channelNo, userName, callback) {
     var data = {
       "userId": userId,
       "userKey": userKey,
       "drawMoney": drawMoney,
-      "drawPwd": afterMd5drawPwd,
-      "md5Sign": hex_md5("userId=" + userId + ",userKey=" + userKey + ",drawMoney=" + drawMoney + ",drawPwd=" + afterMd5drawPwd + userName).substr(8, 16)
+      "mobile": mobile,
+      "drawPwd": drawPwd,
+      "smsMsg": smsMsg,
+      "platform": platform,
+      "channelNo": channelNo,
+      "md5Sign": hex_md5(userId + userKey + drawMoney + mobile + drawPwd + smsMsg + platform + channelNo + userName).substr(8, 16)
     };
 
-    $.ajax({
+    var request = $.ajax({
       type: "GET",
       url: path.DRAWING,
       data: {data: JSON.stringify(data)},
@@ -361,6 +370,7 @@ define(function (require, exports, module) {
       success: callback,
       error: callback
     });
+    return request;
   };
 
   /**
@@ -389,6 +399,61 @@ define(function (require, exports, module) {
       success: callback,
       error: callback
     });
+  };
+
+  /**
+   * 修改昵称
+   * @param userKey    userKey
+   * @param nickName   昵称
+   * @param callback   回调参数
+   */
+  var updateNickName = function (userKey, nickName, callback) {
+
+    var data =
+    {
+      "userKey": userKey,
+      "nickName": encodeURIComponent(nickName)
+    };
+
+    var request = $.ajax({
+      type: "GET",
+      url: path.UPDATE_NICK_NAME,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
+    });
+
+    return request;
+  };
+
+  /**
+   * 修改提款密码
+   * @param userId
+   * @param newPassword
+   * @param oldPassword
+   * @param callback
+   * @returns {*}
+   */
+  var updateWithDrawal = function (userId, newPassword, oldPassword, callback) {
+
+    var data =
+    {
+      "userId": userId,
+      "newPassword": hex_md5(newPassword).substr(8, 16),
+      "oldPassword": hex_md5(oldPassword).substr(8, 16)
+    };
+
+    var request = $.ajax({
+      type: "GET",
+      url: path.UPDATE_WITHDRAWAL,
+      data: {data: JSON.stringify(data)},
+      dataType: "jsonp",
+      success: callback,
+      error: callback
+    });
+
+    return request;
   };
 
 
@@ -441,7 +506,7 @@ define(function (require, exports, module) {
 
   var getAccountDetailList = function (data, callback) {
 
-    $.ajax({
+   return $.ajax({
       type: "GET",
       url: path.GET_ACCOUNT_DETAIL,
       data: {data: JSON.stringify(data)},
@@ -461,6 +526,8 @@ define(function (require, exports, module) {
     getUserInfoByToken: getUserInfoByToken,
     inspectUserIDCardState: inspectUserIDCardState,
     editLoginPassword: editLoginPassword,
+    updateNickName: updateNickName,
+    updateWithDrawal: updateWithDrawal,
     logout: logout,
     sendCaptcha: sendCaptcha,
     bindMobileNo: bindMobileNo,

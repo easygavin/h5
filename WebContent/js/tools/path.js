@@ -2,7 +2,6 @@
  * APP Path
  */
 define(function (require, exports, module) {
-
   // 管家服务器地址
   // 管家测试："http://uatjc.ecp888.com/" 管家正式："http://gj.cpocp.com/"
   var SERVER_URL = "http://uatjc.ecp888.com/";
@@ -32,7 +31,7 @@ define(function (require, exports, module) {
     //修改提款密码
     UPDATE_WITHDRAWAL:SERVER_URL+"gjuser/changeDrawPw.shtml",
     // 获取账户余额/提款资料接口
-    GET_BALANCE: SERVER_URL + "gjuser/blance/0/getBlance.shtml",
+    GET_BALANCE: MIDDLEWARE + "gjuser/blance/0/getBlance.shtml",
     // 获取银行列表接口
     GET_BANKS: SERVER_URL + "gjuser/bindbankcard/3/getBanks.shtml",
     //优惠券接口
@@ -101,11 +100,11 @@ define(function (require, exports, module) {
     //JCZQ_GAME_LIST: SERVER_URL + "gjjczq!betlist.shtml",
     JCZQ_GAME_LIST: MIDDLEWARE + 'gjjclq!betbyfootwalllist.shtml',
     //竞彩足球购买接口.
-    JCZQ_GAME_BUY: SERVER_URL + "gjjczq.shtml",
+    JCZQ_GAME_BUY: MIDDLEWARE + "gjjczq.shtml",
     // 竞彩足球对阵情报分析
     JCZQ_AGAINST: MIDDLEWARE + "gjdata/gjdata!index.shtml",
     // 竞彩足球购彩记录
-    JCZQ_DETAIL: SERVER_URL + "gjjczq!detail.shtml",
+    JCZQ_DETAIL: MIDDLEWARE + "gjjczq!detail.shtml",
     // 竞彩足球开奖结果接口
     JCZQ_LOTTERY_RECORD: NOTICE_SERVER_URL + "gjjczq!kjlist.shtml",
     // 竞彩足球赛事对阵开奖SP值.
@@ -134,7 +133,7 @@ define(function (require, exports, module) {
 
     // 请求参数
     // 平台类型
-    channelNo: "h5_abc",
+    channelNo: "H5",
     // 渠道号/推荐人
     platform: "e",
     // 手机型号

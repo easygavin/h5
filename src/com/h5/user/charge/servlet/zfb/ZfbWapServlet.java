@@ -34,7 +34,7 @@ public class ZfbWapServlet extends HttpServlet {
             JSONObject jsonObject = JSONObject.fromObject(requestParameter);
             //sign=md5(amount + userId + key);
             String args[] = {"amount", "userId"};
-            String key = Common.getZfbWapKey();
+            String key = Common.getCommonKey();
             jsonObject = Util.getSign(jsonObject, args, key);
             JSONObject object = zfbWapImpl.zfbWapCharge(jsonObject);
             resp.getWriter().write(object.toString());

@@ -6,18 +6,15 @@ define(function (require, exports, module) {
     _ = require('underscore'),
     page = require('page'),
     pageEvent = require('events'),
-    service = require('services/jcl'),
+    fastClick = require('fastclick'),
+    service = require('services/jcz'),
     util = require('util');
-
   // 彩种
   var lotteryType = "";
-
   // 请求方式
   var requestType = "";
-
   // 方案编号
   var projectId = "";
-
   /**
    * 初始化
    */
@@ -38,35 +35,30 @@ define(function (require, exports, module) {
         projectId = data.projectId;
       }
     }
-
     // 参数设置
     var params = {};
     if ($.trim(lotteryType) != "") {
       params.lotteryType = lotteryType;
     }
-
     if ($.trim(requestType) != "") {
       params.requestType = requestType;
     }
-
     if ($.trim(projectId) != "") {
       params.projectId = projectId;
     }
-
     var tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
     }
-
     getResult();
 
     // 绑定事件
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcl/result", data: params},
-      "jcl/result",
-        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/result",
+    page.setHistoryState({url: "jcz/result", data: params},
+      "jcz/result",
+        "#jcz/result" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
       forward ? 1 : 0);
   };
 
@@ -80,7 +72,7 @@ define(function (require, exports, module) {
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
-            require.async('/tpl/athletics/result', function(tpl){
+            require.async('/tpl/athletics/result', function (tpl) {
               $('#main').html(tpl(data));
               $(".tzBox").text($.trim(data.title) + "投注");
             });
@@ -97,30 +89,20 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
+    fastClick.attach(document);
     // 返回
-    $(".back").on(pageEvent.touchStart(), function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-      return true;
-    });
-
-    $(".back").on(pageEvent.activate(), function (e) {
+    $(".back").on('click', function () {
       page.goBack();
       return true;
     });
 
     // 去投注
-    $(".tzBox").on(pageEvent.touchStart(), function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-      return true;
-    });
-
-    $(".tzBox").on(pageEvent.activate(), function (e) {
+    $(".tzBox").on('click', function () {
       // 删除缓存的购买数据
-      util.clearLocalData(util.keyMap.LOCAL_JCL);
-      page.init("jcl/bet", {}, 1);
+      util.clearLocalData(util.keyMap.LOCAL_JCZ);
+      page.init("jcz/mix_bet", {}, 1);
       return true;
     });
   };
-
   return {init: init};
 });

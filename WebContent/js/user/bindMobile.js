@@ -35,12 +35,20 @@ define(function (require, exports, module) {
 
     bindEvent();
 
+    mobileBindState();
+
     // 参数设置
     var params = {};
+
+    var tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
+
     // 处理返回
     page.setHistoryState({url: "user/bindMobile", data: params},
         "user/bindMobile",
-            (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/bindMobile",
+        "#user/bindMobile"+(JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
     util.hideLoading();
   };
@@ -68,7 +76,7 @@ define(function (require, exports, module) {
         //显示绑定号码,隐藏发送验证码按钮.
         $('#captcha').val(displayNo).attr("disabled", true);
         $('#sendCaptcha').hide();
-        $('surebtn').html('返回');
+        $('.surebtn').html('返回');
         $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
           page.goBack();
         });
@@ -157,7 +165,7 @@ define(function (require, exports, module) {
     if (!_.isEmpty(userInfo)) {
       account.bindMobileNo(mobileNo, userInfo.userId, userInfo.userKey, captcha, function (data) {
         if (!_.isEmpty(data)) {
-          if (data.statusCode && data.statusCode == '0') {
+          if (typeof  data.statusCode!='undefined' && data.statusCode == '0') {
             userInfo.userMobile = mobileNo;
             util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
             page.toast('手机绑定成功');
@@ -171,7 +179,7 @@ define(function (require, exports, module) {
         }
       });
     } else {
-      page.initPage("login", {}, 1);
+      page.init("login", {}, 1);
     }
   };
   /**

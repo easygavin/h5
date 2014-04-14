@@ -3,14 +3,7 @@
  */
 define(function (require, exports, module) {
   "use strict";
-  var $ = require('zepto'),
-    _ = require('underscore'),
-    util = require('util'),
-    page = require('page'),
-    config = require('config'),
-    fastClick = require('fastclick'),
-    service = require('services/jcz'),
-    betTpl = require('/views/athletics/jcz/mix_bet.html');
+  var $ = require('zepto'), _ = require('underscore'), util = require('util'), page = require('page'), config = require('config'), fastClick = require('fastclick'), service = require('services/jcz'), betTpl = require('/views/athletics/jcz/mix_bet.html');
   var canBack = 0;
   var betList = {};//对阵列表数据
   module.exports = {
@@ -27,8 +20,7 @@ define(function (require, exports, module) {
         'mix_bet': '混投',
         'uad_bet': '上下盘'
       };
-
-      this.uadList = {};//上下盘列表数据
+      this.uadList = {}; //上下盘列表数据
       this.currPlayName = sessionStorage.getItem('jcz_curr_play_name') || 'mix_bet';//当前玩法,默认是混投[混投、上下盘]
       this.matchMap = {};// match Map值
       this.bufferData = {};// 缓存的数据
@@ -40,12 +32,7 @@ define(function (require, exports, module) {
       this.selLeague = null;// 被选中的联赛
       this.initShow(canBack);
       this.bindEvent();
-      page.setHistoryState(
-        {url: "jcz/mix_bet", data: this.params},
-        "jcz/mix_bet",
-          (JSON.stringify(this.params).length > 2 ?
-            "?data=" + encodeURIComponent(JSON.stringify(this.params)) : "") + "#jcz/mix_bet",
-        canBack);
+      page.setHistoryState({url: "jcz/mix_bet", data: this.params}, "jcz/mix_bet", (JSON.stringify(this.params).length > 2 ? "#jcz/mix_bet" + "?data=" + encodeURIComponent(JSON.stringify(this.params)) : ""), canBack);
     },
     //初始化显示
     initShow: function (forward) {
@@ -131,53 +118,67 @@ define(function (require, exports, module) {
           data.matchId = matchId;
           data.match = self.matchMap[matchId];
           if (matchId) {
-            // 选中模式
-            // 球胜平负
+            // 胜平负
             var spfIds = [], $spf = $item.find(".spf_bet .click");
-            $spf.length && $spf.each(function (j, spf) {
-              var spfId = $(spf).attr("id");
-              spfIds.push(spfId);
-            });
-            titleMap["spf"] = $spf.length;
+            if ($spf.length) {
+              $spf.each(function (j, spf) {
+                spfIds.push($(spf).attr("id"));
+              });
+              titleMap["spf"] = 1;
+            }
             data.spfIds = spfIds;
 
             // 让球胜平负
             var rqspfIds = [], $rqspf = $item.find(".rqspf_bet .click");
-            $rqspf.length && $rqspf.each(function (k, rqspf) {
-              var rqspfId = $(rqspf).attr("id");
-              rqspfIds.push(rqspfId);
-            });
-            titleMap["rqspf"] = $rqspf.length;
+            if ($rqspf.length) {
+              $rqspf.each(function (k, rqspf) {
+                rqspfIds.push($(rqspf).attr("id"));
+              });
+              titleMap["rqspf"] = 1;
+            }
             data.rqspfIds = rqspfIds;
 
             // 总进球
             var zjqIds = [], $zjq = $item.find(".zjq_bet .click");
-            $zjq.length && $zjq.each(function (d, zjq) {
-              var zjqId = $(zjq).attr("id");
-              zjqIds.push(zjqId);
-            });
-            titleMap["zjq"] = $zjq.length;
-
+            if ($zjq.length) {
+              $zjq.each(function (d, zjq) {
+                zjqIds.push($(zjq).attr("id"));
+              });
+              titleMap["zjq"] = 1;
+            }
             data.zjqIds = zjqIds;
 
             // 半全场
             var bqcIds = [], $bqc = $item.find(".bqc_bet .click");
-            $bqc.length && $bqc.each(function (c, bqc) {
-              var bqcId = $(bqc).attr("id");
-              bqcIds.push(bqcId);
-            });
-            titleMap["bqc"] = $bqc.length;
+            if ($bqc.length) {
+              $bqc.each(function (c, bqc) {
+                var bqcId = $(bqc).attr("id");
+                bqcIds.push(bqcId);
+              });
+              titleMap["bqc"] = 1;
+            }
             data.bqcIds = bqcIds;
 
             //比分
             var bfIds = [], $bf = $item.find(".bf_bet .click");
-            $bf.length && $bf.each(function (c, bf) {
-              var bfId = $(bf).attr("id");
-              bfIds.push(bfId);
-
-            });
-            titleMap["bf"] = $bf.length;
+            if ($bf.length) {
+              $bf.each(function (c, bf) {
+                bfIds.push($(bf).attr("id"));
+              });
+              titleMap["bf"] = 1;
+            }
             data.bfIds = bfIds;
+
+            //上下盘
+            var uadIds = [], $uad = $item.find('.uad_bet .click');
+            if ($uad.length) {
+              $uad.each(function (c, uad) {
+                uadIds.push($(uad).attr("id") +'_' + $(uad).data('text'));
+              });
+              titleMap["uad"] = 1;
+            }
+            data.uadIds = uadIds;
+
             matchBetList.push(data);
           }
         }
@@ -205,10 +206,7 @@ define(function (require, exports, module) {
     },
     //处理数据并显示赛事列表
     showMatchItems: function () {
-      var self = this,
-        url = 'mix_bet' == self.currPlayName ?
-          '/tpl/athletics/jcz/match' : '/tpl/athletics/jcz/uad',
-        htmlStr = '';
+      var self = this, url = 'mix_bet' == self.currPlayName ? '/tpl/athletics/jcz/match' : '/tpl/athletics/jcz/uad', htmlStr = '';
       console.log(self.currPlayName);
       require.async(url, function (tpl) {
         _.each(betList.datas, function (data) {
@@ -230,8 +228,7 @@ define(function (require, exports, module) {
     },
     //添加赛事种类列表
     addLeagueItems: function () {
-      var htmlStr = '',
-        $leagueBox = $('.leagueBox');
+      var htmlStr = '', $leagueBox = $('.leagueBox');
       _.map(this.leagueMap, function (value, key) {
         htmlStr += '<li class="item click" data-num="' + value + '">' + key + '[' + value + ']场</li>';
       });
@@ -239,8 +236,7 @@ define(function (require, exports, module) {
     },
     //更新选择赛事类型中的场数
     updateSelMatLen: function (num, opt) {
-      var $selectNum = $(".leagueBox .red"),
-        selectNum = (opt ? +$selectNum.text() : 0) + num;
+      var $selectNum = $(".leagueBox .red"), selectNum = (opt ? +$selectNum.text() : 0) + num;
       $selectNum.text(selectNum);
       opt && this.toggleSelAllLea(selectNum);
     },
@@ -255,39 +251,43 @@ define(function (require, exports, module) {
     showBuffer: function () {
       var self = this;
       var matchBetList = this.bufferData.matchBetList;
-      for(var i = 0, len = matchBetList.length; i < len; i++) {
+      for (var i = 0, len = matchBetList.length; i < len; i++) {
         var item = matchBetList[i];
         var matchId = item.matchId;
         var spfIds = item.spfIds,
           rqspfIds = item.rqspfIds,
           zjqIds = item.zjqIds,
           bqcIds = item.bqcIds,
-          bfIds = item.bfIds;
+          bfIds = item.bfIds,
+          uadIds = item.uadIds;
         var $match = $('.match[ data-match-id=' + matchId + ']');
-        if (rqspfIds.length > 0 || zjqIds.length > 0 || bqcIds.length > 0 || bfIds.length > 0) {
+        if (zjqIds.length > 0 || bqcIds.length > 0 || bfIds.length > 0) {
           // 显示SP层
           self.showMoreOdds(matchId);
         }
         // 胜平负
-        for(var j = 0, jLen = spfIds.length; j < jLen; j++) {
+        for (var j = 0, jLen = spfIds.length; j < jLen; j++) {
           $match.find('#' + spfIds[j]).addClass("click");
         }
         // 让球胜平负
-        for(var k = 0, kLen = rqspfIds.length; k < kLen; k++) {
+        for (var k = 0, kLen = rqspfIds.length; k < kLen; k++) {
           $match.find('#' + rqspfIds[k]).addClass("click");
         }
         // 总进球
-        for(var d = 0, dLen = zjqIds.length; d < dLen; d++) {
+        for (var d = 0, dLen = zjqIds.length; d < dLen; d++) {
           $match.find('#' + zjqIds[d]).addClass("click");
         }
         // 半全场
-        for(var c = 0, cLen = bqcIds.length; c < cLen; c++) {
+        for (var c = 0, cLen = bqcIds.length; c < cLen; c++) {
           $match.find('#' + bqcIds[c]).addClass("click");
         }
         // 比分
-        for(var f = 0, bLen = bfIds.length; f < bLen; f++) {
+        for (var f = 0, bLen = bfIds.length; f < bLen; f++) {
           $match.find('#' + bfIds[f]).addClass("click");
         }
+        _.each(uadIds,function(i){
+          $match.find('#uad_'+ i.split('_')[1]).addClass('click');
+        });
         if (spfIds.length || rqspfIds.length || zjqIds.length || bqcIds.length || bfIds.length) {
           $match.addClass('on_show');
           $match.find('.arr').addClass('f07e04');
@@ -297,9 +297,7 @@ define(function (require, exports, module) {
     },
     //显示更多赔率
     showMoreOdds: function (e) {
-      var $match = '',
-        matchId = '',
-        data = {};
+      var $match = '', matchId = '', data = {};
       if ('string' == typeof e) {
         $match = $('.match[ data-match-id=' + e + ']');
         matchId = e;
@@ -319,9 +317,7 @@ define(function (require, exports, module) {
     },
     //页面跳转
     goPage: function (e) {
-      var self = this,
-        $tar = $(e.target),
-        id = $tar.prop('id') || $tar.prop('class');
+      var self = this, $tar = $(e.target), id = $tar.prop('id') || $tar.prop('class');
       switch (id) {
         case 'hm_menu':
           break;
@@ -399,8 +395,7 @@ define(function (require, exports, module) {
       }.bind(this));
       //赛事筛选-全选
       $('.leagueBox').on('click', '.selAll', function (e) {
-        var $tar = $(e.target),
-          $leagueBox = $('.leagueBox');
+        var $tar = $(e.target), $leagueBox = $('.leagueBox');
         if ($tar.text() == '全选') {
           $leagueBox.find('.item').addClass('click');
           $leagueBox.find('.red').text(this.leagueLength);
@@ -417,8 +412,7 @@ define(function (require, exports, module) {
       $('.menuBox').on('click', 'a:not(.click)', this.switchPlay.bind(this));
       //选取赔率
       this.$page.on('click', 'td[class^="odds"]', function (e) {
-        var $tar = $(e.target),
-          $div = $tar.closest('.match');
+        var $tar = $(e.target), $div = $tar.closest('.match');
         $tar.toggleClass('click');
         if ($div.find('.click').length) {
           $div.find('.arr').addClass('f07e04');

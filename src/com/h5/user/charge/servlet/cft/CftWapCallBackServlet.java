@@ -27,17 +27,19 @@ public class CftWapCallBackServlet extends HttpServlet {
         // 验证签名
         if (respHandler.isTenpaySign()) {
             String payResult = respHandler.getParameter("pay_result");
-
             // 判断是否支付成功
             if ("0".equals(payResult)) {
                 System.out.printf("财付通wap手机支付后台通知支付成功，充值订单号为" + orderNo);
+                response.sendRedirect("#charge/callback?type=1&result=1");
             } else {
                 System.out.printf("财付通wap手机支付后台通知支付失败，支付结果为：" + payResult
                         + "，充值订单号为：" + orderNo);
+                response.sendRedirect("#charge/callback?type=1&result=0");
             }
         } else {
             System.out.printf("服务器异步返回=>" + respHandler.getDebugInfo());
             System.out.printf("财付通wap手机支付服务器通知，验证签名失败！");
+            response.sendRedirect("#charge/callback?type=1&result=0");
         }
 
 

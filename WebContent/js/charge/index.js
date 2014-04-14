@@ -11,7 +11,7 @@ define(function (require, exports, module) {
           template = require("../../views/charge/index.html"),
           charge = require('services/charge'),
           account = require('services/account'),
-          md5=require('tools/md5');
+          md5 = require('tools/md5'),
           path = require('path');
 
       // 处理返回参数
@@ -41,6 +41,8 @@ define(function (require, exports, module) {
       //直通卡充值[随机生成的四位验证码]
       var randomNum = '';
 
+      //从callback失败到充值中心,传递过来的result &type
+      var result, type;
 
       /**
        * 初始化
@@ -57,11 +59,19 @@ define(function (require, exports, module) {
           params.token = tkn;
         }
 
+        type = data.type;
+        result = data.result;
+
+        if (typeof data.couponCode != "undefined" && $.trim(data.couponCode) != '') {
+          couponCode = data.couponCode;
+          params.couponCode = couponCode;
+        }
+
         userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
         //参数设定,包括客户端传递,或者H5其他页面传递..
 
-        browserParameterSettings(data, params);
+        //browserParameterSettings(data, params);
 
         initShow();
 
@@ -69,7 +79,8 @@ define(function (require, exports, module) {
 
         // 处理返回
         page.setHistoryState({url: "charge/index", data: params},
-            "charge/index", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#charge/index",
+            "charge/index",
+                "#charge/index" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
             canBack);
         util.hideLoading();
       };
@@ -131,7 +142,6 @@ define(function (require, exports, module) {
         util.showLoading();
         var request = account.getUserInfoByToken(userToken, function (data) {
           util.hideLoading();
-          alert(JSON.stringify(data));
           if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
             if (data.status == '0') {
               $("#balance").html(parseFloat(data.userBalance).toFixed(2));
@@ -157,7 +167,7 @@ define(function (require, exports, module) {
       var getCouponCount = function (userId) {
         var time = getTime();
         util.showLoading();
-        var request = account.getCouponInfo(userId, time.beginTime, time.endTime, function (data) {
+        var request = account.getCouponInfo(userId, time.beginTime, time.endTime, 1, 10, function (data) {
           util.hideLoading();
           //得到优惠券总张数
           if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
@@ -173,7 +183,7 @@ define(function (require, exports, module) {
        */
       var disableCouponInput = function () {
         if (couponCode != '') {
-          $("#coupon").attr("readonly", true).val(couponCode);
+          $("#couponCode").attr("readonly", true).val(couponCode);
         }
       };
 
@@ -231,9 +241,6 @@ define(function (require, exports, module) {
           } else if (couponNo != '' && reg.test(couponNo)) {
             page.toast("请输入有效的优惠券编号");
             return false;
-          } else if (couponNo != '' && couponNo.length != 21) {
-            page.toast("您输入的优惠券号不正确");
-            return false;
           }
           parameterValues.couponNo = couponNo; //优惠券编号.
         }
@@ -275,7 +282,6 @@ define(function (require, exports, module) {
         parameterValues = {};
         parameterValues.amount = amount;           //支付金额.
         parameterValues.userId = userInfo.userId;   //用户Id
-        parameterValues.token = userInfo.userKey;   //token登录令牌 默认是userKey
         parameterValues.couponNo = '';             //充值卡充值,暂时没有优惠券选项.
         parameterValues.canalNo = userInfo.platform;//canalNo 渠道编号.
         parameterValues.cardNo = serialNumber;     //充值卡号.
@@ -334,7 +340,6 @@ define(function (require, exports, module) {
         }
         parameterValues = {};
         parameterValues.userId = userInfo.userId;   //用户Id
-        parameterValues.token = userInfo.userKey;   //登录令牌(默认是userKey)
         parameterValues.cardNo = ztkNum;            //直通卡号
         parameterValues.password = ztkPass;         //直通卡密码
         parameterValues.mobile = zktTele;           //手机号
@@ -376,10 +381,8 @@ define(function (require, exports, module) {
         if (flag) {
           util.showLoading();
           charge.cftWap(parameterValues, function (data) {
-            alert(JSON.stringify(data));
             util.hideLoading();
             if (typeof  data != "undefined" && typeof data.statusCode != "undefined") {
-              alert(JSON.stringify(data));
               if (data.statusCode == '0') {
                 $("#cftWapHref").attr("target", "_parent").attr("href", data.reqUrl).trigger("click");
               } else {
@@ -407,8 +410,11 @@ define(function (require, exports, module) {
                 page.answer(
                     "支付请求提交成功", "充值卡支付请求提交成功，请2分钟后查询账户余额！",
                     "个人中心", "确定",
-                    function (e) {page.init("user/person", {}, 0);},
-                    function (e) { }
+                    function (e) {
+                      page.init("user/person", {}, 0);
+                    },
+                    function (e) {
+                    }
                 );
               } else {
                 page.toast(data.errorMsg);
@@ -432,10 +438,14 @@ define(function (require, exports, module) {
             if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '1') {
                 page.answer(
-                    "充值成功","恭喜您充值成功",
-                    "个人中心","确定",
-                    function (e) { page.init("user/person", {}, 0);},
-                    function (e) {}
+                    "充值成功", "恭喜您充值成功",
+                    "个人中心", "确定",
+                    function (e) {
+                      page.init("user/person", {}, 0);
+                    },
+                    function (e) {
+                      page.goBack();
+                    }
                 );
               } else {
                 page.toast(data.errorMsg);
@@ -458,7 +468,15 @@ define(function (require, exports, module) {
           return true;
         });
         $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
-          page.goBack();
+          if (type != '' && type != 'undefined' && result != '' && result != 'undefined') {
+            page.init('user/person',{},1);
+          }else {
+            if (canBack) {
+              page.goBack();
+            } else {
+              page.init("home", {}, 0);
+            }
+          }
           return true;
         });
 

@@ -509,10 +509,7 @@ define(function (require, exports, module) {
       .on(events.click(), ".tabopition span:not(.click)", function (e) {
         var $span = $(e.currentTarget);
         var tabId = $span.attr("id").split("_")[1];
-        $(".tabopition li").removeClass("click");
-        $("#tab_" + tabId).addClass("click");
         $span.addClass('click').siblings().removeClass('click');
-
         if (tabId == "0") {
           // 普通过关
           showDan(1);

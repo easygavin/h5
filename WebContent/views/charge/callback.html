@@ -1,22 +1,113 @@
 <!--充值回调页面.-->
-<header>
-  <div id="title">
-    <a class="back"><i class="fm">&#xf035;</i>返回</span></a>
+<div class="homeTrans">
+  <!--头部-->
+  <header>
+    <div>
+      <a class="back"><i class="fm">&#xf035;</i>返回</a>
+
+      <h1 class="f24">彩票直通车</h1>
+        <span class="pr0">
+            <!--barTmp-->
+        </span>
+    </div>
+  </header>
+
+  <div id="success" class="jbox_div" style="display: none">
+    <p class="tc_content">恭喜你,充值成功!</p>
+    <p class="mt10"><a class="clearall" id="getBalance">查看余额</a><a id="toIndex_s" class="clearall ml10">去首页</a></p>
   </div>
-</header>
 
-<!--充值成功显示.-->
-<div id="success" class="hidden">
- <h3>恭喜您充值成功</h3>
-  <a id="withdrawal" class="gmButton ml10">查看余额</a>
-  <a id="charge" class="gmButton">去首页</a>
+  <div id="error" class="jbox_div" style="display: none">
+    <p class="tc_content">糟糕,充值失败!</p>
+    <p class="mt10"><a class="clearall" id="recharge">重新充值</a><a id="toIndex_e" class="clearall ml10">去首页</a></p>
+  </div>
+
+  <div class="bunner">
+    <div id="slides" class="ctx">
+
+    </div>
+    <div class="grayBg">
+      <a class="title">彩票直通车</a>
+      <b class="close fm">&#xf064;</b>
+    </div>
+  </div>
+  <!--内容-->
+  <div id="main" class="tc">
+    <!--lotTmp-->
+  </div>
 </div>
 
-<div id="error" class="hidden">
-  <h3>充值失败</h3>
-</div>
+<!--未登录或无定制彩种-->
+<script type="text/template" id="customNTpl">
+  <a class="czdz">+</a>
 
-<a id="toSSQ">双色球,两元变身1000万</a><br>
-<a id="to11x5">十一运夺金,两元变身1000万</a><br>
-<a id="toJz">竞彩足球,返奖率高达69%</a><br>
+  <p class="f14 pb1">请先
+    <% if (!hasLogin) { %>
+    <a id="toLogin" class="cf60">登录</a>,
+    <% } %>
+    定制属于您的彩种</p>
+</script>
+
+
+<!--彩种模板-->
+<script type="text/template" id="lotTpl">
+  <ul class="index">
+    <% _.each(lots, function (l) { %>
+    <li id="<%=l.key%>">
+      <dl>
+        <dt>
+          <a>
+            <div class="sublogo">
+              <img src="<%=l.logo%>"/>
+            </div>
+            <p><%=l.name%></p>
+          </a>
+        </dt>
+        <dd>
+          <p>
+            <a class="gmButton fr"><b class="fm">&#xe000;</b>购买</a>
+            <i class="smbg"><i></i>HOT</i>
+          </p>
+
+          <p class="cf60"><%=l.desc%></p>
+          <% if (l.hasDetail) { %>
+          <p>截止时间：<span class="endTime"></span></p>
+
+          <p><i class="fm fr xq">&#xf065;</i>当期奖池：<i class="cf60"><span class="pool">0</span>元</i></p>
+          <% } %>
+        </dd>
+      </dl>
+    </li>
+    <% });%>
+  </ul>
+</script>
+
+
+<!--资讯列表-->
+<script type="text/template" id="openLotTpl">
+  <table cellpadding="0" cellspacing="0" width="100%">
+    <tbody>
+    <tr>
+      <td>
+        <a class="chose click"><%=issueNo %> 期开奖</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="kjBall">
+        <% _.each(reds, function (r) { %>
+        <span class="red"><%=r %></span>
+        <% });%>
+        <% _.each(blues, function (b) { %>
+        <span class="blue"><%=b %></span>
+        <% });%>
+      </td>
+    </tr>
+    <tr class="min">
+      <td>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</script>
+
 

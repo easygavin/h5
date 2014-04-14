@@ -288,7 +288,7 @@ define(function (require, exports, module) {
           );
           return false;
         }
-        page.init("user/buyRecord", {lotteryId: 36}, 1);
+        page.init("user/buyRecord", {lotteryTypeArray:"36|37|38|39|53"}, 1);
         return false;
       });
       // 开奖信息

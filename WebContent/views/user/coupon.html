@@ -1,14 +1,41 @@
-<!--头部-->
-<header>
-  <a class="back"><i class="fm">&#xf035;</i>我的购彩券</a>
-</header>
-<div class="w45"></div>
-<!--内容-->
-<div id="main" class="f14">
+<div id="couponDiv">
+  <!--头部-->
+  <header>
+    <a class="back"><i class="fm">&#xf035;</i>我的优惠券</a>
+  </header>
+  <!--内容-->
+  <div id="main" class="f14">
+    <table cellpadding="0" cellspacing="0" width="100%" class="bb1">
 
+    </table>
+  </div>
+  <div class="w45"></div>
+  <footer>
+    <div class="loadText"></div>
+    <div class="loadIcon"></div>
+  </footer>
 </div>
+<script type="text/template" id="couponTpl">
+  <% _.each(list, function (m) { %>
+  <tr>
+    <td>
+      <div class="hmBox">
+        <p class="bl3">优惠券类型:<%=m.couponName%></p>
 
-<div class="w45"></div>
-<footer>
-  <i>获取更多</i>
-</footer>
+        <p>优惠劵号：<%=m.couponNo%></p>
+
+        <p>获得时间：<%=m.createTime%></p>
+
+        <p>过期时间：<%=m.expiredTime%></p>
+        <%if(m.statusView=='未使用'){%>
+        <i id='y_<%=m.couponNo%>' class="fm rhjbg f07e04">&#xf008;</i>
+        <%}else if(m.statusView=='已使用'){%>
+        <i class="fm rhjbg">&#xf009;</i>
+        <%}else if(m.statusView=='已过期'){%>
+        <i class="fm rhjbg">&#xf009;</i>
+        <%}%>
+      </div>
+    </td>
+  </tr>
+  <% });%>
+</script>

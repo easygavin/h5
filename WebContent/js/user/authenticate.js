@@ -25,20 +25,25 @@ define(function (require, exports, module) {
 
     canBack = forward ? 1 : 0;
 
+    loginState = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     initShow();
 
     bindEvent();
-
-    loginState = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     idState();
 
     // 参数设置
     var params = {};
+
+    var tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
     // 处理返回
     page.setHistoryState({url: "user/authenticate", data: params},
         "user/authenticate",
-            (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/authenticate",
+        "#user/authenticate"+(JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
 
     // 隐藏加载标示
@@ -105,7 +110,7 @@ define(function (require, exports, module) {
         util.hideLoading();
         $('.surebtn').html('确认');
         if (!_.isEmpty(data)) {
-          if (data.statusCode && data.statusCode == '0') {
+          if (typeof data.statusCode!='undefined' && data.statusCode == '0') {
             showItems(data.name, data.personCardId);
             //存储用户的真实姓名.在绑定银行卡页面需要.
             util.setLocalJson(util.keyMap.USER_TRUE_NAME, data.name);

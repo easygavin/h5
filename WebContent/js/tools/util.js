@@ -28,6 +28,7 @@ define(function (require, exports, module) {
   // 关键字Map
   util.keyMap = {
     LOCAL_USER_INFO_KEY: "local_user_info", // 本地登录用户信息
+    USER_TRUE_NAME:"user_true_name",  //用户真实姓名（在绑定身份证成功,个人中心点绑定银行卡→→保存,在绑定银行卡时使用）.
     LOCAL_TO_HM:"local_to_hm", // 发起合买
     LOCAL_FIVE_SMART: "local_five_smart", // 11选5智能追号
     LOCAL_CUSTOM: "local_custom", // 用户定制彩种

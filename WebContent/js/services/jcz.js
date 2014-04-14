@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
-  var path = require('path'),
-    util = require('util');
+  var path = require('path'), util = require('util');
 
   //胆码
   var danNO = {};
@@ -162,7 +161,7 @@ define(function (require, exports, module) {
     var minCross = getMinCrossNum(dans);
     var maxCross = getMaxCrossNum(counts, types);
 
-    for(var i = minCross; i < maxCross + 1; i++) {
+    for (var i = minCross; i < maxCross + 1; i++) {
       ways.push(i + "-1");
     }
 
@@ -176,7 +175,7 @@ define(function (require, exports, module) {
   var getMaxCrossNum = function (counts, types) {
     var maxCross = 8;
 
-    for(var i = 0; i < types.length; i++) {
+    for (var i = 0; i < types.length; i++) {
       var max = maxMap[types[i]].max;
       maxCross = maxCross > max ? max : maxCross;
     }
@@ -215,7 +214,7 @@ define(function (require, exports, module) {
     obj.minArr = [];  //最小奖金
     obj.danMinArr = [];//最小胆奖金
     //选择的过关模式.
-    for(var len = 0; len < ggmodeArray.length; len++) {
+    for (var len = 0; len < ggmodeArray.length; len++) {
       obj.ggmode.push(ggmodeArray[len]);
     }
 
@@ -223,8 +222,8 @@ define(function (require, exports, module) {
       var gameid = $(this).attr("id").substring(2);   //对阵Id,"tzxxF20140301008" m_F20140301008
       var cc = $(this).find("span");             //对象 <em ltype="spf" xxsort="1" id="F20140301008spf_3" sp="2.04" onclick="clickxx(this)">胜</em>
       var idx = gameid.substring(1);                     //       id   20140301008  <tr sort="20140301008" class="matchinfo" id="tzxxF20140301008"/>
-      var item = [], sfp_ = [], jqs_ = [], cbf_ = [], bqc_ = [], rqspf_ = [];
-      var sfp_Play = [], jqs_Play = [], cbf_Play = [], bqc_Play = [], rqspf_Play = [];
+      var item = [], sfp_ = [], jqs_ = [], cbf_ = [], bqc_ = [], rqspf_ = [], uad_ = [];
+      var sfp_Play = [], jqs_Play = [], cbf_Play = [], bqc_Play = [], rqspf_Play = [], uad_Play= [];
       var maxmin = [];//一场比赛中的最大最小值
       var hhsp = [];//一场比赛中的所有sp值
       var tempArr = spArr[gameid];
@@ -256,6 +255,9 @@ define(function (require, exports, module) {
         } else if (type == "rqspf") {
           rqspf_.push(sp);
           rqspf_Play.push(str);
+        } else if ('uad' == type) {//上下盘
+          uad_.push(sp);
+          uad_Play.push(str);
         }
         hhsp.push(str + "(" + sp + ")");
         maxmin.push(sp);
@@ -267,6 +269,7 @@ define(function (require, exports, module) {
       item.push("cbf_" + cbf_.length + "_" + (max(cbf_) + "|" + min(cbf_)) + "_" + idx + "=" + cbf_Play.join("/") + "^" + cbf_.join("/"));
       item.push("bqc_" + bqc_.length + "_" + (max(bqc_) + "|" + min(bqc_)) + "_" + idx + "=" + bqc_Play.join("/") + "^" + bqc_.join("/"));
       item.push("rqspf_" + rqspf_.length + "_" + (max(rqspf_) + "|" + min(rqspf_)) + "_" + idx + "=" + rqspf_Play.join("/") + "^" + rqspf_.join("/"));
+      item.push("uad_" + uad_.length + "_" + (max(uad_) + "|" + min(uad_)) + "_" + idx + "=" + uad_Play.join("/") + "^" + uad_.join("/"));
       var count = [];
       $.each(item, function (i) {
         var v = item[i].split("_");
@@ -309,7 +312,7 @@ define(function (require, exports, module) {
     var touzhu = [];                     //投注时用到
     var isSpfOrRqSpfPlay = isSpfRqspf(obj), MaxChuan, MinChuan, newMaxPirze = [], newMinPirze = [], info;
     if (obj.ggmode.length != 0) {
-      if (!isSpfOrRqSpfPlay) {              //只有当前选择的比赛当中,没有1场胜平负才会执行下面.否则跳转到 359行.
+      if (!isSpfOrRqSpfPlay) {  //只有当前选择的比赛当中,没有1场胜平负才会执行下面.否则跳转到 359行.
         if (gg[0].split("-")[1] == 1) {  //串一的
           var pass = gg[0].split("-")[0];
           var danSize = danMinArr.length;
@@ -318,18 +321,18 @@ define(function (require, exports, module) {
           /*模糊定胆*/
           var danMinHit = danSize;
           var temp2Array = [];
-          for(var i = 0; i < danMinHit; i++) {
+          for (var i = 0; i < danMinHit; i++) {
             var spz = danMinArr[i].toString();
             temp2Array.push(spz.substring(spz.indexOf(".") + 1, spz.length).length < 2 ? spz.replace(".", "") + "0" : spz.toString().replace(".", ""));
           }
           var min_arr = [];
-          for(var i = danMinHit; i < danSize; i++) {
+          for (var i = danMinHit; i < danSize; i++) {
             min_arr.push(danMinArr[i]);
           }
           min_arr = min_arr.concat(minArr);
           min_arr.sort(service.asc);
           var len = pass - danMinHit;
-          for(var i = 0; i < len; i++) {
+          for (var i = 0; i < len; i++) {
             var spz = min_arr[i].toString();
             temp2Array.push(spz.substring(spz.indexOf(".") + 1, spz.length).length < 2 ? spz.replace(".", "") + "0" : spz.toString().replace(".", ""));
           }
@@ -337,7 +340,7 @@ define(function (require, exports, module) {
         } else {
           //得到最小过关
           var pass = 1000;
-          for(var i = 0; i < gg.length; i++) {
+          for (var i = 0; i < gg.length; i++) {
             if (allInterFace.passType[gg[i]][0] < pass) {
               pass = allInterFace.passType[gg[i]][0];
             }
@@ -348,24 +351,24 @@ define(function (require, exports, module) {
           /*模糊定胆*/
           var danMinHit = danSize;
           var temp2Array = [];
-          for(var i = 0; i < danMinHit; i++) {
+          for (var i = 0; i < danMinHit; i++) {
             var spz = danMinArr[i].toString();
             temp2Array.push(spz.substring(spz.indexOf(".") + 1, spz.length).length < 2 ? spz.replace(".", "") + "0" : spz.toString().replace(".", ""));
           }
           var min_arr = [];
-          for(var i = danMinHit; i < danSize; i++) {
+          for (var i = danMinHit; i < danSize; i++) {
             min_arr.push(danMinArr[i]);
           }
           min_arr = min_arr.concat(minArr);
           min_arr.sort(service.asc);
           var len = pass - danMinHit;
-          for(var i = 0; i < len; i++) {
+          for (var i = 0; i < len; i++) {
             var spz = min_arr[i].toString();
             temp2Array.push(spz.substring(spz.indexOf(".") + 1, spz.length).length < 2 ? spz.replace(".", "") + "0" : spz.toString().replace(".", ""));
           }
           minPrice = cauScale(2, eval(temp2Array.join("*")) * 2 / Math.pow(10, temp2Array.length * 2));
           var min = 0;
-          for(var i = 0; i < gg.length; i++) {
+          for (var i = 0; i < gg.length; i++) {
             var m = parseInt(gg[i].split("-")[0]);
             if (allInterFace.passType[gg[i]][0] == pass) {
               if (cccount == gg[i].split("-")[0]) {
@@ -389,7 +392,7 @@ define(function (require, exports, module) {
           MinChuan = info["MinBonus"];
         }
       }
-      for(var i = 0; i < gg.length; i++) {
+      for (var i = 0; i < gg.length; i++) {
         var t = gg[i];
         var fs = (t == "1-1" ? [1] : allInterFace.passType[t]);//3*4-->[2,3] //过关方式
         var guoguan_num = t.split("-")[0];//过关的数量(5*1,获得5)
@@ -402,7 +405,7 @@ define(function (require, exports, module) {
             array = eachArr(dan, guoguan_num);
           } else {
             var tuoTemp = eachArr(tuo, guoguan_num - dan_lenth);//得到托组合数
-            for(var cc = 0; cc < tuoTemp.length; cc++) {
+            for (var cc = 0; cc < tuoTemp.length; cc++) {
               danArray.push(dan.concat(tuoTemp[cc]));//得到胆拖的组合数
             }
             array = danArray;
@@ -410,19 +413,18 @@ define(function (require, exports, module) {
         } else {
           array = eachArr(tuo, guoguan_num);
         }
-        for(var m = 0, l = array.length; m < l; m++) {//第一次过滤个从复
+        for (var m = 0, l = array.length; m < l; m++) {//第一次过滤个从复
           var v = cl(array[m]);
           arr = arr.concat(v);
         }
-        for(var j = 0, jj = fs.length; j < jj; j++) {
-          for(var k = 0, kk = arr.length; k < kk; k++) {
+        for (var j = 0, jj = fs.length; j < jj; j++) {
+          for (var k = 0, kk = arr.length; k < kk; k++) {
             var len = eachArr(arr[k], fs[j]);//[["2=1:4.3", "3=1:3.29|3=0:2.7"]]
-            for(var n = 0, nn = len.length; n < nn; n++) {
+            for (var n = 0, nn = len.length; n < nn; n++) {
               count += multiplyCount(len[n]);//注数
               if (!isSpfOrRqSpfPlay) {
                 maxPrice += multiplyCount(len[n], "0");//max
-              }
-              else {
+              } else {
                 if (info.reStart) {//多串进这里重新计算理论奖金
                   var info_s = multiplyNewCount(len[n], MaxChuan, MinChuan);
                   newMaxPirze.push(info_s.maxPrice);
@@ -455,16 +457,14 @@ define(function (require, exports, module) {
 
   //二维数组的定位组
   var cl = function (a) {
-    var n = 0,
-      array = [],
-      code = [];
+    var n = 0, array = [], code = [];
     allArr(a, n);
     function allArr(arr, n) {
       if (n >= arr.length) {
         array.push(code.slice());
         code.length = n - 1;
       } else {
-        for(var i = 0, j = arr[n].length; i < j; i++) {
+        for (var i = 0, j = arr[n].length; i < j; i++) {
           code.push(arr[n][i]);
           allArr(arr, n + 1);
         }
@@ -473,6 +473,7 @@ define(function (require, exports, module) {
         }
       }
     }
+
     return array;
   };
 
@@ -480,8 +481,8 @@ define(function (require, exports, module) {
     var t = [
       []
     ], r = [];
-    for(var i = 0, n = arr.length; i < n; i++) {
-      for(var j = 0, k = t.length; j < k; j++) {
+    for (var i = 0, n = arr.length; i < n; i++) {
+      for (var j = 0, k = t.length; j < k; j++) {
         var ss = t[j].concat([arr[i]]);
         ss.length < num ? t.push(ss) : r.push(ss);
       }
@@ -501,7 +502,7 @@ define(function (require, exports, module) {
     var tempArray = [];
     var a = 1;
     if (arr.length == 0)return 0;
-    for(var i = 0, l = arr.length; i < l; i++) {
+    for (var i = 0, l = arr.length; i < l; i++) {
       var v = arr[i].split("_");
       if (flag) {
         var spz = v[2].split("|")[flag];
@@ -540,17 +541,14 @@ define(function (require, exports, module) {
         return parseFloat(a.bonus > parseFloat(b.bonus) ? 1 : -1);
       }
 
-      for(var pas in passtypes) {
+      for (var pas in passtypes) {
         if (!isDC && Number(passtypes[pas].split("-")[1]) > 1)isDC = true;
         pass = pass.concat(allInterFace.passType[passtypes[pas]]);
       }
       pass.sort();
       Handle.min_gg = parseInt(pass[0], 10);
-      for(var j = Handle.recs.length; j >= Handle.min_gg; j--) {
-        var list = Handle.getSingles(j),
-          minlist = Handle.getSingles(j, true),
-          minInfo = Handle.parseSingle(minlist, true),
-          info = Handle.parseSingle(list);
+      for (var j = Handle.recs.length; j >= Handle.min_gg; j--) {
+        var list = Handle.getSingles(j), minlist = Handle.getSingles(j, true), minInfo = Handle.parseSingle(minlist, true), info = Handle.parseSingle(list);
         minBonus.push(minInfo.bonus), MaxBonus.push(info.bonus), minChuan.push(minInfo), maxChuan.push(info);
       }
       return !isDC ? {"MaxBonus": eval("Math.max(" + MaxBonus.join(",") + ")"), "MinBonus": eval("Math.min(" + minBonus.join(",") + ")"), "reStart": false} : {"MaxBonus": Handle.isCz(maxChuan.sort(sortMaxCon).slice(0, 1)), "MinBonus": Handle.isCz(minChuan.sort(sortMinCon).slice(0, 1)), "reStart": true};
@@ -559,9 +557,9 @@ define(function (require, exports, module) {
       var a = new HashMap();
       var content = maxMinChuan[0].content;
       var content = content.split("/");
-      for(var i in content) {
+      for (var i in content) {
         var ai = content[i].split("^");
-        for(var j in ai) {
+        for (var j in ai) {
           if (!a.containsKey(ai[j]))a.put(ai[j], ai[j]);
         }
       }
@@ -591,7 +589,7 @@ define(function (require, exports, module) {
         var isan = false, rqs = 0, sort = null, gameid = null, isdan = false;
         //danNOs[matchId] = matchId 数据保存时的结构...
         //要得到几个属性..
-        $(item).find("span").each(function (j, item_i) {
+        $(item).find(".bet-rs").each(function (j, item_i) {
           var data = $(item_i).attr("id").split("_");//F20140301008_spf_3_2.11_-1
           gameid = data[0]; //1.是否选中胆码..
           if (danNO[gameid]) {
@@ -599,8 +597,8 @@ define(function (require, exports, module) {
           }
           sort = gameid;  //2.得到对阵ID..
           rqs = data[4];               //3.得到让球值(1,-1)..
-          var sp = data[3];           //sp值..
-          var val = data[2];           //spf..
+          var sp = data[3];           //sp值
+          var val = data[2];           //spf
           var rq = data[1].indexOf("rq") != -1 ? true : false;
           sps.push(sp);
           (rq ? rqbtn : nrqbtn).push({
@@ -650,13 +648,12 @@ define(function (require, exports, module) {
 
       if (rq.length === 0) {
         nrq.sort(sortDn).splice(1, 99);
-      }
-      else if (nrq.length === 0) {
+      } else if (nrq.length === 0) {
         rq.sort(sortDn).splice(1, 99);
       } else {
         var mathal = Math.al([nrq, rq]);
         var g = [];
-        for(var ma in mathal) {
+        for (var ma in mathal) {
           var z = mathal[ma];
           var a = z[0].val, b = z[1].val, isture = false;
           if (z[0].sp == '0' || z[1].sp == '0') {
@@ -664,11 +661,9 @@ define(function (require, exports, module) {
           }
           if (a === 3) {
             isture = (r > 0 ? b === 3 : (r !== -1 || b !== 0));
-          }
-          else if (a === 0) {
+          } else if (a === 0) {
             isture = (r < 0 ? b === 0 : (r !== 1 || b !== 3));
-          }
-          else if (a === 1) {
+          } else if (a === 1) {
             isture = (r > 0 ? b === 3 : b === 0);
           }
           if (isture)g.push(z);
@@ -685,8 +680,7 @@ define(function (require, exports, module) {
             } else {
               nrq.length = 0;
             }
-          }
-          else {
+          } else {
             if (nrq[0].sp > rq[0].sp) {
               rq.length = 0;
             } else {
@@ -704,7 +698,7 @@ define(function (require, exports, module) {
     },
     'forEach': function (o, f, z) {
       if (o) {
-        for(var i = 0, j = o.length; i < j; i++) {
+        for (var i = 0, j = o.length; i < j; i++) {
           if (false === f.call(z || o[i], o[i], i, o, j)) {
             break;
           }
@@ -733,7 +727,7 @@ define(function (require, exports, module) {
       var ns = n.split("-");
       var nm = allInterFace.passType[n], group, len = Number(ns[0]), diff = len - (d.length + t.length);
       if (Number(ns[1]) > 1 && diff > 0) {
-        for(var i = diff; i--;) {
+        for (var i = diff; i--;) {
           t.push([0]);
         }
       }//多串中有子串，用0sp值的补全。
@@ -772,7 +766,7 @@ define(function (require, exports, module) {
     'forIn': function (o, f, z) {
       var k, i = 0;
       if (o) {
-        for(k in o) {
+        for (k in o) {
           if (Handle.has(o, k) && false === f.call(z || o[k], o[k], k, o, i++)) {
             break;
           }
@@ -788,10 +782,11 @@ define(function (require, exports, module) {
       function sortMaxCon(a, b) {
         return parseFloat(a.sumsp > parseFloat(b.sumsp) ? 1 : -1);
       }
+
       var cl = {}, sum = 0, info = [], bs = this.bs, content = [], content_s = [], sp_con = [];
-      for(var i = 0, j = list.length; i < j; i++) {
+      for (var i = 0, j = list.length; i < j; i++) {
         var code = list[i], b = 1, len = code.length, con = [];
-        for(var x = code.length; x--;) {
+        for (var x = code.length; x--;) {
           var codes = code[x];
           var codessp = Number(getReaplceByVar(codes.sp + ""));
           b *= codessp;
@@ -828,7 +823,7 @@ define(function (require, exports, module) {
       return (key in obj);
     };
     this.containsValue = function (value) {
-      for(var key in obj) {
+      for (var key in obj) {
         if (obj[key] == value) {
           return true;
         }
@@ -851,14 +846,14 @@ define(function (require, exports, module) {
     };
     this.values = function () {
       var _values = new Array();
-      for(var key in obj) {
+      for (var key in obj) {
         _values.push(obj[key]);
       }
       return _values;
     };
     this.keySet = function () {
       var _keys = new Array();
-      for(var key in obj) {
+      for (var key in obj) {
         _keys.push(key);
       }
       return _keys;
@@ -881,18 +876,9 @@ define(function (require, exports, module) {
    */
   var multiplyNewCount = function (arr, MaxChuan, MinChuan) {
     var tempArray = [], maxPrice = [], minPrice = [];
-    for(var i in arr) {
-      var arri = arr[i],
-        arra = [],
-        arr_c = arri.split("|"),
-        arr_e = arr_c[0].split("_"),
-        playtype = arr_e[0],
-        arr_d = arr_c[1].split("="),
-        gameid = arr_d[0].split("_")[1],
-        arr_j = arr_d[1].split("^"),
-        content = arr_j[0].split("/"),
-        sp = arr_j[1].split("/");
-      for(var h in content) {
+    for (var i in arr) {
+      var arri = arr[i], arra = [], arr_c = arri.split("|"), arr_e = arr_c[0].split("_"), playtype = arr_e[0], arr_d = arr_c[1].split("="), gameid = arr_d[0].split("_")[1], arr_j = arr_d[1].split("^"), content = arr_j[0].split("/"), sp = arr_j[1].split("/");
+      for (var h in content) {
         var contenth = content[h];
         contenth = contenth.replace('让胜', '3').replace('让平', '1').replace('让负', '0');
         contenth = contenth.replace('rq_', '').replace('胜', '3').replace('平', '1').replace('负', '0');
@@ -901,7 +887,7 @@ define(function (require, exports, module) {
       tempArray.push(arra);
     }
     var content_array = Math.al(tempArray, tempArray.length, null);//拆分组合
-    for(var h in content_array) {
+    for (var h in content_array) {
       var a_n = isMaxOrMin(content_array[h], MaxChuan);
       var a_m = isMaxOrMin(content_array[h], MinChuan);
       if (a_n)maxPrice.push(a_n);
@@ -914,11 +900,7 @@ define(function (require, exports, module) {
   /***********************新胜平负/让球胜平负理论奖金js author：吴龙 end**********************/
   /******************工具组--author吴龙 start*************************/
   Math.al = function (A2, fn) {
-    var n = 0,
-      codes = [],
-      code = [],
-      isTest = typeof fn == 'function',
-      stop;
+    var n = 0, codes = [], code = [], isTest = typeof fn == 'function', stop;
     each(A2, n);
     function each(A2, n) {
       if (stop || n >= A2.length) {
@@ -930,7 +912,7 @@ define(function (require, exports, module) {
         }
       } else {
         var cur = A2[n];
-        for(var i = 0, j = cur.length; i < j; i++) {
+        for (var i = 0, j = cur.length; i < j; i++) {
           code.push(cur[i]);
           each(A2, n + 1);
         }
@@ -946,7 +928,7 @@ define(function (require, exports, module) {
     var r = [];
     if (d.length <= n) {
       r = Math.cl(t, n - d.length, z);
-      for(var i = r.length; i--;) {
+      for (var i = r.length; i--;) {
         r[i] = d.concat(r[i]);
       }
     }
@@ -960,7 +942,7 @@ define(function (require, exports, module) {
       if (n === 0 || z && r.length == z) {
         return r[r.length] = t;
       }
-      for(var i = 0, l = a.length - n; i <= l; i++) {
+      for (var i = 0, l = a.length - n; i <= l; i++) {
         if (!z || r.length < z) {
           var b = t.slice();
           b.push(a[i]);
@@ -972,7 +954,7 @@ define(function (require, exports, module) {
 
   var getDan = function () {
     var d = [];
-    for(var no in danNO) {
+    for (var no in danNO) {
       d.push(no);
     }
     return d.join(",");
@@ -985,18 +967,17 @@ define(function (require, exports, module) {
    */
   var isMaxOrMin = function (value, MaxMin) {
     var b = [], c = MaxMin.keySet(), result = 1;
-    for(var j in c) {
+    for (var j in c) {
       b.push(c[j]);
     }
     b = b.join("/");
-    for(var i in value) {
+    for (var i in value) {
       var valuei = value[i].split("/");
       var key = valuei[0];
       var valu = valuei[1];
       if (MaxMin.containsKey(key)) {
         result *= Number(getReaplceByVar(valu));
-      }
-      else {
+      } else {
         result = 0;
         break;
       }
@@ -1053,7 +1034,7 @@ define(function (require, exports, module) {
     },
     C: function (n, m) {
       var n1 = 1, n2 = 1;
-      for(var i = n, j = 1; j <= m; n1 *= i--, n2 *= j++);
+      for (var i = n, j = 1; j <= m; n1 *= i--, n2 *= j++);
       return n1 / n2;
     }
   };
@@ -1097,29 +1078,26 @@ define(function (require, exports, module) {
             fl = fl % 100;
           }
           big = base.toString() + "." + fl.toString();
-        }
-        else if (m > 0 && parseInt(s, 10) == 0) {
+        } else if (m > 0 && parseInt(s, 10) == 0) {
           fl = v1 + 1;
           if (fl >= Math.pow(10, mod)) {
             base = parseInt(base, 10) + 1;
             fl = fl % 100;
           } else if (fl < 10) {
             var tempfl = '';
-            for(var k = 0; k < mod - 1; k++) {
+            for (var k = 0; k < mod - 1; k++) {
               tempfl += '0';
             }
             fl = tempfl + fl;
-          }
-          else if (fl == 10) {
+          } else if (fl == 10) {
             var tempfl = '';
-            for(var k = 0; k < mod - 2; k++) {
+            for (var k = 0; k < mod - 2; k++) {
               tempfl += '0';
             }
             fl = tempfl + fl;
           }
           big = base.toString() + "." + fl.toString();
-        }
-        else {
+        } else {
           big = base + "." + fl;
         }
       }
@@ -1136,16 +1114,16 @@ define(function (require, exports, module) {
     var tuo = obj.tuo;
     var dan = obj.dan;
     if (tuo != null && tuo.length > 0) {
-      for(var i in tuo) {
-        for(var j in  tuo[i]) {
+      for (var i in tuo) {
+        for (var j in  tuo[i]) {
           if (tuo[i][j].indexOf("spf") < 0)
             return false;
         }
       }
     }
     if (dan != null && dan.length > 0) {
-      for(var k in dan) {
-        for(var t in  dan[k]) {
+      for (var k in dan) {
+        for (var t in  dan[k]) {
           if (dan[k][t].indexOf("spf") < 0) {
             return false;
           }
@@ -1166,7 +1144,7 @@ define(function (require, exports, module) {
     var ways = [];
     var minCross = 3;
     var maxCross = getMaxCrossNum(counts, types);
-    for(var i = minCross; i < maxCross + 1; i++) {
+    for (var i = minCross; i < maxCross + 1; i++) {
       switch (i) {
         case 3:
           ways.push("3-3");
@@ -1225,9 +1203,9 @@ define(function (require, exports, module) {
       return calc(passType, wagerType, sa, sb);
     } else {
       var wCount = 0;
-      for(var k = b0; k <= b1; k++) {
+      for (var k = b0; k <= b1; k++) {
         var bm = combineArray(sb, k);
-        for(var j in bm) {
+        for (var j in bm) {
           wCount += calc(passType, wagerType, sa, bm[j]);
         }
       }
@@ -1244,9 +1222,9 @@ define(function (require, exports, module) {
       var len = pc - absCount;
       if (len == 0 && absCount > 0) {
         var pm = new Array(pc);
-        for(var p in sb) {
+        for (var p in sb) {
           var absVoteC = sb[p];
-          for(var k = 0; k < pc; k++) {
+          for (var k = 0; k < pc; k++) {
             if (pm[k] == 0 || pm[k] == null) {
               pm[k] = absVoteC;
               break;
@@ -1257,21 +1235,21 @@ define(function (require, exports, module) {
         eval("wagerCount += calculateWC(passType," + pStr + ");");
       } else {
         var arr = new Array();
-        for(var i in sa) {
+        for (var i in sa) {
           arr[arr.length] = i;
         }
         var w = combineArray(arr, len);
-        for(var i in w) {
+        for (var i in w) {
           var splitArr = w[i];
           var pm = new Array(pc);
-          for(var k = 0; k < pc; k++) {
+          for (var k = 0; k < pc; k++) {
             var d = splitArr[k];
             pm[k] = splitArr[k] != null ? sa[d] : 0;
           }
           if (absCount > 0) {
-            for(var p in sb) {
+            for (var p in sb) {
               var absVoteC = sb[p];
-              for(var k = 0; k < pc; k++) {
+              for (var k = 0; k < pc; k++) {
                 if (pm[k] == 0 || pm[k] == null) {
                   pm[k] = absVoteC;
                   break;
@@ -1287,14 +1265,14 @@ define(function (require, exports, module) {
       var t_list = passType.split("-");
       var len = parseInt(t_list[0], 10);
       var arr = new Array();
-      for(var i in sa) {
+      for (var i in sa) {
         arr[arr.length] = i;
       }
       var w = subsectionArray(arr, len);
-      for(var i in w) {
+      for (var i in w) {
         var splitArr = w[i];
         var pm = new Array(pc);
-        for(var k = 0; k < pc; k++) {
+        for (var k = 0; k < pc; k++) {
           var d = splitArr[k];
           pm[k] = splitArr[k] != null ? sa[d] : 0;
         }
@@ -1314,7 +1292,7 @@ define(function (require, exports, module) {
       return re;
     }
     if (len == 1) {
-      for(var i in arr) {
+      for (var i in arr) {
         re[i] = new Array();
         re[i][0] = arr[i];
       }
@@ -1324,7 +1302,7 @@ define(function (require, exports, module) {
       var st = 0;
       var end = len - 1;
       var suitC = Math.ceil(arr.length / len);
-      for(var i = 0; i < suitC; i++) {
+      for (var i = 0; i < suitC; i++) {
         var a = new Array();
         var sid = i * len;
         var eid = (i + 1) * len - 1;
@@ -1333,7 +1311,7 @@ define(function (require, exports, module) {
             eid = arr.length - 1;
             sid = arr.length - len;
           }
-          for(var j = sid; j <= eid; j++) {
+          for (var j = sid; j <= eid; j++) {
             a[a.length] = arr[j];
           }
           re[re.length] = a;
@@ -1353,21 +1331,21 @@ define(function (require, exports, module) {
       return re;
     }
     if (len == 1) {
-      for(var i in arr) {
+      for (var i in arr) {
         re[i] = new Array();
         re[i][0] = arr[i];
       }
       return re;
     }
     if (len > 1) {
-      for(var i in arr) {
+      for (var i in arr) {
         var arr_b = new Array();
-        for(var j in arr) {
+        for (var j in arr) {
           if (j > i) arr_b[arr_b.length] = arr[j];
         }
         var s = combineArray(arr_b, len - 1);
         if (s.length > 0) {
-          for(var k in s) {
+          for (var k in s) {
             var p = s[k];
             p[p.length] = arr[i];
             p.sort(service.asc);
@@ -1415,8 +1393,9 @@ define(function (require, exports, module) {
    * @type {Object}
    */
   var maxMap = {
-    "spf": {max: 8},
-    "rqspf": {max: 8},
+    'uad': {max: 8},
+    'spf': {max: 8},
+    'rqspf': {max: 8},
     "bqc": {max: 4},
     "zjq": {max: 6},
     "bf": {max: 4}

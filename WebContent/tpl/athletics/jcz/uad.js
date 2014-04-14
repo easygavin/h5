@@ -17,12 +17,16 @@ __p += '<!--竞彩足球[上下盘]模板-->\r\n<div data-match-id="' +
 ((__t = (time)) == null ? '' : __t) +
 ' <br>\r\n      </td>\r\n      <td class="analyse" colspan="3">\r\n        <b class="f16">' +
 ((__t = (playAgainst.split('|').join('</b>vs<b class="f16">'))) == null ? '' : __t) +
-'</b>\r\n        <b class="fr">>&nbsp;&nbsp;</b>\r\n      </td>\r\n    </tr>\r\n    <tr class="spf_bet">\r\n      ';
-var spfOdds = spDatas.footwall.split('|');;
-__p += '\r\n      <td class="odds_spf">' +
-((__t = (spfOdds[0].replace('_',' '))) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_spf">' +
-((__t = (spfOdds[1].replace('_',' '))) == null ? '' : __t) +
+'</b>\r\n        <b class="fr">>&nbsp;&nbsp;</b>\r\n      </td>\r\n    </tr>\r\n    <tr class="uad_bet">\r\n      ';
+var uadOdds = spDatas.footwall.split('|');;
+__p += '\r\n      <td class="odds_aud" id="uad_0" data-text="' +
+((__t = (uadOdds[0])) == null ? '' : __t) +
+'">' +
+((__t = (uadOdds[0].replace('_',' '))) == null ? '' : __t) +
+'</td>\r\n      <td class="odds_aud" id="uad_1" data-text="' +
+((__t = (uadOdds[1])) == null ? '' : __t) +
+'">' +
+((__t = (uadOdds[1].replace('_',' '))) == null ? '' : __t) +
 '</td>\r\n    </tr>\r\n    </tbody>\r\n  </table>\r\n</div>';
 
 }

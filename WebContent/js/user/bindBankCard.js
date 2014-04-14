@@ -36,10 +36,16 @@ define(function (require, exports, module) {
 
     // 参数设置
     var params = {};
+
+    var tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
+
     // 处理返回
     page.setHistoryState({url: "user/bindBankCard", data: params},
         "user/bindBankCard",
-            (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#user/bindBankCard",
+        "#user/bindBankCard"+(JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
     util.hideLoading();
   };
@@ -91,7 +97,7 @@ define(function (require, exports, module) {
     //开户省市列表.
     getCityList();
     //提交按钮value
-    $('.surebtn').val('立即绑定');
+    $('.surebtn').html('立即绑定');
   };
   /**
    * 如果已经绑定银行卡则初始化页面数据.
