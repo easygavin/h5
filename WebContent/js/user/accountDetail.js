@@ -2,6 +2,7 @@
  * 账户明细
  */
 define(function (require, exports, module) {
+
   var page = require('page'),
       events = require('events'),
       util = require('util'),
@@ -22,6 +23,8 @@ define(function (require, exports, module) {
   var periodOfCheck = "30";
   // 总页面数
   var pages = 0;
+  // 检查登录状态
+  var tkn;
 
   /**
    * 初始化
@@ -29,30 +32,23 @@ define(function (require, exports, module) {
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
-    initShow();
-
-    initQuery();
-
-    bindEvent();
-
     // 参数设置
     var params = {};
-
-    // 参数设置
-    var params = {};
-    var tkn = util.checkLogin(data);
+    tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
     }
+
+    initShow();
+
+    bindEvent();
+
     // 处理返回
     page.setHistoryState({url: "user/accountDetail", data: params},
         "user/accountDetail",
             "#user/accountDetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
-    // 隐藏加载标示
+
     util.hideLoading();
   };
 
@@ -62,6 +58,8 @@ define(function (require, exports, module) {
   var initShow = function () {
 
     $("#container").html(template);
+
+    initQuery();
   };
 
   /**
@@ -79,6 +77,7 @@ define(function (require, exports, module) {
     // 请求数据
     getBuyRecordsList();
   };
+
   /**
    * 获取购买记录
    */
@@ -86,10 +85,16 @@ define(function (require, exports, module) {
 
     // 总页数重置
     pages = 0;
-    if (_.isEmpty(userInfo)) {
-      page.init('login', {}, 1);
-      return false;
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
     }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     // 保存登录成功信息
     var data = {};
@@ -123,6 +128,7 @@ define(function (require, exports, module) {
       // 隐藏加载图标
       loadingShow(0);
     });
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -247,6 +253,7 @@ define(function (require, exports, module) {
       requestPage = "1";
 
       clearItems();
+
       getBuyRecordsList();
 
       return true;

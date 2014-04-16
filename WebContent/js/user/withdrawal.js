@@ -20,25 +20,23 @@ define(function (require, exports, module) {
 
   var userBankInfo = {};
 
+  var tkn;
+
   /**
    * 初始化
    */
   var init = function (data, forward) {
+
     canBack = forward || 0;
+    var params = {};
+    tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
 
     initShow();
 
     bindEvent();
-
-    // 参数设置
-    var params = {};
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
-    var tkn = util.checkLogin(data);
-    if (tkn) {
-      params.token = tkn;
-    }
 
     // 处理返回
     page.setHistoryState({url: "user/withdrawal", data: params},
@@ -55,10 +53,7 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
 
-    // compile our template
-    var tmp = _.template(template);
-
-    $("#container").empty().html(tmp());
+    $("#container")..html(template);
 
     getBalance();
   };
@@ -67,6 +62,18 @@ define(function (require, exports, module) {
    * 获取绑定银行卡信息.
    */
   var getBalance = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       var userId = userInfo.userId, userKey = userInfo.userKey;
       account.getUserBalance(requestType, userId, userKey, function (data) {
@@ -106,6 +113,18 @@ define(function (require, exports, module) {
    *提款.
    */
   var withdrawal = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     if (!_.isEmpty(userBankInfo) && typeof userBankInfo.availMoney != 'undefined') {
       var availMoney = parseInt(userBankInfo.availMoney);
       var drawalmoney = $("#drawalmoney").val(), drawalpass = $("#drawalpass").val();

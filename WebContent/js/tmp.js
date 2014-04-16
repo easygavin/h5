@@ -2,12 +2,12 @@
  * 首页
  */
 define(function (require, exports, module) {
-    var page = require('page'),
-      events = require('events'),
-      util = require('util'),
-      $ = require('zepto'),
-      _ = require('underscore'),
-      template = require("../tpl/home.tpl");
+  var page = require('page'),
+    events = require('events'),
+    util = require('util'),
+    $ = require('zepto'),
+    _ = require('underscore'),
+    template = require("../tpl/home.tpl");
 
   var canBack = 1;
 
@@ -24,7 +24,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"home", data:params},
+    page.setHistoryState({url: "home", data: params},
       "home",
       "#home" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
       canBack);
@@ -50,22 +50,15 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 0);
-        }
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
   };
 
-  return {init:init};
+  return {init: init};
 });

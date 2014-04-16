@@ -11,7 +11,7 @@
     <tbody>
     <tr>
       <td class="more_odds_btn" rowspan="3">
-        <%=leagueMatch%>
+        <span class="leagueT"><%=leagueMatch%></span>
         <br><%=number%><br><%=time%> <br>
         <i class="fm arr"></i>
       </td>

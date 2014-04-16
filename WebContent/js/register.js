@@ -50,87 +50,76 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back, .pr0, .checked").
-      on(events.touchStart(), ".back, .pr0, .checked", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    // 返回
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 0);
-        }
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
 
     // 登录
-    $(document).off(events.activate(), ".pr0").
-      on(events.activate(), ".pr0", function (e) {
-        if (canBack && from == "login") {
-          page.goBack();
-        } else {
-          page.init("login", {}, 1);
-        }
-        return true;
-      });
+    $(".pr0").on(events.click(), function (e) {
+      if (canBack && from == "login") {
+        page.goBack();
+      } else {
+        page.init("login", {}, 1);
+      }
+      return true;
+    });
 
     // 购彩协议
-    $(document).off(events.activate(), ".checked").
-      on(events.activate(), ".checked", function (e) {
-        page.init("protocol", {}, 1);
-        return true;
-      });
+    $(".checked").on(events.click(), function (e) {
+      page.init("protocol", {}, 1);
+      return true;
+    });
 
     // 注册
-    $(document).off(events.click(), ".loginbtn").
-      on(events.click(), ".loginbtn", function (e) {
-        var username = $(".username").val();
-        var password = $(".password").val();
-        var nextpad = $(".nextpad").val();
-        var checkbox = $(".checkbox").attr("checked");
+    $(".loginbtn").on(events.click(), function (e) {
+      var username = $(".username").val();
+      var password = $(".password").val();
+      var nextpad = $(".nextpad").val();
+      var checkbox = $(".checkbox").attr("checked");
 
-        if (!checkbox) {
-          page.toast("请同意直通车购彩协议");
-          return false;
-        }
+      if (!checkbox) {
+        page.toast("请同意直通车购彩协议");
+        return false;
+      }
 
-        if ($.trim(username) === "") {
-          page.toast("用户名不能为空");
-          return false;
-        }
+      if ($.trim(username) === "") {
+        page.toast("用户名不能为空");
+        return false;
+      }
 
-        if ($.trim(username).length < 4 || $.trim(username).length > 50) {
-          page.toast("用户名长度为4~50位字符");
-          return false;
-        }
+      if ($.trim(username).length < 4 || $.trim(username).length > 50) {
+        page.toast("用户名长度为4~50位字符");
+        return false;
+      }
 
-        if ($.trim(password) === "") {
-          page.toast("密码不能为空");
-          return false;
-        }
+      if ($.trim(password) === "") {
+        page.toast("密码不能为空");
+        return false;
+      }
 
-        if ($.trim(password).length < 6 || $.trim(password).length > 15) {
-          page.toast("密码长度为6~15位字符");
-          return false;
-        }
+      if ($.trim(password).length < 6 || $.trim(password).length > 15) {
+        page.toast("密码长度为6~15位字符");
+        return false;
+      }
 
-        if ($.trim(nextpad) === "") {
-          page.toast("确认密码不能为空");
-          return false;
-        }
+      if ($.trim(nextpad) === "") {
+        page.toast("确认密码不能为空");
+        return false;
+      }
 
-        if ($.trim(password) != $.trim(nextpad)) {
-          page.toast("确认密码与密码不一致");
-          return false;
-        }
+      if ($.trim(password) != $.trim(nextpad)) {
+        page.toast("确认密码与密码不一致");
+        return false;
+      }
 
-        toRegister(username, password);
-        return true;
-      });
+      toRegister(username, password);
+      return true;
+    });
   };
 
   /**

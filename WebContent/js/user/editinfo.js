@@ -16,26 +16,24 @@ define(function (require, exports, module) {
   //用户信息
   var userInfo;
 
+  //用户登录信息.
+  var tkn;
+
   /**
    * 初始化
    */
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+    var params = {};
+    tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
 
     initShow();
 
     bindEvent();
-
-    // 参数设置
-    var params = {};
-
-    var tkn = util.checkLogin(data);
-    if (tkn) {
-      params.token = tkn;
-    }
 
     // 处理返回
     page.setHistoryState({url: "user/editinfo", data: params},
@@ -50,10 +48,7 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
 
-    // compile our template
-    var tmp = _.template(template);
-
-    $("#container").empty().html(tmp());
+    $("#container").html(template);
   };
 
   /**
@@ -61,6 +56,18 @@ define(function (require, exports, module) {
    */
 
   var updateNickName = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     var nickName = $('#nickName').val();
     if (nickName == '' || nickName == null) {
       page.toast('请输入昵称');
@@ -85,13 +92,19 @@ define(function (require, exports, module) {
    * 修改登录密码
    */
   var updateLoginPass = function () {
-    var userId = userInfo.userId,
-        userKey = userInfo.userKey;
-    if (!userId || !userKey) {
-      page.init('login', {}, 1);
-      return false;
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
     }
 
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
+    var userId = userInfo.userId, userKey = userInfo.userKey;
     var oldLoginPass = $('#oldLoginPass').val();
     var newLoginPass = $('#newLoginPass').val();
     var confLoginPass = $('#confLoginPass').val();
@@ -137,12 +150,17 @@ define(function (require, exports, module) {
    * 修改提款密码
    */
   var updateDrawPass = function () {
-    var userId = userInfo.userId,
-        userKey = userInfo.userKey;
-    if (!userId || !userKey) {
-      page.init('login', {}, 1);
-      return false;
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
     }
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+    var userId = userInfo.userId, userKey = userInfo.userKey;
     var oldPassword = $('#oldDrawalPass').val(),
         newPassword = $('#newDrawalPass').val(),
         confDrawalPass = $('#confDrawalPass').val();

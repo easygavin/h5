@@ -4,9 +4,16 @@
  * @describe 竞彩足球下单购买页面
  * */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/buy.html'), page = require('page'), util = require('util'), _ = require('underscore'), fastClick = require('fastclick'), events = require('events'), service = require('services/jcz');
+  var view = require('/views/athletics/buy.html');
+  var page = require('page');
+  var util = require('util');
+  var _ = require('underscore');
+  var fastClick = require('fastclick');
+  var events = require('events');
+  var service = require('services/jcz');
   var canBack = 1;
   var title = "竞足";
+  var mode = 0;
   // 彩种
   var lotteryType = "46";
   // 玩法 默认2，奖金优化10，上下盘12
@@ -134,7 +141,7 @@ define(function (require, exports, module) {
         var sp = handleSPValue(spfIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(1);
-        var mode = spModeMap[spfIds[i]];
+        mode = spModeMap[spfIds[i]];
         str += '<span class="bet-rs" id="' + matchId + '_spf_' + mode.flag + '_' + sp + '_' + item.match.transfer + '">' + mode.title + '</span>&nbsp;&nbsp;';
       }
     }
@@ -144,7 +151,7 @@ define(function (require, exports, module) {
         var sp = handleSPValue(rqspfIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(2);
-        var mode = spModeMap[rqspfIds[i]];
+        mode = spModeMap[rqspfIds[i]];
         str += '<span class="bet-rs" id="' + matchId + '_rqspf_' + mode.flag + '_' + sp + '_' + item.match.transfer + '">' + mode.title + '</span>&nbsp;&nbsp;';
       }
     }
@@ -154,7 +161,7 @@ define(function (require, exports, module) {
         var sp = handleSPValue(zjqIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(3);
-        var mode = spModeMap[zjqIds[i]];
+        mode = spModeMap[zjqIds[i]];
         str += '<span class="bet-rs" id="' + matchId + '_zjq_' + mode.flag + '_' + sp + '_' + item.match.transfer + '">' + mode.title + '</span>&nbsp;&nbsp;';
       }
     }
@@ -164,7 +171,7 @@ define(function (require, exports, module) {
         var sp = handleSPValue(bqcIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(4);
-        var mode = spModeMap[bqcIds[i]];
+        mode = spModeMap[bqcIds[i]];
         str += '<span class="bet-rs" id="' + matchId + '_bqc_' + mode.flag + '_' + sp + '_' + item.match.transfer + '">' + mode.title + '</span>&nbsp;&nbsp;';
       }
     }
@@ -175,7 +182,7 @@ define(function (require, exports, module) {
         var sp = handleSPValue(bfIds[i], match);
         itemSPArr.push(sp);
         agcgArr.push(5);
-        var mode = spModeMap[bfIds[i]];
+        mode = spModeMap[bfIds[i]];
         str += '<span class="bet-rs" id="' + matchId + '_bf_' + mode.flag + '_' + sp + '_' + item.match.transfer + '">' + mode.title + '</span>&nbsp;&nbsp;';
       }
     }
@@ -404,6 +411,10 @@ define(function (require, exports, module) {
     $("#pays").text(pays);
   };
 
+  //奖金优化
+  var optimizeBonus = function () {
+    page.init("jcz/optimize", {}, 1);
+  };
   /**
    * 绑定事件
    */
@@ -412,9 +423,7 @@ define(function (require, exports, module) {
     //fastclick events
     fastClick.attach(document);
     // 返回
-    $page.on('click', '.back', function () {
-      page.goBack();
-    });
+    $page.on('click', '.back', page.goBack);
     // 协议
     $page.on('click', '.checked', function (e) {
       //获取选择的胆码..
@@ -543,10 +552,11 @@ define(function (require, exports, module) {
       // 显示付款信息
       showPayInfo();
     });
+    //$('#bonus-opt-btn').on('click',optimizeBonus);
     // 合买
     $("footer").on('click', '.btn1', function () {
       // 检查值
-      !_.isEmpty(bufferData) && bufferData.matchBetList.length && checkVal() && toBuy();
+      !_.isEmpty(bufferData) && bufferData.matchBetList.length && checkVal() && goHm();
       return true;
     });
     // 付款
@@ -782,9 +792,8 @@ define(function (require, exports, module) {
     params.totalBei = timesUnit; // 总倍数
     params.projectCount = +totals * +timesUnit * +price;//方案总金额
     params.totalAmount = params.projectCount;
-    console.log('-----', params.totalBei);
     util.setLocalJson(util.keyMap.LOCAL_TO_HM, params);
-    page.init("jcl/hm", {}, 1);
+    page.init("jcz/hm", {}, 1);
   };
   /**
    * 显示遮盖层

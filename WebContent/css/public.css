@@ -1371,7 +1371,7 @@ footer a.btn2 {
   border: 2px solid #2779b5;
   margin-right: 0.5em;
 }
-
+.gmchose .click ,
 .chose.click {
   background: #2779b5;
   color: #fff;
@@ -1402,7 +1402,6 @@ footer a.btn2 {
   text-align: center;
   font-size: 1em;
   color: #fff;
-  text-align: center;
   background: #2779b5;
 }
 
@@ -2368,6 +2367,9 @@ body{font-size:90%}
   -moz-opacity: .5;
 }
 /*奖金优化*/
+#bonus-opt-btn{
+  margin-right: 1.2em;
+}
 .inputNum {
     width:8em;
     text-align:center;
@@ -2414,3 +2416,14 @@ body{font-size:90%}
 .space{padding: 0 0.2em;}
 .jbox_div{text-align:center;padding:1em 0 2em 0;border-bottom:1px solid #ccc;margin-bottom:1em}
 .tc_content{font:1.5em/2em "微软雅黑";color:red}
+
+/*
+#filterBtn:hover:after{
+  float: left;
+  margin-top: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.5);
+  content: '  ';
+  z-index: 100;
+}*/

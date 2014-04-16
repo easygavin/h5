@@ -21,6 +21,8 @@ define(function (require, exports, module) {
   // 定时器
   var secondsTimer = null;
 
+  //登录状态.
+  var tkn;
 
   /**
    * 初始化
@@ -28,27 +30,20 @@ define(function (require, exports, module) {
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+    var params = {};
+    tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
 
     initShow();
 
     bindEvent();
 
-    mobileBindState();
-
-    // 参数设置
-    var params = {};
-
-    var tkn = util.checkLogin(data);
-    if (tkn) {
-      params.token = tkn;
-    }
-
     // 处理返回
     page.setHistoryState({url: "user/bindMobile", data: params},
         "user/bindMobile",
-        "#user/bindMobile"+(JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+            "#user/bindMobile" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
     util.hideLoading();
   };
@@ -57,17 +52,27 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-
-    // compile our template
-    var tmp = _.template(template);
-
-    $("#container").empty().html(tmp());
+    $("#container").html(template);
+    //查询手机绑定状态.
+     mobileBindState();
   };
 
   /**
    * 查询手机绑定状态.
    */
   var mobileBindState = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     if (!_.isEmpty(userInfo)) {
       var mobileNo = userInfo.userMobile;
       if (mobileNo) {
@@ -142,6 +147,14 @@ define(function (require, exports, module) {
    */
   var bindMobile = function () {
 
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
 
     var mobileNo = $('#mobileNo').val().trim();
     var reg = new RegExp("^[0-9]*$");
@@ -165,7 +178,7 @@ define(function (require, exports, module) {
     if (!_.isEmpty(userInfo)) {
       account.bindMobileNo(mobileNo, userInfo.userId, userInfo.userKey, captcha, function (data) {
         if (!_.isEmpty(data)) {
-          if (typeof  data.statusCode!='undefined' && data.statusCode == '0') {
+          if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
             userInfo.userMobile = mobileNo;
             util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
             page.toast('手机绑定成功');

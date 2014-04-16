@@ -608,7 +608,7 @@ define(function (require, exports, module) {
           "1": {key: "1", name: "欧冠杯", endTime: "2014-05-25 02:40:00", event: "O", issueNo: "2014"}
         }
       },
-      flags:{
+      flags: {
         "巴西": "images/flags/lm_flag9.png",
         "德国": "images/flags/lm_flag2.png",
         "阿根廷": "images/flags/lm_flag24.png",
@@ -670,6 +670,29 @@ define(function (require, exports, module) {
     34: "syx", // 十一选5
     46: "jcz", // 竞彩足球
     36: "jcl" // 竞彩篮球
+  };
+
+  ////11|12|13|46|47|48|49|52|56|36|37|38|39|53|89|92
+  //双色球(11)|福彩3D(12)|大乐透(13)|竞彩足球-胜平负(46)|竞彩足球-比分(47)|竞彩足球-总进球(48)
+  //竞彩足球-半全场(49)|竞彩足球-混投(52)|竞彩足球-让球胜平负(56)|竞彩篮球-胜负(36)|竞彩篮球-让分胜负(37)
+  //竞彩篮球-胜分差(38)|竞彩篮球-大小分(39)|竞彩篮球混投(53)|北单-让球胜平负(89)|北单-比分(92)
+  config.lotteryIdReflectStr = {
+    11: {"abbreviation": "ssq", "title": "双色球"},
+    12: {"abbreviation": "f3d", "title": "福彩3D"},
+    13: {"abbreviation": "dlt", "title": "大乐透"},
+    46: {"abbreviation": "jczqspf", "title": "竞彩足球胜平负"},
+    47: {"abbreviation": "jczqbf", "title": "竞彩足球比分"},
+    48: {"abbreviation": "jczqzjq", "title": "竞彩足球总进球"},
+    49: {"abbreviation": "jczqbqc", "title": "竞彩足球半全场"},
+    52: {"abbreviation": "jczqht", "title": "竞彩足球混投"},
+    56: {"abbreviation": "jczrqspf", "title": "竞彩足球让球胜平负"},
+    36: {"abbreviation": "jclqsf", "title": "竞彩篮球胜负"},
+    37: {"abbreviation": "jclqrfsf", "title": "竞彩篮球让分胜负"},
+    38: {"abbreviation": "jclqsfc", "title": "竞彩篮球胜分差"},
+    39: {"abbreviation": "jclqdxf", "title": "竞彩篮球大小分"},
+    53: {"abbreviation": "jclqht", "title": "竞彩篮球混投"},
+    89: {"abbreviation": "bjdcrqspf", "title": "北单让球胜平负"},
+    92: {"abbreviation": "bjdcbf", "title": "北单比分"}
   };
   module.exports = config;
 });

@@ -117,24 +117,16 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.goBack();
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      page.goBack();
+      return true;
+    });
 
     // 去投注
-    $(document).off(events.click(), "#toBuyNo").
-      on(events.click(), "#toBuyNo", function (e) {
-        util.clearLocalData(lotConfig.localKey);
-        page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
-      });
+    $("#toBuyNo").on(events.click(), function (e) {
+      util.clearLocalData(lotConfig.localKey);
+      page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
+    });
   };
 
   return {init: init};

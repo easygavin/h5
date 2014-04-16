@@ -3,7 +3,14 @@
  */
 define(function (require, exports, module) {
   "use strict";
-  var $ = require('zepto'), _ = require('underscore'), util = require('util'), page = require('page'), config = require('config'), fastClick = require('fastclick'), service = require('services/jcz'), betTpl = require('/views/athletics/jcz/mix_bet.html');
+  var $ = require('zepto');
+  var _ = require('underscore');
+  var util = require('util');
+  var page = require('page');
+  var config = require('config');
+  var fastClick = require('fastclick');
+  var service = require('services/jcz');
+  var betTpl = require('/views/athletics/jcz/mix_bet.html');
   var canBack = 0;
   var betList = {};//对阵列表数据
   module.exports = {
@@ -29,10 +36,14 @@ define(function (require, exports, module) {
       this.issueNo = "";// 显示期号
       this.leagueMap = {};// 赛事分类
       this.leagueLength = 0;// 一共有多少对阵
-      this.selLeague = null;// 被选中的联赛
       this.initShow(canBack);
       this.bindEvent();
-      page.setHistoryState({url: "jcz/mix_bet", data: this.params}, "jcz/mix_bet", (JSON.stringify(this.params).length > 2 ? "#jcz/mix_bet" + "?data=" + encodeURIComponent(JSON.stringify(this.params)) : ""), canBack);
+      // 处理返回
+      page.setHistoryState(
+        {url: "jcz/mix_bet", data: this.params},
+        "jcz/mix_bet",
+          "#jcz/mix_bet"+ (JSON.stringify(this.params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(this.params)) : ""),
+        canBack);
     },
     //初始化显示
     initShow: function (forward) {
@@ -67,13 +78,10 @@ define(function (require, exports, module) {
         }
       });
     },
-    //计算上下盘数据
-    getUadList: function () {
-
-    },
     //统计赛事场数
     unitTotal: function () {
       var total = 0;
+      5
       $('.match').each(function (i, item) {
         total = total + ~~!!$(item).find(".click").length;
       });
@@ -173,7 +181,7 @@ define(function (require, exports, module) {
             var uadIds = [], $uad = $item.find('.uad_bet .click');
             if ($uad.length) {
               $uad.each(function (c, uad) {
-                uadIds.push($(uad).attr("id") +'_' + $(uad).data('text'));
+                uadIds.push($(uad).attr("id") + '_' + $(uad).data('text'));
               });
               titleMap["uad"] = 1;
             }
@@ -207,7 +215,6 @@ define(function (require, exports, module) {
     //处理数据并显示赛事列表
     showMatchItems: function () {
       var self = this, url = 'mix_bet' == self.currPlayName ? '/tpl/athletics/jcz/match' : '/tpl/athletics/jcz/uad', htmlStr = '';
-      console.log(self.currPlayName);
       require.async(url, function (tpl) {
         _.each(betList.datas, function (data) {
           _.each(data['matchArray'], function (m) {
@@ -254,12 +261,7 @@ define(function (require, exports, module) {
       for (var i = 0, len = matchBetList.length; i < len; i++) {
         var item = matchBetList[i];
         var matchId = item.matchId;
-        var spfIds = item.spfIds,
-          rqspfIds = item.rqspfIds,
-          zjqIds = item.zjqIds,
-          bqcIds = item.bqcIds,
-          bfIds = item.bfIds,
-          uadIds = item.uadIds;
+        var spfIds = item.spfIds, rqspfIds = item.rqspfIds, zjqIds = item.zjqIds, bqcIds = item.bqcIds, bfIds = item.bfIds, uadIds = item.uadIds;
         var $match = $('.match[ data-match-id=' + matchId + ']');
         if (zjqIds.length > 0 || bqcIds.length > 0 || bfIds.length > 0) {
           // 显示SP层
@@ -285,8 +287,8 @@ define(function (require, exports, module) {
         for (var f = 0, bLen = bfIds.length; f < bLen; f++) {
           $match.find('#' + bfIds[f]).addClass("click");
         }
-        _.each(uadIds,function(i){
-          $match.find('#uad_'+ i.split('_')[1]).addClass('click');
+        _.each(uadIds, function (i) {
+          $match.find('#uad_' + i.split('_')[1]).addClass('click');
         });
         if (spfIds.length || rqspfIds.length || zjqIds.length || bqcIds.length || bfIds.length) {
           $match.addClass('on_show');
@@ -320,6 +322,7 @@ define(function (require, exports, module) {
       var self = this, $tar = $(e.target), id = $tar.prop('id') || $tar.prop('class');
       switch (id) {
         case 'hm_menu':
+          page.init("hm/index", {lotteryTypeArray: "46|47|48|49|52|56"}, 1);
           break;
         case 'gc_menu'://购彩记录
           if (!util.checkLogin(null)) {
@@ -329,7 +332,7 @@ define(function (require, exports, module) {
               page.init("login", {}, 1)
             }, null);
           } else {
-            page.init("user/buyRecord", {lotteryId: self.lotteryType}, 1);
+            page.init("user/buyRecord", {lotteryTypeArray: "46|47|48|49|52|56"}, 1);
           }
           break;
         case 'wf_menu'://玩法介绍
@@ -352,16 +355,41 @@ define(function (require, exports, module) {
     },
     //切换玩法
     switchPlay: function (e) {
-      var $tar = $(e.target),
-        $playName = $('#playName'),
-        type = $tar.data('type'),
-        text = $tar.data('text');
+      var $tar = $(e.target), $playName = $('#playName'), type = $tar.data('type'), text = $tar.data('text');
       this.currPlayName = type;
       sessionStorage.setItem('jcz_curr_play_name', type);
       this.showMatchItems();
       $playName.text(text);
       $('.menuBox').hide();
       $tar.addClass('click').siblings().removeClass('click');
+      util.hideCover();
+    },
+    filterMatch:function(){
+      var $league = $(".leagueBox .icon .click");
+      if (!$league.length) {
+        util.toast("请至少选择1种赛事");
+        return false;
+      }
+      var matchLen = 0;
+      var $allLeague = $("#selAll");
+      if ('全选' == $allLeague.text()) {
+        $(".match").show();
+      } else {
+        $(".match").hide();
+        $league.each(function (i, li) {
+          var text = $(li).text();
+          var leagueName = text.substring(0, text.indexOf("["));
+          $(".leagueT").each(function (i, t) {
+            var $t = $(t);
+            if (leagueName == $t.text()) {
+              matchLen++;
+              $t.closest(".match").show();
+            }
+          });
+        });
+      }
+      this.showIssueNo(matchLen);
+      $(".leagueBox").hide();
       util.hideCover();
     },
     //绑定事件
@@ -391,7 +419,6 @@ define(function (require, exports, module) {
         $tar.toggleClass('click');
         var num = $tar.hasClass('click') ? $tar.data('num') : -$tar.data('num');
         this.updateSelMatLen(num, true);
-        //this.selLeague = $(".leagueBox .item .click");
       }.bind(this));
       //赛事筛选-全选
       $('.leagueBox').on('click', '.selAll', function (e) {
@@ -406,6 +433,7 @@ define(function (require, exports, module) {
           $tar.text('全选');
         }
       }.bind(this));
+      $(".confirm").on('click', this.filterMatch.bind(this));
       //显示更多玩法
       this.$page.on('click', '.more_odds_btn', this.showMoreOdds.bind(this));
       //切换玩法
@@ -422,14 +450,13 @@ define(function (require, exports, module) {
         this.unitTotal();
       }.bind(this));
       // 关闭显示框
-      $(".cover").on('click', function (e) {
+      $(".cover").on('click', function () {
         util.hideCover();
         $(".popup").hide();
         $(".menuBox").hide();
         if ($(".leagueBox").is(":visible")) {
           $(".leagueBox").hide();
         }
-        return true;
       });
       //赛事分析
       this.$page.on('click', '.analyse', this.goPage.bind(this));

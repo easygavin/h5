@@ -66,7 +66,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"number/detail", data:params},
+    page.setHistoryState({url: "number/detail", data: params},
       "number/detail",
       "#number/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
       canBack);
@@ -200,22 +200,15 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (step < -1) {
-          // 返回多步
-          page.go(step);
-        } else {
-          page.goBack();
-        }
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      if (step < -1) {
+        // 返回多步
+        page.go(step);
+      } else {
+        page.goBack();
+      }
+      return true;
+    });
 
     // 下拉图标
     $(document).off(events.tap(), "#pullBtn").
@@ -243,44 +236,43 @@ define(function (require, exports, module) {
       });
 
     // 复活追号
-    $(document).off(events.click(), "#appendPrj").
-      on(events.click(), "#appendPrj", function (e) {
-        if ($.trim(projectId) == "") {
-          page.toast("方案无效");
-          return false;
-        }
-        page.answer(
-          "温馨提示",
-          "以本方案投注内容再次购买当前期彩种？",
-          "取消",
-          "确定",
-          function (e) {
-          },
-          function (e) {
-            // 复活请求
-            var request = digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
-              if (typeof data != "undefined") {
-                if (typeof data.statusCode != "undefined") {
-                  if (data.statusCode == "0") {
-                    page.dialog(
-                      "",
-                      "复活追号成功，您的账号余额为" + data.userBalance + "元",
-                      "确定",
-                      function (e) {
-                      }
-                    );
-                  } else {
-                    page.codeHandler(data);
-                  }
+    $("#appendPrj").on(events.click(), function (e) {
+      if ($.trim(projectId) == "") {
+        page.toast("方案无效");
+        return false;
+      }
+      page.answer(
+        "温馨提示",
+        "以本方案投注内容再次购买当前期彩种？",
+        "取消",
+        "确定",
+        function (e) {
+        },
+        function (e) {
+          // 复活请求
+          var request = digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
+            if (typeof data != "undefined") {
+              if (typeof data.statusCode != "undefined") {
+                if (data.statusCode == "0") {
+                  page.dialog(
+                    "",
+                    "复活追号成功，您的账号余额为" + data.userBalance + "元",
+                    "确定",
+                    function (e) {
+                    }
+                  );
+                } else {
+                  page.codeHandler(data);
                 }
               }
-            });
+            }
+          });
 
-            util.addAjaxRequest(request);
-          }
-        );
-        return true;
-      });
+          util.addAjaxRequest(request);
+        }
+      );
+      return true;
+    });
   };
 
   return {init: init};

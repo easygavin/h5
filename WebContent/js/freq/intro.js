@@ -47,7 +47,7 @@ define(function (require, exports, module) {
     });
 
     // 处理返回
-    page.setHistoryState({url:"freq/intro", data:params},
+    page.setHistoryState({url: "freq/intro", data: params},
       "freq/intro",
       "#freq/intro" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
       canBack);
@@ -86,37 +86,29 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.goBack();
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      page.goBack();
+      return true;
+    });
 
     // 菜单切换
-    $(document).off(events.tap(), ".jsBox").
-      on(events.tap(), ".jsBox", function (e) {
-        var $target = $(e.target);
-        var $a = null;
-        if (e.target.tagName.toLocaleLowerCase() === "a") {
-          $a = $target;
-        } else {
-          $a = $target.find("a");
-        }
+    $(".jsBox").on(events.tap(), function (e) {
+      var $target = $(e.target);
+      var $a = null;
+      if (e.target.tagName.toLocaleLowerCase() === "a") {
+        $a = $target;
+      } else {
+        $a = $target.find("a");
+      }
 
-        if ($a.length && !$a.hasClass("click")) {
-          hideZone();
-          flag = $a.attr("id").split("_")[1];
-          showZone();
-        }
-        return true;
-      });
+      if ($a.length && !$a.hasClass("click")) {
+        hideZone();
+        flag = $a.attr("id").split("_")[1];
+        showZone();
+      }
+      return true;
+    });
   };
 
-  return {init:init};
+  return {init: init};
 });

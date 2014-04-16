@@ -10,8 +10,8 @@
     </colgroup>
     <tbody>
     <tr>
-      <td colspan="2" class="more_odds_btn" rowspan="2">
-        <%=leagueMatch%>
+      <td colspan="2" rowspan="2">
+        <span class="leagueT"><%=leagueMatch%></span>
         <br><%=number%><br><%=time%> <br>
       </td>
       <td class="analyse" colspan="3">

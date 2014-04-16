@@ -57,11 +57,11 @@ define(function (require, exports, module) {
     }
 
     var lottMap = config.lotteryMap;
-    for (var i = 0; i < localArr.length; i++ ) {
+    for (var i = 0; i < localArr.length; i++) {
       cusArr.push(lottMap[localArr[i]]);
     }
 
-    for(var l in lottMap) {
+    for (var l in lottMap) {
       console.log("key:" + lottMap[l].key);
       var isContains = _.contains(localArr, lottMap[l].key);
       if (!isContains) {
@@ -70,13 +70,13 @@ define(function (require, exports, module) {
     }
 
     if (cusArr.length) {
-      for(var i = 0, iLen = cusArr.length; i < iLen; i++) {
+      for (var i = 0, iLen = cusArr.length; i < iLen; i++) {
         showCusLott(cusArr[i]);
       }
     }
 
     if (noCusArr.length) {
-      for(var j = 0, jLen = noCusArr.length; j < jLen; j++) {
+      for (var j = 0, jLen = noCusArr.length; j < jLen; j++) {
         showNoCusLott(noCusArr[j]);
       }
     }
@@ -112,61 +112,52 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 0);
-        }
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
 
     // 删除
-    $(document).off(events.tap(), "#custom_lott").
-      on(events.tap(), "#custom_lott", function (e) {
-        var $li = $(e.target).closest("li");
-        if ($li.length) {
-          var key = $li.attr("id").split("_")[1];
-          var itemMap = config.lotteryMap[key];
+    $("#custom_lott").on(events.tap(), function (e) {
+      var $li = $(e.target).closest("li");
+      if ($li.length) {
+        var key = $li.attr("id").split("_")[1];
+        var itemMap = config.lotteryMap[key];
 
-          // 删除
-          $li.remove();
+        // 删除
+        $li.remove();
 
-          // 添加
-          showNoCusLott(itemMap);
+        // 添加
+        showNoCusLott(itemMap);
 
-          // 保存用户定制彩种
-          saveCustomLott();
-        }
-        return true;
-      });
+        // 保存用户定制彩种
+        saveCustomLott();
+      }
+      return true;
+    });
 
     // 添加
-    $(document).off(events.tap(), "#no_custom_lott").
-      on(events.tap(), "#no_custom_lott", function (e) {
-        var $a = $(e.target).closest("a");
-        if ($a.length) {
-          var key = $a.attr("id").split("_")[1];
-          var itemMap = config.lotteryMap[key];
+    $("#no_custom_lott").on(events.tap(), function (e) {
+      var $a = $(e.target).closest("a");
+      if ($a.length) {
+        var key = $a.attr("id").split("_")[1];
+        var itemMap = config.lotteryMap[key];
 
-          // 删除
-          $a.remove();
+        // 删除
+        $a.remove();
 
-          // 添加
-          showCusLott(itemMap);
+        // 添加
+        showCusLott(itemMap);
 
-          // 保存用户定制彩种
-          saveCustomLott();
-        }
-        return true;
-      });
+        // 保存用户定制彩种
+        saveCustomLott();
+      }
+      return true;
+    });
   };
 
   /**

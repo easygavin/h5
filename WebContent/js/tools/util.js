@@ -28,8 +28,8 @@ define(function (require, exports, module) {
   // 关键字Map
   util.keyMap = {
     LOCAL_USER_INFO_KEY: "local_user_info", // 本地登录用户信息
-    USER_TRUE_NAME:"user_true_name",  //用户真实姓名（在绑定身份证成功,个人中心点绑定银行卡→→保存,在绑定银行卡时使用）.
-    LOCAL_TO_HM:"local_to_hm", // 发起合买
+    USER_TRUE_NAME: "user_true_name",  //用户真实姓名（在绑定身份证成功,个人中心点绑定银行卡→→保存,在绑定银行卡时使用）.
+    LOCAL_TO_HM: "local_to_hm", // 发起合买
     LOCAL_FIVE_SMART: "local_five_smart", // 11选5智能追号
     LOCAL_CUSTOM: "local_custom", // 用户定制彩种
     LOCAL_JCL: 'local_jcl',// 竞彩篮球
@@ -183,7 +183,7 @@ define(function (require, exports, module) {
     }
     var max = m, min = n, total = 1, div;
     // m * (m-1) * (m 2) * ... * (n+1)
-    for(var i = min + 1; i <= max; i++) {
+    for (var i = min + 1; i <= max; i++) {
       total *= i;
       div = i - min;
       total /= div;
@@ -205,7 +205,7 @@ define(function (require, exports, module) {
       return 1;// 当m为0或者n 为 0 时,返回 1 by :zw
     }
     var n1 = 1, n2 = 1;
-    for(var i = n, j = 1; j <= m; n1 *= i--, n2 *= j++) {
+    for (var i = n, j = 1; j <= m; n1 *= i--, n2 *= j++) {
 
     }
     return n1 / n2;
@@ -237,7 +237,7 @@ define(function (require, exports, module) {
     if ((n < 0) || (n > 19)) {
       return -1;
     }
-    for(var i = 1; i <= n; i++) {
+    for (var i = 1; i <= n; i++) {
       result = i * result;
     }
     return result;
@@ -283,7 +283,7 @@ define(function (require, exports, module) {
    * @return {Boolean}
    */
   util.isContain = function (arr, n) {
-    for(var i = 0, len = arr.length; i < len; i++) {
+    for (var i = 0, len = arr.length; i < len; i++) {
       if (arr[i] == n) {
         return true;
       }
@@ -325,11 +325,7 @@ define(function (require, exports, module) {
 
     // 本地保存用户token值
     var userInfo = this.getLocalJson(this.keyMap.LOCAL_USER_INFO_KEY);
-    if (nowToken !== null && typeof nowToken != "undefined" &&
-      $.trim(nowToken) !== "" &&
-      userInfo !== null && userInfo.token !== null &&
-      typeof userInfo.token != "undefined" &&
-      $.trim(userInfo.token) !== "") {
+    if (nowToken !== null && typeof nowToken != "undefined" && $.trim(nowToken) !== "" && userInfo !== null && userInfo.token !== null && typeof userInfo.token != "undefined" && $.trim(userInfo.token) !== "") {
       if ($.trim(nowToken) == $.trim(userInfo.token)) {
         this.token = nowToken;
         return nowToken;
@@ -353,8 +349,8 @@ define(function (require, exports, module) {
    * 清除Ajax Request 请求
    */
   util.clearAjaxRequests = function () {
-    for(var i = 0, len = ajaxRequests.length; i < len; i++) {
-      if (typeof ajaxRequests[i]["abort"] == "function") {
+    for (var i = 0, len = ajaxRequests.length; i < len; i++) {
+      if (ajaxRequests[i] && typeof ajaxRequests[i]["abort"] == "function") {
         ajaxRequests[i].abort();
         console.log("request abort!");
       }
@@ -374,7 +370,7 @@ define(function (require, exports, module) {
    * 清除Interval
    */
   util.clearIntervals = function () {
-    for(var i = 0, len = intervals.length; i < len; i++) {
+    for (var i = 0, len = intervals.length; i < len; i++) {
       clearInterval(intervals[i]);
       console.log("clear interval!");
     }
@@ -393,7 +389,7 @@ define(function (require, exports, module) {
    * 清除timer
    */
   util.clearTimers = function () {
-    for(var i = 0, len = timers.length; i < len; i++) {
+    for (var i = 0, len = timers.length; i < len; i++) {
       clearTimeout(timers[i]);
       console.log("clear timeout!");
     }
@@ -416,12 +412,9 @@ define(function (require, exports, module) {
   util.unParam = function (str) {
     var rs = {};
     if (typeof str == 'string' && (str = $.trim(str))) {
-      var decode = decodeURIComponent,
-        pairs = str.split('&');
-      for(var i = 0, l = pairs.length; i < l; ++i) {
-        var pair = pairs[i].split('='),
-          key = decode(pair[0]).replace('[]', ''),
-          val = decode(pair[1]);
+      var decode = decodeURIComponent, pairs = str.split('&');
+      for (var i = 0, l = pairs.length; i < l; ++i) {
+        var pair = pairs[i].split('='), key = decode(pair[0]).replace('[]', ''), val = decode(pair[1]);
         if (key in rs) {
           if ($.isArray(rs[key])) {
             rs[key].push(val);

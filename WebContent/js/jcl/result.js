@@ -2,12 +2,12 @@
  * 竞彩篮球方案详情
  */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/result.html'),
-    _ = require('underscore'),
-    page = require('page'),
-    pageEvent = require('events'),
-    service = require('services/jcl'),
-    util = require('util');
+  var view = require('/views/athletics/result.html');
+  var _ = require('underscore');
+  var page = require('page');
+  var fastClick = require('fastclick');
+  var service = require('services/jcl');
+  var util = require('util');
 
   // 彩种
   var lotteryType = "";
@@ -64,10 +64,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcl/result", data: params},
-      "jcl/result",
-        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/result",
-      forward ? 1 : 0);
+    page.setHistoryState({url: "jcl/result", data: params}, "jcl/result", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/result", forward ? 1 : 0);
   };
 
   /**
@@ -80,7 +77,7 @@ define(function (require, exports, module) {
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
-            require.async('/tpl/athletics/result', function(tpl){
+            require.async('/tpl/athletics/result', function (tpl) {
               $('#main').html(tpl(data));
               $(".tzBox").text($.trim(data.title) + "投注");
             });
@@ -97,24 +94,11 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
+    fastClick.attach(document);
     // 返回
-    $(".back").on(pageEvent.touchStart(), function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-      return true;
-    });
-
-    $(".back").on(pageEvent.activate(), function (e) {
-      page.goBack();
-      return true;
-    });
-
+    $('.back').on('click', page.goBack);
     // 去投注
-    $(".tzBox").on(pageEvent.touchStart(), function (e) {
-      pageEvent.handleTapEvent(this, this, pageEvent.activate, e);
-      return true;
-    });
-
-    $(".tzBox").on(pageEvent.activate(), function (e) {
+    $(".tzBox").on('click', function () {
       // 删除缓存的购买数据
       util.clearLocalData(util.keyMap.LOCAL_JCL);
       page.init("jcl/bet", {}, 1);

@@ -43,7 +43,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"notice/detail", data:params},
+    page.setHistoryState({url: "notice/detail", data: params},
       "notice/detail",
       "#notice/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
       canBack);
@@ -122,33 +122,25 @@ define(function (require, exports, module) {
 
     $(window).off("message").
       on("message", function (e) {
-      if (e.origin === "http://gj.caipiao123.com.cn") {
-        var height = parseInt(e.data, 10) + 40;
-        $("#noticeFrame").css({"height":height + "px"});
-      }
-      return true;
-    });
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 0);
+        if (e.origin === "http://gj.caipiao123.com.cn") {
+          var height = parseInt(e.data, 10) + 40;
+          $("#noticeFrame").css({"height": height + "px"});
         }
         return true;
       });
 
+    // 返回
+    $(".back").on(events.click(), function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
+
     // 立即参与
-    $(document).off(events.click(), "#noticeJoin").
-      on(events.click(), "#noticeJoin", function (e) {
+    $("#noticeJoin").on(events.click(), function (e) {
       switch (result.type) {
         case "0": // 普通活动
           switch (result.lotteryId) {
@@ -195,5 +187,5 @@ define(function (require, exports, module) {
     });
   };
 
-  return {init:init};
+  return {init: init};
 });

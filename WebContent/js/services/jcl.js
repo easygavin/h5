@@ -134,8 +134,11 @@ define(function (require, exports, module) {
    * 获取竞彩篮球开奖详情SP值
    * @param matchId
    */
-  var getAwardDetailSP = function (data, callback) {
+  var getAwardDetailSP = function (_data, callback) {
     // 开奖记录
+    var data = {
+      matchId:  _data
+    };
     $.ajax({
       type: "GET",
       url: path.JCLQ_AWARD_DETAIL_SP,

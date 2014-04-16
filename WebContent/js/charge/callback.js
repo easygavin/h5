@@ -28,7 +28,7 @@ define(function (require, exports, module) {
 
   //token--充值页面保存,当前页面获取.
 
-  var userInfo = '';
+  var userInfo;
 
   // 是否登录
   var hasLogin = false;
@@ -75,7 +75,6 @@ define(function (require, exports, module) {
     } else {
       hasLogin = false;
     }
-
 
     initShow();
 

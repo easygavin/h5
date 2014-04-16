@@ -25,25 +25,24 @@ define(function (require, exports, module) {
   //页行数{每页显示10行.}
   var pageSize = 10;
 
+  //用户登录状态.
+  var tkn;
+
   /**
    * 初始化
    */
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+    var params = {};
+    tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
 
     initShow();
 
     bindEvent();
-
-    // 参数设置
-    var params = {};
-    var tkn = util.checkLogin(data);
-    if (tkn) {
-      params.token = tkn;
-    }
 
     // 处理返回
     page.setHistoryState({url: "user/coupon", data: params},
@@ -59,7 +58,7 @@ define(function (require, exports, module) {
   var initShow = function () {
 
     $("#container").html(template);
-
+    //得到优惠券之类的信息.
     getCouponCount();
   };
 
@@ -133,9 +132,17 @@ define(function (require, exports, module) {
 
   var getCouponCount = function () {
 
-    if (_.isEmpty(userInfo)) {
-      page.init('login', {}, 1);
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
     }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     //获取优惠券
     var time = getTime();
     // 显示加载图标

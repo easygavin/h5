@@ -9,9 +9,9 @@ __p += '<!--竞彩足球[上下盘]模板-->\r\n<div data-match-id="' +
 ((__t = (number)) == null ? '' : __t) +
 '"\r\n         data-live-id="' +
 ((__t = (gliveId)) == null ? '' : __t) +
-'">\r\n    <colgroup>\r\n      <col width="">\r\n      <col width="10%">\r\n      <col width="40%">\r\n      <col width="40%">\r\n    </colgroup>\r\n    <tbody>\r\n    <tr>\r\n      <td colspan="2" class="more_odds_btn" rowspan="2">\r\n        ' +
+'">\r\n    <colgroup>\r\n      <col width="">\r\n      <col width="10%">\r\n      <col width="40%">\r\n      <col width="40%">\r\n    </colgroup>\r\n    <tbody>\r\n    <tr>\r\n      <td colspan="2" rowspan="2">\r\n        <span class="leagueT">' +
 ((__t = (leagueMatch)) == null ? '' : __t) +
-'\r\n        <br>' +
+'</span>\r\n        <br>' +
 ((__t = (number)) == null ? '' : __t) +
 '<br>' +
 ((__t = (time)) == null ? '' : __t) +

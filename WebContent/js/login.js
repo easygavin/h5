@@ -30,7 +30,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url:"login", data:params},
+    page.setHistoryState({url: "login", data: params},
       "login",
       "#login" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
       canBack);
@@ -52,47 +52,40 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back, .pr0").
-      on(events.touchStart(), ".back, .pr0", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 0);
-        }
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
 
     // 注册
-    $(document).off(events.activate(), ".pr0").
-      on(events.activate(), ".pr0", function (e) {
-        page.init("register", {from:"login"}, 1);
-        return true;
-      });
+    $(".pr0").on(events.click(), function (e) {
+      page.init("register", {from: "login"}, 1);
+      return true;
+    });
 
     // 登录
-    $(document).off(events.click(), ".loginbtn").
-      on(events.click(), ".loginbtn", function (e) {
-        var name = $(".username").val();
-        var password = $(".password").val();
-        if ($.trim(name) === "") {
-          page.toast("用户名不能为空");
-          return false;
-        }
+    $(".loginbtn").on(events.click(), function (e) {
 
-        if ($.trim(password) === "") {
-          page.toast("密码不能为空");
-          return false;
-        }
+      var name = $(".username").val();
+      var password = $(".password").val();
 
-        toLogin(name, password);
-        return true;
-      });
+      if ($.trim(name) === "") {
+        page.toast("用户名不能为空");
+        return false;
+      }
+
+      if ($.trim(password) === "") {
+        page.toast("密码不能为空");
+        return false;
+      }
+
+      toLogin(name, password);
+      return true;
+    });
   };
 
   /**
@@ -120,7 +113,7 @@ define(function (require, exports, module) {
             page.toast("登录成功");
             if (canBack) {
               if (from === "home") {
-                page.init("home", {from:"login"}, 0);
+                page.init("home", {from: "login"}, 0);
               } else {
                 page.goBack();
               }
@@ -140,5 +133,5 @@ define(function (require, exports, module) {
 
     util.addAjaxRequest(request);
   };
-  return {init:init};
+  return {init: init};
 });

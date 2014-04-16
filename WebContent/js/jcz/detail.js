@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
   var view = require('/views/athletics/jcz/detail.html'),
     page = require('page'),
-    pageEvent = require('fastclick'),
+    _ = require('underscore'),
     service = require('services/jcz'),
     fastClick = require('fastclick'),
     util = require('util');
@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     // 加载模板内容
     $("#container").html(view);
     // 赛事开奖结果
-    matchResult = forward ? data : data.matchResult;
+    matchResult = _.isEmpty(data) ? JSON.parse(util.unParam(location.search.substring(1)).data).matchResult : data;
     // 参数设置
     var params = {};
     if (matchResult != "undefined") {

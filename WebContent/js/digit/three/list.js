@@ -255,192 +255,172 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
 
-    // 返回， 购彩协议
-    $(document).off(events.touchStart(), ".back, .checked").
-      on(events.touchStart(), ".back, .checked", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     // 返回
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.goBack();
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      page.goBack();
+      return true;
+    });
 
     // 获取期号
-    $(document).off(events.tap(), "#issueNo").
-      on(events.tap(), "#issueNo", function (e) {
-        // 获取期号信息
-        getIssue();
-        return true;
-      });
+    $("#issueNo").on(events.tap(), function (e) {
+      // 获取期号信息
+      getIssue();
+      return true;
+    });
 
     // 删除
-    $(document).off(events.tap(), ".gmList").
-      on(events.tap(), ".gmList", function (e) {
-        var $target = $(e.target);
-        if ($target.hasClass("delete")) {
-          // 删除
-          var index = parseInt($target.attr("id").split("_")[1], 10);
-          if (bufferData !== null && typeof bufferData != "undefined"
-            && bufferData.length > 0 && !isNaN(index)) {
+    $(".gmList").on(events.tap(), function (e) {
+      var $target = $(e.target);
+      if ($target.hasClass("delete")) {
+        // 删除
+        var index = parseInt($target.attr("id").split("_")[1], 10);
+        if (bufferData !== null && typeof bufferData != "undefined"
+          && bufferData.length > 0 && !isNaN(index)) {
 
-            if (bufferData.length == 1) {
-              page.toast("请至少选择 1 注");
-              return false;
-            }
-
-            bufferData.splice(index, 1);
-            // 保存本地数据
-            operateToLocal(1);
-
-            // 显示投注列表
-            showItems();
+          if (bufferData.length == 1) {
+            page.toast("请至少选择 1 注");
+            return false;
           }
+
+          bufferData.splice(index, 1);
+          // 保存本地数据
+          operateToLocal(1);
+
+          // 显示投注列表
+          showItems();
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     // 追期
-    $(document).off("keyup", "#issueInput").
-      on("keyup", "#issueInput",function (e) {
-        this.value = this.value.replace(/\D/g, '');
-        var $issueInput = $(this);
-        issueInput = $issueInput.val();
+    $("#issueInput").on("keyup",function (e) {
+      this.value = this.value.replace(/\D/g, '');
+      var $issueInput = $(this);
+      issueInput = $issueInput.val();
 
-        if ($.trim(issueInput) == "") {
-          issueInput = 0;
-        } else {
-          if ($.trim(issueInput) != "" && (isNaN(issueInput) || issueInput < 1)) {
-            issueInput = 1;
-            $issueInput.val(1);
-          } else if (issueInput > 50) {
-            page.toast("亲，最多只能追50期哦");
-            issueInput = 50;
-            $issueInput.val(50);
-          }
+      if ($.trim(issueInput) == "") {
+        issueInput = 0;
+      } else {
+        if ($.trim(issueInput) != "" && (isNaN(issueInput) || issueInput < 1)) {
+          issueInput = 1;
+          $issueInput.val(1);
+        } else if (issueInput > 50) {
+          page.toast("亲，最多只能追50期哦");
+          issueInput = 50;
+          $issueInput.val(50);
         }
+      }
 
-        // 显示付款信息
-        showPayInfo();
-        return true;
-      }).off("blur", "#issueInput")
-      .on("blur", "#issueInput", function (e) {
+      // 显示付款信息
+      showPayInfo();
+      return true;
+    }).on("blur", function (e) {
         this.value = this.value.replace(/\D/g, '');
         // 显示付款信息
         showPayInfo();
       });
 
     // 加倍
-    $(document).off("keyup", "#timesInput").
-      on("keyup", "#timesInput",function (e) {
-        this.value = this.value.replace(/\D/g, '');
-        var $timesInput = $(this);
-        timesInput = $timesInput.val();
+    $("#timesInput").on("keyup",function (e) {
+      this.value = this.value.replace(/\D/g, '');
+      var $timesInput = $(this);
+      timesInput = $timesInput.val();
 
-        if ($.trim(timesInput) == "") {
-          timesInput = 0;
-        } else {
-          if ($.trim(timesInput) != "" && (isNaN(timesInput) || timesInput < 1)) {
-            timesInput = 1;
-            $timesInput.val(1);
-          } else if (timesInput > 999) {
-            page.toast("亲，最多只能投999倍哦");
-            timesInput = 999;
-            $timesInput.val(999);
-          }
+      if ($.trim(timesInput) == "") {
+        timesInput = 0;
+      } else {
+        if ($.trim(timesInput) != "" && (isNaN(timesInput) || timesInput < 1)) {
+          timesInput = 1;
+          $timesInput.val(1);
+        } else if (timesInput > 999) {
+          page.toast("亲，最多只能投999倍哦");
+          timesInput = 999;
+          $timesInput.val(999);
         }
+      }
 
-        // 显示付款信息
-        showPayInfo();
-        return true;
-      }).off("blur", "#timesInput")
-      .on("blur", "#timesInput", function (e) {
+      // 显示付款信息
+      showPayInfo();
+      return true;
+    }).on("blur", function (e) {
         this.value = this.value.replace(/\D/g, '');
         // 显示付款信息
         showPayInfo();
       });
 
     // 机选一注
-    $(document).off(events.tap(), "#random").
-      on(events.tap(), "#random", function (e) {
-        getRandom(1);
-        return true;
-      });
+    $("#random").on(events.tap(), function (e) {
+      getRandom(1);
+      return true;
+    });
 
     // 继续选号
-    $(document).off(events.tap(), "#goBall").
-      on(events.tap(), "#goBall", function (e) {
-        page.goBack();
-        return true;
-      });
+    $("#goBall").on(events.tap(), function (e) {
+      page.goBack();
+      return true;
+    });
 
     // 全部删除
-    $(document).off(events.tap(), "#clearAll").
-      on(events.tap(), "#clearAll", function (e) {
-        if (bufferData !== null && typeof bufferData != "undefined"
-          && bufferData.length > 0) {
+    $("#clearAll").on(events.tap(), function (e) {
+      if (bufferData !== null && typeof bufferData != "undefined"
+        && bufferData.length > 0) {
 
-          if (bufferData.length == 1) {
-            page.toast("请至少选择 1 注");
-            return false;
-          } else {
+        if (bufferData.length == 1) {
+          page.toast("请至少选择 1 注");
+          return false;
+        } else {
 
-            bufferData.splice(1, bufferData.length - 1);
-            // 保存本地数据
-            operateToLocal(1);
+          bufferData.splice(1, bufferData.length - 1);
+          // 保存本地数据
+          operateToLocal(1);
 
-            // 显示投注列表
-            showItems();
-          }
+          // 显示投注列表
+          showItems();
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     // 移除cover的click事件，防止重复提交订单
     $(".cover").off(events.click());
 
     // 购买
-    $(document).off(events.click(), ".btn2").
-      on(events.click(), ".btn2", function (e) {
-        if (typeof issue.issueNo == "undefined") {
-          page.toast("无法获取到彩票期号");
-          return false;
-        }
+    $(".btn2").on(events.click(), function (e) {
+      if (typeof issue.issueNo == "undefined") {
+        page.toast("无法获取到彩票期号");
+        return false;
+      }
 
-        // 检查值
-        if (checkVal()) {
-          // 购买
-          toBuy();
-        }
-        return true;
-      });
+      // 检查值
+      if (checkVal()) {
+        // 购买
+        toBuy();
+      }
+      return true;
+    });
 
     // 发起合买
-    $(document).off(events.click(), ".btn1").
-      on(events.click(), ".btn1", function (e) {
-        // 发起合买
-        if (typeof issue.issueNo == "undefined") {
-          page.toast("无法获取到彩票期号");
-          return false;
-        }
+    $(".btn1").on(events.click(), function (e) {
+      // 发起合买
+      if (typeof issue.issueNo == "undefined") {
+        page.toast("无法获取到彩票期号");
+        return false;
+      }
 
-        // 检查值
-        if (checkVal()) {
-          // 购买
-          toHm();
-        }
-        return true;
-      });
+      // 检查值
+      if (checkVal()) {
+        // 购买
+        toHm();
+      }
+      return true;
+    });
 
     // 购彩协议
-    $(document).off(events.activate(), ".checked").
-      on(events.activate(), ".checked", function (e) {
-        page.init("protocol", {}, 1);
-        return true;
-      });
+    $(".checked").on(events.click(), function (e) {
+      page.init("protocol", {}, 1);
+      return true;
+    });
   };
 
   /**

@@ -90,24 +90,16 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.goBack();
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      page.goBack();
+      return true;
+    });
 
     // 冠军竞猜投注
-    $(document).off(events.click(), "#goBuyGjj").
-      on(events.click(), "#goBuyGjj", function (e) {
-        page.init("gjj/bet", {}, 0);
-        return true;
-      });
+    $("#goBuyGjj").on(events.click(), function (e) {
+      page.init("gjj/bet", {}, 0);
+      return true;
+    });
   };
 
   return {init: init};

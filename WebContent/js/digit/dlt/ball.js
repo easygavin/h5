@@ -28,6 +28,8 @@ define(function (require, exports, module) {
   var issueCount = 5;
   // 开奖号码列表
   var openNumbers = {};
+  // 登录标示
+  var tkn = "";
   /**
    * 初始化
    */
@@ -36,7 +38,7 @@ define(function (require, exports, module) {
 
     // 参数设置
     var params = {};
-    var tkn = util.checkLogin(data);
+    tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
     }
@@ -341,89 +343,82 @@ define(function (require, exports, module) {
         });
     }
 
-    // 返回, 模式, 右菜单, 机选一注
-    $(document).off(events.touchStart(), ".back, .caList, .pr0, .gmButton").
-      on(events.touchStart(), ".back, .caList, .pr0, .gmButton", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     // 返回
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.init("home", {}, 0);
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      page.init("home", {}, 0);
+      return true;
+    });
 
     // 下拉箭头
-    $(document).off(events.tap(), ".openArrow, #lastNo").
-      on(events.tap(), ".openArrow, #lastNo", function (e) {
-        var $openArrow = $(".openArrow");
-        if ($openArrow.hasClass("down")) {
-          $openArrow.removeClass("down").addClass("up").html("&#xf060;");
-          toOpenNumbers(1);
-        } else {
-          $openArrow.removeClass("up").addClass("down").html("&#xf003;");
-          toOpenNumbers(0);
-        }
-        return true;
-      });
+    $(".openArrow, #lastNo").on(events.tap(), function (e) {
+      var $openArrow = $(".openArrow");
+      if ($openArrow.hasClass("down")) {
+        $openArrow.removeClass("down").addClass("up").html("&#xf060;");
+        toOpenNumbers(1);
+      } else {
+        $openArrow.removeClass("up").addClass("down").html("&#xf003;");
+        toOpenNumbers(0);
+      }
+      return true;
+    });
 
     // 获取期号
-    $(document).off(events.tap(), "#issueNo").
-      on(events.tap(), "#issueNo", function (e) {
-        // 获取期号信息
-        getIssue();
-        return true;
-      });
+    $("#issueNo").on(events.tap(), function (e) {
+      // 获取期号信息
+      getIssue();
+      return true;
+    });
 
     // 模式
-    $(document).off(events.activate(), ".caList").
-      on(events.activate(), ".caList", function (e) {
-        if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
-          page.toast("本站暂不支持多种玩法混合投注");
-        } else {
-          $(".menuBox").show();
-          util.showCover();
-        }
-        return true;
-      });
+    $(".caList").on(events.click(), function (e) {
+      if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
+        page.toast("本站暂不支持多种玩法混合投注");
+      } else {
+        $(".menuBox").show();
+        util.showCover();
+      }
+      return true;
+    });
 
     // 右菜单
-    $(document).off(events.activate(), ".pr0").
-      on(events.activate(), ".pr0", function (e) {
-        $(".popup").show();
-        util.showCover();
-        return true;
-      });
+    $(".pr0").on(events.click(), function (e) {
+      $(".popup").show();
+      util.showCover();
+      return true;
+    });
 
     // 右菜单项点击
-    $(document).off(events.click(), ".popup").
-      on(events.click(), ".popup", function (e) {
-        var $a = $(e.target).closest("a");
-        if (!$a.hasClass("click")) {
-          var id = $a.attr("id");
-          switch (id) {
-            case "hm_menu":
-              // 去合买
-              break;
-            case "gc_menu":
+    $(".popup").on(events.click(), function (e) {
+      var $a = $(e.target).closest("a");
+      if (!$a.hasClass("click")) {
+        var id = $a.attr("id");
+        switch (id) {
+          case "hm_menu":
+            // 去合买
+            page.init("hm/index", {lotteryTypeArray: lotConfig.lotteryId}, 1);
+            break;
+          case "gc_menu":
+            if (!tkn) {
+              page.codeHandler({statusCode: "off"});
+            } else {
               // 购彩记录
-              break;
-            case "kj_menu":
-              // 开奖信息
-              util.hideCover();
-              page.init("number/openLott", {lot: lot}, 1);
-              break;
-            case "wf_menu":
-              util.hideCover();
-              page.init(lotConfig.paths["intro"].js, {lot: lot}, 1);
-              // 玩法介绍
-              break;
-          }
+              page.init("user/buyRecord", {lotteryTypeArray: lotConfig.lotteryId}, 1);
+            }
+            break;
+          case "kj_menu":
+            // 开奖信息
+            util.hideCover();
+            page.init("number/openLott", {lot: lot}, 1);
+            break;
+          case "wf_menu":
+            util.hideCover();
+            page.init(lotConfig.paths["intro"].js, {lot: lot}, 1);
+            // 玩法介绍
+            break;
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     // 关闭显示框
     $(".cover").off(events.click()).on(events.click(), function (e) {
@@ -434,159 +429,151 @@ define(function (require, exports, module) {
     });
 
     // 选中模式
-    $(document).off(events.click(), ".menuBox").
-      on(events.click(), ".menuBox", function (e) {
-        var $a = $(e.target).closest("a");
-        if (!$a.hasClass("click")) {
-          var id = $a.attr("id").split("_")[1];
-          // 保存模式
-          mode = id;
+    $(".menuBox").on(events.click(), function (e) {
+      var $a = $(e.target).closest("a");
+      if (!$a.hasClass("click")) {
+        var id = $a.attr("id").split("_")[1];
+        // 保存模式
+        mode = id;
 
-          $(".menuBox a").removeClass("click");
-          $a.addClass("click");
+        $(".menuBox a").removeClass("click");
+        $a.addClass("click");
 
-          $(".menuBox").hide();
-          util.hideCover();
+        $(".menuBox").hide();
+        util.hideCover();
 
-          // 显示标题
-          showModeTitle();
+        // 显示标题
+        showModeTitle();
 
-          // 显示模块
-          showModeZone();
+        // 显示模块
+        showModeZone();
 
-          // 清除原来选中号
-          clear();
-
-          // 统计注数
-          unitBets();
-        }
-        return true;
-      });
-
-    // 机选一注
-    $(document).off(events.activate(), ".gmButton").
-      on(events.activate(), ".gmButton", function (e) {
-        showRdmNo();
-        return true;
-      });
-
-    // 第一行
-    $(document).off(events.tap(), "#line_0").
-      on(events.tap(), "#line_0", function (e) {
-        var $num = $(e.target).closest(".num");
-
-        if ($num.length) {
-          if ($num.hasClass("click")) {
-            $num.removeClass("click");
-          } else {
-            var count = $("#line_0 .click").length;
-            if (mode === "0") {
-              // 普通投注
-              // 只能选20个红球
-              if (count == 20) {
-                page.toast("所选号码已经达到最大限制");
-                return false;
-              }
-            } else if (mode === "1") {
-              // 胆拖投注
-              // 只能选4个胆红
-              if (count == 4) {
-                page.toast("所选号码已经达到最大限制");
-                return false;
-              }
-              // 移除拖红选中
-              $("#line_1 li .num :contains('" + $num.text() + "')").removeClass("click");
-            }
-            $num.addClass("click");
-          }
-          // 统计注数
-          unitBets();
-        }
-        return true;
-      });
-
-    // 第二行
-    $(document).off(events.tap(), "#line_1").
-      on(events.tap(), "#line_1", function (e) {
-        var $num = $(e.target).closest(".num");
-
-        if ($num.length) {
-          if ($num.hasClass("click")) {
-            $num.removeClass("click");
-          } else {
-            $num.addClass("click");
-            // 移除胆红选中
-            $("#line_0 li .num :contains('" + $num.text() + "')").removeClass("click");
-          }
-          // 统计注数
-          unitBets();
-        }
-        return true;
-      });
-
-    // 第三行
-    $(document).off(events.tap(), "#line_2").
-      on(events.tap(), "#line_2", function (e) {
-        var $num = $(e.target).closest(".num");
-
-        if ($num.length) {
-          if ($num.hasClass("click")) {
-            $num.removeClass("click");
-          } else if ($num.length) {
-            var count = $("#line_2 .click").length;
-            if (mode === "1") {
-              // 胆拖投注
-              // 只能选1个胆蓝
-              if (count == 1) {
-                page.toast("所选号码已经达到最大限制");
-                return false;
-              }
-              // 移除拖红选中
-              $("#line_3 li .num :contains('" + $num.text() + "')").removeClass("click");
-            }
-            $num.addClass("click");
-          }
-          // 统计注数
-          unitBets();
-        }
-        return true;
-      });
-
-    // 第四行
-    $(document).off(events.tap(), "#line_3").
-      on(events.tap(), "#line_3", function (e) {
-        var $num = $(e.target).closest(".num");
-
-        if ($num.length) {
-          if ($num.hasClass("click")) {
-            $num.removeClass("click");
-          } else {
-            $num.addClass("click");
-            // 移除胆红选中
-            $("#line_2 li .num :contains('" + $num.text() + "')").removeClass("click");
-          }
-          // 统计注数
-          unitBets();
-        }
-        return true;
-      });
-
-    // 确定
-    $(document).off(events.click(), ".btn2").
-      on(events.click(), ".btn2", function (e) {
-        toList();
-        return true;
-      });
-
-    // 清除
-    $(document).off(events.click(), ".btn1").
-      on(events.click(), ".btn1", function (e) {
-        // 清除
+        // 清除原来选中号
         clear();
+
         // 统计注数
         unitBets();
-        return true;
-      });
+      }
+      return true;
+    });
+
+    // 机选一注
+    $(".gmButton").on(events.click(), function (e) {
+      showRdmNo();
+      return true;
+    });
+
+    // 第一行
+    $("#line_0").on(events.tap(), function (e) {
+      var $num = $(e.target).closest(".num");
+
+      if ($num.length) {
+        if ($num.hasClass("click")) {
+          $num.removeClass("click");
+        } else {
+          var count = $("#line_0 .click").length;
+          if (mode === "0") {
+            // 普通投注
+            // 只能选20个红球
+            if (count == 20) {
+              page.toast("所选号码已经达到最大限制");
+              return false;
+            }
+          } else if (mode === "1") {
+            // 胆拖投注
+            // 只能选4个胆红
+            if (count == 4) {
+              page.toast("所选号码已经达到最大限制");
+              return false;
+            }
+            // 移除拖红选中
+            $("#line_1 li .num :contains('" + $num.text() + "')").removeClass("click");
+          }
+          $num.addClass("click");
+        }
+        // 统计注数
+        unitBets();
+      }
+      return true;
+    });
+
+    // 第二行
+    $("#line_1").on(events.tap(), function (e) {
+      var $num = $(e.target).closest(".num");
+
+      if ($num.length) {
+        if ($num.hasClass("click")) {
+          $num.removeClass("click");
+        } else {
+          $num.addClass("click");
+          // 移除胆红选中
+          $("#line_0 li .num :contains('" + $num.text() + "')").removeClass("click");
+        }
+        // 统计注数
+        unitBets();
+      }
+      return true;
+    });
+
+    // 第三行
+    $("#line_2").on(events.tap(), function (e) {
+      var $num = $(e.target).closest(".num");
+
+      if ($num.length) {
+        if ($num.hasClass("click")) {
+          $num.removeClass("click");
+        } else if ($num.length) {
+          var count = $("#line_2 .click").length;
+          if (mode === "1") {
+            // 胆拖投注
+            // 只能选1个胆蓝
+            if (count == 1) {
+              page.toast("所选号码已经达到最大限制");
+              return false;
+            }
+            // 移除拖红选中
+            $("#line_3 li .num :contains('" + $num.text() + "')").removeClass("click");
+          }
+          $num.addClass("click");
+        }
+        // 统计注数
+        unitBets();
+      }
+      return true;
+    });
+
+    // 第四行
+    $("#line_3").on(events.tap(), function (e) {
+      var $num = $(e.target).closest(".num");
+
+      if ($num.length) {
+        if ($num.hasClass("click")) {
+          $num.removeClass("click");
+        } else {
+          $num.addClass("click");
+          // 移除胆红选中
+          $("#line_2 li .num :contains('" + $num.text() + "')").removeClass("click");
+        }
+        // 统计注数
+        unitBets();
+      }
+      return true;
+    });
+
+    // 确定
+    $(".btn2").on(events.click(), function (e) {
+      toList();
+      return true;
+    });
+
+    // 清除
+    $(".btn1").on(events.click(), function (e) {
+      // 清除
+      clear();
+      // 统计注数
+      unitBets();
+      return true;
+    });
   };
 
   /**

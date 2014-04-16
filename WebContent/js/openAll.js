@@ -86,24 +86,17 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(document).off(events.touchStart(), ".back, .kjList tr").
-      on(events.touchStart(), ".back, .kjList tr", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
+    $(".back").on(events.click(), function (e) {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
 
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 0);
-        }
-        return true;
-      });
-
-    $(document).off(events.activate(), ".kjList tr").
-      on(events.activate(), ".kjList tr", function (e) {
+    $(document).off(events.tap(), ".kjList tr").
+      on(events.tap(), ".kjList tr", function (e) {
         var $fm = $(this).find(".fm");
         if ($fm.length) {
           // 开奖列表

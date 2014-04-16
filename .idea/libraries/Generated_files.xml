@@ -19,6 +19,7 @@
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/history.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/jf.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/match.js" />
+        <item url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/optimize.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/detail.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.js" />
         <item url="file://$PROJECT_DIR$/WebContent/tpl/number/look.js" />
@@ -60,6 +61,7 @@
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/jf.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/match.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/detail.js" />
+      <root url="file://$PROJECT_DIR$/WebContent/tpl/athletics/jcz/optimize.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/number/look.js" />
       <root url="file://$PROJECT_DIR$/WebContent/tpl/gjj/detail.js" />

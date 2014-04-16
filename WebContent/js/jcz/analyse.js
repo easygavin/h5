@@ -2,12 +2,13 @@
  * Created by Administrator on 14-3-26.
  */
 define(function (require, exports, module) {
-  var $ = require('zepto'),
-    util = require('util'),
-    page = require('page'),
-    _ = require('underscore'),
-    service = require('services/jcz'),
-    pageTpl = require('/views/athletics/jcz/analyse.html');
+  var $ = require('zepto');
+  var util = require('util');
+  var page = require('page');
+  var _ = require('underscore');
+  var service = require('services/jcz');
+  var fastClick = require('fastclick');
+  var pageTpl = require('/views/athletics/jcz/analyse.html');
 
   var analyse = {
     init: function (data, forward) {
@@ -20,12 +21,7 @@ define(function (require, exports, module) {
       self.params = data;
       self.getData();
       self.events();
-      page.setHistoryState(
-        {url: "jcz/analyse", data: self.params},
-        "jcz/analyse",
-          (JSON.stringify(self.params).length > 2 ?
-            "?data=" + encodeURIComponent(JSON.stringify(self.params)) : "") + "#jcz/analyse",
-        self.canBack ? 1 : 0);
+      page.setHistoryState({url: "jcz/analyse", data: self.params}, "jcz/analyse", (JSON.stringify(self.params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(self.params)) : "") + "#jcz/analyse", self.canBack ? 1 : 0);
     },
     getData: function () {
       util.showLoading();
@@ -41,9 +37,7 @@ define(function (require, exports, module) {
       });
     },
     show: function () {
-      var data = this.data,
-        _data ,
-        url = '/tpl/athletics/jcz/oyd';
+      var data = this.data, _data , url = '/tpl/athletics/jcz/oyd';
       $('#teamInfo').find('.host').html(data.hostName);
       $('#teamInfo').find('.score').html(data.hostAllRank + ':' + data.visitAllRank);
       $('#teamInfo').find('.visit').html(data.visitName);
@@ -89,6 +83,7 @@ define(function (require, exports, module) {
       this.show();
     },
     events: function () {
+      fastClick.attach(document);
       $('.back').on('click', page.goBack);
       $('#tabs').on('click', 'a', this.switchTab.bind(this));
       $('#refresh').on('click', this.getData.bind(this));

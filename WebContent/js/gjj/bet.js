@@ -200,58 +200,48 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
 
-    // 返回, 模式, 右菜单, 机选一注
-    $(document).off(events.touchStart(), ".back, .caList, .pr0, .gmButton").
-      on(events.touchStart(), ".back, .caList, .pr0, .gmButton", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.init("home", {}, 0);
-        return true;
-      });
+    // 返回
+    $(".back").on(events.click(), function (e) {
+      page.init("home", {}, 0);
+      return true;
+    });
 
     // 模式
-    $(document).off(events.activate(), ".caList").
-      on(events.activate(), ".caList", function (e) {
-        if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
-          page.toast("本站暂不支持多种玩法混合投注");
-        } else {
-          $(".menuBox").show();
-          util.showCover();
-        }
-        return true;
-      });
+    $(".caList").on(events.click(), function (e) {
+      if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
+        page.toast("本站暂不支持多种玩法混合投注");
+      } else {
+        $(".menuBox").show();
+        util.showCover();
+      }
+      return true;
+    });
 
     // 右菜单
-    $(document).off(events.activate(), ".pr0").
-      on(events.activate(), ".pr0", function (e) {
-        $(".popup").show();
-        util.showCover();
-        return true;
-      });
+    $(".pr0").on(events.click(), function (e) {
+      $(".popup").show();
+      util.showCover();
+      return true;
+    });
 
     // 右菜单项点击
-    $(document).off(events.click(), ".popup").
-      on(events.click(), ".popup", function (e) {
-        var $a = $(e.target).closest("a");
-        if (!$a.hasClass("click")) {
-          var id = $a.attr("id");
-          switch (id) {
-            case "gc_menu":
-              // 购彩记录
-              break;
-            case "wf_menu":
-              util.hideCover();
-              page.init("gjj/intro", {}, 1);
-              // 玩法介绍
-              break;
-          }
+    $(".popup").on(events.click(), function (e) {
+      var $a = $(e.target).closest("a");
+      if (!$a.hasClass("click")) {
+        var id = $a.attr("id");
+        switch (id) {
+          case "gc_menu":
+            // 购彩记录
+            break;
+          case "wf_menu":
+            util.hideCover();
+            page.init("gjj/intro", {}, 1);
+            // 玩法介绍
+            break;
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     // 关闭显示框
     $(".cover").off(events.click()).on(events.click(), function (e) {
@@ -262,76 +252,72 @@ define(function (require, exports, module) {
     });
 
     // 选中模式
-    $(document).off(events.click(), ".menuBox").
-      on(events.click(), ".menuBox", function (e) {
-        var $a = $(e.target).closest("a");
-        if (!$a.hasClass("click")) {
-          var id = $a.attr("id").split("_")[1];
-          // 保存模式
-          mode = id;
+    $(".menuBox").on(events.click(), function (e) {
+      var $a = $(e.target).closest("a");
+      if (!$a.hasClass("click")) {
+        var id = $a.attr("id").split("_")[1];
+        // 保存模式
+        mode = id;
 
-          $(".menuBox a").removeClass("click");
-          $a.addClass("click");
+        $(".menuBox a").removeClass("click");
+        $a.addClass("click");
 
-          $(".menuBox").hide();
-          util.hideCover();
+        $(".menuBox").hide();
+        util.hideCover();
 
-          // 显示标题
-          showModeTitle();
+        // 显示标题
+        showModeTitle();
 
-          // 显示模块
-          // 显示加载标示
-          util.showLoading();
-          // 获取对阵列表
-          getBetList();
+        // 显示模块
+        // 显示加载标示
+        util.showLoading();
+        // 获取对阵列表
+        getBetList();
 
-          // 清除原来选中号
-          clear();
-
-          // 统计注数
-          unitBets();
-        }
-        return true;
-      });
-
-    // 赛事列表点击
-    $(document).off(events.tap(), ".bets").
-      on(events.tap(), ".bets", function (e) {
-        var $matchSp = $(e.target).closest(".matchSp");
-
-        if ($matchSp.length) {
-          if ($matchSp.hasClass("click")) {
-            $matchSp.removeClass("click");
-          } else {
-            var count = $(".bets .click").length;
-            if (count == 15) {
-              page.toast("最多选择15场比赛进行投注");
-              return false;
-            }
-            $matchSp.addClass("click");
-          }
-
-          // 统计注数
-          unitBets();
-        }
-      });
-
-    // 确定
-    $(document).off(events.click(), ".btn2").
-      on(events.click(), ".btn2", function (e) {
-        toList();
-        return true;
-      });
-
-    // 清除
-    $(document).off(events.click(), ".btn1").
-      on(events.click(), ".btn1", function (e) {
-        // 清除
+        // 清除原来选中号
         clear();
+
         // 统计注数
         unitBets();
-        return true;
-      });
+      }
+      return true;
+    });
+
+    // 赛事列表点击
+    $(".bets").on(events.tap(), function (e) {
+      var $matchSp = $(e.target).closest(".matchSp");
+
+      if ($matchSp.length) {
+        if ($matchSp.hasClass("click")) {
+          $matchSp.removeClass("click");
+        } else {
+          var count = $(".bets .click").length;
+          if (count == 15) {
+            page.toast("最多选择15场比赛进行投注");
+            return false;
+          }
+          $matchSp.addClass("click");
+        }
+
+        // 统计注数
+        unitBets();
+      }
+    });
+
+    // 确定
+    $(".btn2").on(events.click(), function (e) {
+      toList();
+      return true;
+    });
+
+    // 清除
+    $(".btn1").on(events.click(), function (e) {
+      // 清除
+      clear();
+      // 统计注数
+      unitBets();
+      return true;
+    });
   };
 
   /**

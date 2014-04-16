@@ -18,32 +18,28 @@ define(function (require, exports, module) {
   //登录信息
   var loginState = null;
 
+  //登录状态.
+  var tkn;
   /**
    * 初始化
    */
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    loginState = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+    var params = {};
+    tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
 
     initShow();
 
     bindEvent();
 
-    idState();
-
-    // 参数设置
-    var params = {};
-
-    var tkn = util.checkLogin(data);
-    if (tkn) {
-      params.token = tkn;
-    }
     // 处理返回
     page.setHistoryState({url: "user/authenticate", data: params},
         "user/authenticate",
-        "#user/authenticate"+(JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+            "#user/authenticate" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
 
     // 隐藏加载标示
@@ -55,12 +51,10 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
 
-    // compile our template
-    var tmp = _.template(template);
+    $("#container").empty().html(template);
 
-    $("#container").empty().html(tmp());
-
-
+    //初始化显示,查询身份证是否认证.
+     idState();
   };
 
   /**
@@ -102,6 +96,18 @@ define(function (require, exports, module) {
    * 初始化显示,查询身份证是否认证.
    */
   var idState = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
+    loginState = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     // 显示遮住层
     util.showLoading();
     if (!_.isEmpty(loginState) && loginState.userId && loginState.userKey) {
@@ -110,7 +116,7 @@ define(function (require, exports, module) {
         util.hideLoading();
         $('.surebtn').html('确认');
         if (!_.isEmpty(data)) {
-          if (typeof data.statusCode!='undefined' && data.statusCode == '0') {
+          if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
             showItems(data.name, data.personCardId);
             //存储用户的真实姓名.在绑定银行卡页面需要.
             util.setLocalJson(util.keyMap.USER_TRUE_NAME, data.name);

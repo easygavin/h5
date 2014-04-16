@@ -19,33 +19,29 @@ define(function (require, exports, module) {
   //数据组装.
   var parameterValues = {};
 
+  //登录状态
+  var tkn;
+
   /**
    * 初始化
    */
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
-    initShow();
-
-    queryExistsBind();
-
-    bindEvent();
-
-    // 参数设置
     var params = {};
-
-    var tkn = util.checkLogin(data);
+    tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
     }
 
+    initShow();
+
+    bindEvent();
+
     // 处理返回
     page.setHistoryState({url: "user/bindBankCard", data: params},
         "user/bindBankCard",
-        "#user/bindBankCard"+(JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+            "#user/bindBankCard" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
     util.hideLoading();
   };
@@ -54,24 +50,33 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-
-    // compile our template
-    var tmp = _.template(template);
-
-    $("#container").empty().html(tmp());
-
+    $("#container").html(template);
+    //查询用户是否绑定银行
+    queryExistsBind();
   };
 
   /**
    * 查询用户是否绑定银行.
    */
   var queryExistsBind = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (data.statusCode == '0') {
             //初始化页面数据
-              initPageData(data);
+            initPageData(data);
           } else if (data.statusCode == '0007') {
             //0007尚未绑定身份证.
             page.toast("您尚未进行身份验证");
@@ -107,11 +112,11 @@ define(function (require, exports, module) {
     $('#province').html(data.province);
     $('#city').html(data.city);
     $('#bankAccount').val(data.bankInfo);
-    $('#bankNum').val(data.cardNo.substring(0,10)+'******');
+    $('#bankNum').val(data.cardNo.substring(0, 10) + '******');
     $('#bankPass').val('*******');
     $('#bankPassConf').val('*******');
     $('#main select').hide();
-    $('#main input').attr('readonly',true);
+    $('#main input').attr('readonly', true);
     $('.selectbox i').hide();
     $('.surebtn').html('返回');
     $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
@@ -289,9 +294,19 @@ define(function (require, exports, module) {
    * 用户真实姓名.
    */
   var getUserTrueName = function () {
+
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
+    }
+
     //｛1.先从本地缓存取得,2.查询接口.｝
     var trueName = util.getLocalJson(util.keyMap.USER_TRUE_NAME);
-    if (trueName && trueName != '') {
+    if (trueName != '') {
       return trueName;
     } else {
       util.showLoading();

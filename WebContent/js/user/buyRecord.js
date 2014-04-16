@@ -2,13 +2,7 @@
  * 购彩记录
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-      events = require('events'),
-      util = require('util'),
-      $ = require('zepto'),
-      _ = require('underscore'),
-      template = require("../../views/user/buyRecord.html"),
-      account = require('services/account');
+  var page = require('page'), events = require('events'), util = require('util'), $ = require('zepto'), _ = require('underscore'), fastClick = require('fastclick'), template = require("../../views/user/buyRecord.html"), account = require('services/account');
 
   // 处理返回参数
   var canBack = 0;
@@ -36,42 +30,34 @@ define(function (require, exports, module) {
   //用户信息.
   var userInfo;
 
+  //用户登录状态
+  var tkn;
+
   /**
    * 初始化
    */
   var init = function (data, forward) {
 
     canBack = forward ? 1 : 0;
-
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
+    var params = {};
+    tkn = util.checkLogin(data);
+    if (tkn) {
+      params.token = tkn;
+    }
     // 彩种列表
     typeArr = data.lotteryTypeArray || lotteryTypeArray;
-
+    params.lotteryTypeArray = typeArr;
     // 返回后的Tab焦点与数据加载参数
     if (forward) {
       buyType = "0", requestPage = "1", requestType = "0";
     }
 
-    // 参数设置
-    var params = {};
-    var tkn = util.checkLogin(data);
-    if (tkn) {
-      params.token = tkn;
-    }
-    params.lotteryTypeArray = typeArr;
-
     initShow();
 
     bindEvent();
 
-    initQuery();
-
     // 处理返回
-    page.setHistoryState({url: "user/buyRecord", data: params},
-        "user/buyRecord",
-            "#user/buyRecord" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-        canBack);
+    page.setHistoryState({url: "user/buyRecord", data: params}, "user/buyRecord", "#user/buyRecord" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
     util.hideLoading();
   };
 
@@ -80,12 +66,13 @@ define(function (require, exports, module) {
    */
   var initQuery = function (data) {
 
+    requestPage = "1";
+
     showTitle();
 
     // 清空列表
     clearItems();
 
-    requestPage = "1";
     // 请求数据
     getBuyRecordsList();
   };
@@ -118,7 +105,6 @@ define(function (require, exports, module) {
       case "52": // 竞彩足球混投
       case "56": // 竞彩足球让球胜平负
         prepend = "竞彩足球";
-
         break;
       case "36": // 竞彩蓝球胜负
       case "37": // 竞彩蓝球让分胜负
@@ -147,10 +133,16 @@ define(function (require, exports, module) {
 
     // 总页数重置
     pages = 0;
-    if (_.isEmpty(userInfo)) {
-      page.init('login', {}, 1);
-      return false;
+    if (!tkn) {
+      // 尚未登录，弹出提示框
+      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+        page.init("login", {}, 1);
+      }, function () {
+        $(".popup").hide();
+      });
     }
+
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
     var data = {};
     // buyType 0: 全部, 1: 自购
@@ -181,7 +173,6 @@ define(function (require, exports, module) {
       } else {
         page.toast("加载失败");
       }
-
       // 隐藏加载图标
       loadingShow(0);
     });
@@ -216,10 +207,6 @@ define(function (require, exports, module) {
     }
   };
 
-  /**
-   * 添加一项数据
-   * @param item
-   */
   /**
    * 添加一项数据
    * @param item
@@ -285,49 +272,37 @@ define(function (require, exports, module) {
   var initShow = function () {
 
     $("#container").html(template);
+    //初始化查询.
+    initQuery();
   };
 
   /**
    * 绑定事件
    */
   var bindEvent = function () {
-
+    fastClick.attach(document);
     // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
+    $('.back').on('click', page.goBack);
 
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
-      offBind();
-      page.goBack();
-      return true;
-    });
-
-    //tab 切换.
-    $(document).off(events.touchStart(), ".jltab a").on(events.touchStart(), ".jltab a", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".jltab a").on(events.activate(), ".jltab a", function (e) {
+    //tab 切换
+    $('.jltab').on('click', 'a', function () {
       var $target = $(this);
       var id = $target.attr("id").split("_")[1];
       switch (id) {
         case "all": //全部
-          requestType ="0";
-          buyType ="0";
+          requestType = "0";
+          buyType = "0";
           break;
         case "awarded": // 中奖
           requestType = "1";
-          buyType ="0";
+          buyType = "0";
           break;
         case "notAward": // 未中奖
           requestType = "2";
-          buyType ="0";
+          buyType = "0";
           break;
         case "buy": // 自购
-          requestType ="0";
+          requestType = "0";
           buyType = "1";
           break;
       }
@@ -338,14 +313,8 @@ define(function (require, exports, module) {
       return true;
     });
 
-
     // 详情
-    $(document).off(events.touchStart(), ".buyInformation tr").on(events.touchStart(), ".buyInformation tr", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".buyInformation tr").on(events.activate(), ".buyInformation tr", function (e) {
+    $('.buyInformation').on('click', "tr", function () {
       // 详情
       var params = $(this).find(".fm").attr("id").split("_");
       if (params.length == 3) {
@@ -353,19 +322,15 @@ define(function (require, exports, module) {
         var lotteryType = params[1], requestType = "0", projectId = params[2];
         if (lotteryType == "11" || lotteryType == "12" || lotteryType == "13" || lotteryType == "14" || lotteryType == "31") {
           // 数字彩，高频彩
-          page.init("digit/details", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
-        } else if (lotteryType == "36" || lotteryType == "37"
-            || lotteryType == "38" || lotteryType == "39"
-            || lotteryType == "53") {
+          page.init("number/detail", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
+        } else if (lotteryType == "36" || lotteryType == "37" || lotteryType == "38" || lotteryType == "39" || lotteryType == "53") {
           // 竞彩篮球
           page.init("jcl/result", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
         } else if (lotteryType == "46" || lotteryType == "47" || lotteryType == "48" || lotteryType == "49" || lotteryType == "52" || lotteryType == "56") {
           page.init("jcz/result", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
         }
       }
-      return true;
     });
-
     var timer = 0;
     $(window).on("scroll", function () {
       if (!timer) {

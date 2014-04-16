@@ -4,7 +4,7 @@
 define(function (require, exports, module) {
   var view = require('/views/athletics/jcl/detail.html'),
     page = require('page'),
-    pageEvent = require('fastclick'),
+    _ = require('underscore'),
     service = require('services/jcl'),
     fastClick = require('fastclick'),
     util = require('util');
@@ -17,7 +17,7 @@ define(function (require, exports, module) {
     // 加载模板内容
     $("#container").html(view);
     // 赛事开奖结果
-    matchResult = forward ? data : data.matchResult;
+    matchResult = _.isEmpty(data) ? JSON.parse(util.unParam(location.search.substring(1)).data).matchResult : data;
     // 参数设置
     var params = {};
     if (matchResult != "undefined") {
@@ -27,7 +27,6 @@ define(function (require, exports, module) {
     if (tkn) {
       params.token = tkn;
     }
-    console.log('---',matchResult);
     // 显示赛事信息
     var teams = matchResult.playAgainst.split("|");
     $(".match").html(teams[0] + "&nbsp;<b>" + matchResult.goalscore + "</b>&nbsp;" + teams[1]);
@@ -109,7 +108,7 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
     //fastclick events
-    fastClick.attach(document.body);
+    fastClick.attach(document);
     // 返回
     $('.back').on('click', page.goBack);
     // 去投注

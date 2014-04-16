@@ -44,17 +44,16 @@ define(function (require, exports, module) {
       //从callback失败到充值中心,传递过来的result &type
       var result, type;
 
+      //登录状态.
+      var tkn ;
+
       /**
        * 初始化
        */
       var init = function (data, forward) {
-
         canBack = forward ? 1 : 0;
-
-        // 参数设置
         var params = {};
-
-        var tkn = util.checkLogin(data);
+        tkn = util.checkLogin(data);
         if (tkn) {
           params.token = tkn;
         }
@@ -66,8 +65,6 @@ define(function (require, exports, module) {
           couponCode = data.couponCode;
           params.couponCode = couponCode;
         }
-
-        userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
 
         //参数设定,包括客户端传递,或者H5其他页面传递..
 
@@ -91,33 +88,40 @@ define(function (require, exports, module) {
       var initShow = function () {
 
         $("#container").html(template);
-
+        //何处登录.
         loginByWhich();
-
+        //文本框禁用.
         disableCouponInput();
-
       };
 
       /**
        * 判断用户登录平台.
        */
       var loginByWhich = function () {
-        //userInfo 不等于空,来自H5自有用户.
-        if (userInfo != null && userInfo.userId != null && userInfo.userKey != null && typeof userInfo.userId != "undefined" && typeof userInfo.userKey != "undefined") {
-          loginByH5();
-        } else if (userToken != '' && client_channelNo != '' && client_platform != '') {
+
+        if (userToken != '' && client_channelNo != '' && client_platform != '') {
           //如果有userToken,client_channelNo,client_platform则表明来自客户端内嵌.
           loginByToken();
         } else {
-          //未登录用户.
-          page.init("login", {}, 1);
+          //来自H5自有用户.
+          loginByH5();
         }
       };
-
       /**
        * h5自有用户登录.
        */
       var loginByH5 = function () {
+
+        if (!tkn) {
+          // 尚未登录，弹出提示框
+          page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
+            page.init("login", {}, 1);
+          }, function () {
+            $(".popup").hide();
+          });
+        }
+
+        userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
         util.showLoading();
         var request = account.getUserBalance(requestType, userInfo.userId, userInfo.userKey, function (data) {
           util.hideLoading();
@@ -590,7 +594,6 @@ define(function (require, exports, module) {
           ckzPay();
           return true;
         });
-
 
         //直通卡充值.
         $(document).off(events.touchStart(), ".surebtn").on(events.touchStart(), ".surebtn", function (e) {

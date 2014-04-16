@@ -240,40 +240,31 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    // 返回
-    $(document).off(events.touchStart(), ".back").
-      on(events.touchStart(), ".back", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
 
-    $(document).off(events.activate(), ".back").
-      on(events.activate(), ".back", function (e) {
-        page.goBack();
-        return true;
-      });
+    // 返回
+    $(".back").on(events.click(), function (e) {
+      page.goBack();
+      return true;
+    });
 
     // 获取期号
-    $(document).off(events.tap(), "#issueNo").
-      on(events.tap(), "#issueNo", function (e) {
-        // 获取期号信息
-        getIssue();
-        return true;
-      });
+    $("#issueNo").on(events.tap(), function (e) {
+      // 获取期号信息
+      getIssue();
+      return true;
+    });
 
     // 加倍
-    $(document).off("keyup", ".line30 input").
-      on("keyup", ".line30 input",function (e) {
-        var valObj = checkTimesVal(this);
-        var times = parseInt(valObj.times, 10);
-        if (times != items[valObj.index].muls) {
-          items[valObj.index].muls = times;
-          // 重置倍数后更新数据
-          toResetTimes(valObj);
-        }
-        return true;
-      }).off("blur", ".line30 input")
-      .on("blur", ".line30 input", function (e) {
+    $(".line30 input").on("keyup",function (e) {
+      var valObj = checkTimesVal(this);
+      var times = parseInt(valObj.times, 10);
+      if (times != items[valObj.index].muls) {
+        items[valObj.index].muls = times;
+        // 重置倍数后更新数据
+        toResetTimes(valObj);
+      }
+      return true;
+    }).on("blur", function (e) {
         var valObj = checkTimesVal(this);
         var times = parseInt(valObj.times, 10);
         if (times != items[valObj.index].muls) {
@@ -285,28 +276,26 @@ define(function (require, exports, module) {
       });
 
     // 追期数
-    $(document).off("keyup", "#issueInput").
-      on("keyup", "#issueInput",function (e) {
-        this.value = this.value.replace(/\D/g, '');
-        var $issueInput = $(this);
-        count = $issueInput.val();
+    $("#issueInput").on("keyup",function (e) {
+      this.value = this.value.replace(/\D/g, '');
+      var $issueInput = $(this);
+      count = $issueInput.val();
 
-        if ($.trim(count) == "") {
-          count = 0;
-        } else {
-          if ($.trim(count) != "" && (isNaN(count) || count < 1)) {
-            count = 10;
-            $issueInput.val(count);
-          } else if (count > handleResult.leave) {
-            util.toast("离截止还剩" + handleResult.leave + "期可追");
-            count = handleResult.leave;
-            $issueInput.val(count);
-          }
+      if ($.trim(count) == "") {
+        count = 0;
+      } else {
+        if ($.trim(count) != "" && (isNaN(count) || count < 1)) {
+          count = 10;
+          $issueInput.val(count);
+        } else if (count > handleResult.leave) {
+          util.toast("离截止还剩" + handleResult.leave + "期可追");
+          count = handleResult.leave;
+          $issueInput.val(count);
         }
+      }
 
-        return true;
-      }).off("blur", "#issueInput")
-      .on("blur", "#issueInput", function (e) {
+      return true;
+    }).on("blur", function (e) {
         this.value = this.value.replace(/\D/g, '');
         var $issueInput = $(this);
         count = $issueInput.val();
@@ -318,26 +307,25 @@ define(function (require, exports, module) {
       });
 
     // 最小盈利率
-    $(document).off("keyup", "#minRate").
-      on("keyup", "#minRate",function (e) {
-        this.value = this.value.replace(/\D/g, '');
-        var $minRate = $(this);
-        rate = $minRate.val();
+    $("#minRate").on("keyup",function (e) {
+      this.value = this.value.replace(/\D/g, '');
+      var $minRate = $(this);
+      rate = $minRate.val();
 
-        if ($.trim(rate) == "") {
-          rate = 0;
-        } else {
-          if ($.trim(rate) != "" && (isNaN(rate) || rate < 1)) {
-            rate = 30;
-            $minRate.val(rate);
-          } else if (rate > 1000) {
-            rate = 999;
-            $minRate.val(rate);
-          }
+      if ($.trim(rate) == "") {
+        rate = 0;
+      } else {
+        if ($.trim(rate) != "" && (isNaN(rate) || rate < 1)) {
+          rate = 30;
+          $minRate.val(rate);
+        } else if (rate > 1000) {
+          rate = 999;
+          $minRate.val(rate);
         }
+      }
 
-        return true;
-      }).on("blur", function (e) {
+      return true;
+    }).on("blur", function (e) {
         this.value = this.value.replace(/\D/g, '');
         var $minRate = $(this);
         rate = $minRate.val();
@@ -349,22 +337,21 @@ define(function (require, exports, module) {
       });
 
     // 最小盈利金额
-    $(document).off("keyup", "#minIncome").
-      on("keyup", "#minIncome",function (e) {
-        this.value = this.value.replace(/\D/g, '');
-        var $minIncome = $(this);
-        income = $minIncome.val();
+    $("#minIncome").on("keyup",function (e) {
+      this.value = this.value.replace(/\D/g, '');
+      var $minIncome = $(this);
+      income = $minIncome.val();
 
-        if ($.trim(income) == "") {
-          income = 0;
-        } else {
-          if ($.trim(income) != "" && (isNaN(income) || income < 1)) {
-            income = 30;
-            $minIncome.val(income);
-          }
+      if ($.trim(income) == "") {
+        income = 0;
+      } else {
+        if ($.trim(income) != "" && (isNaN(income) || income < 1)) {
+          income = 30;
+          $minIncome.val(income);
         }
-        return true;
-      }).on("blur", function (e) {
+      }
+      return true;
+    }).on("blur", function (e) {
         this.value = this.value.replace(/\D/g, '');
         var $minIncome = $(this);
         income = $minIncome.val();
@@ -376,23 +363,21 @@ define(function (require, exports, module) {
       });
 
     // 购买
-    $(document).off(events.click(), ".btn2").
-      on(events.click(), ".btn2", function (e) {
-        toBuy();
-        return true;
-      });
+    $(".btn2").on(events.click(), function (e) {
+      toBuy();
+      return true;
+    });
 
-    $(document).off(events.click(), ".btn1").
-      on(events.click(), ".btn1", function (e) {
-        if ($(".smartModBox").is(":visible")) {
-          // 收起
-          hideModBox();
-        } else {
-          // 设置
-          showModBox();
-        }
-        return true;
-      });
+    $(".btn1").on(events.click(), function (e) {
+      if ($(".smartModBox").is(":visible")) {
+        // 收起
+        hideModBox();
+      } else {
+        // 设置
+        showModBox();
+      }
+      return true;
+    });
 
   };
 

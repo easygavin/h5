@@ -376,7 +376,7 @@ define(function (require, exports, module) {
           if (typeof data != "undefined") {
             if (typeof data.statusCode != "undefined") {
               if (data.statusCode == "0") {
-                $("#short_alias").html(user.userName + " 余额：<i class='cf60'>" + (parseFloat(data.userBalance).toFixed(2)) + "</i>元");
+                $("#short_alias").html(user.userName + " <br>余额：<i class='cf60'>" + (parseFloat(data.userBalance).toFixed(2)) + "</i>元");
               }
             }
           }
@@ -512,10 +512,10 @@ define(function (require, exports, module) {
         page.init("user/person", {}, 1);
         break;
       case "record": // 购彩记录
-
+        page.init("user/buyRecord", {}, 1);
         break;
       case "recharge": // 充值
-
+        page.init("charge/index", {}, 1);
         break;
       case "custom": // 我的定制
         // 去定制彩种页面
@@ -525,7 +525,7 @@ define(function (require, exports, module) {
         page.init("openAll", {}, 1);
         break;
       case "hmHal": // 合买大厅
-
+        page.init("hm/index", {}, 1);
         break;
       case "ssq": // 双色球
       case "dlt": // 大乐透
@@ -559,81 +559,66 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
 
-    // 防止异常跳转
-    $(document).off(events.touchStart(), ".pr0").off(events.activate(), ".pr0");
-
-    // 个人中心, 登录, 注册, 快捷图标
-    $(document).off(events.touchStart(), "#p_center, #login, #register, .return").
-      on(events.touchStart(), "#p_center, #login, #register, .return", function (e) {
-        events.handleTapEvent(this, this, events.activate(), e);
-        return true;
-      });
-
     // 个人中心
-    $(document).off(events.activate(), "#p_center").
-      on(events.activate(), "#p_center", function (e) {
-        // 进入二级页面
-        goSubPage("center");
-        return true;
-      });
+    $("#p_center").on(events.click(), function (e) {
+      // 进入二级页面
+      goSubPage("center");
+      return true;
+    });
 
     // 登录
-    $(document).off(events.activate(), "#login").
-      on(events.activate(), "#login", function (e) {
-        // 进入二级页面
-        goSubPage("login");
-        return true;
-      });
+    $("#login").on(events.click(), function (e) {
+      // 进入二级页面
+      goSubPage("login");
+      return true;
+    });
 
     // 注册
-    $(document).off(events.activate(), "#register").
-      on(events.activate(), "#register", function (e) {
-        // 进入二级页面
-        goSubPage("register");
-        return true;
-      });
+    $("#register").on(events.click(), function (e) {
+      // 进入二级页面
+      goSubPage("register");
+      return true;
+    });
 
     // 快捷图标
-    $(document).off(events.activate(), ".return").
-      on(events.activate(), ".return", function (e) {
-        var $html = $("html"),
-          $slide = $(".side"),
-          $home = $(".homeTrans");
+    $(".return").on(events.click(), function (e) {
+      var $html = $("html"),
+        $slide = $(".side"),
+        $home = $(".homeTrans");
 
-        if ($html.hasClass("mm-opened")) {
-          $home.removeClass("home_swipe").
-            off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd").
-            on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function () {
-              $html.removeClass("mm-opened");
-              $(".side").hide();
-            });
-        } else {
-          $html.addClass("mm-opened");
-          $slide.show();
-          $home.addClass("home_swipe").
-            off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd");
-          showShortCutItems();
-        }
+      if ($html.hasClass("mm-opened")) {
+        $home.removeClass("home_swipe").
+          off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd").
+          on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function () {
+            $html.removeClass("mm-opened");
+            $(".side").hide();
+          });
+      } else {
+        $html.addClass("mm-opened");
+        $slide.show();
+        $home.addClass("home_swipe").
+          off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd");
+        showShortCutItems();
+      }
 
-        return true;
-      });
+      return true;
+    });
 
     // 菜单点击
-    $(document).off(events.tap(), "nav").
-      on(events.tap(), "nav", function (e) {
-        var $li = $(e.target).closest("li");
-        if ($li.length) {
-          var $a = $li.find("a");
-          if (!$a.hasClass("focus")) {
-            $("nav a").removeClass("focus");
-            $a.addClass("focus");
+    $("nav").on(events.tap(), function (e) {
+      var $li = $(e.target).closest("li");
+      if ($li.length) {
+        var $a = $li.find("a");
+        if (!$a.hasClass("focus")) {
+          $("nav a").removeClass("focus");
+          $a.addClass("focus");
 
-            // 显示焦点菜单内容
-            showMenuContent();
-          }
+          // 显示焦点菜单内容
+          showMenuContent();
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     $(document).off(events.tap(), ".index").
       on(events.tap(), ".index", function (e) {
@@ -682,55 +667,62 @@ define(function (require, exports, module) {
       });
 
     // 快捷链接
-    $(document).off(events.tap(), ".side").
-      on(events.tap(), ".side", function (e) {
-        var $li = $(e.target).closest("li");
-        if ($li.length) {
-          var key = $li.attr("id").split("_")[1];
+    $(".side").on(events.tap(), function (e) {
+      var $li = $(e.target).closest("li");
+      if ($li.length) {
+        var key = $li.attr("id").split("_")[1];
+        if (key == "digit" || key == "freq" || key == "athletics") {
+          var $ul = $li.find("ul");
+          if ($ul.is(":visible")) {
+            $ul.hide();
+            $li.find("a").addClass("down").html("&#xf004;");
+          } else {
+            $ul.show();
+            $li.find("a").addClass("up").html("&#xf005;");
+          }
+        } else {
           // 进入二级页面
           goSubPage(key);
         }
-      });
+
+      }
+    });
 
     // 收起公告图片
-    $(document).off(events.tap(), ".close").
-      on(events.tap(), ".close", function (e) {
-        clearInterval(this.noticeTimer);
-        $(".bunner").css({"height": "0"});
-        return true;
-      });
+    $(".close").on(events.tap(), function (e) {
+      clearInterval(this.noticeTimer);
+      $(".bunner").css({"height": "0"});
+      return true;
+    });
 
     // 滑动公告
-    $(document).off("swipeLeft", "#slides").
-      on("swipeLeft", "#slides", function (e) {
-        if (slider != null) {
-          slider.next();
-          itemFocus();
-        }
-        return true;
-      });
+    $("#slides").on("swipeLeft", function (e) {
+      if (slider != null) {
+        slider.next();
+        itemFocus();
+      }
+      return true;
+    });
 
-    $(document).off("swipeRight", "#slides").
-      on("swipeRight", "#slides", function (e) {
-        if (slider != null) {
-          slider.preview();
-          itemFocus();
-        }
-        return true;
-      });
+    $("#slides").on("swipeRight", function (e) {
+      if (slider != null) {
+        slider.preview();
+        itemFocus();
+      }
+      return true;
+    });
 
     // 公告图片点击
-    $(document).off(events.tap(), "#slides").
-      on(events.tap(), "#slides", function (e) {
-        var $img = $(e.target).closest("img");
-        if ($img.length) {
-          var noticeId = $img.attr("id").split("_")[1];
-          if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
-            page.init("notice/detail", {noticeId: noticeId}, 1);
-          }
+    $("#slides").on(events.tap(), function (e) {
+      var $img = $(e.target).closest("img");
+      if ($img.length) {
+        var noticeId = $img.attr("id").split("_")[1];
+        if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
+          page.init("notice/detail", {noticeId: noticeId}, 1);
         }
-        return true;
-      });
+      }
+      return true;
+    });
 
     // 公告列表点击
     $(document).off(events.tap(), ".zx_list").
