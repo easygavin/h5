@@ -2,13 +2,13 @@
  * 定制彩种
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-    events = require('events'),
-    util = require('util'),
-    $ = require('zepto'),
-    _ = require('underscore'),
-    template = require("../views/cusLott.html"),
-    config = require('config');
+  var page = require('page');
+  var fastClick = require('fastclick');
+  var util = require('util');
+  var $ = require('zepto');
+  var _ = require('underscore');
+  var template = require("/views/cusLott.html");
+  var config = require('config');
 
   var canBack = 1;
 
@@ -32,10 +32,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "cusLott", data: params},
-      "cusLott",
-      "#cusLott" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      canBack);
+    page.setHistoryState({url : "cusLott", data : params}, "cusLott", "#cusLott" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -110,53 +107,40 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
+    fastClick.attach(document.body);
     // 返回
-    $(".back").on(events.click(), function (e) {
-      if (canBack) {
-        page.goBack();
-      } else {
-        page.init("home", {}, 0);
-      }
-      return true;
+    $('.back').on('click', function () {
+      canBack ? page.goBack() : page.init('home', {}, 0);
     });
 
     // 删除
-    $("#custom_lott").on(events.tap(), function (e) {
+    $('#custom_lott').on('click',function(e){
       var $li = $(e.target).closest("li");
       if ($li.length) {
         var key = $li.attr("id").split("_")[1];
         var itemMap = config.lotteryMap[key];
-
         // 删除
         $li.remove();
-
         // 添加
         showNoCusLott(itemMap);
-
         // 保存用户定制彩种
         saveCustomLott();
       }
-      return true;
     });
 
     // 添加
-    $("#no_custom_lott").on(events.tap(), function (e) {
+    $("#no_custom_lott").on('click', function (e) {
       var $a = $(e.target).closest("a");
       if ($a.length) {
         var key = $a.attr("id").split("_")[1];
         var itemMap = config.lotteryMap[key];
-
         // 删除
         $a.remove();
-
         // 添加
         showCusLott(itemMap);
-
         // 保存用户定制彩种
         saveCustomLott();
       }
-      return true;
     });
   };
 
@@ -173,5 +157,5 @@ define(function (require, exports, module) {
     util.setLocalString(util.keyMap.LOCAL_CUSTOM, lottArr.length > 0 ? lottArr.toString() : "");
   };
 
-  return {init: init};
+  return {init : init};
 });

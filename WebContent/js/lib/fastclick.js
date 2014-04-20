@@ -18,8 +18,8 @@
  * @param {Element} layer The layer to listen on
  */
 define(function (require, exports, module) {
+  'use strict';
   function FastClick(layer) {
-    'use strict';
     var oldOnClick;
     /**
      * Whether a click is currently being tracked.
@@ -188,7 +188,6 @@ define(function (require, exports, module) {
    * @returns {boolean} Returns true if the element needs a native click
    */
   FastClick.prototype.needsClick = function(target) {
-    'use strict';
     switch (target.nodeName.toLowerCase()) {
 
       // Don't send a synthetic click to disabled inputs (issue #62)
@@ -224,7 +223,6 @@ define(function (require, exports, module) {
    * @returns {boolean} Returns true if the element requires a call to focus to simulate native click.
    */
   FastClick.prototype.needsFocus = function(target) {
-    'use strict';
     switch (target.nodeName.toLowerCase()) {
       case 'textarea':
         return true;
@@ -256,7 +254,6 @@ define(function (require, exports, module) {
    * @param {Event} event
    */
   FastClick.prototype.sendClick = function(targetElement, event) {
-    'use strict';
     var clickEvent, touch;
 
     // On some Android devices activeElement needs to be blurred otherwise the synthetic click will have no effect (#24)
@@ -274,8 +271,6 @@ define(function (require, exports, module) {
   };
 
   FastClick.prototype.determineEventType = function(targetElement) {
-    'use strict';
-
     //Issue #159: Android Chrome Select Box does not open with a synthetic click event
     if (deviceIsAndroid && targetElement.tagName.toLowerCase() === 'select') {
       return 'mousedown';
@@ -289,7 +284,6 @@ define(function (require, exports, module) {
    * @param {EventTarget|Element} targetElement
    */
   FastClick.prototype.focus = function(targetElement) {
-    'use strict';
     var length;
 
     // Issue #160: on iOS 7, some input elements (e.g. date datetime) throw a vague TypeError on setSelectionRange. These elements don't have an integer value for the selectionStart and selectionEnd properties, but unfortunately that can't be used for detection because accessing the properties also throws a TypeError. Just check the type instead. Filed as Apple bug #15122724.
@@ -308,7 +302,6 @@ define(function (require, exports, module) {
    * @param {EventTarget|Element} targetElement
    */
   FastClick.prototype.updateScrollParent = function(targetElement) {
-    'use strict';
     var scrollParent, parentElement;
 
     scrollParent = targetElement.fastClickScrollParent;
@@ -340,8 +333,6 @@ define(function (require, exports, module) {
    * @returns {Element|EventTarget}
    */
   FastClick.prototype.getTargetElementFromEventTarget = function(eventTarget) {
-    'use strict';
-
     // On some older browsers (notably Safari on iOS 4.1 - see issue #56) the event target may be a text node.
     if (eventTarget.nodeType === Node.TEXT_NODE) {
       return eventTarget.parentNode;
@@ -358,7 +349,6 @@ define(function (require, exports, module) {
    * @returns {boolean}
    */
   FastClick.prototype.onTouchStart = function(event) {
-    'use strict';
     var targetElement, touch, selection;
 
     // Ignore multiple touches, otherwise pinch-to-zoom is prevented if both fingers are on the FastClick element (issue #111).
@@ -424,7 +414,6 @@ define(function (require, exports, module) {
    * @returns {boolean}
    */
   FastClick.prototype.touchHasMoved = function(event) {
-    'use strict';
     var touch = event.changedTouches[0], boundary = this.touchBoundary;
 
     if (Math.abs(touch.pageX - this.touchStartX) > boundary || Math.abs(touch.pageY - this.touchStartY) > boundary) {
@@ -442,7 +431,6 @@ define(function (require, exports, module) {
    * @returns {boolean}
    */
   FastClick.prototype.onTouchMove = function(event) {
-    'use strict';
     if (!this.trackingClick) {
       return true;
     }
@@ -464,8 +452,6 @@ define(function (require, exports, module) {
    * @returns {Element|null}
    */
   FastClick.prototype.findControl = function(labelElement) {
-    'use strict';
-
     // Fast path for newer browsers supporting the HTML5 control attribute
     if (labelElement.control !== undefined) {
       return labelElement.control;
@@ -489,7 +475,6 @@ define(function (require, exports, module) {
    * @returns {boolean}
    */
   FastClick.prototype.onTouchEnd = function(event) {
-    'use strict';
     var forElement, trackingClickStart, targetTagName, scrollParent, touch, targetElement = this.targetElement;
 
     if (!this.trackingClick) {
@@ -582,7 +567,6 @@ define(function (require, exports, module) {
    * @returns {void}
    */
   FastClick.prototype.onTouchCancel = function() {
-    'use strict';
     this.trackingClick = false;
     this.targetElement = null;
   };
@@ -595,8 +579,6 @@ define(function (require, exports, module) {
    * @returns {boolean}
    */
   FastClick.prototype.onMouse = function(event) {
-    'use strict';
-
     // If a target element was never set (because a touch event was never fired) allow the event
     if (!this.targetElement) {
       return true;
@@ -646,7 +628,6 @@ define(function (require, exports, module) {
    * @returns {boolean}
    */
   FastClick.prototype.onClick = function(event) {
-    'use strict';
     var permitted;
 
     // It's possible for another FastClick-like library delivered with third-party code to fire a click event before FastClick does (issue #44). In that case, set the click-tracking flag back to false and return early. This will cause onTouchEnd to return early.
@@ -679,7 +660,6 @@ define(function (require, exports, module) {
    * @returns {void}
    */
   FastClick.prototype.destroy = function() {
-    'use strict';
     var layer = this.layer;
 
     if (deviceIsAndroid) {
@@ -702,7 +682,6 @@ define(function (require, exports, module) {
    * @param {Element} layer The layer to listen on
    */
   FastClick.notNeeded = function(layer) {
-    'use strict';
     var metaViewport;
     var chromeVersion;
 
@@ -744,9 +723,7 @@ define(function (require, exports, module) {
     return false;
   };
   FastClick.attach = function(layer) {
-    'use strict';
     return new FastClick(layer);
   };
   module.exports = FastClick;
-
 });

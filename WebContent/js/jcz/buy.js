@@ -71,7 +71,7 @@ define(function (require, exports, module) {
     // 绑定事件
     bindEvent();
     // 处理返回
-    page.setHistoryState({url: "jcz/buy", data: {}}, "jcz/buy", "#jcz/buy" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
+    page.setHistoryState({url : "jcz/buy", data : {}}, "jcz/buy", "#jcz/buy" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -258,7 +258,7 @@ define(function (require, exports, module) {
    * 显示标题
    */
   var showTitle = function () {
-    title = '竟足'
+    title = '竞足'
     types = [];
     var count = 0;
     if (!_.isEmpty(bufferData) && bufferData.matchBetList.length) {
@@ -421,7 +421,7 @@ define(function (require, exports, module) {
   var bindEvent = function () {
     var $page = $('#wrapper');
     //fastclick events
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
     $page.on('click', '.back', page.goBack);
     // 协议
@@ -697,12 +697,12 @@ define(function (require, exports, module) {
     });
     // 投注方式
     return {
-      detail: detailArr.join("\/"),
-      matchIds: matchArr.join(","),
-      buySP: buySPArr.join("\/"),
-      danCount: danArr.length + "",
-      dan: danArr.join(","),
-      passway: $(".ggbox").data('passType')
+      detail : detailArr.join("\/"),
+      matchIds : matchArr.join(","),
+      buySP : buySPArr.join("\/"),
+      danCount : danArr.length + "",
+      dan : danArr.join(","),
+      passway : $(".ggbox").data('passType')
     };
   };
 
@@ -752,7 +752,7 @@ define(function (require, exports, module) {
           if (data.statusCode == "0") {
             result = data;
             page.answer($("#title").text() + " 投注成功", "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元", "查看方案", "确定", function () {
-              page.init("jcz/result", {lotteryType: lotteryType, requestType: "0", projectId: result.projectId}, 0);
+              page.init("jcz/result", { lotteryType : lotteryType, requestType : "0", projectId : result.projectId}, 0);
             }, function () {
               page.goBack();
             });
@@ -795,88 +795,75 @@ define(function (require, exports, module) {
     util.setLocalJson(util.keyMap.LOCAL_TO_HM, params);
     page.init("jcz/hm", {}, 1);
   };
-  /**
-   * 显示遮盖层
-   */
-  var showLCover = function () {
-    var bodyHeight = Math.max(document.documentElement.clientHeight, document.body.offsetHeight);
-    var headerH = $(".iheader").height();
-    $(".lCover").css({"height": (bodyHeight - headerH) + "px"}).show();
-  };
-  /**
-   * 隐藏遮盖层
-   */
-  var hideLCover = function () {
-    $(".lCover").hide();
-  };
+
   /**
    * 模式映射
    * @type {Object}
    */
   var spModeMap = {
     // 胜平负
-    "spf_0": {title: "胜", flag: "3"},
-    "spf_1": {title: "平", flag: "1"},
-    "spf_2": {title: "负", flag: "0"},
+    "spf_0" : {title : "胜", flag : "3"},
+    "spf_1" : {title : "平", flag : "1"},
+    "spf_2" : {title : "负", flag : "0"},
 
     //让球胜平负.
-    "rqspf_1": {title: "让胜", flag: "3"},
-    "rqspf_2": {title: "让平", flag: "1"},
-    "rqspf_3": {title: "让负", flag: "0"},
+    "rqspf_1" : {title : "让胜", flag : "3"},
+    "rqspf_2" : {title : "让平", flag : "1"},
+    "rqspf_3" : {title : "让负", flag : "0"},
 
     //总进球
-    "zjq_0": {title: "0球", flag: "0"},
-    "zjq_1": {title: "1球", flag: "1"},
-    "zjq_2": {title: "2球", flag: "2"},
-    "zjq_3": {title: "3球", flag: "3"},
-    "zjq_4": {title: "4球", flag: "4"},
-    "zjq_5": {title: "5球", flag: "5"},
-    "zjq_6": {title: "6球", flag: "6"},
-    "zjq_7": {title: "7球", flag: "7"},
+    "zjq_0" : {title : "0球", flag : "0"},
+    "zjq_1" : {title : "1球", flag : "1"},
+    "zjq_2" : {title : "2球", flag : "2"},
+    "zjq_3" : {title : "3球", flag : "3"},
+    "zjq_4" : {title : "4球", flag : "4"},
+    "zjq_5" : {title : "5球", flag : "5"},
+    "zjq_6" : {title : "6球", flag : "6"},
+    "zjq_7" : {title : "7球", flag : "7"},
 
     //半全场.
-    "bqc_0": {title: "胜胜", flag: "s-s"},
-    "bqc_1": {title: "胜平", flag: "s-p"},
-    "bqc_2": {title: "胜负", flag: "s-f"},
-    "bqc_3": {title: "平胜", flag: "p-s"},
-    "bqc_4": {title: "平平", flag: "p-p"},
-    "bqc_5": {title: "平负", flag: "p-f"},
-    "bqc_6": {title: "负胜", flag: "f-s"},
-    "bqc_7": {title: "负平", flag: "f-p"},
-    "bqc_8": {title: "负负", flag: "f-f"},
+    "bqc_0" : {title : "胜胜", flag : "s-s"},
+    "bqc_1" : {title : "胜平", flag : "s-p"},
+    "bqc_2" : {title : "胜负", flag : "s-f"},
+    "bqc_3" : {title : "平胜", flag : "p-s"},
+    "bqc_4" : {title : "平平", flag : "p-p"},
+    "bqc_5" : {title : "平负", flag : "p-f"},
+    "bqc_6" : {title : "负胜", flag : "f-s"},
+    "bqc_7" : {title : "负平", flag : "f-p"},
+    "bqc_8" : {title : "负负", flag : "f-f"},
 
     //比分
-    "bf_0": {title: "1:0", flag: "1-0"},
-    "bf_1": {title: "2:0", flag: "2-0"},
-    "bf_2": {title: "2:1", flag: "2-1"},
-    "bf_3": {title: "3:0", flag: "3-0"},
-    "bf_4": {title: "3:1", flag: "3-1"},
-    "bf_5": {title: "3:2", flag: "3-2"},
-    "bf_6": {title: "4:0", flag: "4-0"},
-    "bf_7": {title: "4:1", flag: "4-1"},
-    "bf_8": {title: "4:2", flag: "4-2"},
-    "bf_9": {title: "5:0", flag: "5-0"},
-    "bf_10": {title: "5:1", flag: "5-1"},
-    "bf_11": {title: "5:2", flag: "5-2"},
-    "bf_12": {title: "胜其他", flag: "s-s"},//胜其他
-    "bf_13": {title: "0:0", flag: "0-0"},
-    "bf_14": {title: "1:1", flag: "1-1"},
-    "bf_15": {title: "2:2", flag: "2-2"},
-    "bf_16": {title: "3:3", flag: "3-3"},
-    "bf_17": {title: "平其他", flag: "p-p"},//平其他
-    "bf_18": {title: "0:1", flag: "0-1"},
-    "bf_19": {title: "0:2", flag: "0-2"},
-    "bf_20": {title: "1:2", flag: "1-2"},
-    "bf_21": {title: "0:3", flag: "0-3"},
-    "bf_22": {title: "1:3", flag: "1-3"},
-    "bf_23": {title: "2:3", flag: "2-3"},
-    "bf_24": {title: "0:4", flag: "0-4"},
-    "bf_25": {title: "1:4", flag: "1-4"},
-    "bf_26": {title: "2:4", flag: "2-4"},
-    "bf_27": {title: "0:5", flag: "0-5"},
-    "bf_28": {title: "1:5", flag: "1-5"},
-    "bf_29": {title: "2:5", flag: "2-5"},
-    "bf_30": {title: "负其他", flag: "f-f"} //负其他
+    "bf_0" : {title : "1:0", flag : "1-0"},
+    "bf_1" : {title : "2:0", flag : "2-0"},
+    "bf_2" : {title : "2:1", flag : "2-1"},
+    "bf_3" : {title : "3:0", flag : "3-0"},
+    "bf_4" : {title : "3:1", flag : "3-1"},
+    "bf_5" : {title : "3:2", flag : "3-2"},
+    "bf_6" : {title : "4:0", flag : "4-0"},
+    "bf_7" : {title : "4:1", flag : "4-1"},
+    "bf_8" : {title : "4:2", flag : "4-2"},
+    "bf_9" : {title : "5:0", flag : "5-0"},
+    "bf_10" : {title : "5:1", flag : "5-1"},
+    "bf_11" : {title : "5:2", flag : "5-2"},
+    "bf_12" : {title : "胜其他", flag : "s-s"},//胜其他
+    "bf_13" : {title : "0:0", flag : "0-0"},
+    "bf_14" : {title : "1:1", flag : "1-1"},
+    "bf_15" : {title : "2:2", flag : "2-2"},
+    "bf_16" : {title : "3:3", flag : "3-3"},
+    "bf_17" : {title : "平其他", flag : "p-p"},//平其他
+    "bf_18" : {title : "0:1", flag : "0-1"},
+    "bf_19" : {title : "0:2", flag : "0-2"},
+    "bf_20" : {title : "1:2", flag : "1-2"},
+    "bf_21" : {title : "0:3", flag : "0-3"},
+    "bf_22" : {title : "1:3", flag : "1-3"},
+    "bf_23" : {title : "2:3", flag : "2-3"},
+    "bf_24" : {title : "0:4", flag : "0-4"},
+    "bf_25" : {title : "1:4", flag : "1-4"},
+    "bf_26" : {title : "2:4", flag : "2-4"},
+    "bf_27" : {title : "0:5", flag : "0-5"},
+    "bf_28" : {title : "1:5", flag : "1-5"},
+    "bf_29" : {title : "2:5", flag : "2-5"},
+    "bf_30" : {title : "负其他", flag : "f-f"} //负其他
   };
 
   /**
@@ -884,13 +871,13 @@ define(function (require, exports, module) {
    * @type {Object}
    */
   var lotteryMap = {
-    uad: {lotteryId: "52"},
-    "spf": {lotteryId: "46"},    // 胜负
-    "bf": {lotteryId: "47"},     // 比分
-    "zjq": {lotteryId: "48"},   // 总进球
-    "bqc": {lotteryId: "49"},   // 半全场
-    "mix": {lotteryId: "52"},   //  混投
-    "rqspf": {lotteryId: "56"}  // 让球胜平负
+    uad : {lotteryId : "52"},
+    "spf" : {lotteryId : "46"},    // 胜负
+    "bf" : {lotteryId : "47"},     // 比分
+    "zjq" : {lotteryId : "48"},   // 总进球
+    "bqc" : {lotteryId : "49"},   // 半全场
+    "mix" : {lotteryId : "52"},   //  混投
+    "rqspf" : {lotteryId : "56"}  // 让球胜平负
   };
 
   /**
@@ -910,5 +897,5 @@ define(function (require, exports, module) {
       $("#" + v).addClass("click");
     }
   };
-  return {init: init};
+  return {init : init};
 });

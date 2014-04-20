@@ -18,6 +18,7 @@ define(function (require, exports, module) {
   // 方案编号
   var projectId = "";
 
+  var backNum = -1;
   /**
    * 初始化
    */
@@ -36,6 +37,9 @@ define(function (require, exports, module) {
       // 方案编号
       if (typeof data.projectId != "undefined" && $.trim(data.projectId) != "") {
         projectId = data.projectId;
+      }
+      if(data.backNum){
+        backNum = data.backNum;
       }
     }
 
@@ -94,15 +98,16 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
-    $('.back').on('click', page.goBack);
+    $(".back").on('click', function(){
+      page.go(backNum);
+    });
     // 去投注
     $(".tzBox").on('click', function () {
       // 删除缓存的购买数据
       util.clearLocalData(util.keyMap.LOCAL_JCL);
       page.init("jcl/bet", {}, 1);
-      return true;
     });
   };
 

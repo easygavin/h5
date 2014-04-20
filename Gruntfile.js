@@ -3,8 +3,7 @@
  */
 module.exports = function (grunt) {
   'use strict';
-  var sourceSrc = 'WebContent',
-    targetSrc = 'dist';
+  var sourceSrc = 'WebContent', targetSrc = 'dist';
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: {
@@ -25,7 +24,7 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
-            cwd: sourceSrc ,
+            cwd: sourceSrc,
             src: '*.html',
             dest: targetSrc
           }
@@ -96,7 +95,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: sourceSrc + '/tpl',
             src: ['**/*.tpl'],
-            dest: sourceSrc + '/tpl',
+            dest: targetSrc + '/tpl',
             ext: '.js'
           }
         ]
@@ -106,8 +105,19 @@ module.exports = function (grunt) {
         namespace: false,
         prettify: true
       }
+    },
+    copy: {
+      main: {
+        files: [
+          {
+            expand: true,
+            cwd:sourceSrc + '/font',
+            src:['**/*'],
+            dest: targetSrc + '/font'
+          }
+        ]
+      }
     }
-
   });
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
@@ -115,6 +125,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   // 默认任务
-  grunt.registerTask('build', ['clean', 'htmlmin', 'cssmin:minify', 'uglify', 'jst', 'imagemin']);
+  grunt.registerTask('build', ['clean', 'htmlmin', 'cssmin:minify', 'uglify', 'jst', 'imagemin', 'copy']);
 };

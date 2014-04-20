@@ -231,7 +231,7 @@ define(function (require, exports, module) {
     $(document).off(events.tap(), "#hmOrder").
       on(events.tap(), "#hmOrder", function (e) {
         // 三个参数 lotteryType,requestType,projectId
-
+          page.init('hm/hmdetail', {"lotteryType": lotteryType, "projectId": projectId, "requestType": "1"}, 1);
         return true;
       });
 

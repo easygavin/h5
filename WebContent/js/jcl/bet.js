@@ -108,6 +108,10 @@ define(function (require, exports, module) {
   var handleBetList = function () {
     // 隐藏加载标示
     util.hideLoading();
+    if(!betList.datas.length){
+      $("#JMIssueNo").text("本期暂无比赛可投注");
+      return false;
+    }
     var matchLen = 0;
     for (var i = 0, len = betList.datas.length; i < len; i++) {
       matchLen += betList.datas[i].matchArray.length;
@@ -246,7 +250,7 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
     // fastclick events
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 右菜单
@@ -284,7 +288,7 @@ define(function (require, exports, module) {
       page.init("jcl/intro", {}, 1);
     });
     // 关闭显示框
-    $('.cover').on('click', function () {
+    $('.cover').on('touchstart', function () {
       $(".popup").hide();
       if ($(".leagueBox").is(":visible")) {
         hideLeagueBox();
@@ -295,6 +299,7 @@ define(function (require, exports, module) {
         showLeagueMatchLen();
       }
       util.hideCover();
+      util.preventEvent(e);
     });
     $('.balls').on('click', function (e) {
       var $tar = $(e.target);

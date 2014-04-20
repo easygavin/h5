@@ -50,7 +50,7 @@ __p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kj
       desc = "查看开奖详情";
       break;
     case "36": // 竞彩篮球
-      lotteryName = "竞彩足球";
+      lotteryName = "竞彩篮球";
       desc = "查看开奖详情";
       break;
   }

@@ -74,7 +74,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcl/list", data: {}}, "jcl/list", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/list", forward ? 1 : 0);
+    page.setHistoryState({url : "jcl/list", data : {}}, "jcl/list", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/list", forward ? 1 : 0);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -118,7 +118,7 @@ define(function (require, exports, module) {
     types = [];
     var count = 0;
     titleFlag = "";
-    var _title='竟篮'
+    var _title = '竞篮'
     if (bufferData != null && typeof bufferData != "undefined" && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined" && bufferData.matchBetList.length) {
       for (var t in bufferData.titleMap) {
         count++;
@@ -210,7 +210,7 @@ define(function (require, exports, module) {
         agcgArr.push(3);
 
         mode = spModeMap[dxfIds[i]];
-        str += "<i id='dxf_" + mode.flag + "|" + sp + "'>" + mode.title + "</i>&nbsp;&nbsp;";
+        str += "<span id='dxf_" + mode.flag + "|" + sp + "'>" + mode.title + "</span>&nbsp;&nbsp;";
       }
     }
 
@@ -221,7 +221,7 @@ define(function (require, exports, module) {
         itemSPArr.push(sp);
         agcgArr.push(4);
         mode = spModeMap[sfcIds[i]];
-        str += "<i id='sfc_" + mode.flag + "|" + sp + "'>" + mode.title + "</i>&nbsp;&nbsp;";
+        str += "<span id='sfc_" + mode.flag + "|" + sp + "'>" + mode.title + "</span>&nbsp;&nbsp;";
       }
     }
 
@@ -359,8 +359,8 @@ define(function (require, exports, module) {
     console.log(type.toString());
 
     prizes = {
-      min: "0.00",
-      max: "0.00"
+      min : "0.00",
+      max : "0.00"
     };
 
     if (type != "过关方式") {
@@ -414,7 +414,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 购彩协议
@@ -477,7 +477,7 @@ define(function (require, exports, module) {
     $('.lCover').on('click', hideCrossBox);
 
     // tab 切换
-    $('.tabopition').on('click','span:not(.click)',function(e){
+    $('.tabopition').on('click', 'span:not(.click)', function (e) {
       var $span = $(e.currentTarget);
       var tabId = $span.attr("id").split("_")[1];
       $span.addClass('click').siblings().removeClass('click');
@@ -551,8 +551,7 @@ define(function (require, exports, module) {
     //合买
     $('.btn1').on('click', function () {
       // 检查值
-      if (bufferData != null && typeof bufferData != "undefined" && bufferData.matchBetList != null
-        && typeof bufferData.matchBetList != "undefined" && bufferData.matchBetList.length && checkVal()) {
+      if (bufferData != null && typeof bufferData != "undefined" && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined" && bufferData.matchBetList.length && checkVal()) {
         // 合买
         goHm();
       }
@@ -560,8 +559,7 @@ define(function (require, exports, module) {
     // 付款
     $('.btn2').on('click', function () {
       // 检查值
-      if (bufferData != null && typeof bufferData != "undefined" && bufferData.matchBetList != null
-        && typeof bufferData.matchBetList != "undefined" && bufferData.matchBetList.length && checkVal()) {
+      if (bufferData != null && typeof bufferData != "undefined" && bufferData.matchBetList != null && typeof bufferData.matchBetList != "undefined" && bufferData.matchBetList.length && checkVal()) {
         // 购买
         toBuy();
       }
@@ -675,12 +673,12 @@ define(function (require, exports, module) {
     // 投注方式
     var passway = $('.ggbox').data('passType');
     return {
-      detail: detailArr.join("\/"),
-      matchIds: matchArr.join(","),
-      buySP: buySPArr.join("\/"),
-      danCount: danArr.length + "",
-      dan: danArr.join(","),
-      passway: passway
+      detail : detailArr.join("\/"),
+      matchIds : matchArr.join(","),
+      buySP : buySPArr.join("\/"),
+      danCount : danArr.length + "",
+      dan : danArr.join(","),
+      passway : passway
     };
   };
   /**
@@ -759,8 +757,8 @@ define(function (require, exports, module) {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == 0) {
             result = data;
-            page.answer($("#title").text() + " 投注成功", "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元", "查看方案", "确定", function (e) {
-              page.init("jcl/result", {lotteryType: lotteryType, requestType: "0", projectId: result.projectId}, 0);
+            page.answer($("#title").text() + " 投注成功", "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元", "查看方案", "确定", function () {
+              page.init("jcl/result", { lotteryType : lotteryType, requestType : "0", projectId : result.projectId}, 0);
             }, function (e) {
               page.goBack();
             });
@@ -780,15 +778,6 @@ define(function (require, exports, module) {
   };
 
   /**
-   * 显示遮盖层
-   */
-  var showLCover = function () {
-    var bodyHeight = Math.max(document.documentElement.clientHeight, document.body.offsetHeight);
-    var headerH = $(".iheader").height();
-    $(".lCover").css({"height": (bodyHeight - headerH) + "px"}).show();
-  };
-
-  /**
    * 隐藏遮盖层
    */
   var hideLCover = function () {
@@ -800,24 +789,24 @@ define(function (require, exports, module) {
    * @type {Object}
    */
   var spModeMap = {
-    "sf_0": {title: "主胜", flag: "3"},
-    "sf_1": {title: "客胜", flag: "0"},
-    "rfsf_1": {title: "让分主胜", flag: "3"},
-    "rfsf_2": {title: "让分客胜", flag: "0"},
-    "dxf_1": {title: "大分", flag: "3"},
-    "dxf_2": {title: "小分", flag: "0"},
-    "sfc_0": {title: "主胜1-5分", flag: "h1-5"},
-    "sfc_1": {title: "主胜6-10分", flag: "h6-10"},
-    "sfc_2": {title: "主胜11-15分", flag: "h11-15"},
-    "sfc_3": {title: "主胜16-20分", flag: "h16-20"},
-    "sfc_4": {title: "主胜21-25分", flag: "h21-25"},
-    "sfc_5": {title: "主胜26+分", flag: "h26"},
-    "sfc_6": {title: "客胜1-5分", flag: "v1-5"},
-    "sfc_7": {title: "客胜6-10分", flag: "v6-10"},
-    "sfc_8": {title: "客胜11-15分", flag: "v11-15"},
-    "sfc_9": {title: "客胜16-20分", flag: "v16-20"},
-    "sfc_10": {title: "客胜21-25分", flag: "v21-25"},
-    "sfc_11": {title: "客胜26+分", flag: "v26"}
+    "sf_0" : {title : "主胜", flag : "3"},
+    "sf_1" : {title : "客胜", flag : "0"},
+    "rfsf_1" : {title : "让分主胜", flag : "3"},
+    "rfsf_2" : {title : "让分客胜", flag : "0"},
+    "dxf_1" : {title : "大分", flag : "3"},
+    "dxf_2" : {title : "小分", flag : "0"},
+    "sfc_0" : {title : "主胜1-5分", flag : "h1-5"},
+    "sfc_1" : {title : "主胜6-10分", flag : "h6-10"},
+    "sfc_2" : {title : "主胜11-15分", flag : "h11-15"},
+    "sfc_3" : {title : "主胜16-20分", flag : "h16-20"},
+    "sfc_4" : {title : "主胜21-25分", flag : "h21-25"},
+    "sfc_5" : {title : "主胜26+分", flag : "h26"},
+    "sfc_6" : {title : "客胜1-5分", flag : "v1-5"},
+    "sfc_7" : {title : "客胜6-10分", flag : "v6-10"},
+    "sfc_8" : {title : "客胜11-15分", flag : "v11-15"},
+    "sfc_9" : {title : "客胜16-20分", flag : "v16-20"},
+    "sfc_10" : {title : "客胜21-25分", flag : "v21-25"},
+    "sfc_11" : {title : "客胜26+分", flag : "v26"}
   };
 
   /**
@@ -825,12 +814,12 @@ define(function (require, exports, module) {
    * @type {Object}
    */
   var lotteryMap = {
-    "sf": {lotteryId: "36"}, // 胜负
-    "rfsf": {lotteryId: "37"}, // 让分胜负
-    "sfc": {lotteryId: "38"}, // 胜分差
-    "dxf": {lotteryId: "39"}, // 大小分
-    "mix": {lotteryId: "53"} // 混投
+    "sf" : {lotteryId : "36"}, // 胜负
+    "rfsf" : {lotteryId : "37"}, // 让分胜负
+    "sfc" : {lotteryId : "38"}, // 胜分差
+    "dxf" : {lotteryId : "39"}, // 大小分
+    "mix" : {lotteryId : "53"} // 混投
   };
 
-  return {init: init};
+  return {init : init};
 });

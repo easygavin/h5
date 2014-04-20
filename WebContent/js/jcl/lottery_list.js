@@ -11,7 +11,7 @@ define(function (require, exports, module) {
       self.infoMap = {};
       self.getData();
       self.events();
-      page.setHistoryState({url: "jcl/lottery_list", self: this.params}, "jcl/lottery_list", (JSON.stringify(self.params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(self.params)) : "") + "#jcl/lottery_list", self.canBack ? 1 : 0);
+      page.setHistoryState({url: "jcl/lottery_list", self: this.params}, "jcl/lottery_list", "#jcl/lottery_list" + (JSON.stringify(self.params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(self.params)) : ""), self.canBack ? 1 : 0);
     },
     getData: function (date) {
       util.showLoading();

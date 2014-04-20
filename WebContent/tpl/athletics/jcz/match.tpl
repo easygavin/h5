@@ -11,12 +11,12 @@
     <tbody>
     <tr>
       <td class="more_odds_btn" rowspan="3">
-        <span class="leagueT"><%=leagueMatch%></span>
-        <br><%=number%><br><%=time%> <br>
+        <span class="leagueT"><%=leagueMatch%></span><br>
+        <%=number%><br><%=time%> <br>
         <i class="fm arr"></i>
       </td>
       <td class="c257ab3" colspan="3">
-        <b class="f16"><%=playAgainst.split('|').join('</b>vs<b class="f16">')%></b>
+        <b class="f16"><%=playAgainst.split('|').join('vs')%></b>
       </td>
       <td class="analyse">析</td>
     </tr>

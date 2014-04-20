@@ -83,7 +83,7 @@ define(function (require, exports, module) {
       this.show();
     },
     events: function () {
-      fastClick.attach(document);
+      fastClick.attach(document.body);
       $('.back').on('click', page.goBack);
       $('#tabs').on('click', 'a', this.switchTab.bind(this));
       $('#refresh').on('click', this.getData.bind(this));

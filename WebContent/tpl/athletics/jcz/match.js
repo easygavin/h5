@@ -11,12 +11,12 @@ __p += '<!--竞彩篮球对阵模板-->\r\n<div data-match-id="' +
 ((__t = (gliveId)) == null ? '' : __t) +
 '">\r\n    <colgroup>\r\n      <col width="">\r\n      <col width="10%">\r\n      <col width="23%">\r\n      <col width="23%">\r\n      <col width="23%">\r\n    </colgroup>\r\n    <tbody>\r\n    <tr>\r\n      <td class="more_odds_btn" rowspan="3">\r\n        <span class="leagueT">' +
 ((__t = (leagueMatch)) == null ? '' : __t) +
-'</span>\r\n        <br>' +
+'</span><br>\r\n        ' +
 ((__t = (number)) == null ? '' : __t) +
 '<br>' +
 ((__t = (time)) == null ? '' : __t) +
 ' <br>\r\n        <i class="fm arr"></i>\r\n      </td>\r\n      <td class="c257ab3" colspan="3">\r\n        <b class="f16">' +
-((__t = (playAgainst.split('|').join('</b>vs<b class="f16">'))) == null ? '' : __t) +
+((__t = (playAgainst.split('|').join('vs'))) == null ? '' : __t) +
 '</b>\r\n      </td>\r\n      <td class="analyse">析</td>\r\n    </tr>\r\n    <tr class="spf_bet">\r\n      ';
  var spfOdds = spDatas.spf.split(','); ;
 __p += '\r\n      <td>0</td>\r\n      <td class="odds_spf" id="spf_0">胜' +

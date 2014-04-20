@@ -297,11 +297,7 @@ define(function (require, exports, module) {
 
     if (!tkn) {
       // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init('login',{},1);
     }
 
     //｛1.先从本地缓存取得,2.查询接口.｝

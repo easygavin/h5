@@ -44,7 +44,7 @@
       desc = "查看开奖详情";
       break;
     case "36": // 竞彩篮球
-      lotteryName = "竞彩足球";
+      lotteryName = "竞彩篮球";
       desc = "查看开奖详情";
       break;
   }

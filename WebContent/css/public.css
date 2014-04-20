@@ -28,7 +28,7 @@ body {
 
 body {
   font-family: "微软雅黑", Verdana, Arial, Helvetica, sans-serif;
-  color: #666;
+  color: #000;
 }
 
 /*.hover:after{
@@ -232,9 +232,11 @@ a:not(href) {
 .f14 {
   font-size: 0.875em;
 }
-
-.f16 {
+.f15 {
   font-size: 1em;
+}
+.f16 {
+  font-size: 1.1em;
 }
 
 .f24 {
@@ -1207,6 +1209,9 @@ footer {
 footer a {
   color: #fff;
 }
+footer a.a1{background:#257ab3;height:2.8125em;width:25%;overflow:hidden}
+.a1 input{width:85%;height:80%;text-align:center;background:#ffffff;border:none;color:#b2b2b2;font-size:1.125em;line-height:2.2125em;font-family:"微软雅黑";border:7px solid #257AB3}
+footer a.a2{background:#f07e04;height:2.8125em;width:25%}
 
 footer em {
   height: 2.8125em;
@@ -1586,15 +1591,13 @@ footer a.btn2 {
 }
 
 /*竞彩*/
-/*竞彩*/
 .line50 {
   border: 1px solid #e9e9e9;
-  line-height: 3.57142857em;
+  line-height: 2.8em;
   text-align: center;
   font-size: 0.875em;
   border-top: 3px solid #2779b5;
   margin-top: 0.625em;
-  border-collapse: collapse
 }
 
 .line50 td {
@@ -1968,7 +1971,7 @@ td.click {
 }
 
 .tabp td {
-  padding: 1.07143em 1em
+  padding: 0.07143em 1em
 }
 
 .kjBall span {
@@ -1999,8 +2002,8 @@ td.click {
   float: right;
   position: absolute;
   font-size: 4em;
-  right: 0.123em;
-  top: 1.3em
+  right: 0.2em;
+  top: 1em
 }
 
 .anniu .gmchose {
@@ -2339,6 +2342,11 @@ body{font-size:90%}
 
 .smartModBox .m {
   margin: 0.5em;
+}
+
+.loadMore {
+    width: 100%;
+    height: 80px;
 }
 .loadIcon {
     width: 32px;

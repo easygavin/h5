@@ -45,7 +45,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 菜单切换

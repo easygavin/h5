@@ -3,12 +3,12 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
     config = require('config'),
-    template = require("../views/openAll.html"),
+    fastClick = require('fastclick'),
+    template = require("/views/openAll.html"),
     digitService = require('services/digit');
   var canBack = 1;
 
@@ -84,41 +84,31 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
+    fastClick.attach(document.body);
     // 返回
-    $(".back").on(events.click(), function (e) {
-      if (canBack) {
-        page.goBack();
-      } else {
-        page.init("home", {}, 0);
-      }
-      return true;
+    $('.back').on('click', function () {
+      canBack ? page.goBack() : page.init('home',{},0);
     });
-
-    $(document).off(events.tap(), ".kjList tr").
-      on(events.tap(), ".kjList tr", function (e) {
-        var $fm = $(this).find(".fm");
-        if ($fm.length) {
-          // 开奖列表
-          var lotteryType = $fm.attr("id").split("_")[1];
-          var lot = config.lotteryIdToStr[lotteryType];
-          if (lot !== null && typeof lot != "undefined" && $.trim(lot) != "") {
-            if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
-              lot == "syx" || lot == "syy") {
-              page.init("number/openLott", {lot: lot}, 1);
-            } else if (lot == "jcl") {
-              // 竞彩篮球
-              console.log("[open all] : to jcl");
-            } else if (lot == "jcz") {
-              // 竞彩足球
-              console.log("[open all] : to jcz");
-            }
+    $('#main').on('click', 'tr', function () {
+      var $fm = $(this).find(".fm");
+      if ($fm.length) {
+        // 开奖列表
+        var lotteryType = $fm.attr("id").split("_")[1];
+        var lot = config.lotteryIdToStr[lotteryType];
+        if (lot !== null && typeof lot != "undefined" && $.trim(lot) != "") {
+          if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
+            lot == "syx" || lot == "syy") {
+            page.init("number/openLott", {lot: lot}, 1);
+          } else if (lot == "jcl") {
+            // 竞彩篮球
+            page.init('jcl/lottery_list', {lotteryType : lotteryType}, 1);
+          } else if (lot == "jcz") {
+            // 竞彩足球
+            page.init('jcz/lottery_list', {lotteryType : lotteryType}, 1);
           }
         }
-        return true;
-      });
-
+      }
+    });
   };
-
   return {init: init};
 });

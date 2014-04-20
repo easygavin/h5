@@ -1,4 +1,4 @@
-/**
+﻿/**
  * APP Path
  */
 define(function (require, exports, module) {
@@ -8,8 +8,15 @@ define(function (require, exports, module) {
   // 中间件："http://mw.cpocp.com/"
   // 公告正式："http://gj.caipiao123.com.cn/";
   var NOTICE_SERVER_URL = "http://gj.caipiao123.com.cn/";
+
   var SERVER_URL = "http://uatjc.ecp888.com/";
-  var MIDDLEWARE = "http://mw.cpocp.com/";
+  /*
+  * 中间件地址
+  * 内部测试环境： //192.168.1.60/
+  * 东莞测试环境： //mw.cpocp.com/
+  * */
+  var MIDDLEWARE = "//mw.cpocp.com/";
+
   module.exports = {
     // 用于设置图片路径
     NOTICE_SERVER_URL: NOTICE_SERVER_URL,
@@ -122,7 +129,26 @@ define(function (require, exports, module) {
     GJJ_TO_BUY: MIDDLEWARE + "sportsfootballguanjun/gjgg/createGuanjunProject.shtml",
     // 冠军竞猜方案详情
     GJJ_GET_PROJECT_DETAIL: MIDDLEWARE + "sportsfootballguanjun/gj/getProjectDetail.shtml",
-
+    // 获取合买数据列表接口.
+    HM_DETAIL_LIST:SERVER_URL+"gjdigit/group-buy/api/index.shtml",
+    //数字彩合买详情接口
+    DIGIT_HM_DETAIL:SERVER_URL+"gjdigit/partner/api/subscribeorder.shtml",
+    //参与数字彩合买接口
+    JOIN_DIGIT_HM_URL:SERVER_URL+"gjdigit/partner/api/comfirmBuy.shtml",
+    //竞彩足球合买详情接口
+    JCZQ_HM_DETAIL:SERVER_URL+"gjjczq!detail.shtml",
+    //参与竞彩足球合买接口
+    JOIN_JCZQ_HM_URL:SERVER_URL+"gjjczq!Subscribe.shtml",
+    //竞彩篮球合买详情接口
+    JCLQ_HM_DETAIL:SERVER_URL+"gjjclq!detail.shtml",
+    //参与竞彩篮球合买接口
+    JOIN_JCLQ_HM_URL:SERVER_URL+"gjjclq!Subscribe.shtml",
+    //北京单场合买详情接口
+    BJDC_HM_DETAIL:SERVER_URL+"gjzcbd/gjbd!detail.shtml",
+    //参与北京单场/传统足球合买接口
+    JOIN_BD_TRADITIONAL_HM_URL:SERVER_URL+"gjzcbd/gjzcbdorder!Buy.shtml",
+    //传统足彩合买详情接口
+    TRADITIONAL_BALL_HM_DETAIL:SERVER_URL+"gjzcbd/gjzc!detail.shtml",
     // 活动公告列表接口
     NOTICE_LIST: NOTICE_SERVER_URL + "gjgonggao/app/notic_app!index.shtml",
     // 活动公告详情接口

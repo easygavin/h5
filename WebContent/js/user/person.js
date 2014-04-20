@@ -73,12 +73,7 @@ define(function (require, exports, module) {
 
     if (!tkn) {
       // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
-      return false;
+      page.init('login',{},1);
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
@@ -108,11 +103,7 @@ define(function (require, exports, module) {
 
     if (!tkn) {
       // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init('login',{},1);
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     // 显示遮住层
@@ -179,7 +170,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach('click');
+    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', function () {
       if (type != '' && type != 'undefined' && result != '' && result != 'undefined') {

@@ -15,7 +15,7 @@
         <br><%=number%><br><%=time%> <br>
       </td>
       <td class="analyse" colspan="3">
-        <b class="f16"><%=playAgainst.split('|').join('</b>vs<b class="f16">')%></b>
+        <b class="f16 c257ab3"><%=playAgainst.split('|').join('vs')%></b>
         <b class="fr">>&nbsp;&nbsp;</b>
       </td>
     </tr>

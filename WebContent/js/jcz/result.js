@@ -2,19 +2,15 @@
  * 竞彩篮球方案详情
  */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/result.html'),
-    _ = require('underscore'),
-    page = require('page'),
-    pageEvent = require('events'),
-    fastClick = require('fastclick'),
-    service = require('services/jcz'),
-    util = require('util');
+  var view = require('/views/athletics/result.html'), _ = require('underscore'), page = require('page'), fastClick = require('fastclick'), service = require('services/jcz'), util = require('util');
   // 彩种
   var lotteryType = "";
   // 请求方式
   var requestType = "";
   // 方案编号
   var projectId = "";
+  //回退
+  var backNum = -1;
   /**
    * 初始化
    */
@@ -34,6 +30,9 @@ define(function (require, exports, module) {
       if (typeof data.projectId != "undefined" && $.trim(data.projectId) != "") {
         projectId = data.projectId;
       }
+      if(data.backNum){
+        backNum = data.backNum;
+      }
     }
     // 参数设置
     var params = {};
@@ -46,6 +45,7 @@ define(function (require, exports, module) {
     if ($.trim(projectId) != "") {
       params.projectId = projectId;
     }
+
     var tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
@@ -56,10 +56,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcz/result", data: params},
-      "jcz/result",
-        "#jcz/result" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      forward ? 1 : 0);
+    page.setHistoryState({url: "jcz/result", data: params}, "jcz/result", "#jcz/result" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
   };
 
   /**
@@ -89,19 +86,16 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
-    $(".back").on('click', function () {
-      page.goBack();
-      return true;
+    $(".back").on('click', function(){
+      page.go(backNum);
     });
-
     // 去投注
     $(".tzBox").on('click', function () {
       // 删除缓存的购买数据
       util.clearLocalData(util.keyMap.LOCAL_JCZ);
       page.init("jcz/mix_bet", {}, 1);
-      return true;
     });
   };
   return {init: init};

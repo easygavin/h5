@@ -2,15 +2,7 @@
  * 竞彩篮球彩合买
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-    events = require('events'),
-    util = require('util'),
-    $ = require('zepto'),
-    _ = require('underscore'),
-    fastClick = require('fastclick'),
-    views = require("/views/athletics/hm.html"),
-    config = require('config'),
-    servers = require('services/jcl');
+  var page = require('page'), events = require('events'), util = require('util'), $ = require('zepto'), _ = require('underscore'), fastClick = require('fastclick'), views = require("/views/athletics/hm.html"), config = require('config'), servers = require('services/jcl');
   var canBack = 1;
   // 单价
   var price = 2;
@@ -43,10 +35,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcl/hm", data: params},
-      "jcl/hm",
-        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/hm",
-      canBack ? 1 : 0);
+    page.setHistoryState({url : "jcl/hm", data : params}, "jcl/hm", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/hm", canBack ? 1 : 0);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -124,12 +113,12 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
 
     // 提成百分比
-    $('#selectPer').on('change',function () {
+    $('#selectPer').on('change', function () {
       projectCommissions = $(this).find("option:selected").text();
       $("#showPer").text(projectCommissions);
     });
@@ -144,7 +133,7 @@ define(function (require, exports, module) {
     });
 
     // 购买金额
-    $('#projectBuy').on('keyup',function(e){
+    $('#projectBuy').on('keyup', function (e) {
       e.value = this.value.replace(/\D/g, '');
       var $projectBuy = $(this);
       projectBuy = $projectBuy.val();
@@ -163,13 +152,13 @@ define(function (require, exports, module) {
       }
       // 显示付款信息
       showPayInfo();
-    }).on('blur',function(){
+    }).on('blur', function () {
       this.value = this.value.replace(/\D/g, '');
       // 显示付款信息
       showPayInfo();
     });
     // 保底金额
-    $('#projectHold').on('keyup',function(e){
+    $('#projectHold').on('keyup', function (e) {
       e.value = this.value.replace(/\D/g, '');
       var $projectHold = $(this);
       projectHold = $projectHold.val();
@@ -194,7 +183,7 @@ define(function (require, exports, module) {
       showPayInfo();
     });
     // footer
-    $('footer').on('click','.btn2',function(){
+    $('footer').on('click', '.btn2', function () {
       checkVal() && toBuy();
     });
   };
@@ -243,7 +232,7 @@ define(function (require, exports, module) {
     util.showCover();
     util.showLoading();
     // 请求接口
-    var request = servers.toBuy("2",  params, price, function (data) {
+    var request = servers.toBuy("2", params, price, function (data) {
       // 隐藏遮住层
       util.hideCover();
       util.hideLoading();
@@ -251,22 +240,14 @@ define(function (require, exports, module) {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
             result = data;
-            page.answer(
-                "发起合买成功",
-                "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元",
-              "查看方案",
-              "确定",
-              function (e) {
-                page.init("jcl/result", {lotteryType: params.lotteryId, requestType: "0", projectId: result.projectId, step: -2}, 0);
-              },
-              function (e) {
+            page.answer("发起合买成功", "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元", "查看方案", "确定", function (e) {
+                page.init("jcl/result", {backNum : -2, lotteryType : params.lotteryId, requestType : "0", projectId : result.projectId, step : -2}, 0);
+              }, function () {
                 page.go(-2);
-              }
-            );
+              });
             // 删除选号记录
             util.clearLocalData(util.keyMap.LOCAL_JCL);
             util.clearLocalData(util.keyMap.LOCAL_TO_HM);
-
           } else {
             page.codeHandler(data);
           }
@@ -280,5 +261,5 @@ define(function (require, exports, module) {
     util.addAjaxRequest(request);
   };
 
-  return {init: init};
+  return {init : init};
 });

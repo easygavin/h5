@@ -2,7 +2,7 @@
  * 竞彩足球彩合买
  */
 define(function (require, exports, module) {
-  var page = require('page'), events = require('events'), util = require('util'), $ = require('zepto'), _ = require('underscore'), fastClick = require('fastclick'), views = require("/views/athletics/hm.html"), config = require('config'), servers = require('services/jcz');
+  var page = require('page'), util = require('util'), $ = require('zepto'), _ = require('underscore'), fastClick = require('fastclick'), views = require("/views/athletics/hm.html"), config = require('config'), servers = require('services/jcz');
   var canBack = 1;
   // 单价
   var price = 2;
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcz/hm", data: params}, "jcz/hm", "#jcz/hm" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack ? 1 : 0);
+    page.setHistoryState({url : "jcz/hm", data : params}, "jcz/hm", "#jcz/hm" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack ? 1 : 0);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -113,10 +113,9 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document);
+    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
-
     // 提成百分比
     $('#selectPer').on('change', function () {
       projectCommissions = $(this).find("option:selected").text();
@@ -226,8 +225,7 @@ define(function (require, exports, module) {
     params.projectHold = projectHold;
     params.projectOpenState = projectOpenState;
     params.projectBuy = projectBuy;
-    params.projectCommissions = parseInt(projectCommissions, 10) + "";
-
+    params.projectCommissions = projectCommissions.replace('%','');
     // 显示遮住层
     util.showCover();
     util.showLoading();
@@ -241,7 +239,7 @@ define(function (require, exports, module) {
           if (data.statusCode == "0") {
             result = data;
             page.answer("发起合买成功", "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元", "查看方案", "确定", function (e) {
-              page.init("jcz/result", {lotteryType: params.lotteryId, requestType: "0", projectId: result.projectId, step: -2}, 0);
+              page.init("jcz/result", {lotteryType : params.lotteryId, requestType : "0", projectId : result.projectId, step : -2}, 0);
             }, function (e) {
               page.go(-2);
             });
@@ -262,5 +260,5 @@ define(function (require, exports, module) {
     util.addAjaxRequest(request);
   };
 
-  return {init: init};
+  return {init : init};
 });

@@ -36,8 +36,56 @@ define(function (require, exports, module) {
         error: callback
       });
 
-    }
+    },
 
+    /**
+     * 获取合买单详情
+     * @param lotteryType
+     * @param requestType
+     * @param projectId
+     * @param requestUrl
+     * @param userKey
+     * @param userId
+     * @param callback
+
+     */
+    getHmDetail: function (lotteryType, requestType, projectId, requestUrl, userKey, userId, callback) {
+
+      var data = {
+        "lotteryType": lotteryType,
+        "requestType": requestType,
+        "projectId": projectId,
+        "requestUrl": requestUrl,
+        "userKey": "",
+        "userId": ""
+      };
+
+      return $.ajax({
+        type: "GET",
+        url: requestUrl,
+        data: {data: JSON.stringify(data)},
+        dataType: "jsonp",
+        success: callback,
+        error: callback
+      });
+    },
+
+    /**
+     * 参与合买.
+     * @param params   参数
+     * @param url      地址
+     * @param callback 回调
+     */
+    joinHm: function (params,url,callback) {
+      return $.ajax({
+        type: "GET",
+        url: url,
+        data: {data: JSON.stringify(params)},
+        dataType: "jsonp",
+        success: callback,
+        error: callback
+      });
+    }
   };
 
 });

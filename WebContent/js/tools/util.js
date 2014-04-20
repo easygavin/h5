@@ -407,7 +407,18 @@ define(function (require, exports, module) {
     this.clearIntervals();
     this.clearTimers();
   };
-
+  //阻止时间继续传递
+  util.preventEvent = function(e){
+    if(!e) return false;
+    if(e && e.stopPropagation){
+      e.preventDefault();
+      e.stopPropagation();
+    }else{
+      window.event.cancelBubble = true;
+      window.event.returnValue = false;
+      return false;
+    }
+  };
   //将查询字符串解析成一个对象
   util.unParam = function (str) {
     var rs = {};
