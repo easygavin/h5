@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -98,7 +97,7 @@ define(function (require, exports, module) {
       $("#playMode").text(playMode);
 
       // 预期购买
-      var expectBuy = parseInt(params.projectCount, 10) * 0.05;
+      var expectBuy = Math.ceil(parseInt(params.projectCount, 10) * 0.05);
       if (expectBuy > projectBuy) {
         minBuy = expectBuy;
         projectBuy = minBuy;
@@ -137,7 +136,7 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
@@ -150,7 +149,7 @@ define(function (require, exports, module) {
     });
 
     // 公开方式
-    $(".gmchose").on(events.tap(), function (e) {
+    $(".gmchose").on("click", function (e) {
       var $a = $(e.target).closest("a");
       if ($a.length) {
         projectOpenState = $a.attr("id").split("_")[1];
@@ -199,7 +198,7 @@ define(function (require, exports, module) {
         if ($.trim(projectHold) != "" && (isNaN(projectHold) || projectHold < 1)) {
           projectHold = 0;
           $projectHold.val(0);
-        } else if ((projectHold + projectBuy) > params.projectCount) {
+        } else if ((parseInt(projectHold,10) + projectBuy) > params.projectCount) {
           page.toast("保底金额+认购金额不能大于总金额");
           projectHold = params.projectCount - projectBuy;
           $projectHold.val(projectHold);
@@ -216,7 +215,7 @@ define(function (require, exports, module) {
       });
 
     // 发起合买
-    $(".btn2").on(events.click(), function (e) {
+    $(".btn2").on("click", function (e) {
       // 检查值
       if (checkVal()) {
         // 购买

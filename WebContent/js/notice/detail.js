@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require("page"),
-    events = require('events'),
     util = require("util"),
     $ = require("zepto"),
     _ = require("underscore"),
@@ -130,7 +129,7 @@ define(function (require, exports, module) {
       });
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       if (canBack) {
         page.goBack();
       } else {
@@ -140,7 +139,7 @@ define(function (require, exports, module) {
     });
 
     // 立即参与
-    $("#noticeJoin").on(events.click(), function (e) {
+    $("#noticeJoin").on("click", function (e) {
       switch (result.type) {
         case "0": // 普通活动
           switch (result.lotteryId) {
@@ -164,7 +163,7 @@ define(function (require, exports, module) {
             case "12": // 福彩3D
             case "13": // 大乐透
             case "31": // 十一运夺金
-            case "34": // 十一选5
+            case "34": // 11选5
               var key = config.lotteryIdToStr[result.lotteryId];
               var lotConfig = config.lotteryMap[key];
               util.clearLocalData(lotConfig.localKey);

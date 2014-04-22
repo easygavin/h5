@@ -4,15 +4,14 @@
 define(function (require, exports, module) {
 
       var page = require('page'),
-          events = require('events'),
           util = require('util'),
           $ = require('zepto'),
           _ = require('underscore'),
-          template = require("../../views/charge/index.html"),
+          md5 = require('tools/md5'),
+          path = require('path'),
           charge = require('services/charge'),
           account = require('services/account'),
-          md5 = require('tools/md5'),
-          path = require('path');
+          template = require("../../views/charge/index.html");
 
       // 处理返回参数
       var canBack = 0;
@@ -30,7 +29,7 @@ define(function (require, exports, module) {
       var couponCount = 0;
 
       //客户端过来的userToken，平台号,渠道号.
-      var userToken, client_channelNo, client_platform;
+      var userToken = '', client_channelNo = '', client_platform = '';
 
       //调用充值接口所需的参数.
       var parameterValues = {};
@@ -38,14 +37,11 @@ define(function (require, exports, module) {
       //充值卡,三种运行商发行卡序列号,密码,长度
       var serialNumberMap = {};
 
-      //直通卡充值[随机生成的四位验证码]
-      var randomNum = '';
-
       //从callback失败到充值中心,传递过来的result &type
       var result, type;
 
       //登录状态.
-      var tkn ;
+      var tkn;
 
       /**
        * 初始化
@@ -76,8 +72,7 @@ define(function (require, exports, module) {
 
         // 处理返回
         page.setHistoryState({url: "charge/index", data: params},
-            "charge/index",
-                "#charge/index" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
+            "charge/index", "#charge/index" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
             canBack);
         util.hideLoading();
       };
@@ -119,6 +114,7 @@ define(function (require, exports, module) {
           }, function () {
             $(".popup").hide();
           });
+          return false;
         }
 
         userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
@@ -302,8 +298,7 @@ define(function (require, exports, module) {
         //直通卡,卡号,密码,手机号码,验证码 校验.
         var ztkNum = $('#ztkNum').val(),
             ztkPass = $('#ztkPass').val(),
-            zktTele = $('#zktTele').val(),
-            ztkICode = $('#ztkICode').val();
+            zktTele = $('#zktTele').val();
 
         //直通卡卡号校验.
         var regZtkNum = /^[A-Za-z0-9]+$/;
@@ -327,19 +322,6 @@ define(function (require, exports, module) {
           return false;
         } else if (zktTele.length != 11 || isNaN(zktTele)) {
           page.toast('您输入的手机号码不正确');
-          return false;
-        }
-
-        //验证码校验.
-        var random = randomNum.join("");
-        if (ztkICode == '请输入验证码' || ztkICode == '') {
-          page.toast('请输入验证码');
-          return false;
-        } else if (isNaN(ztkICode) || ztkICode.length != 4) {
-          page.toast('验证码不正确');
-          return false;
-        } else if (parseInt(random) != parseInt(ztkICode)) {
-          page.toast('验证码不正确');
           return false;
         }
         parameterValues = {};
@@ -465,113 +447,58 @@ define(function (require, exports, module) {
        * 绑定事件
        */
       var bindEvent = function () {
-
-        //返回.
-        $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-        $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+        $('.back').on('click', function () {
           if (type != '' && type != 'undefined' && result != '' && result != 'undefined') {
-            page.init('user/person',{},1);
-          }else {
+            page.init('user/person', {}, 1);
+          } else {
             if (canBack) {
               page.goBack();
             } else {
               page.init("home", {}, 0);
             }
           }
-          return true;
         });
 
-        //优惠券说明.
-        $(document).off(events.touchStart(), ".whbox").on(events.touchStart(), ".whbox", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".whbox").on(events.activate(), ".whbox", function (e) {
+        //优惠券说明
+        $('.whbox').on('click', function () {
           page.init("user/getCoupon", {}, 1);
-          return true;
         });
 
         //页面选项卡切换[在线充值,充值卡充值,直通卡充值].
-        $(document).off(events.touchStart(), ".tabs span").on(events.touchStart(), ".tabs span", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".tabs span").on(events.activate(), ".tabs span", function (e) {
+        $('.tabs').on('click', 'span', function (e) {
           $(".tabs span").removeClass("click");
           $(e.currentTarget).addClass("click");
           $('.wrapper').prop('id', $(e.target).data('type'));
-          var showId = $(e.target).attr("id").split("_")[0];
-          //切换到直通卡后,页面当中需要用到4位验证码.
-          if (showId == 'ztk') {
-            randomNum = util.getSrand(1, 9, 4);
-            $('.nzmbtn').text(randomNum.join(" "));
-          }
         });
 
         //充值卡充值选项卡切换[神州行,联通卡,电信卡].
-        $(document).off(events.touchStart(), ".tabs1 span").on(events.touchStart(), ".tabs1 span", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".tabs1 span").on(events.activate(), ".tabs1 span", function (e) {
+        $('.tabs1').on('click', 'span', function (e) {
           $(".tabs1 span").removeClass("click");
           $(e.currentTarget).addClass("click");
           $('.selectCzkMode').prop('id', $(e.target).data('type'));
-          return true;
         });
 
         //充值卡[神州卡面额选择]
-        $(document).off(events.touchStart(), ".yd li").on(events.touchStart(), ".yd li", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".yd li").on(events.activate(), ".yd li", function (e) {
-          var clickItem = $(e.target).attr("id");
+        $('.yd').on('click', 'li', function (e) {
           $(".yd li").removeClass("click");
           $(e.target).addClass("click");
-          return true;
         });
 
         //充值卡[联通卡面额选择]
-        $(document).off(events.touchStart(), ".lt li").on(events.touchStart(), ".lt li", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".lt li").on(events.activate(), ".lt li", function (e) {
-          var clickItem = $(e.target).attr("id");
+        $('.lt').on('click', 'li', function (e) {
           $(".lt li").removeClass("click");
           $(e.target).addClass("click");
           return true;
         });
 
         //充值卡[电信卡面额选择]
-        $(document).off(events.touchStart(), ".dxx li").on(events.touchStart(), ".dxx li", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".dxx li").on(events.activate(), ".dxx li", function (e) {
-          var clickItem = $(e.target).attr("id");
+        $('.dxx').on('click', 'li', function (e) {
           $(".dxx li").removeClass("click");
           $(e.target).addClass("click");
-          return true;
         });
 
         //在线冲值[支付宝WAP，财付通WAP]
-        $(document).off(events.touchStart(), ".account li").on(events.touchStart(), ".account li", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".account li").on(events.activate(), ".account li", function (e) {
+        $('.account').on('click', 'li', function (e) {
           var targetId = $(this).attr("id");
           switch (targetId) {
             case "zfb_charge":
@@ -581,29 +508,16 @@ define(function (require, exports, module) {
               cftWapPay();
               break;
           }
-          return true;
         });
 
         //充值卡充值[移动,联通,电信]
-        $(document).off(events.touchStart(), ".loginbtn").on(events.touchStart(), ".loginbtn", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".loginbtn").on(events.activate(), ".loginbtn", function (e) {
+        $('.loginbtn').on('click',function (e) {
           ckzPay();
-          return true;
         });
 
         //直通卡充值.
-        $(document).off(events.touchStart(), ".surebtn").on(events.touchStart(), ".surebtn", function (e) {
-          events.handleTapEvent(this, this, events.activate(), e);
-          return true;
-        });
-
-        $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
+        $('.surebtn').on('click', function (e) {
           ztkPay();
-          return true;
         });
 
       };

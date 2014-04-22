@@ -4,12 +4,11 @@
 define(function (require, exports, module) {
 
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
-      template = require("../../views/user/coupon.html"),
-      account = require('services/account');
+      account = require('services/account'),
+      template = require("/views/user/coupon.html");
 
   // 处理返回参数
   var canBack = 0;
@@ -66,15 +65,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
-      offBind();
+    $('.back').on('click', function () {
       if (canBack) {
         page.goBack();
       } else {
@@ -83,13 +74,9 @@ define(function (require, exports, module) {
       return true;
     });
 
-    //当点击加载更多按钮的时候.触发
-    $(document).off(events.touchStart(), ".loadText").on(events.touchStart(), ".loadText", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
 
-    $(document).off(events.activate(), ".loadText").on(events.activate(), ".loadText", function (e) {
+    //当点击加载更多按钮的时候.触发
+    $('.loadText').on('click',function () {
       var intRequestPage = parseInt(pageNo, 10);
       if (intRequestPage < pages) {
         pageNo = (intRequestPage + 1) + "";
@@ -100,12 +87,7 @@ define(function (require, exports, module) {
 
 
     //点击尚未使用的优惠券编号时,跳转到充值页.自动填充优惠券选项卡.
-    $(document).off(events.touchStart(), ".hmBox i").on(events.touchStart(), ".hmBox i", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".hmBox i").on(events.activate(), ".hmBox i", function (e) {
+    $('.bb1').on('click','i', function (e) {
       var targetId = $(e.target).attr('id');
       if (targetId != 'undefined' && targetId != '') {
         var couponCode = targetId.split('_')[1];
@@ -135,10 +117,9 @@ define(function (require, exports, module) {
     if (!tkn) {
       // 尚未登录，弹出提示框
       page.init('login',{},1);
+      return false;
     }
-
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     //获取优惠券
     var time = getTime();
     // 显示加载图标
@@ -154,16 +135,16 @@ define(function (require, exports, module) {
       } else {
         page.toast("查询优惠券失败,请稍候重试!");
       }
-      util.addAjaxRequest(request);
+      loadingShow(0);
     });
-    loadingShow(0);
+    util.addAjaxRequest(request);
   };
 
   /**
    * 优惠券页面模版.
    */
   var showCouponItem = function (data) {
-    pages = (parseInt(data.count) + pageSize - 1) / pageSize;
+    pages = parseInt((parseInt(data.count) + pageSize - 1) / pageSize);
     if (pageNo < pages) {
       $(".loadText").text("查看更多");
     } else {

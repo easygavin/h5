@@ -76,10 +76,10 @@ define(function (require, exports, module) {
      * @param url      地址
      * @param callback 回调
      */
-    joinHm: function (params,url,callback) {
+    joinHm: function (params,callback) {
       return $.ajax({
         type: "GET",
-        url: url,
+        url: path.JOIN_HM_ACTION,
         data: {data: JSON.stringify(params)},
         dataType: "jsonp",
         success: callback,

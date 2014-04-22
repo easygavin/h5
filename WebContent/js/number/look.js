@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -117,13 +116,13 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
 
     // 去投注
-    $("#toBuyNo").on(events.click(), function (e) {
+    $("#toBuyNo").on("click", function (e) {
       util.clearLocalData(lotConfig.localKey);
       page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
     });

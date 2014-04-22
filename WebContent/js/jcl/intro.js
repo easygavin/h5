@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
   var page = require('page');
-  var fastClick = require('fastclick');
   var util = require('util');
   var $ = require('zepto');
   var canBack = 1;
@@ -45,7 +44,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 菜单切换

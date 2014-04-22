@@ -5,7 +5,6 @@ define(function (require, exports, module) {
   var view = require('/views/athletics/result.html');
   var _ = require('underscore');
   var page = require('page');
-  var fastClick = require('fastclick');
   var service = require('services/jcl');
   var util = require('util');
 
@@ -98,7 +97,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
     // 返回
     $(".back").on('click', function(){
       page.go(backNum);

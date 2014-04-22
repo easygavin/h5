@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -52,7 +51,7 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       if (canBack) {
         page.goBack();
       } else {
@@ -62,13 +61,13 @@ define(function (require, exports, module) {
     });
 
     // 注册
-    $(".pr0").on(events.click(), function (e) {
+    $(".pr0").on("click", function (e) {
       page.init("register", {from: "login"}, 1);
       return true;
     });
 
     // 登录
-    $(".loginbtn").on(events.click(), function (e) {
+    $(".loginbtn").on("click", function (e) {
 
       var name = $(".username").val();
       var password = $(".password").val();

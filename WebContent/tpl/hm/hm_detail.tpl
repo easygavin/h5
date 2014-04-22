@@ -10,7 +10,7 @@
   <p>方案总金额：<i style="color:red"><%=data.totalAmount%></i>元</p>
   <P>提成：<i style="color:red"><%=data.commPercent%></i>%</p>
   <p>共<i style="color:red">
-    <%=data.totalCount%></i>份,剩余1<i style="color:red">
+    <%=data.totalCount%></i>份,剩余<i style="color:red">
     <%=data.totalCount-data.buyVolume%></i>份,&nbsp;每份金额：<i style="color:red">
     <%=data.oneAmount%></i>元</p>
   <p>
@@ -35,7 +35,7 @@
   </thead>
   <tbody>
 
-  <%if(!_.isEmpty(data.detail)){%>
+  <%if(typeof data.detail!='undefined'&&typeof data.detail.content!='undefined'){%>
 
   <%
   for(var i = 0, len = data.detail.length; i < len; i++) {

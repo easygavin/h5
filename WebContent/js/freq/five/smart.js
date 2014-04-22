@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -242,29 +241,30 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
 
     // 获取期号
-    $("#issueNo").on(events.tap(), function (e) {
+    $("#issueNo").on("click", function (e) {
       // 获取期号信息
       getIssue();
       return true;
     });
 
     // 加倍
-    $(".line30 input").on("keyup",function (e) {
-      var valObj = checkTimesVal(this);
-      var times = parseInt(valObj.times, 10);
-      if (times != items[valObj.index].muls) {
-        items[valObj.index].muls = times;
-        // 重置倍数后更新数据
-        toResetTimes(valObj);
-      }
-      return true;
-    }).on("blur", function (e) {
+    $(document).off("keyup", ".line30 input").
+      on("keyup", ".line30 input",function (e) {
+        var valObj = checkTimesVal(this);
+        var times = parseInt(valObj.times, 10);
+        if (times != items[valObj.index].muls) {
+          items[valObj.index].muls = times;
+          // 重置倍数后更新数据
+          toResetTimes(valObj);
+        }
+        return true;
+      }).on("blur", function (e) {
         var valObj = checkTimesVal(this);
         var times = parseInt(valObj.times, 10);
         if (times != items[valObj.index].muls) {
@@ -363,12 +363,12 @@ define(function (require, exports, module) {
       });
 
     // 购买
-    $(".btn2").on(events.click(), function (e) {
+    $(".btn2").on("click", function (e) {
       toBuy();
       return true;
     });
 
-    $(".btn1").on(events.click(), function (e) {
+    $(".btn1").on("click", function (e) {
       if ($(".smartModBox").is(":visible")) {
         // 收起
         hideModBox();
@@ -419,7 +419,7 @@ define(function (require, exports, module) {
     params.bets = opt.bet + ""; // 总注数
     params.totalIssue = opt.count + ""; // 总期数
     params.totalBet = totalBet + ""; // 总倍数
-    params.stopBetting = $("#stopBetting").attr("checked") ? "1" : "0"; // 中奖后停止追号 0不停止，1停止
+    params.stopBetting = $("#stopBetting").prop("checked") ? "1" : "0"; // 中奖后停止追号 0不停止，1停止
     params.btzh = "1"; // 高频彩，是否是倍投计算器
     params.stopCondition = "0";  // 停止追号条件
 
@@ -504,6 +504,8 @@ define(function (require, exports, module) {
    */
   var toResetTimes = function (valObj) {
     items = digitService.calcPayIncome(items, handleResult);
+
+    showPayInfo();
     $(".line30 tbody tr").each(function (i, item) {
       if (i >= valObj.index) {
         $(item).find("td").each(function (j, td) {
@@ -535,10 +537,10 @@ define(function (require, exports, module) {
     count = handleResult.count;
     //计算方式 1：盈利率，2：盈利金额
     if (handleResult.type == 2) {
-      $("#incomeMode").attr({"checked": true});
+      $("#incomeMode").prop({"checked": true});
       type = 2;
     } else {
-      $("#rateMode").attr({"checked": true});
+      $("#rateMode").prop({"checked": true});
       type = 1;
     }
     // 盈利率

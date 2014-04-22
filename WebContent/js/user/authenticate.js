@@ -4,13 +4,12 @@
 define(function (require, exports, module) {
 
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
+      config = require('config'),
       account = require('services/account'),
-      template = require("../../views/user/authenticate.html"),
-      config = require('config');
+      template = require("/views/user/authenticate.html");
 
   // 处理返回参数
   var canBack = 0;
@@ -41,8 +40,6 @@ define(function (require, exports, module) {
         "user/authenticate",
             "#user/authenticate" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
-
-    // 隐藏加载标示
     util.hideLoading();
   };
 
@@ -54,22 +51,14 @@ define(function (require, exports, module) {
     $("#container").empty().html(template);
 
     //初始化显示,查询身份证是否认证.
-     idState();
+    idState();
   };
 
   /**
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+    $('.back').on('click', function () {
       if (canBack) {
         page.goBack();
       } else {
@@ -80,17 +69,10 @@ define(function (require, exports, module) {
   };
 
   // 绑定身份证.
-  $(document).off(events.touchStart(), ".surebtn").on(events.touchStart(), ".surebtn", function (e) {
-    events.handleTapEvent(this, this, events.activate(), e);
-    return true;
-  });
-
-
-  $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
+  $('.surebtn').on('click', function () {
     bindIdNumber();
     return true;
   });
-
 
   /**
    * 初始化显示,查询身份证是否认证.
@@ -98,11 +80,10 @@ define(function (require, exports, module) {
   var idState = function () {
 
     if (!tkn) {
-        page.init("login", {}, 1);
+      page.init("login", {}, 1);
+      return false;
     }
-
     loginState = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     // 显示遮住层
     util.showLoading();
     if (!_.isEmpty(loginState) && loginState.userId && loginState.userKey) {
@@ -144,8 +125,7 @@ define(function (require, exports, module) {
     } else {
       $("#idNumber").val(idNumber).attr("readonly", true);
     }
-    $('.surebtn').html('返回');
-    $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
+    $('.surebtn').off('click').html('返回').on('click', function () {
       page.goBack();
     });
   };

@@ -7,7 +7,6 @@ define(function (require, exports, module) {
   var page = require('page');
   var _ = require('underscore');
   var service = require('services/jcz');
-  var fastClick = require('fastclick');
   var pageTpl = require('/views/athletics/jcz/analyse.html');
 
   var analyse = {
@@ -46,7 +45,7 @@ define(function (require, exports, module) {
           url = '/tpl/athletics/jcz/jf';
           _data = {
             hostName: data.hostName,
-            visitName: data.hostName,
+            visitName: data.visitName,
             host: [ data.integral.host.all, data.integral.host.zhu, data.integral.host.ke],
             visit: [ data.integral.visit.all, data.integral.visit.zhu, data.integral.visit.ke]
           };
@@ -55,7 +54,7 @@ define(function (require, exports, module) {
           url = '/tpl/athletics/jcz/history';
           _data = {
             hostName: data.hostName,
-            visitName: data.hostName,
+            visitName: data.visitName,
             jf: data.history['0'].jfHistory,
             host: data.history['0'].hostHistory,
             visit: data.history['0'].visitHistory
@@ -83,7 +82,6 @@ define(function (require, exports, module) {
       this.show();
     },
     events: function () {
-      fastClick.attach(document.body);
       $('.back').on('click', page.goBack);
       $('#tabs').on('click', 'a', this.switchTab.bind(this));
       $('#refresh').on('click', this.getData.bind(this));

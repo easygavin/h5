@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     template = require('../views/register.html'),
@@ -50,7 +49,7 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       if (canBack) {
         page.goBack();
       } else {
@@ -60,7 +59,7 @@ define(function (require, exports, module) {
     });
 
     // 登录
-    $(".pr0").on(events.click(), function (e) {
+    $(".pr0").on("click", function (e) {
       if (canBack && from == "login") {
         page.goBack();
       } else {
@@ -70,17 +69,17 @@ define(function (require, exports, module) {
     });
 
     // 购彩协议
-    $(".checked").on(events.click(), function (e) {
+    $(".checked").on("click", function (e) {
       page.init("protocol", {}, 1);
       return true;
     });
 
     // 注册
-    $(".loginbtn").on(events.click(), function (e) {
+    $(".loginbtn").on("click", function (e) {
       var username = $(".username").val();
       var password = $(".password").val();
       var nextpad = $(".nextpad").val();
-      var checkbox = $(".checkbox").attr("checked");
+      var checkbox = $(".checkbox").prop("checked");
 
       if (!checkbox) {
         page.toast("请同意直通车购彩协议");
@@ -155,7 +154,7 @@ define(function (require, exports, module) {
                 page.go(-2);
                 break;
               case "":
-                page.init("home", {}, 0);
+                page.init("user/bindMobile", {}, 0);
                 break;
             }
           } else {

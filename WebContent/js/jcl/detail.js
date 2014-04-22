@@ -6,7 +6,6 @@ define(function (require, exports, module) {
     page = require('page'),
     _ = require('underscore'),
     service = require('services/jcl'),
-    fastClick = require('fastclick'),
     util = require('util');
   // 赛事开奖结果
   var matchResult = {};
@@ -107,8 +106,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    //fastclick events
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 去投注

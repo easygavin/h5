@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
@@ -43,8 +42,6 @@ define(function (require, exports, module) {
         "user/withdrawal",
             "#user/withdrawal" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
-
-    // 隐藏加载标示
     util.hideLoading();
   };
 
@@ -53,9 +50,8 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
 
-    $("#container")..html(template);
-
-    getBalance();
+    $("#container").html(template);
+      getBalance();
   };
 
   /**
@@ -64,16 +60,11 @@ define(function (require, exports, module) {
   var getBalance = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init("login", {}, 1);
+      return false;
     }
 
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       var userId = userInfo.userId, userKey = userInfo.userKey;
       account.getUserBalance(requestType, userId, userKey, function (data) {
@@ -121,6 +112,7 @@ define(function (require, exports, module) {
       }, function () {
         $(".popup").hide();
       });
+      return false;
     }
 
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
@@ -146,7 +138,7 @@ define(function (require, exports, module) {
       var platform = path.platform, channelNo = path.channelNo;
       // 发送请求.
       var request = account.withdrawal(userInfo.userId, userInfo.userKey,
-          drawalmoney, userInfo.userMobile, drawalpass, 0,platform,channelNo, userInfo.userName,function (data) {
+          drawalmoney, userInfo.userMobile, drawalpass, 0, platform, channelNo, userInfo.userName, function (data) {
             if (!_.isEmpty(data)) {
               if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
                 //重新再请求下数据.
@@ -179,36 +171,19 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+    $('.back').on('click', function () {
       page.goBack();
       return true;
     });
 
     // 提款须知.
-    $(document).off(events.touchStart(), "#notes").on(events.touchStart(), "#notes", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), "#notes").on(events.activate(), "#notes", function (e) {
-      page.init('user/drawalnotes', {}, 1);
+    $('#notes').on('click', function () {
+      page.init('user/drawalnotes', {}, 0);
       return true;
     });
 
     // 提款.
-    $(document).off(events.touchStart(), "#confdrawal").on(events.touchStart(), "#confdrawal", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), "#confdrawal").on(events.activate(), "#confdrawal", function (e) {
+    $('#confdrawal').on('click', function () {
       withdrawal();
       return true;
     });

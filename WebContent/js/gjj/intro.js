@@ -2,11 +2,7 @@
  * 高频彩介绍
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-    events = require('events'),
-    util = require('util'),
-    $ = require('zepto'),
-    template = require("../../views/gjj/intro.html");
+  var page = require('page'), util = require('util'), $ = require('zepto'), template = require("/views/gjj/intro.html");
 
   var canBack = 1;
 
@@ -29,10 +25,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "gjj/intro", data: params},
-      "gjj/intro",
-      "#gjj/intro" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      canBack);
+    page.setHistoryState({url : "gjj/intro", data : params}, "gjj/intro", "#gjj/intro" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
 
     // 隐藏加载标示
     util.hideLoading();
@@ -69,13 +62,13 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
 
     // 菜单切换
-    $(".jsBox").on(events.tap(), function (e) {
+    $(".jsBox").on('click', function (e) {
       var $target = $(e.target);
       var $a = null;
       if (e.target.tagName.toLocaleLowerCase() === "a") {
@@ -93,5 +86,5 @@ define(function (require, exports, module) {
     });
   };
 
-  return {init: init};
+  return {init : init};
 });

@@ -2,13 +2,13 @@
  * 修改密码.
  */
 define(function (require, exports, module) {
+
   var page = require('page'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
-      events = require('events'),
       account = require('services/account'),
-      template = require('../../views/user/editinfo.html');
+      template = require('/views/user/editinfo.html');
 
   // 处理返回参数
   var canBack = 0;
@@ -58,16 +58,10 @@ define(function (require, exports, module) {
   var updateNickName = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init("login", {}, 1);
+      return false;
     }
-
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     var nickName = $('#nickName').val();
     if (nickName == '' || nickName == null) {
       page.toast('请输入昵称');
@@ -94,16 +88,10 @@ define(function (require, exports, module) {
   var updateLoginPass = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init("login", {}, 1);
+      return false;
     }
-
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     var userId = userInfo.userId, userKey = userInfo.userKey;
     var oldLoginPass = $('#oldLoginPass').val();
     var newLoginPass = $('#newLoginPass').val();
@@ -152,12 +140,8 @@ define(function (require, exports, module) {
   var updateDrawPass = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init("login", {}, 1);
+      return false;
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     var userId = userInfo.userId, userKey = userInfo.userKey;
@@ -198,29 +182,17 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+    $('.back').on('click', function () {
       if (canBack) {
         page.goBack();
       } else {
         page.init("home", {}, 0);
       }
-      return true;
     });
 
     // 修改信息.
-    $(document).off(events.touchStart(), "#main button").on(events.touchStart(), "#main button", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
 
-    $(document).off(events.activate(), "#main button").on(events.activate(), "#main button", function (e) {
+    $('#main').on('click', 'button', function (e) {
       var targetId = $(e.target).attr("id");
       switch (targetId) {
         //修改昵称.
@@ -236,7 +208,6 @@ define(function (require, exports, module) {
           updateDrawPass();
           break;
       }
-      return true;
     });
   };
   return {init: init};

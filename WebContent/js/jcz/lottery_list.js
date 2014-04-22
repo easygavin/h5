@@ -4,7 +4,6 @@ define(function (require, exports, module) {
     page = require('page'),
     _ = require('underscore'),
     service = require('services/jcz'),
-    fastClick = require('fastclick'),
     view = require('/views/athletics/lottery_list.html');
   var lotteryList = {
     init: function (data, forward) {
@@ -74,15 +73,13 @@ define(function (require, exports, module) {
       $('.popup').hide();
     },
     goBetRecord: function () {
-      page.init("user/buyRecord", {lotteryId: "46"}, 1);
+      page.init("user/buyRecord", {lotteryTypeArray: "46|47|48|49|52|56"}, 1);
     },
     goDetail: function (e) {
       var matchId = $(e.currentTarget).data('matchId');
       page.init("jcz/detail", this.infoMap[matchId], 1);
     },
     events: function () {
-      //fastclick events
-      fastClick.attach(document.body);
       $('.back').on('click', page.goBack);
       $('.select').on('click', this.openFilter.bind(this));
       $('.popup').on('click', this.filterByDate.bind(this));

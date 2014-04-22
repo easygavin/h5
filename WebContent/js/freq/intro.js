@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     config = require('config');
@@ -86,13 +85,13 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
 
     // 菜单切换
-    $(".jsBox").on(events.tap(), function (e) {
+    $(".jsBox").on("click", function (e) {
       var $target = $(e.target);
       var $a = null;
       if (e.target.tagName.toLocaleLowerCase() === "a") {

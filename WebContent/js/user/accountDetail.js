@@ -4,7 +4,6 @@
 define(function (require, exports, module) {
 
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
@@ -48,7 +47,6 @@ define(function (require, exports, module) {
         "user/accountDetail",
             "#user/accountDetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
-
     util.hideLoading();
   };
 
@@ -56,9 +54,7 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-
     $("#container").html(template);
-
     initQuery();
   };
 
@@ -82,16 +78,13 @@ define(function (require, exports, module) {
    * 获取购买记录
    */
   var getBuyRecordsList = function () {
-
     // 总页数重置
     pages = 0;
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.init('login',{},1);
+      page.init('login', {}, 1);
+      return false;
     }
-
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     // 保存登录成功信息
     var data = {};
     // sortType 排序方式,0 表示时间倒序默认为0;1 表示金额倒序
@@ -103,10 +96,8 @@ define(function (require, exports, module) {
     data.periodOfCheck = periodOfCheck;
     data.userId = userInfo.userId + "";
     data.userKey = userInfo.userKey;
-
     // 显示加载图标
     loadingShow(1);
-
     var request = account.getAccountDetailList(data, function (data) {
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
@@ -206,25 +197,18 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+    $('.back').on('click', function () {
       offBind();
-      page.goBack();
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
       return true;
     });
 
     // Tab 切换
-    $(document).off(events.touchStart(), ".jltab a").on(events.touchStart(), ".jltab a", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".jltab a").on(events.activate(), ".jltab a", function (e) {
+    $('.jltab').on('click','a', function () {
       var $target = $(this);
       var id = $target.attr("id").split("_")[1];
       switch (id) {

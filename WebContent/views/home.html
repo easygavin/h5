@@ -17,8 +17,8 @@
 
     </div>
     <div class="grayBg">
-      <a class="title">彩票直通车</a>
-      <b class="close fm">&#xf064;</b>
+      <a class="title"></a>
+      <b class="close fm"></b>
     </div>
   </div>
   <!--导航-->
@@ -59,7 +59,7 @@
       <p><a class="fr fm up">&#xf005;</a>高频彩</p>
       <ul>
         <li id="sub_syy">十一运夺金</li>
-        <li id="sub_syx">十一选5</li>
+        <li id="sub_syx">11选5</li>
       </ul>
     </li>
     <li id="short_athletics" class="listNav">
@@ -118,7 +118,9 @@
           <p class="cf60"><%=l.desc%></p>
           <% if (l.hasDetail) { %>
           <p>截止时间：<span class="endTime"></span></p>
-          <p><i class="fm fr xq">&#xf065;</i>当期奖池：<i class="cf60"><span class="pool">0</span>元</i></p>
+          <p>
+            <% if (l.hasLevels) { %><i class="fm fr xq">&#xf065;</i><% } %>
+            <% if (l.hasPool) { %>当期奖池：<i class="cf60"><span class="pool">0</span>元</i><% } %></p>
           <% } %>
         </dd>
       </dl>
@@ -130,12 +132,7 @@
 <!--未登录或无定制彩种-->
 <script type="text/template" id="customNTpl">
   <a class="czdz">+</a>
-
-  <p class="f14 pb1">请先
-    <% if (!hasLogin) { %>
-    <a id="toLogin" class="cf60">登录</a>,
-    <% } %>
-    定制属于您的彩种</p>
+  <p class="f14 pb1">请先<% if (!hasLogin) { %><a id="toLogin" class="cf60">登录</a>,<% } %>定制属于您的彩种</p>
 </script>
 
 <!--资讯列表-->

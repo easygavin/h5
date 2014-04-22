@@ -3,11 +3,10 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
-      template = require("../../views/user/drawalnotes.html");
+      template = require("/views/user/drawalnotes.html");
 
   var canBack = 1;
 
@@ -38,37 +37,23 @@ define(function (require, exports, module) {
    * 初始化显示
    */
   var initShow = function () {
-
-    // compile our template
-    var tmp = _.template(template);
-
-    $("#container").empty().html(tmp());
+    $("#container").empty().html(template);
   };
 
   /**
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
+    $('.back').on('click', function () {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
     });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
-      page.goBack();
-      return true;
-    });
-
 
     // 我已阅读.
-    $(document).off(events.touchStart(), "#haveRead").on(events.touchStart(), "#haveRead", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), "#haveRead").on(events.activate(), "#haveRead", function (e) {
+    $('#haveRead').on('click', function () {
       page.goBack();
       return true;
     });

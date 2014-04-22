@@ -5,7 +5,6 @@ define(function (require, exports, module) {
   var view = require('/views/athletics/buy.html');
   var page = require('page');
   var util = require('util');
-  var fastClick = require('fastclick');
   var service = require('services/jcl');
 
   // 彩种
@@ -414,7 +413,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 购彩协议
@@ -570,7 +568,7 @@ define(function (require, exports, module) {
    * 检查有效值
    */
   var checkVal = function () {
-    if (!$("#protocol").attr("checked")) {
+    if (!$("#protocol").prop("checked")) {
       page.toast("请勾选同意合买代购协议!");
       return false;
     }

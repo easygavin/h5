@@ -8,7 +8,6 @@ define(function (require, exports, module) {
   var _ = require('underscore');
   var hm = require('services/hm');
   var config = require('config');
-  var fastClick = require('fastclick');
   var template = require('/views/hm/index.html');
 
   var canBack = 1;
@@ -28,11 +27,11 @@ define(function (require, exports, module) {
   //页行数.
   var pagesize = 20;
 
-  //查询方式｛percent:百分比,money:总金额｝
+  //查询方式｛percent:百分比,totalAmount:总金额｝
   var orderByName = 'percent';
 
   //排序方式{desc:升序,asc:降序}
-  var orderBy = 'desc';
+  var orderBy = 'asc';
 
   //请求页数
   var requestPage = 1;
@@ -312,12 +311,9 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
-
     $('.back').on('click', function () {
       offBind();
       page.goBack();
-      return true;
     });
     // 排序方式.
     $('.jltab li').on('click', function () {
@@ -325,19 +321,16 @@ define(function (require, exports, module) {
       switch (targetId) {
         case "byPercent":
           orderByName = 'percent';
+          orderBy = 'asc';
           break;
-        case "byMoney":
-          orderByName = 'money';
+        case "byTotalAmount":
+          orderByName = 'totalAmount';
+          orderBy='desc';
           break;
       }
-
       requestPage = "1";
-
       clearItems();
-
       initQuery();
-
-      return true;
     });
 
     $('.bb1').on('click', 'tr', function () {
@@ -347,7 +340,6 @@ define(function (require, exports, module) {
       //{lotteryType-彩种id,projectId-方案id,requestType-查询类型{0购彩方案详情，1合买方案详情}}
       var lotteryType = id[1], projectId = id[2];
       page.init('hm/hmdetail', {"lotteryType" : lotteryType, "projectId" : projectId, "requestType" : "1"}, 1);
-      return true;
     });
     var timer = 0;
     $(window).on("scroll", function () {

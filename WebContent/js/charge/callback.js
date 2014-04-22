@@ -4,13 +4,12 @@
 define(function (require, exports, module) {
 
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
-      digitService = require('services/digit'),
       config = require('config'),
-      template = require("../../views/charge/callback.html");
+      digitService = require('services/digit'),
+      template = require("/views/charge/callback.html");
 
   var canBack = 1;
 
@@ -106,20 +105,14 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
     // 返回
-    $(document).off(events.touchStart(), ".back,#toIndex_s,#toIndex_e").on(events.touchStart(), ".back,#toIndex_s,#toIndex_e", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back,#toIndex_s,#toIndex_e").on(events.activate(), ".back,#toIndex_s,#toIndex_e", function (e) {
+    $('.back,#toIndex_s,#toIndex_e').on('click', function (e) {
       //后退
       page.init('home', {"token": userInfo.token}, 0);
       return true;
     });
 
-    $(document).off(events.tap(), ".index").on(events.tap(), ".index", function (e) {
+    $('.index').on('click',function (e) {
       var $target = $(e.target);
       var $a = $target.closest("a");
       var $gmButton = $target.closest(".gmButton");
@@ -144,23 +137,14 @@ define(function (require, exports, module) {
     });
 
     //查看余额.
-    $(document).off(events.touchStart(), "#getBalance").on(events.touchStart(), "#getBalance", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), "#getBalance").on(events.activate(), "#getBalance", function (e) {
+    $('#getBalance').on('click',function () {
       page.init('user/person', {"token":userInfo.token,"type":type,"result":result}, 1);
       return true;
     });
 
     //重新充值.
-    $(document).off(events.touchStart(), "#recharge").on(events.touchStart(), "#recharge", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
 
-    $(document).off(events.activate(), "#recharge").on(events.activate(), "#recharge", function (e) {
+    $('#recharge').on('click', function (e) {
       page.init('charge/index', {"token": userInfo.token,"type":type,"result":result}, 1);
       return true;
     });
@@ -201,7 +185,7 @@ define(function (require, exports, module) {
       case "dlt": // 大乐透
       case "f3d": // 福彩3D
       case "pl3": // 排列三
-      case "syx": // 十一选5
+      case "syx": // 11选5
       case "syy": // 十一运夺金
         // 彩种配置
         var lotConfig = config.lotteryMap[key];

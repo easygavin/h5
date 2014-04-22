@@ -2,13 +2,12 @@
  * 数字彩方案详情
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-    events = require('events'),
-    util = require('util'),
-    $ = require('zepto'),
-    _ = require('underscore'),
-    template = require("../../views/gjj/detail.html"),
-    gjjService = require('services/gjj');
+  var page = require('page');
+  var util = require('util');
+  var $ = require('zepto');
+  var _ = require('underscore');
+  var template = require("/views/gjj/detail.html");
+  var gjjService = require('services/gjj');
   var canBack = 1;
   // 方案编号
   var projectno = "";
@@ -37,10 +36,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "gjj/detail", data: params},
-      "gjj/detail",
-      "#gjj/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      canBack);
+    page.setHistoryState({url : "gjj/detail", data : params}, "gjj/detail", "#gjj/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
   };
 
   /**
@@ -88,19 +84,13 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
     // 返回
-    $(".back").on(events.click(), function (e) {
-      page.goBack();
-      return true;
-    });
-
+    $(".back").on('click', page.goBack);
     // 冠军竞猜投注
-    $("#goBuyGjj").on(events.click(), function (e) {
+    $("#goBuyGjj").on("click", function (e) {
       page.init("gjj/bet", {}, 0);
-      return true;
     });
   };
 
-  return {init: init};
+  return {init : init};
 });

@@ -3,8 +3,7 @@
  */
 define(function (require, exports, module) {
   var $ = require('zepto'),
-    util = require('util'),
-    events = require('events');
+    util = require('util');
   var Page = {
     pages: []
   };
@@ -155,7 +154,7 @@ define(function (require, exports, module) {
     $(".dialog .cxt").html(ctx);
     var $btn = $("#dialog_l");
     $btn.text(button);
-    $btn.off(events.click()).on(events.click(), function (e) {
+    $btn.off("click").on("click", function (e) {
       $(".dialog").hide();
       callback(e);
       util.hideCover();
@@ -187,14 +186,14 @@ define(function (require, exports, module) {
     $l_btn.text(l_btn);
     $r_btn.text(r_btn);
 
-    $l_btn.off(events.click()).on(events.click(), function (e) {
+    $l_btn.off("click").on("click", function (e) {
       $(".prompt").hide();
       l_callback(e);
       util.hideCover();
       return false;
     });
 
-    $r_btn.off(events.click()).on(events.click(), function (e) {
+    $r_btn.off("click").on("click", function (e) {
       $(".prompt").hide();
       r_callback(e);
       util.hideCover();
@@ -222,10 +221,10 @@ define(function (require, exports, module) {
     } else if (data.statusCode == "0007") {
       // 用户信息不完善
       self.answer("", "用户信息不完善,请完善资料", "去完善", "取消",
-        function (e) {
+        function () {
           self.init("user/authenticate", {}, 1);
         },
-        function (e) {
+        function () {
         }
       );
     } else if (data.statusCode == "off") {

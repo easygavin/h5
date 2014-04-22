@@ -30,7 +30,7 @@
   <tr>
     <td colspan="6">
       <span style="float:left;">/ 近期战绩</span>
-      <span class="bold" style="margin-left: -90px;"><%=visitName%></span>
+      <span class="bold" style="margin-left: -90px;"><%=hostName%></span>
     </td>
   </tr>
   <tr>

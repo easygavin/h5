@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
   var page = require('page');
-  var fastClick = require('fastclick');
   var util = require('util');
   var canBack = 1;
   var flag = "intro";
@@ -44,8 +43,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    //fastclick events
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 菜单切换
@@ -62,7 +59,6 @@ define(function (require, exports, module) {
           flag = $a.attr("id").split("_")[1];
           showZone();
         }
-        return true;
       });
   };
   return {init: init};

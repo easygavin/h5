@@ -20,14 +20,14 @@
     <tr class="footballTz">
       <% var sfOdds = spDatas.sf.split(','); %>
       <td class="tab">0</td>
-      <td id="sf_0-<%=matchId%>"><%=sfOdds[0]||'--'%></td>
-      <td id="sf_1-<%=matchId%>"><%=sfOdds[1]||'--'%></td>
+      <td id="sf_0-<%=matchId%>">主胜<br><%=sfOdds[0]||'--'%></td>
+      <td id="sf_1-<%=matchId%>">客胜<br><%=sfOdds[1]||'--'%></td>
     </tr>
     <tr class="lYTable">
       <% var rfsfOdds = spDatas.rfsf.split(','); %>
-      <td class="tab"><%=rfsfOdds[0]||'--'%></td>
-      <td id="rfsf_1-<%=matchId%>"><%=rfsfOdds[1]||'--'%></td>
-      <td id="rfsf_2-<%=matchId%>"><%=rfsfOdds[2]||'--'%></td>
+      <td class="tab">让分<br><%=rfsfOdds[0]||'--'%></td>
+      <td id="rfsf_1-<%=matchId%>">让分主胜<br><%=rfsfOdds[1]||'--'%></td>
+      <td id="rfsf_2-<%=matchId%>">让分客胜<br><%=rfsfOdds[2]||'--'%></td>
     </tr>
   </table>
 </div>

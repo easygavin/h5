@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -226,7 +225,7 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
@@ -259,7 +258,7 @@ define(function (require, exports, module) {
       });
 
     // 平均优化
-    $("#avgSet").on(events.tap(), function (e) {
+    $("#avgSet").on("click", function (e) {
       if (bets * price * timesInput < 20) {
         page.toast("计划购买金额至少20元!");
         return false;
@@ -269,10 +268,10 @@ define(function (require, exports, module) {
     });
 
     // 移除cover的click事件，防止重复提交订单
-    $(".cover").off(events.click());
+    $(".cover").off("click");
 
     // 购买
-    $(".btn2").on(events.click(), function (e) {
+    $(".btn2").on("click", function (e) {
 
       // 检查值
       if (checkVal()) {
@@ -283,7 +282,7 @@ define(function (require, exports, module) {
     });
 
     // 购彩协议
-    $(".checked").on(events.click(), function (e) {
+    $(".checked").on("click", function (e) {
       page.init("protocol", {}, 1);
       return true;
     });
@@ -318,7 +317,7 @@ define(function (require, exports, module) {
    * 购买付款
    */
   var toBuy = function () {
-    if (!$("#protocol").attr("checked")) {
+    if (!$("#protocol").prop("checked")) {
       page.toast("请勾选同意合买代购协议!");
       return false;
     }

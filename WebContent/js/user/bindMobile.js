@@ -2,13 +2,13 @@
  * 绑定手机号
  */
 define(function (require, exports, module) {
+
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
-      template = require("../../views/user/bindMobile.html"),
-      account = require('services/account');
+      account = require('services/account'),
+      template = require("/views/user/bindMobile.html");
 
   // 处理返回参数
   var canBack = 0;
@@ -23,6 +23,9 @@ define(function (require, exports, module) {
 
   //登录状态.
   var tkn;
+
+  //判断是否绑定
+  var bindFlag = false;
 
   /**
    * 初始化
@@ -54,7 +57,7 @@ define(function (require, exports, module) {
   var initShow = function () {
     $("#container").html(template);
     //查询手机绑定状态.
-     mobileBindState();
+    mobileBindState();
   };
 
   /**
@@ -63,16 +66,11 @@ define(function (require, exports, module) {
   var mobileBindState = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init('login', {}, 1);
+      return false;
     }
 
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     if (!_.isEmpty(userInfo)) {
       var mobileNo = userInfo.userMobile;
       if (mobileNo) {
@@ -82,9 +80,7 @@ define(function (require, exports, module) {
         $('#captcha').val(displayNo).attr("disabled", true);
         $('#sendCaptcha').hide();
         $('.surebtn').html('返回');
-        $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
-          page.goBack();
-        });
+         bindFlag = true;
       }
     }
 
@@ -148,65 +144,57 @@ define(function (require, exports, module) {
   var bindMobile = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
-    }
-
-    var mobileNo = $('#mobileNo').val().trim();
-    var reg = new RegExp("^[0-9]*$");
-    if (mobileNo == '') {
-      page.toast('手机号码不能为空');
-      return false;
-    } else if (!reg.test(mobileNo) || mobileNo.length != 11) {
-      page.toast('请输入有效的手机号码');
+      page.init('login', {}, 1);
       return false;
     }
+    if(!bindFlag) {
+      var mobileNo = $('#mobileNo').val();
+      var reg = new RegExp("^[0-9]*$");
+      if (mobileNo == '') {
+        page.toast('手机号码不能为空');
+        return false;
+      } else if (!reg.test(mobileNo) || mobileNo.length != 11) {
+        page.toast('请输入有效的手机号码');
+        return false;
+      }
 
-    var captcha = $('#captcha').val().trim();
-    if (captcha == '') {
-      page.toast('请输入有效的验证码');
-      return false;
-    } else if (isNaN(captcha)) {
-      page.toast('请输入有效的6位验证码');
-      return false;
-    }
+      var captcha = $('#captcha').val().trim();
+      if (captcha == '') {
+        page.toast('请输入有效的验证码');
+        return false;
+      } else if (isNaN(captcha)) {
+        page.toast('请输入有效的6位验证码');
+        return false;
+      }
 
-    if (!_.isEmpty(userInfo)) {
-      account.bindMobileNo(mobileNo, userInfo.userId, userInfo.userKey, captcha, function (data) {
-        if (!_.isEmpty(data)) {
-          if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
-            userInfo.userMobile = mobileNo;
-            util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
-            page.toast('手机绑定成功');
-            page.goBack();
+      if (!_.isEmpty(userInfo)) {
+        account.bindMobileNo(mobileNo, userInfo.userId, userInfo.userKey, captcha, function (data) {
+          if (!_.isEmpty(data)) {
+            if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
+              userInfo.userMobile = mobileNo;
+              util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
+              page.toast('手机绑定成功');
+              page.goBack();
+            } else {
+              page.toast(data.errorMsg);
+            }
           } else {
-            page.toast(data.errorMsg);
+            page.toast("系统错误,请稍后再重试");
+            page.goBack();
           }
-        } else {
-          page.toast("系统错误,请稍后再重试");
-          page.goBack();
-        }
-      });
-    } else {
-      page.init("login", {}, 1);
+        });
+      } else {
+        page.init("login", {}, 1);
+      }
+    }else {
+      page.goBack();
     }
   };
   /**
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+    $('.back').on('click', function () {
       if (canBack) {
         page.goBack();
       } else {
@@ -216,12 +204,7 @@ define(function (require, exports, module) {
     });
 
     //发送验证码
-    $(document).off(events.touchStart(), "#sendCaptcha").on(events.touchStart(), "#sendCaptcha", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), "#sendCaptcha").on(events.activate(), "#sendCaptcha", function (e) {
+    $('#sendCaptcha').on('click', function () {
       if (secondsTimer != null) {
         return false;
       } else {
@@ -229,29 +212,24 @@ define(function (require, exports, module) {
       }
       return true;
     });
+
+    //绑定手机号码.
+    $('.surebtn').on('click', function () {
+      bindMobile();
+      return true;
+    });
+
+    //跳过.
+    $('#pass').on('click', function () {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
   };
 
-  //绑定手机号码.
-  $(document).off(events.touchStart(), ".surebtn").on(events.touchStart(), ".surebtn", function (e) {
-    events.handleTapEvent(this, this, events.activate(), e);
-    return true;
-  });
-
-  $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
-    bindMobile();
-    return true;
-  });
-
-  //跳过.
-  $(document).off(events.touchStart(), "#pass").on(events.touchStart(), "#pass", function (e) {
-    events.handleTapEvent(this, this, events.activate(), e);
-    return true;
-  });
-
-  $(document).off(events.activate(), "#pass").on(events.activate(), "#pass", function (e) {
-    page.goBack();
-    return true;
-  });
 
   return {init: init};
 });

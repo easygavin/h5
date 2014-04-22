@@ -2,15 +2,22 @@
  * 购彩记录
  */
 define(function (require, exports, module) {
-  var page = require('page'), events = require('events'), util = require('util'), $ = require('zepto'), _ = require('underscore'), fastClick = require('fastclick'), template = require("../../views/user/buyRecord.html"), account = require('services/account');
+
+  var page = require('page');
+  var util = require('util');
+  var $ = require('zepto');
+  var _ = require('underscore');
+  var account = require('services/account');
+  var template = require("/views/user/buyRecord.html");
 
   // 处理返回参数
   var canBack = 0;
 
-  // 彩种 双色球|大乐透|十一运夺金|福彩3D|幸运赛车|竞彩足球|
+  // 彩种 排列三|双色球|大乐透|十一运夺金|福彩3D|幸运赛车|竞彩足球|
   // 竞彩篮球胜负|竞彩篮球让分胜负|竞彩篮球胜分差||竞彩篮球大小分|竞彩篮球混投
   // 竞彩足球胜平负|竞彩足球让球胜平负|竞彩足球比分|竞彩足球总进球|竞彩足球半全场|竞彩足球混投|让球胜平负
-  var lotteryTypeArray = "11|13|31|12|14|36|37|38|39|53|46|56|47|48|49|52|56";
+  //var lotteryTypeArray = "11|13|31|12|14|36|37|38|39|53|46|56|47|48|49|52|56";
+  var lotteryTypeArray = "4|11|13|31|12|36|37|38|39|53|46|56|47|48|49|52|56";
 
   // 请求彩种列表
   var typeArr = "";
@@ -57,7 +64,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "user/buyRecord", data: params}, "user/buyRecord", "#user/buyRecord" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
+    page.setHistoryState({url : "user/buyRecord", data : params}, "user/buyRecord", "#user/buyRecord" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
     util.hideLoading();
   };
 
@@ -95,9 +102,9 @@ define(function (require, exports, module) {
       case "12": // 福彩3D
         prepend = "福彩3D";
         break;
-      case "14": // 幸运赛车
+      /*case "14": // 幸运赛车
         prepend = "幸运赛车";
-        break;
+        break;*/
       case "46": // 竞彩足球胜平负
       case "47": // 竞彩足球比分
       case "48": // 竞彩足球总进球
@@ -135,7 +142,8 @@ define(function (require, exports, module) {
     pages = 0;
     if (!tkn) {
       // 尚未登录，弹出提示框
-     page.init('login',{},1);
+      page.init('login', {}, 1);
+      return false;
     }
 
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
@@ -179,9 +187,9 @@ define(function (require, exports, module) {
    */
   var loadingShow = function (flag) {
     if (flag) {
-      $(".loadIcon").css({"visibility": "visible"});
+      $(".loadIcon").css({"visibility" : "visible"});
     } else {
-      $(".loadIcon").css({"visibility": "hidden"});
+      $(".loadIcon").css({"visibility" : "hidden"});
     }
   };
 
@@ -259,7 +267,7 @@ define(function (require, exports, module) {
     }
     $tr.append($td);
     $tr.append($("<td></td>").html("<i class='fr'>" + item.time + "</i>"));
-    $tr.append($("<td class='tc'></td>").append($("<a class='fm'>&#xf059;</a>").attr({"id": "more_" + item.lotteryType + "_" + item.projectId})));
+    $tr.append($("<td class='tc'></td>").append($("<a class='fm'>&#xf059;</a>").attr({"id" : "more_" + item.lotteryType + "_" + item.projectId})));
     $(".buyInformation tbody").append($tr);
   };
   /**
@@ -276,9 +284,15 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
-    // 返回
-    $('.back').on('click', page.goBack);
+
+    $('.back').on('click', function () {
+      if (canBack) {
+        page.goBack();
+      } else {
+        page.init("home", {}, 0);
+      }
+      return true;
+    });
 
     //tab 切换
     $('.jltab').on('click', 'a', function () {
@@ -316,14 +330,14 @@ define(function (require, exports, module) {
       if (params.length == 3) {
         offBind();
         var lotteryType = params[1], requestType = "0", projectId = params[2];
-        if (lotteryType == "11" || lotteryType == "12" || lotteryType == "13" || lotteryType == "14" || lotteryType == "31") {
+        if (lotteryType == "11" || lotteryType == "12" || lotteryType == "13" || /*lotteryType == "14" ||*/ lotteryType == "4" || lotteryType == "31" || lotteryType == "34") {
           // 数字彩，高频彩
-          page.init("number/detail", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
+          page.init("number/detail", {lotteryType : lotteryType, requestType : requestType, projectId : projectId}, 1);
         } else if (lotteryType == "36" || lotteryType == "37" || lotteryType == "38" || lotteryType == "39" || lotteryType == "53") {
           // 竞彩篮球
-          page.init("jcl/result", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
+          page.init("jcl/result", {lotteryType : lotteryType, requestType : requestType, projectId : projectId}, 1);
         } else if (lotteryType == "46" || lotteryType == "47" || lotteryType == "48" || lotteryType == "49" || lotteryType == "52" || lotteryType == "56") {
-          page.init("jcz/result", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
+          page.init("jcz/result", {lotteryType : lotteryType, requestType : requestType, projectId : projectId}, 1);
         }
       }
     });
@@ -358,5 +372,5 @@ define(function (require, exports, module) {
     $(window).off("scroll");
   };
 
-  return {init: init};
+  return {init : init};
 });

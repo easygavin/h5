@@ -1,5 +1,10 @@
 define(function (require, exports, module) {
-  var $ = require('zepto'), util = require('util'), page = require('page'), _ = require('underscore'), service = require('services/jcl'), fastClick = require('fastclick'), view = require('/views/athletics/lottery_list.html');
+  var $ = require('zepto');
+    var util = require('util');
+    var page = require('page');
+    var _ = require('underscore');
+    var service = require('services/jcl');
+    var view = require('/views/athletics/lottery_list.html');
   var lotteryList = {
     init: function (data, forward) {
       var self = this;
@@ -58,15 +63,13 @@ define(function (require, exports, module) {
       $('.popup').hide();
     },
     goBetRecord: function () {
-      page.init("user/buyRecord", {lotteryId: "36"}, 1);
+      page.init("user/buyRecord", {lotteryTypeArray: '36|37|38|39|53'}, 1);
     },
     goDetail: function (e) {
       var matchId = $(e.currentTarget).data('matchId');
       page.init("jcl/detail", this.infoMap[matchId], 1);
     },
     events: function () {
-      //fastclick events
-      fastClick.attach(document.body);
       $('.back').on('click', page.goBack);
       $('.select').on('click', this.openFilter.bind(this));
       $('.popup').on('click', this.filterByDate.bind(this));

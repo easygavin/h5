@@ -21,23 +21,23 @@ __p += '<!--竞彩篮球对阵模板-->\r\n<div id="' +
  var sfOdds = spDatas.sf.split(','); ;
 __p += '\r\n      <td class="tab">0</td>\r\n      <td id="sf_0-' +
 ((__t = (matchId)) == null ? '' : __t) +
-'">' +
+'">主胜<br>' +
 ((__t = (sfOdds[0]||'--')) == null ? '' : __t) +
 '</td>\r\n      <td id="sf_1-' +
 ((__t = (matchId)) == null ? '' : __t) +
-'">' +
+'">客胜<br>' +
 ((__t = (sfOdds[1]||'--')) == null ? '' : __t) +
 '</td>\r\n    </tr>\r\n    <tr class="lYTable">\r\n      ';
  var rfsfOdds = spDatas.rfsf.split(','); ;
-__p += '\r\n      <td class="tab">' +
+__p += '\r\n      <td class="tab">让分<br>' +
 ((__t = (rfsfOdds[0]||'--')) == null ? '' : __t) +
 '</td>\r\n      <td id="rfsf_1-' +
 ((__t = (matchId)) == null ? '' : __t) +
-'">' +
+'">让分主胜<br>' +
 ((__t = (rfsfOdds[1]||'--')) == null ? '' : __t) +
 '</td>\r\n      <td id="rfsf_2-' +
 ((__t = (matchId)) == null ? '' : __t) +
-'">' +
+'">让分客胜<br>' +
 ((__t = (rfsfOdds[2]||'--')) == null ? '' : __t) +
 '</td>\r\n    </tr>\r\n  </table>\r\n</div>';
 

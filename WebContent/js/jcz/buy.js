@@ -8,8 +8,6 @@ define(function (require, exports, module) {
   var page = require('page');
   var util = require('util');
   var _ = require('underscore');
-  var fastClick = require('fastclick');
-  var events = require('events');
   var service = require('services/jcz');
   var canBack = 1;
   var title = "竞足";
@@ -420,8 +418,6 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
     var $page = $('#wrapper');
-    //fastclick events
-    fastClick.attach(document.body);
     // 返回
     $page.on('click', '.back', page.goBack);
     // 协议
@@ -819,7 +815,7 @@ define(function (require, exports, module) {
     "zjq_4" : {title : "4球", flag : "4"},
     "zjq_5" : {title : "5球", flag : "5"},
     "zjq_6" : {title : "6球", flag : "6"},
-    "zjq_7" : {title : "7球", flag : "7"},
+    "zjq_7" : {title : "7+球", flag : "7"},
 
     //半全场.
     "bqc_0" : {title : "胜胜", flag : "s-s"},

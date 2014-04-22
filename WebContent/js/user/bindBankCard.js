@@ -2,8 +2,8 @@
  * 绑定银行卡
  */
 define(function (require, exports, module) {
+
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
@@ -61,16 +61,10 @@ define(function (require, exports, module) {
   var queryExistsBind = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init("login", {}, 1);
+      return false;
     }
-
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
         if (!_.isEmpty(data)) {
@@ -118,8 +112,7 @@ define(function (require, exports, module) {
     $('#main select').hide();
     $('#main input').attr('readonly', true);
     $('.selectbox i').hide();
-    $('.surebtn').html('返回');
-    $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
+    $('.surebtn').off('click').html('返回').on('click', function () {
       page.goBack();
     });
   };
@@ -294,12 +287,10 @@ define(function (require, exports, module) {
    * 用户真实姓名.
    */
   var getUserTrueName = function () {
-
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.init('login',{},1);
+      page.init('login', {}, 1);
+      return false;
     }
-
     //｛1.先从本地缓存取得,2.查询接口.｝
     var trueName = util.getLocalJson(util.keyMap.USER_TRUE_NAME);
     if (trueName != '') {
@@ -333,14 +324,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
-    // 返回
-    $(document).off(events.touchStart(), ".back").on(events.touchStart(), ".back", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".back").on(events.activate(), ".back", function (e) {
+    $('.back').on('click', function () {
       if (canBack) {
         page.goBack();
       } else {
@@ -348,18 +332,11 @@ define(function (require, exports, module) {
       }
       return true;
     });
-
-    // 返回
-    $(document).off(events.touchStart(), ".surebtn").on(events.touchStart(), ".surebtn", function (e) {
-      events.handleTapEvent(this, this, events.activate(), e);
-      return true;
-    });
-
-    $(document).off(events.activate(), ".surebtn").on(events.activate(), ".surebtn", function (e) {
+    // 绑定
+    $('.surebtn').on('click', function () {
       toBind();
       return true;
     });
-
   };
 
   return {init: init};

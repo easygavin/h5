@@ -7,9 +7,8 @@ define(function (require, exports, module) {
       $ = require('zepto'),
       _ = require('underscore'),
       path = require('path'),
-      fastClick = require('fastclick'),
       hm = require('services/hm'),
-      template = require("../../views/hm/hmdetail.html");
+      template = require("/views/hm/hmdetail.html");
 
   //彩种Id
   var lotteryType = '';
@@ -21,8 +20,6 @@ define(function (require, exports, module) {
   var tkn;
   //合买单详情接口地址.
   var hmDetailUrl = '';
-  //参与合买接口地址.
-  var joinHmUrl='';
   //用于判断显示数字彩,还是竞彩.
   var display_flag = '';
   //合买信息.
@@ -88,7 +85,6 @@ define(function (require, exports, module) {
         case "8":
         case "88":
           hmDetailUrl = path.DIGIT_HM_DETAIL;
-          joinHmUrl=path.JOIN_DIGIT_HM_URL;
           display_flag = 'digit';
           break;
         //竞彩足球合买详情接口.
@@ -99,7 +95,6 @@ define(function (require, exports, module) {
         case "52":
         case "56":
           hmDetailUrl = path.JCZQ_HM_DETAIL;
-          joinHmUrl=path.JOIN_JCZQ_HM_URL;
           display_flag = 'jc';
           break;
         //竞彩篮球合买详情接口.
@@ -109,7 +104,6 @@ define(function (require, exports, module) {
         case"39":
         case"53":
           hmDetailUrl = path.JCLQ_HM_DETAIL;
-          joinHmUrl=path.JOIN_JCLQ_HM_URL;
           display_flag = 'jc';
           break;
         //北京单场
@@ -118,7 +112,6 @@ define(function (require, exports, module) {
          break;
          hmDetailUrl = path.BJDC_HM_DETAIL;
          display_flag = 'bjdc';
-         joinHmUrl=path.JOIN_BD_TRADITIONAL_HM_URL;
          */
       }
     }
@@ -128,6 +121,7 @@ define(function (require, exports, module) {
    *获取方案详情
    */
   var getDetail = function () {
+    util.showLoading();
     if (lotteryType != '' && requestType != '' && projectId != '' && hmDetailUrl != '') {
       hm.getHmDetail(lotteryType, requestType, projectId, hmDetailUrl, "", "", function (data) {
         // 隐藏加载标示
@@ -171,7 +165,7 @@ define(function (require, exports, module) {
   var toBuy = function () {
 
     // 尚未登录，弹出提示框
-    if (!util.checkLogin(null)) {
+    if (!tkn) {
       page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
         page.init("login", {}, 1);
       }, function () {
@@ -198,9 +192,9 @@ define(function (require, exports, module) {
     requestPrams.lotteryType = lotteryType;    //彩种id
     requestPrams.purchaseMoney = singleMoney;  //每份金额
     requestPrams.projectId = projectId;        //方案Id
-    hm.joinHm(requestPrams, joinHmUrl, function (datas) {
+    hm.joinHm(requestPrams,function (datas) {
       if (!_.isEmpty(datas)) {
-        if (typeof datas.statusCode != 'undefined' && datas.statusCode == '1') {
+        if (typeof datas.statusCode != 'undefined' && datas.statusCode == '0') {
           page.toast('购买成功');
           page.goBack();
         } else {
@@ -216,9 +210,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
     $('.back').on('click', page.goBack);
-
     /**
      * 份数输入框的变化.
      */

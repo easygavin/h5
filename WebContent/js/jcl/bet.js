@@ -7,7 +7,6 @@ define(function (require, exports, module) {
   var _ = require('underscore');
   var util = require('util');
   var page = require('page');
-  var fastClick = require('fastclick');
   var config = require('config');
   var service = require('services/jcl');
   var view = require('/views/athletics/jcl/bet.html');
@@ -249,8 +248,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    // fastclick events
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 右菜单
@@ -288,7 +285,7 @@ define(function (require, exports, module) {
       page.init("jcl/intro", {}, 1);
     });
     // 关闭显示框
-    $('.cover').on('touchstart', function () {
+    $('.cover').on('touchstart click', function () {
       $(".popup").hide();
       if ($(".leagueBox").is(":visible")) {
         hideLeagueBox();

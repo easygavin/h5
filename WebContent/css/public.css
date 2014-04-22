@@ -232,9 +232,11 @@ a:not(href) {
 .f14 {
   font-size: 0.875em;
 }
+
 .f15 {
   font-size: 1em;
 }
+
 .f16 {
   font-size: 1.1em;
 }
@@ -253,6 +255,10 @@ a:not(href) {
 
 .mt20 {
   margin-top: 1em
+}
+
+.wb {
+  word-break: break-all;
 }
 
 .line30 tr:hover, .bb1 tr:hover, .spftab tbody tr:hover {
@@ -391,10 +397,10 @@ header a {
 }
 
 .bunner .close {
-  line-height: 1.5em;
   position: absolute;
   right: 0;
-  font-size: 0.8;
+  font-size: 0.8em;
+  padding: 0.3em 0;
   color: #fff;
   z-index: 5
 }
@@ -624,6 +630,10 @@ a.right {
   border-top: 0.1875em solid #257ab3;
 }
 
+.bt4 {
+  border-bottom: 0.1875em solid #257ab3;
+}
+
 #main .index li {
   border-bottom: 0.1875em solid #257ab3;
 }
@@ -638,8 +648,10 @@ a.right {
 
 #main li dt {
   background: #fff;
-  width: 37.5%;
+  width: 33.5%;
   float: left;
+  overflow: hidden;
+  margin:0.5em;
 }
 
 #main li dt p {
@@ -882,9 +894,22 @@ a.right {
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-.buyInformation{font-size:0.875em}
-.buyInformation td{border-bottom:1px solid #ccc;line-height: 1.5em;padding:0.5em 0}
-.buyInformation .f16{font-size: 1.2em;color:#333}
+
+.buyInformation {
+  font-size: 0.875em
+}
+
+.buyInformation td {
+  border-bottom: 1px solid #ccc;
+  line-height: 1.5em;
+  padding: 0.5em 0
+}
+
+.buyInformation .f16 {
+  font-size: 1.2em;
+  color: #333
+}
+
 .jlList b {
   width: 3.57142857em;
   height: 3.57142857em;
@@ -934,24 +959,23 @@ a.right {
 
 /**中奖后撤单**/
 .bg6 {
-    background: #b49adb;
+  background: #b49adb;
 }
 
 /**追号中**/
 .bg7 {
-    background: #e67d17;
+  background: #e67d17;
 }
 
 /**未中奖**/
 .bg8 {
-    background: #b1b0b0;
+  background: #b1b0b0;
 }
 
 /**已撤单**/
 .bg9 {
-    background: #6c94b9;
+  background: #6c94b9;
 }
-
 
 .jlList li {
   border-bottom: 1px solid #e9e9e9;
@@ -1209,9 +1233,32 @@ footer {
 footer a {
   color: #fff;
 }
-footer a.a1{background:#257ab3;height:2.8125em;width:25%;overflow:hidden}
-.a1 input{width:85%;height:80%;text-align:center;background:#ffffff;border:none;color:#b2b2b2;font-size:1.125em;line-height:2.2125em;font-family:"微软雅黑";border:7px solid #257AB3}
-footer a.a2{background:#f07e04;height:2.8125em;width:25%}
+
+footer a.a1 {
+  background: #257ab3;
+  height: 2.8125em;
+  width: 25%;
+  overflow: hidden
+}
+
+.a1 input {
+  width: 85%;
+  height: 80%;
+  text-align: center;
+  background: #ffffff;
+  border: none;
+  color: #b2b2b2;
+  font-size: 1.125em;
+  line-height: 2.2125em;
+  font-family: "微软雅黑";
+  border: 7px solid #257AB3
+}
+
+footer a.a2 {
+  background: #f07e04;
+  height: 2.8125em;
+  width: 25%
+}
 
 footer em {
   height: 2.8125em;
@@ -1256,7 +1303,8 @@ footer a.btn2 {
 }
 
 #lastNo {
-  height: 1.5em;
+  height: 1.8em;
+  line-height: 1.8em;
   overflow: hidden;
 }
 
@@ -1279,7 +1327,6 @@ footer a.btn2 {
   border-radius: 3px;
   margin-right: 1em;
   padding: 0;
-  float: right;
 }
 
 .openArrow {
@@ -1376,7 +1423,8 @@ footer a.btn2 {
   border: 2px solid #2779b5;
   margin-right: 0.5em;
 }
-.gmchose .click ,
+
+.gmchose .click,
 .chose.click {
   background: #2779b5;
   color: #fff;
@@ -1592,7 +1640,6 @@ footer a.btn2 {
 
 /*竞彩*/
 .line50 {
-  border: 1px solid #e9e9e9;
   line-height: 2.8em;
   text-align: center;
   font-size: 0.875em;
@@ -1602,7 +1649,15 @@ footer a.btn2 {
 
 .line50 td {
   border-bottom: 1px solid #e9e9e9;
-  border-left: 1px solid #e9e9e9
+  border-left: 1px solid #e9e9e9;
+}
+
+.footballTz td, .lYTable td {
+  line-height: 1.8em;
+}
+
+.more_odds_btn {
+  line-height: 2.5em;
 }
 
 .line50 td.first {
@@ -2182,19 +2237,19 @@ body{font-size:90%}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 700px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 700px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 700px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px), only screen and (                min-resolution: 192dpi) and (min-width: 700px), only screen and (                min-resolution: 2dppx)  and (min-width: 700px) {
   body {
-    font-size: 200%;
+    font-size: 170%;
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 1000px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1000px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1000px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1000px), only screen and (                min-resolution: 192dpi) and (min-width: 1000px), only screen and (                min-resolution: 2dppx)  and (min-width: 1000px) {
   body {
-    font-size: 250%;
+    font-size: 220%;
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 1300px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1300px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1300px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1300px), only screen and (                min-resolution: 192dpi) and (min-width: 1300px), only screen and (                min-resolution: 2dppx)  and (min-width: 1300px) {
   body {
-    font-size: 200%;
+    font-size: 240%;
   }
 }
 
@@ -2318,9 +2373,11 @@ body{font-size:90%}
 #ztk_pay .ztk {
   display: block;
 }
-#yd_pay .yd,#lt_pay .lt ,#dx_pay .dxx{
-    display: block;
+
+#yd_pay .yd, #lt_pay .lt, #dx_pay .dxx {
+  display: block;
 }
+
 .smartModBox {
   position: fixed;
   left: 1%;
@@ -2345,21 +2402,22 @@ body{font-size:90%}
 }
 
 .loadMore {
-    width: 100%;
-    height: 80px;
+  width: 100%;
+  height: 80px;
 }
+
 .loadIcon {
-    width: 32px;
-    height: 32px;
-    margin: 0 auto;
-    background: url(../images/loading.gif) repeat-x;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  background: url(../images/loading.gif) repeat-x;
 }
 
 .loadText {
-    width: 100%;
-    height: 30px;
-    text-align: center;
-    font-size: 18px;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  font-size: 18px;
 }
 
 .lCover {
@@ -2374,56 +2432,77 @@ body{font-size:90%}
   filter: alpha(opacity:50);
   -moz-opacity: .5;
 }
+
 /*奖金优化*/
-#bonus-opt-btn{
+#bonus-opt-btn {
   margin-right: 1.2em;
 }
+
 .inputNum {
-    width:8em;
-    text-align:center;
-    font:0.875em/2.7142857em "微软雅黑";
-    height:2.7142857em;
-    background:#e9e9e9;
-    border:none;
-    margin:0.5em 0.5em 0.5em 0;
+  width: 8em;
+  text-align: center;
+  font: 0.875em/2.7142857em "微软雅黑";
+  height: 2.7142857em;
+  background: #e9e9e9;
+  border: none;
+  margin: 0.5em 0.5em 0.5em 0;
 }
+
 .bat3 {
-    display:inline-block;
-    font:0.875em/2.7142857em "微软雅黑";
-    width:4em;
-    height:2.7142857em;
-    background-color:#fefab3;
-    color:#989061;
-    text-align:center;
-    margin-top:0.5em;
+  display: inline-block;
+  font: 0.875em/2.7142857em "微软雅黑";
+  width: 4em;
+  height: 2.7142857em;
+  background-color: #fefab3;
+  color: #989061;
+  text-align: center;
+  margin-top: 0.5em;
 }
+
 .bat3.cur {
-    background-color:#b3db95;
-    color:#fff;
+  background-color: #b3db95;
+  color: #fff;
 }
+
 .optList li {
-    border-top:1px solid #eee;
-    padding-bottom:0.625em;
+  border-top: 1px solid #eee;
+  padding-bottom: 0.625em;
 }
-.decre,.incre {
-    font-size:1em;
-    font-weight:bolder;
-    color:#fff;
-    background-color:#f00;
-    width:1.5em;
-    text-align:center;
+
+.decre, .incre {
+  font-size: 1em;
+  font-weight: bolder;
+  color: #fff;
+  background-color: #f00;
+  width: 1.5em;
+  text-align: center;
 }
+
 .idn {
-    border-top:1px solid #eee;
-    border-bottom:1px solid #eee;
-    width:6em;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  width: 6em;
 }
+
 .optList {
-    display:none;
+  display: none;
 }
-.space{padding: 0 0.2em;}
-.jbox_div{text-align:center;padding:1em 0 2em 0;border-bottom:1px solid #ccc;margin-bottom:1em}
-.tc_content{font:1.5em/2em "微软雅黑";color:red}
+
+.space {
+  padding: 0 0.2em;
+}
+
+.jbox_div {
+  text-align: center;
+  padding: 1em 0 2em 0;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1em
+}
+
+.tc_content {
+  font: 1.5em/2em "微软雅黑";
+  color: red
+}
 
 /*
 #filterBtn:hover:after{

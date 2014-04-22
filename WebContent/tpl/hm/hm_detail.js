@@ -19,7 +19,7 @@ __p += '<div class="hmBox" style="font-size: 1.0em">\r\n  <p class="bl3">发起�
 ((__t = (data.commPercent)) == null ? '' : __t) +
 '</i>%</p>\r\n  <p>共<i style="color:red">\r\n    ' +
 ((__t = (data.totalCount)) == null ? '' : __t) +
-'</i>份,剩余1<i style="color:red">\r\n    ' +
+'</i>份,剩余<i style="color:red">\r\n    ' +
 ((__t = (data.totalCount-data.buyVolume)) == null ? '' : __t) +
 '</i>份,&nbsp;每份金额：<i style="color:red">\r\n    ' +
 ((__t = (data.oneAmount)) == null ? '' : __t) +
@@ -38,7 +38,7 @@ __p += '\r\n  <colgroup>\r\n    <col width=\'70%\'>\r\n    <col width=\'20%\'>\r
 '期<span class="fr">' +
 ((__t = (data.passWay)) == null ? '' : __t) +
 '</span></td>\r\n  </tr>\r\n  </thead>\r\n  <tbody>\r\n\r\n  ';
-if(!_.isEmpty(data.detail)){;
+if(typeof data.detail!='undefined'&&typeof data.detail.content!='undefined'){;
 __p += '\r\n\r\n  ';
 
   for(var i = 0, len = data.detail.length; i < len; i++) {

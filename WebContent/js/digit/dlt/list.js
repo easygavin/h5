@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -148,8 +147,8 @@ define(function (require, exports, module) {
       text = "<span class='cdd1049'>" + item.reds.toString() + "</span>" +
         " | <span class='c0cc'> " + item.blues.toString() + " </span>";
     }
-    $tr.append($("<td></td>").html("<p>" + text + "</p>"));
-    $tr.append($("<td></td>").html(item.bets + "注"));
+    $tr.append($("<td></td>").html("<p class='wb'>" + text + "</p>"));
+    $tr.append($("<td class='tc'></td>").html(item.bets + "注"));
     $tr.append($("<td></td>").html("<a class='delete' id='del_" + index + "'>&times;</a>"));
 
     $(".line30 tbody").append($tr);
@@ -233,20 +232,20 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.goBack();
       return true;
     });
 
     // 获取期号
-    $("#issueNo").on(events.tap(), function (e) {
+    $("#issueNo").on("click", function (e) {
       // 获取期号信息
       getIssue();
       return true;
     });
 
     // 删除
-    $(".gmList").on(events.tap(), function (e) {
+    $(".gmList").on("click", function (e) {
       var $target = $(e.target);
       if ($target.hasClass("delete")) {
         // 删除
@@ -327,19 +326,19 @@ define(function (require, exports, module) {
       });
 
     // 机选一注
-    $("#random").on(events.tap(), function (e) {
+    $("#random").on("click", function (e) {
       getRandom(1);
       return true;
     });
 
     // 继续选号
-    $("#goBall").on(events.tap(), function (e) {
+    $("#goBall").on("click", function (e) {
       page.goBack();
       return true;
     });
 
     // 全部删除
-    $("#clearAll").on(events.tap(), function (e) {
+    $("#clearAll").on("click", function (e) {
       if (bufferData !== null && typeof bufferData != "undefined"
         && bufferData.length > 0) {
 
@@ -360,10 +359,10 @@ define(function (require, exports, module) {
     });
 
     // 移除cover的click事件，防止重复提交订单
-    $(".cover").off(events.click());
+    $(".cover").off("click");
 
     // 购买
-    $(".btn2").on(events.click(), function (e) {
+    $(".btn2").on("click", function (e) {
       if (typeof issue.issueNo == "undefined") {
         page.toast("无法获取到彩票期号");
         return false;
@@ -378,7 +377,7 @@ define(function (require, exports, module) {
     });
 
     // 发起合买
-    $(".btn1").on(events.click(), function (e) {
+    $(".btn1").on("click", function (e) {
       // 发起合买
       if (typeof issue.issueNo == "undefined") {
         page.toast("无法获取到彩票期号");
@@ -395,7 +394,7 @@ define(function (require, exports, module) {
 
     // 是否追加
     $("#addtionSupper").on("change", function (e) {
-      if ($(this).attr("checked")) {
+      if ($(this).prop("checked")) {
         price = 3;
       } else {
         price = 2;
@@ -405,7 +404,7 @@ define(function (require, exports, module) {
     });
 
     // 购彩协议
-    $(".checked").on(events.click(), function (e) {
+    $(".checked").on("click", function (e) {
       page.init("protocol", {}, 1);
       return true;
     });
@@ -452,7 +451,7 @@ define(function (require, exports, module) {
    * 购买付款
    */
   var toBuy = function () {
-    if (!$("#protocol").attr("checked")) {
+    if (!$("#protocol").prop("checked")) {
       page.toast("请勾选同意合买代购协议!");
       return false;
     }
@@ -509,7 +508,7 @@ define(function (require, exports, module) {
     var params = getBuyParams();
     params.lot = lot;
     params.mode = mode;
-    params.projectCount = bets * price;
+    params.projectCount = bets * price * timesInput * issueInput;
     params.eachMoney = 1;
 
     util.setLocalJson(util.keyMap.LOCAL_TO_HM, params);
@@ -538,7 +537,7 @@ define(function (require, exports, module) {
     params.content = content.replace(/[ ]/g, "");
 
     // 大乐透专用，0不追加，1追加
-    params.addtionSupper = $("#addtionSupper").attr("checked") ? "1" : "0";
+    params.addtionSupper = $("#addtionSupper").prop("checked") ? "1" : "0";
 
     // 购买当期的详细信息
     var detail = [
@@ -553,7 +552,7 @@ define(function (require, exports, module) {
     params.bets = bets + ""; // 总注数
     params.totalIssue = issueInput + ""; // 总期数
     params.totalBet = (timesInput * issueInput) + ""; // 总倍数
-    params.stopBetting = $("#stopBetting").attr("checked") ? "1" : "0"; // 中奖后停止追号 0不停止，1停止
+    params.stopBetting = $("#stopBetting").prop("checked") ? "1" : "0"; // 中奖后停止追号 0不停止，1停止
     params.btzh = "0"; // 高频彩，是否是倍投计算器
     params.stopCondition = "8";  // 停止追号条件
 

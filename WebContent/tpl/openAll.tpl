@@ -1,5 +1,4 @@
 <% _.each(datas, function (d) { %>
-<table cellpadding="0" cellspacing="0" width="100%" class="line30 kjList">
   <%
   var lotteryType = d.lotteryType + "", lotteryName = "";
   var numbers = d.lotteryNumbers.split(","),
@@ -49,6 +48,8 @@
       break;
   }
   %>
+  <% if(lotteryType != '89' && lotteryType != '92' &&  lotteryType !='1' && lotteryType !='88' ){%>
+<table cellpadding="0" cellspacing="0" width="100%" class="line30 kjList bt4 mt10">
   <tr>
     <td>
       <i class="fl"><%=lotteryName %></i>
@@ -68,5 +69,6 @@
       <% } %>
     </td>
   </tr>
+  <%}%>
 </table>
 <% });%>

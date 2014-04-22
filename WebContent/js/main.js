@@ -1,9 +1,14 @@
 define(function (require, exports, module) {
-  var $ = require('zepto'),
-    page = require('page'),
-    util = require('util');
+  var $ = require('zepto');
+  var page = require('page');
+  var util = require('util');
+  var fastClick = require('fastclick');
+
   // 页面加载完毕
   $(document).ready(function () {
+
+    fastClick.attach(document.body);
+
     // 加载图标
     util.showLoading();
     // 参数处理

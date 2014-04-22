@@ -4,13 +4,11 @@
 define(function (require, exports, module) {
 
   var page = require('page'),
-      events = require('events'),
       util = require('util'),
       $ = require('zepto'),
       _ = require('underscore'),
-      fastClick = require('fastclick'),
-      template = require("../../views/user/person.html"),
-      account = require('services/account');
+      account = require('services/account'),
+      template = require("/views/user/person.html");
 
   // 处理返回参数
   var canBack = 0;
@@ -46,12 +44,9 @@ define(function (require, exports, module) {
 
     bindEvent();
 
-    // 处理返回
     page.setHistoryState({url: "user/person", data: params},
         "user/person", "#user/person" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
         canBack);
-
-    // 隐藏加载标示
     util.hideLoading();
   };
 
@@ -61,7 +56,7 @@ define(function (require, exports, module) {
   var initShow = function () {
 
     $("#container").html(template);
-    //金额,账户名显示.
+
     getBalance();
 
   };
@@ -72,8 +67,8 @@ define(function (require, exports, module) {
   var getBalance = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.init('login',{},1);
+      page.init('login', {}, 1);
+      return false;
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
@@ -81,9 +76,9 @@ define(function (require, exports, module) {
       var request = account.getUserBalance(requestType, userInfo.userId, userInfo.userKey, function (data) {
         util.hideLoading();
         if (!_.isEmpty(data) && data.statusCode == '0') {
-          $("#trueName").html("账户名:" + userInfo.userName);
+          $("#trueName").html("账户名：" + userInfo.userName);
           var balance = parseFloat(data.userBalance).toFixed(2);
-          $("#balance").html(balance > 0 ? balance : 0);
+          $("#balance").html(balance <= 0 ? 0 : balance);
         } else if (data.statusCode == '0007') {
         } else {
           page.toast(data.errorMsg);
@@ -102,8 +97,8 @@ define(function (require, exports, module) {
   var idState = function (flag) {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.init('login',{},1);
+      page.init('login', {}, 1);
+      return false;
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     // 显示遮住层
@@ -141,14 +136,9 @@ define(function (require, exports, module) {
   var bankCardState = function () {
 
     if (!tkn) {
-      // 尚未登录，弹出提示框
-      page.answer("", "您还未登录，请先登录", "登录", "取消", function () {
-        page.init("login", {}, 1);
-      }, function () {
-        $(".popup").hide();
-      });
+      page.init('login', {}, 1);
+      return false;
     }
-
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       var userId = userInfo.userId, userKey = userInfo.userKey;
@@ -163,6 +153,8 @@ define(function (require, exports, module) {
           page.toast('查询失败,请稍后重试');
         }
       });
+    }else{
+      page.init('login', {}, 1);
     }
   };
 
@@ -170,8 +162,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
-    // 返回
     $('.back').on('click', function () {
       if (type != '' && type != 'undefined' && result != '' && result != 'undefined') {
         page.init('home', {}, 0);
@@ -182,10 +172,10 @@ define(function (require, exports, module) {
           page.init("home", {}, 0);
         }
       }
-      return true;
     });
+
     //选项.
-    $('.account').on('click', "li", function (e) {
+    $('.account').on('click', "li", function () {
       var targetId = $(this).attr("id");
       switch (targetId) {
         //我的优惠券.

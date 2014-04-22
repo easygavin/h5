@@ -3,13 +3,11 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
-    template = require("../views/home.html"),
-    config = require('config'),
-    path = require('path'),
+    template = require("/views/home.html"),
+    config = require('config'), path = require('path'),
     digitService = require('services/digit');
 
   var canBack = 1;
@@ -29,6 +27,8 @@ define(function (require, exports, module) {
   var from = "";
   // 上期开奖Map
   var openLotMap = {};
+  // 公告开关
+  var noticeSwitch = 1;
   /**
    * 初始化
    */
@@ -45,8 +45,7 @@ define(function (require, exports, module) {
     }
 
     // 来源
-    if (data != null && typeof data != "undefined"
-      && typeof data.from != "undefined" && $.trim(data.from) != "") {
+    if (data != null && typeof data != "undefined" && typeof data.from != "undefined" && $.trim(data.from) != "") {
       from = data.from;
     }
 
@@ -54,10 +53,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "home", data: params},
-      "home",
-      "#home" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      canBack);
+    page.setHistoryState({url: "home", data: params}, "home", "#home" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -173,14 +169,12 @@ define(function (require, exports, module) {
 
                 var pool = 0, endTime = "";
                 // 奖池
-                if (items[i].bonuspoolAmount != null && typeof items[i].bonuspoolAmount != "undefined" &&
-                  items[i].bonuspoolAmount != "") {
+                if (items[i].bonuspoolAmount != null && typeof items[i].bonuspoolAmount != "undefined" && items[i].bonuspoolAmount != "") {
                   pool = items[i].bonuspoolAmount;
                 }
 
                 // 截止时间
-                if (items[i].endTime != null && typeof items[i].endTime != "undefined" &&
-                  items[i].endTime != "") {
+                if (items[i].endTime != null && typeof items[i].endTime != "undefined" && items[i].endTime != "") {
                   endTime = items[i].endTime;
                 }
 
@@ -203,7 +197,8 @@ define(function (require, exports, module) {
    * @param lot
    */
   var showLottOpenInfo = function (lot) {
-    if (openLotMap[lot] !== null && typeof openLotMap[lot] != "undefined") {
+    var data = openLotMap[lot];
+    if (data !== null && typeof data != "undefined") {
       var $li = $("#" + lot), $openLot = $li.find(".openLot");
 
       // 已经存在，并在显示的状态，隐藏显示
@@ -212,7 +207,6 @@ define(function (require, exports, module) {
         return false;
       }
 
-      var data = openLotMap[lot];
       var lotteryId = data.lotteryId;
       var numbers = (data.winnumber != null && typeof data.winnumber != "undefined") ? data.winnumber.split(",") : [];
       var reds = [], blues = [];
@@ -240,11 +234,11 @@ define(function (require, exports, module) {
           reds = numbers;
           break;
         case "34": // 11选5
-          data.issueNo = data.issueNo.substring(8);
+          data.issueNo = data.issueNo.length > 8 ? data.issueNo.substring(8) : data.issueNo;
           reds = numbers;
           break;
         case "31": // 十一运夺金
-          data.issueNo = data.issueNo.substring(8);
+          data.issueNo = data.issueNo.length > 8 ? data.issueNo.substring(8) : data.issueNo;
           reds = numbers;
           break;
       }
@@ -275,8 +269,7 @@ define(function (require, exports, module) {
    */
   var getLottOpenLevel = function (lotteryId) {
     var request = digitService.getLotteryLevelByLotteryId(lotteryId, function (data) {
-      if (typeof data != "undefined" && data != "" &&
-        typeof data.lotteryId != "undefined" && data.lotteryId != "") {
+      if (typeof data != "undefined" && data != "" && typeof data.lotteryId != "undefined" && data.lotteryId != "") {
         var key = config.lotteryIdToStr[data.lotteryId];
         var $openLot = $("#" + key).find(".openLot");
         if ($openLot.length) {
@@ -285,10 +278,7 @@ define(function (require, exports, module) {
             var str = "";
             for (var i = 0; i < levels.length; i++) {
               var level = levels[i];
-              str += "<p>" + level.awardtype + ": "
-                + level.awardbetnum + " 注" +
-                "&nbsp;&nbsp;&nbsp;&nbsp;" +
-                "<i class='cf60'>" + level.awardmoney + "元</i></p>";
+              str += "<p>" + level.awardtype + ": " + level.awardbetnum + " 注" + "&nbsp;&nbsp;&nbsp;&nbsp;" + "<i class='cf60'>" + level.awardmoney + "元</i></p>";
             }
             $openLot.find(".min").html(str);
           }
@@ -349,13 +339,10 @@ define(function (require, exports, module) {
    */
   var showNoCustomLott = function () {
     var tmp = $("#customNTpl").html();
-
     // compile our template
     var cmp = _.template(tmp);
-
     var data = {};
     data.hasLogin = hasLogin;
-
     $("#main").html(cmp(data));
   };
 
@@ -418,37 +405,63 @@ define(function (require, exports, module) {
       if ($.trim(data[i].htmlUrl) != "") {
         imageNotices.push(data[i]);
       }
-
       notices.push(data[i]);
     }
 
     if (imageNotices.length) {
-      $(".bunner").css({"height": "8em"});
-    } else {
-      return false;
+      handleSlider();
     }
+  };
 
+  /**
+   * 处理图片滑动
+   */
+  var handleSlider = function () {
     slider = null;
     $("#slides").empty();
     for (var i = 0, len = imageNotices.length; i < len; i++) {
       $("#slides").append("<img id='img_" + notices[i].noticeId + "' src='" + path.NOTICE_SERVER_URL + notices[i].htmlUrl + "' width='100%' class='notice' style='top:0;left:" + (i * 100) + "%;'>");
-      $(".grayBg .next").append($("<dd></dd>"));
     }
 
-    if (notices.length > 1) {
+    if (imageNotices.length > 1) {
       require.async("tools/slider", function () {
         // 滑动
         slider = new Slider({items: $(".notice").toArray(), width: 100, duration: 300});
-        // 轮播
-        if (this.noticeTimer == null) {
-          this.noticeTimer = setInterval(function () {
-            $("#slides").trigger("swipeLeft");
-          }, 3000);
-        }
+        switchFlashShow();
         itemFocus();
       });
     }
+  }
 
+  /**
+   * 开关公告显示
+   */
+  var switchFlashShow = function () {
+    if (noticeSwitch) {
+      // 开启
+      $(".close").html("&#xf005;");
+      if (imageNotices.length) {
+        $(".bunner").css({"height": "8em"});
+        if (imageNotices.length > 1) {
+          // 轮播
+          if (this.noticeTimer == null) {
+            this.noticeTimer = setInterval(function () {
+              $("#slides").trigger("swipeLeft");
+            }, 3000);
+          }
+        }
+      }
+    } else {
+      // 关闭
+      $(".close").html("&#xf004;");
+      if (imageNotices.length) {
+        $(".bunner").css({"height": "1.5em"});
+        if (this.noticeTimer != null) {
+          clearInterval(this.noticeTimer);
+          this.noticeTimer = null;
+        }
+      }
+    }
   };
 
   /**
@@ -460,16 +473,28 @@ define(function (require, exports, module) {
   };
 
   /**
+   * 滑动图片的详情
+   */
+  var toFlashDetail = function () {
+    var index = slider == null ? 0 : slider.getIndex();
+    if (imageNotices.length) {
+      var noticeId = imageNotices[index].noticeId;
+
+      if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
+        page.init("notice/detail", {noticeId: noticeId}, 1);
+      }
+    }
+  };
+
+  /**
    * 显示资讯列表
    */
   var showNoticeItems = function () {
     var tmp = $("#noticeTpl").html();
-
     // compile our template
     var cmp = _.template(tmp);
     var data = {};
     data.notices = notices;
-
     // 设置文字显示内容
     for (var i = 0, len = data.notices.length; i < len; i++) {
       if (typeof data.notices[i].lotteryId != "undefined" && data.notices[i].lotteryId != "") {
@@ -492,7 +517,6 @@ define(function (require, exports, module) {
         data.notices[i].type = "资讯";
       }
     }
-
     $("#main").html(cmp(data));
   };
 
@@ -531,7 +555,7 @@ define(function (require, exports, module) {
       case "dlt": // 大乐透
       case "f3d": // 福彩3D
       case "pl3": // 排列三
-      case "syx": // 十一选5
+      case "syx": // 11选5
       case "syy": // 十一运夺金
         // 彩种配置
         var lotConfig = config.lotteryMap[key];
@@ -558,116 +582,83 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
     // 个人中心
-    $("#p_center").on(events.click(), function (e) {
-      // 进入二级页面
+    $("#p_center").on('click', function () {
       goSubPage("center");
-      return true;
     });
-
     // 登录
-    $("#login").on(events.click(), function (e) {
-      // 进入二级页面
+    $("#login").on('click', function () {
       goSubPage("login");
-      return true;
     });
-
     // 注册
-    $("#register").on(events.click(), function (e) {
-      // 进入二级页面
+    $("#register").on('click', function () {
       goSubPage("register");
-      return true;
     });
-
     // 快捷图标
-    $(".return").on(events.click(), function (e) {
-      var $html = $("html"),
-        $slide = $(".side"),
-        $home = $(".homeTrans");
-
+    $(".return").on('click', function () {
+      var $html = $("html"), $slide = $(".side"), $home = $(".homeTrans");
       if ($html.hasClass("mm-opened")) {
-        $home.removeClass("home_swipe").
-          off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd").
-          on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function () {
-            $html.removeClass("mm-opened");
-            $(".side").hide();
-          });
+        $home.removeClass("home_swipe").off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd").on("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd", function () {
+          $html.removeClass("mm-opened");
+          $(".side").hide();
+        });
       } else {
         $html.addClass("mm-opened");
         $slide.show();
-        $home.addClass("home_swipe").
-          off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd");
+        $home.addClass("home_swipe").off("transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd");
         showShortCutItems();
       }
-
-      return true;
     });
 
     // 菜单点击
-    $("nav").on(events.tap(), function (e) {
+    $("nav").on('click', function (e) {
       var $li = $(e.target).closest("li");
       if ($li.length) {
         var $a = $li.find("a");
         if (!$a.hasClass("focus")) {
           $("nav a").removeClass("focus");
           $a.addClass("focus");
-
           // 显示焦点菜单内容
           showMenuContent();
         }
       }
-      return true;
     });
 
-    $(document).off(events.tap(), ".index").
-      on(events.tap(), ".index", function (e) {
-        var $target = $(e.target);
-        var $a = $target.closest("a");
-        var $gmButton = $target.closest(".gmButton");
-        var $xq = $target.closest(".xq");
-        if ($a.length || $gmButton.length) {
-          // 进入彩种选号
-          var $li = $target.closest("li");
-          if ($li.length) {
-            var key = $li.attr("id");
-            // 进入二级页面
-            goSubPage(key);
-          }
-        } else if ($xq.length) {
-          // 上期开奖详情
-          var $li = $target.closest("li");
-          if ($li.length) {
-            var key = $li.attr("id");
-            showLottOpenInfo(key);
-          }
+    $('#main').on('click', ".index", function (e) {
+      var $target = $(e.target);
+      var $a = $target.closest("a");
+      var $gmButton = $target.closest(".gmButton");
+      var $xq = $target.closest(".xq");
+      if ($a.length || $gmButton.length) {
+        // 进入彩种选号
+        var $li = $target.closest("li");
+        if ($li.length) {
+          var key = $li.attr("id");
+          // 进入二级页面
+          goSubPage(key);
         }
-        return true;
-      });
+      } else if ($xq.length) {
+        // 上期开奖详情
+        var $li = $target.closest("li");
+        if ($li.length) {
+          var key = $li.attr("id");
+          showLottOpenInfo(key);
+        }
+      }
+    });
+    // 显示未登录或无定制彩种
+    $('#main').on('click', ".czdz", function () {
+      goSubPage(hasLogin ? 'custom' : 'login');
+    });
 
     // 显示未登录或无定制彩种
-    $(document).off(events.tap(), ".czdz").
-      on(events.tap(), ".czdz", function (e) {
-        if (hasLogin) {
-          // 去定制彩种页面
-          goSubPage("custom");
-        } else {
-          // 登录
-          goSubPage("login");
-        }
-        return true;
-      });
-
-    // 显示未登录或无定制彩种
-    $(document).off(events.tap(), "#toLogin").
-      on(events.tap(), "#toLogin", function (e) {
-        // 登录
-        goSubPage("login");
-        return true;
-      });
+    $('#main').on('click', "#toLogin", function () {
+      // 登录
+      goSubPage("login");
+    });
 
     // 快捷链接
-    $(".side").on(events.tap(), function (e) {
+    $(".side").on('click', function (e) {
       var $li = $(e.target).closest("li");
       if ($li.length) {
         var key = $li.attr("id").split("_")[1];
@@ -684,58 +675,50 @@ define(function (require, exports, module) {
           // 进入二级页面
           goSubPage(key);
         }
-
       }
     });
 
     // 收起公告图片
-    $(".close").on(events.tap(), function (e) {
-      clearInterval(this.noticeTimer);
-      $(".bunner").css({"height": "0"});
-      return true;
+    $(".grayBg").on('click', function (e) {
+      var $target = $(e.target);
+      if ($target.hasClass("close")) {
+        noticeSwitch = noticeSwitch ? 0 : 1;
+        switchFlashShow();
+      } else {
+        toFlashDetail();
+      }
     });
 
     // 滑动公告
-    $("#slides").on("swipeLeft", function (e) {
+    $("#slides").on("swipeLeft", function () {
       if (slider != null) {
         slider.next();
         itemFocus();
       }
-      return true;
     });
 
-    $("#slides").on("swipeRight", function (e) {
+    $("#slides").on("swipeRight", function () {
       if (slider != null) {
         slider.preview();
         itemFocus();
       }
-      return true;
     });
 
     // 公告图片点击
-    $("#slides").on(events.tap(), function (e) {
-      var $img = $(e.target).closest("img");
-      if ($img.length) {
-        var noticeId = $img.attr("id").split("_")[1];
+    $("#slides").on('click', function (e) {
+      toFlashDetail();
+    });
+
+    // 公告列表点击
+    $('#main').on('click', ".zx_list", function (e) {
+      var $li = $(e.target).closest("li");
+      if ($li.length) {
+        var noticeId = $li.attr("id").split("_")[1];
         if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
           page.init("notice/detail", {noticeId: noticeId}, 1);
         }
       }
-      return true;
     });
-
-    // 公告列表点击
-    $(document).off(events.tap(), ".zx_list").
-      on(events.tap(), ".zx_list", function (e) {
-        var $li = $(e.target).closest("li");
-        if ($li.length) {
-          var noticeId = $li.attr("id").split("_")[1];
-          if (typeof noticeId != "undefined" && $.trim(noticeId) != "") {
-            page.init("notice/detail", {noticeId: noticeId}, 1);
-          }
-        }
-        return true;
-      });
   };
   module.exports = {init: init};
 });

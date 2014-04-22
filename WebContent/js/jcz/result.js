@@ -1,8 +1,12 @@
 /**
- * 竞彩篮球方案详情
+ * 竞彩足球方案详情
  */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/result.html'), _ = require('underscore'), page = require('page'), fastClick = require('fastclick'), service = require('services/jcz'), util = require('util');
+  var view = require('/views/athletics/result.html');
+  var _ = require('underscore');
+  var page = require('page');
+  var service = require('services/jcz');
+  var util = require('util');
   // 彩种
   var lotteryType = "";
   // 请求方式
@@ -86,7 +90,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
     // 返回
     $(".back").on('click', function(){
       page.go(backNum);

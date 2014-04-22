@@ -2,7 +2,13 @@
  * 竞彩足球彩合买
  */
 define(function (require, exports, module) {
-  var page = require('page'), util = require('util'), $ = require('zepto'), _ = require('underscore'), fastClick = require('fastclick'), views = require("/views/athletics/hm.html"), config = require('config'), servers = require('services/jcz');
+  var page = require('page');
+  var util = require('util');
+  var $ = require('zepto');
+  var _ = require('underscore');
+  var views = require("/views/athletics/hm.html");
+  var config = require('config');
+  var servers = require('services/jcz');
   var canBack = 1;
   // 单价
   var price = 2;
@@ -15,7 +21,7 @@ define(function (require, exports, module) {
   // 合买方案提成
   var projectCommissions = "5%";
   // 方案公开方式
-  var projectOpenState = "2";
+  var projectOpenState = 1;
   // 最小购买份数
   var minBuy = 1;
   // 购买成功后返回的结果集
@@ -58,7 +64,7 @@ define(function (require, exports, module) {
       projectBuy = 1;
       projectHold = 0;
       projectCommissions = "5%";
-      projectOpenState = "2";
+      projectOpenState = 1;
       minBuy = 1;
     }
   };
@@ -74,14 +80,6 @@ define(function (require, exports, module) {
       $(".title").text(params.title + "合买");
       $("#projectCount").text(params.projectCount + "元");
       $("#eachMoney").text(params.eachMoney + "元");
-
-      // 预期购买
-      var expectBuy = parseInt(params.projectCount, 10) * 0.05;
-      if (expectBuy > projectBuy) {
-        minBuy = expectBuy;
-        projectBuy = minBuy;
-      }
-
       $("#projectBuy").val(projectBuy);
       $("#projectHold").val(projectHold);
       $("#showPer").text(projectCommissions);
@@ -113,7 +111,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 提成百分比

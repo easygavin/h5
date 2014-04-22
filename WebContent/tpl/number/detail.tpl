@@ -32,9 +32,9 @@
       <p><%=title %></p>
     </li>
     <% } %>
-    <li><p><%=detail %></p></li>
+    <li><p class="wb"><%=detail %></p></li>
     <% if (openNumber) { %>
-    <li class="title"><p>
+    <li class="title"><p class="wb">
       <%=issueNo %>期开奖号码:
       <% if (reds) { %>
       <span class="cdd1049"><%=reds %></span>

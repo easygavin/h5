@@ -8,7 +8,6 @@ define(function (require, exports, module) {
   var util = require('util');
   var page = require('page');
   var config = require('config');
-  var fastClick = require('fastclick');
   var service = require('services/jcz');
   var betTpl = require('/views/athletics/jcz/mix_bet.html');
   var canBack = 0;
@@ -237,23 +236,26 @@ define(function (require, exports, module) {
     },
     //添加赛事种类列表
     addLeagueItems : function () {
-      var htmlStr = '', $leagueBox = $('.leagueBox');
-      _.map(this.leagueMap, function (value, key) {
-        htmlStr += '<li class="item click" data-num="' + value + '">' + key + '[' + value + ']场</li>';
-      });
-      $leagueBox.addClass('success').find('.icon').html(htmlStr);
+      if(this.leagueMap){
+        var htmlStr = '', $leagueBox = $('.leagueBox');
+        _.map(this.leagueMap, function (value, key) {
+          htmlStr += '<li class="item click" data-num="' + value + '">' + key + '[' + value + ']场</li>';
+        });
+        util.showCover();
+        $leagueBox.show().addClass('success').find('.icon').html(htmlStr);
+        selectLeagueElem = $(".leagueBox .click");
+      }
     },
     //更新选择赛事类型中的场数
     updateSelMatLen : function (num, opt) {
       var $selectNum = $(".leagueBox .red"), selectNum = 0;
       if (num || opt) {
         selectNum = (opt ? +$selectNum.text() : 0) + num
-      }else{
-        _.each($('.leagueBox').find('.click'),function(item){
+      } else {
+        _.each($('.leagueBox').find('.click'), function (item) {
           selectNum += $(item).data('num');
         });
       }
-
       $selectNum.text(selectNum);
       opt && this.toggleSelAllLea(selectNum);
     },
@@ -406,8 +408,6 @@ define(function (require, exports, module) {
     },
     //绑定事件
     bindEvent : function () {
-      //fastclick events
-      fastClick.attach(document.body);
       this.$page.on('click', '.back', function () {
         this.callback ? page.goBack() : page.init('home', {}, 1);
       }.bind(this));
@@ -422,9 +422,13 @@ define(function (require, exports, module) {
       }.bind(this));
       //打开赛事筛选
       this.$page.on('click', '#filterBtn', function () {
-        util.showCover();
-        $('.leagueBox').toggle().hasClass('success') ? '' : this.addLeagueItems();
-        selectLeagueElem = $(".leagueBox .click");
+        if ($('.leagueBox').hasClass('success')) {
+          util.showCover();
+          $('.leagueBox').toggle()
+          selectLeagueElem = $(".leagueBox .click");
+        }else{
+          this.addLeagueItems();
+        }
       }.bind(this));
       //赛事筛选
       $(".leagueBox").on('click', '.item', function (e) {
@@ -463,7 +467,7 @@ define(function (require, exports, module) {
         this.unitTotal();
       }.bind(this));
       // 关闭显示框
-      $(".cover").on('touchstart', function (e) {
+      $(".cover").on('touchstart click', function (e) {
         util.hideCover();
         $(".popup").hide();
         $(".menuBox").hide();

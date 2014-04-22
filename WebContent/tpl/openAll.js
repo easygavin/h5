@@ -5,7 +5,7 @@ function print() { __p += __j.call(arguments, '') }
 with (obj) {
 
  _.each(datas, function (d) { ;
-__p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kjList">\r\n  ';
+__p += '\r\n  ';
 
   var lotteryType = d.lotteryType + "", lotteryName = "";
   var numbers = d.lotteryNumbers.split(","),
@@ -55,7 +55,9 @@ __p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kj
       break;
   }
   ;
-__p += '\r\n  <tr>\r\n    <td>\r\n      <i class="fl">' +
+__p += '\r\n  ';
+ if(lotteryType != '89' && lotteryType != '92' &&  lotteryType !='1' && lotteryType !='88' ){;
+__p += '\r\n<table cellpadding="0" cellspacing="0" width="100%" class="line30 kjList bt4 mt10">\r\n  <tr>\r\n    <td>\r\n      <i class="fl">' +
 ((__t = (lotteryName )) == null ? '' : __t) +
 '</i>\r\n      <i class="fr">第' +
 ((__t = (d.issueNo )) == null ? '' : __t) +
@@ -79,7 +81,9 @@ __p += '\r\n        <i class="cdd1049">' +
 ((__t = (desc )) == null ? '' : __t) +
 '</i>\r\n      ';
  } ;
-__p += '\r\n    </td>\r\n  </tr>\r\n</table>\r\n';
+__p += '\r\n    </td>\r\n  </tr>\r\n  ';
+};
+__p += '\r\n</table>\r\n';
  });;
 
 

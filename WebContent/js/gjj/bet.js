@@ -3,7 +3,6 @@
  */
 define(function (require, exports, module) {
   var page = require('page'),
-    events = require('events'),
     util = require('util'),
     $ = require('zepto'),
     _ = require('underscore'),
@@ -201,13 +200,13 @@ define(function (require, exports, module) {
   var bindEvent = function () {
 
     // 返回
-    $(".back").on(events.click(), function (e) {
+    $(".back").on("click", function (e) {
       page.init("home", {}, 0);
       return true;
     });
 
     // 模式
-    $(".caList").on(events.click(), function (e) {
+    $(".caList").on("click", function (e) {
       if (bufferData !== null && typeof bufferData != "undefined" && bufferData.length > 0) {
         page.toast("本站暂不支持多种玩法混合投注");
       } else {
@@ -218,14 +217,14 @@ define(function (require, exports, module) {
     });
 
     // 右菜单
-    $(".pr0").on(events.click(), function (e) {
+    $(".pr0").on("click", function (e) {
       $(".popup").show();
       util.showCover();
       return true;
     });
 
     // 右菜单项点击
-    $(".popup").on(events.click(), function (e) {
+    $(".popup").on("click", function (e) {
       var $a = $(e.target).closest("a");
       if (!$a.hasClass("click")) {
         var id = $a.attr("id");
@@ -244,7 +243,7 @@ define(function (require, exports, module) {
     });
 
     // 关闭显示框
-    $(".cover").off(events.click()).on(events.click(), function (e) {
+    $(".cover").off("click").on("click", function (e) {
       $(".popup").hide();
       $(".menuBox").hide();
       util.hideCover();
@@ -252,7 +251,7 @@ define(function (require, exports, module) {
     });
 
     // 选中模式
-    $(".menuBox").on(events.click(), function (e) {
+    $(".menuBox").on("click", function (e) {
       var $a = $(e.target).closest("a");
       if (!$a.hasClass("click")) {
         var id = $a.attr("id").split("_")[1];
@@ -284,7 +283,7 @@ define(function (require, exports, module) {
     });
 
     // 赛事列表点击
-    $(".bets").on(events.tap(), function (e) {
+    $(".bets").on("click", function (e) {
       var $matchSp = $(e.target).closest(".matchSp");
 
       if ($matchSp.length) {
@@ -305,13 +304,13 @@ define(function (require, exports, module) {
     });
 
     // 确定
-    $(".btn2").on(events.click(), function (e) {
+    $(".btn2").on("click", function (e) {
       toList();
       return true;
     });
 
     // 清除
-    $(".btn1").on(events.click(), function (e) {
+    $(".btn1").on("click", function (e) {
       // 清除
       clear();
       // 统计注数

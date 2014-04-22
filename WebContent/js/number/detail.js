@@ -2,13 +2,12 @@
  * 数字彩方案详情
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-    events = require('events'),
-    util = require('util'),
-    $ = require('zepto'),
-    _ = require('underscore'),
-    template = require("../../views/number/detail.html"),
-    digitService = require('services/digit');
+  var page = require('page');
+  var util = require('util');
+  var $ = require('zepto');
+  var _ = require('underscore');
+  var template = require("../../views/number/detail.html");
+  var digitService = require('services/digit');
   var canBack = 1;
   // 返回step
   var step = -1;
@@ -66,10 +65,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "number/detail", data: params},
-      "number/detail",
-      "#number/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      canBack);
+    page.setHistoryState({url : "number/detail", data : params}, "number/detail", "#number/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
   };
 
   /**
@@ -135,18 +131,15 @@ define(function (require, exports, module) {
       past = 0, // 已追期数
       witdraw = 0; // 撤单期数
 
-    if (data.isWithdraw != null && typeof data.isWithdraw != "undefined"
-      && $.trim(data.isWithdraw) != "") {
+    if (data.isWithdraw != null && typeof data.isWithdraw != "undefined" && $.trim(data.isWithdraw) != "") {
       isWithdraw = parseInt(data.isWithdraw, 10);
     }
 
-    if (data.past != null && typeof data.past != "undefined"
-      && $.trim(data.past) != "") {
+    if (data.past != null && typeof data.past != "undefined" && $.trim(data.past) != "") {
       past = parseInt(data.past, 10);
     }
 
-    if (data.witdraw != null && typeof data.witdraw != "undefined"
-      && $.trim(data.witdraw) != "") {
+    if (data.witdraw != null && typeof data.witdraw != "undefined" && $.trim(data.witdraw) != "") {
       witdraw = parseInt(data.witdraw, 10);
     }
 
@@ -158,11 +151,10 @@ define(function (require, exports, module) {
 
     var detail = data.detail;
 
-    var detail = detail.replace(/{/g, '<span class="cdd1049">')
-      .replace(/}/g, '</span>')
-      .replace(/#/g, '<br>');
+    var detail = detail.replace(/{/g, '<span class="cdd1049">').replace(/}/g, '</span>').replace(/#/g, '<br>');
     data.detail = detail;
 
+    data.reds = [], data.blues = [];
     if ($.trim(data.openNumber) != "") {
       var openNumbers = data.openNumber.split("+");
       data.reds = openNumbers[0];
@@ -198,82 +190,57 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-
     // 返回
-    $(".back").on(events.click(), function (e) {
-      if (step < -1) {
-        // 返回多步
-        page.go(step);
-      } else {
-        page.goBack();
-      }
-      return true;
+    $(".back").on("click", function (e) {
+      step < -1 ? page.go(step) : page.goBack();
     });
 
     // 下拉图标
-    $(document).off(events.tap(), "#pullBtn").
-      on(events.tap(), "#pullBtn", function (e) {
-        if ($(this).hasClass("down")) {
-          $(this).removeClass("down").addClass("up").html("&#xf060;");
-          if (allIssue != null && typeof allIssue != "undefined"
-            && allIssue.length) {
-            $("#allIssueList").show();
-          } else {
-            getAllIssue();
-          }
+    $('.detailBox').on('click', "#pullBtn", function () {
+      if ($(this).hasClass("down")) {
+        $(this).removeClass("down").addClass("up").html("&#xf060;");
+        if (allIssue != null && typeof allIssue != "undefined" && allIssue.length) {
+          $("#allIssueList").show();
         } else {
-          $(this).removeClass("up").addClass("down").html("&#xf003;");
-          $("#allIssueList").hide();
+          getAllIssue();
         }
-      });
+      } else {
+        $(this).removeClass("up").addClass("down").html("&#xf003;");
+        $("#allIssueList").hide();
+      }
+    });
 
     // 查看本单合买
-    $(document).off(events.tap(), "#hmOrder").
-      on(events.tap(), "#hmOrder", function (e) {
-        // 三个参数 lotteryType,requestType,projectId
-          page.init('hm/hmdetail', {"lotteryType": lotteryType, "projectId": projectId, "requestType": "1"}, 1);
-        return true;
-      });
+    $(document).on('click', "#hmOrder", function (e) {
+      // 三个参数 lotteryType,requestType,projectId
+      page.init('hm/hmdetail', {"lotteryType" : lotteryType, "projectId" : projectId, "requestType" : "1"}, 1);
+    });
 
     // 复活追号
-    $("#appendPrj").on(events.click(), function (e) {
+    $("#appendPrj").on("click", function (e) {
       if ($.trim(projectId) == "") {
         page.toast("方案无效");
-        return false;
       }
-      page.answer(
-        "温馨提示",
-        "以本方案投注内容再次购买当前期彩种？",
-        "取消",
-        "确定",
-        function (e) {
-        },
-        function (e) {
-          // 复活请求
-          var request = digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
-            if (typeof data != "undefined") {
-              if (typeof data.statusCode != "undefined") {
-                if (data.statusCode == "0") {
-                  page.dialog(
-                    "",
-                    "复活追号成功，您的账号余额为" + data.userBalance + "元",
-                    "确定",
-                    function (e) {
-                    }
-                  );
-                } else {
-                  page.codeHandler(data);
-                }
+      page.answer("温馨提示", "以本方案投注内容再次购买当前期彩种？", "取消", "确定", function (e) {
+      }, function () {
+        // 复活请求
+        var request = digitService.addBuyDigit(lotteryType, projectId + "", function (data) {
+          if (typeof data != "undefined") {
+            if (typeof data.statusCode != "undefined") {
+              if (data.statusCode == "0") {
+                page.dialog("", "复活追号成功，您的账号余额为" + data.userBalance + "元", "确定", function (e) {
+                });
+              } else {
+                page.codeHandler(data);
               }
             }
-          });
+          }
+        });
 
-          util.addAjaxRequest(request);
-        }
-      );
-      return true;
+        util.addAjaxRequest(request);
+      });
     });
   };
 
-  return {init: init};
+  return {init : init};
 });

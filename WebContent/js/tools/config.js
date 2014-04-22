@@ -38,6 +38,7 @@ define(function (require, exports, module) {
       desc: "2元能中1000万", // 说明
       logo: "images/ssq.png", // 图标
       hasDetail: true, // 需要显示上期开奖号码
+      hasPool: true, // 是否有奖池信息
       hasLevels: true, // 是否有中奖等级,
       type: "digit", // 彩种类型
       paths: {
@@ -50,7 +51,7 @@ define(function (require, exports, module) {
         def: "0", // 默认模式
         list: { // 模式列表
           "0": {key: "0", name: "普通投注", shows: [
-            {id: "0", desc: "红", yl: "漏"},
+            {id: "0", desc: "红", yl: "遗漏"},
             {id: "2", desc: "蓝", yl: ""}
           ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "1",
             desc: "红球区-至少选择6个，篮球区-至少选择1个",
@@ -74,6 +75,7 @@ define(function (require, exports, module) {
       desc: "2元能中500万",
       logo: "images/dlt.png",
       hasDetail: true,
+      hasPool: true, // 是否有奖池信息
       hasLevels: true, // 是否有中奖等级
       type: "digit", // 彩种类型
       paths: {
@@ -86,7 +88,7 @@ define(function (require, exports, module) {
         def: "0", // 默认模式
         list: { // 模式列表
           "0": {key: "0", name: "普通投注", shows: [
-            {id: "0", desc: "红", yl: "漏"},
+            {id: "0", desc: "红", yl: "遗漏"},
             {id: "2", desc: "蓝", yl: ""}
           ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "1",
             desc: "前区-至少选择5个，后区-至少选择2个",
@@ -111,6 +113,7 @@ define(function (require, exports, module) {
       desc: "天天开奖",
       logo: "images/f3d.png",
       hasDetail: true,
+      hasPool: false, // 是否有奖池信息
       hasLevels: true, // 是否有中奖等级
       type: "digit", // 彩种类型
       paths: {
@@ -123,32 +126,32 @@ define(function (require, exports, module) {
         def: "0", // 默认模式
         list: { // 模式列表
           "0": {key: "0", name: "直选", shows: [
-            {id: "0", desc: "百位", yl: "漏"},
+            {id: "0", desc: "百位", yl: "遗漏"},
             {id: "1", desc: "十位", yl: ""},
             {id: "2", desc: "个位", yl: ""}
           ], rdm: true, omit: true, omitIndex: 6, omitKey: "9", playType: "2", betType: "1",
-            desc: "每位至少选1个",
+            desc: "每位至少选择1个号码，单注奖金1000元",
             tips: "请至少选择一注"
           },
           "1": {key: "1", name: "组三", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "3",
-            desc: "至少选择2个号码",
+            desc: "至少选择2个号码，单注奖金320元",
             tips: "请至少选择一注"
           },
           "2": {key: "2", name: "组六", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "2", playType: "2", betType: "4",
             desc: "至少选择3个号码，单注奖金160元",
             tips: "请至少选择一注"
           },
-          "3": {key: "3", name: "直选胆拖", shows: [
+          /*"3": {key: "3", name: "直选胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
           ], rdm: false, omit: false, playType: "5", betType: "1",
             desc: "由1-2个胆拖加n个拖码组成",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },
+          },*/
           "4": {key: "4", name: "组三胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
@@ -173,6 +176,7 @@ define(function (require, exports, module) {
       desc: "好玩易中",
       logo: "images/pl3.png",
       hasDetail: true,
+      hasPool: false, // 是否有奖池信息
       hasLevels: true, // 是否有中奖等级
       type: "digit", // 彩种类型
       paths: {
@@ -185,7 +189,7 @@ define(function (require, exports, module) {
         def: "0", // 默认模式
         list: { // 模式列表
           "0": {key: "0", name: "直选", shows: [
-            {id: "0", desc: "百位", yl: "漏"},
+            {id: "0", desc: "百位", yl: "遗漏"},
             {id: "1", desc: "十位", yl: ""},
             {id: "2", desc: "个位", yl: ""}
           ], rdm: true, omit: true, omitIndex: 6, omitKey: "9", playType: "2", betType: "1",
@@ -193,24 +197,24 @@ define(function (require, exports, module) {
             tips: "请至少选择一注"
           },
           "1": {key: "1", name: "组三", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "3",
             desc: "至少选择2个号码，单注奖金320元",
             tips: "请至少选择一注"
           },
           "2": {key: "2", name: "组六", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "2", playType: "2", betType: "4",
             desc: "至少选择3个号码，单注奖金160元",
             tips: "请至少选择一注"
           },
-          "3": {key: "3", name: "直选胆拖", shows: [
+          /*"3": {key: "3", name: "直选胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
           ], rdm: false, omit: false, playType: "5", betType: "1",
             desc: "由1-2个胆码加n个拖码组成",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },
+          },*/
           "4": {key: "4", name: "组三胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
@@ -235,7 +239,8 @@ define(function (require, exports, module) {
       desc: "10分钟一期",
       logo: "images/syy.png",
       hasDetail: true,
-      hasLevels: false, // 是否有中奖等级
+      hasPool: false, // 是否有奖池信息
+      hasLevels: true, // 是否有中奖等级
       type: "freq", // 彩种类型
       paths: {
         ball: {js: 'freq/five/ball', tpl: '../../../views/freq/five/ball.html'},
@@ -248,55 +253,55 @@ define(function (require, exports, module) {
         def: "4", // 默认模式
         list: { // 模式列表
           "0": {key: "0", name: "任一", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 0, omitKey: "201", ctxKey: "201", bonus: 13, playType: "1", betType: "1",
             desc: "至少选择1个号码，单注奖金13元",
             tips: "请至少选择一注"
           },
           "1": {key: "1", name: "任二", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "202", bonus: 6, playType: "1", betType: "1",
             desc: "至少选择2个号码，单注奖金6元",
             tips: "请至少选择一注"
           },
           "2": {key: "2", name: "任三", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "203", bonus: 19, playType: "1", betType: "1",
             desc: "至少选择3个号码，单注奖金19元",
             tips: "请至少选择一注"
           },
           "3": {key: "3", name: "任四", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "204", bonus: 78, playType: "1", betType: "1",
             desc: "至少选择4个号码，单注奖金78元",
             tips: "请至少选择一注"
           },
           "4": {key: "4", name: "任五", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "205", bonus: 540, playType: "1", betType: "1",
             desc: "至少选择5个号码，单注奖金540元",
             tips: "请至少选择一注"
           },
           "5": {key: "5", name: "任六", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "206", bonus: 90, playType: "1", betType: "1",
             desc: "至少选择6个号码，单注奖金90元",
             tips: "请至少选择一注"
           },
           "6": {key: "6", name: "任七", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "207", bonus: 26, playType: "1", betType: "1",
             desc: "至少选择7个号码，单注奖金26元",
             tips: "请至少选择一注"
           },
           "7": {key: "7", name: "任八", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "208", bonus: 9, playType: "1", betType: "1",
             desc: "至少选择8个号码，单注奖金9元",
             tips: "请至少选择一注"
           },
           "8": {key: "8", name: "前三直选", shows: [
-            {id: "0", desc: "一", yl: "漏"},
+            {id: "0", desc: "一", yl: "遗漏"},
             {id: "1", desc: "二"},
             {id: "2", desc: "三"}
           ], rdm: true, omit: true, omitIndex: 2, omitKey: "511", ctxKey: "511", bonus: 1170, playType: "1", betType: "1",
@@ -310,7 +315,7 @@ define(function (require, exports, module) {
             tips: "请至少选择一注"
           },
           "10": {key: "10", name: "前二直选", shows: [
-            {id: "0", desc: "一", yl: "漏"},
+            {id: "0", desc: "一", yl: "遗漏"},
             {id: "1", desc: "二"}
           ], rdm: true, omit: true, omitIndex: 3, omitKey: "411", ctxKey: "411", bonus: 130, playType: "1", betType: "1",
             desc: "每位至少选择1个号码，单注奖金130元",
@@ -322,13 +327,13 @@ define(function (require, exports, module) {
             desc: "至少选择2个号码，单注奖金65元",
             tips: "请至少选择一注"
           },
-          "12": {key: "12", name: "前三直选胆拖", shows: [
+          /*"12": {key: "12", name: "前三直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "512", bonus: 1170, playType: "1", betType: "1",
             desc: "由1-2个胆码加n个拖码组成，单注奖金1170元",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },
+          },*/
           "13": {key: "13", name: "前三组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -336,13 +341,13 @@ define(function (require, exports, module) {
             desc: "由1-2个胆码加n个拖码组成，单注奖金195元",
             tips: "请至少选择一注,胆码不能超过2个球"
           },
-          "14": {key: "14", name: "前二直选胆拖", shows: [
+          /*"14": {key: "14", name: "前二直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "412", bonus: 130, playType: "1", betType: "1",
             desc: "由1个胆码加n个拖码组成，单注奖金130元",
             tips: "请至少选择一注,胆码不能超过1个球"
-          },
+          },*/
           "15": {key: "15", name: "前二组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -402,13 +407,14 @@ define(function (require, exports, module) {
         }
       }
     },
-    syx: { // 十一选5
+    syx: { // 11选5
       key: "syx",
       lotteryId: "34",
-      name: "十一选5",
+      name: "11选5",
       desc: "10分钟一期",
       logo: "images/syx.png",
       hasDetail: true,
+      hasPool: false, // 是否有奖池信息
       hasLevels: true, // 是否有中奖等级
       type: "freq", // 彩种类型
       paths: {
@@ -422,55 +428,55 @@ define(function (require, exports, module) {
         def: "4", // 默认模式
         list: { // 模式列表
           "0": {key: "0", name: "任一", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 0, omitKey: "201", ctxKey: "201", bonus: 13, playType: "1", betType: "1",
             desc: "至少选择1个号码，单注奖金13元",
             tips: "请至少选择一注"
           },
           "1": {key: "1", name: "任二", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "202", bonus: 6, playType: "1", betType: "1",
             desc: "至少选择2个号码，单注奖金6元",
             tips: "请至少选择一注"
           },
           "2": {key: "2", name: "任三", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "203", bonus: 19, playType: "1", betType: "1",
             desc: "至少选择3个号码，单注奖金19元",
             tips: "请至少选择一注"
           },
           "3": {key: "3", name: "任四", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "204", bonus: 78, playType: "1", betType: "1",
             desc: "至少选择4个号码，单注奖金78元",
             tips: "请至少选择一注"
           },
           "4": {key: "4", name: "任五", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "205", bonus: 540, playType: "1", betType: "1",
             desc: "至少选择5个号码，单注奖金540元",
             tips: "请至少选择一注"
           },
           "5": {key: "5", name: "任六", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "206", bonus: 90, playType: "1", betType: "1",
             desc: "至少选择6个号码，单注奖金90元",
             tips: "请至少选择一注"
           },
           "6": {key: "6", name: "任七", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "207", bonus: 26, playType: "1", betType: "1",
             desc: "至少选择7个号码，单注奖金26元",
             tips: "请至少选择一注"
           },
           "7": {key: "7", name: "任八", shows: [
-            {id: "0", desc: "选号", yl: "漏"}
+            {id: "0", desc: "选号", yl: "遗漏"}
           ], rdm: true, omit: true, omitIndex: 1, omitKey: "202", ctxKey: "208", bonus: 9, playType: "1", betType: "1",
             desc: "至少选择8个号码，单注奖金9元",
             tips: "请至少选择一注"
           },
           "8": {key: "8", name: "前三直选", shows: [
-            {id: "0", desc: "一", yl: "漏"},
+            {id: "0", desc: "一", yl: "遗漏"},
             {id: "1", desc: "二"},
             {id: "2", desc: "三"}
           ], rdm: true, omit: true, omitIndex: 2, omitKey: "511", ctxKey: "511", bonus: 1170, playType: "1", betType: "1",
@@ -484,7 +490,7 @@ define(function (require, exports, module) {
             tips: "请至少选择一注"
           },
           "10": {key: "10", name: "前二直选", shows: [
-            {id: "0", desc: "一", yl: "漏"},
+            {id: "0", desc: "一", yl: "遗漏"},
             {id: "1", desc: "二"}
           ], rdm: true, omit: true, omitIndex: 3, omitKey: "411", ctxKey: "411", bonus: 130, playType: "1", betType: "1",
             desc: "每位至少选择1个号码，单注奖金130元",
@@ -496,13 +502,13 @@ define(function (require, exports, module) {
             desc: "至少选择2个号码，单注奖金65元",
             tips: "请至少选择一注"
           },
-          "12": {key: "12", name: "前三直选胆拖", shows: [
+          /*"12": {key: "12", name: "前三直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "512", bonus: 1170, playType: "1", betType: "1",
             desc: "由1-2个胆码加n个拖码组成，单注奖金1170元",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },
+          },*/
           "13": {key: "13", name: "前三组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -510,13 +516,13 @@ define(function (require, exports, module) {
             desc: "由1-2个胆码加n个拖码组成，单注奖金195元",
             tips: "请至少选择一注,胆码不能超过2个球"
           },
-          "14": {key: "14", name: "前二直选胆拖", shows: [
+          /*"14": {key: "14", name: "前二直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "412", bonus: 130, playType: "1", betType: "1",
             desc: "由1个胆码加n个拖码组成，单注奖金130元",
             tips: "请至少选择一注,胆码不能超过1个球"
-          },
+          },*/
           "15": {key: "15", name: "前二组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -667,7 +673,7 @@ define(function (require, exports, module) {
     12: "f3d", // 福彩3D
     13: "dlt", // 大乐透
     31: "syy", // 十一运夺金
-    34: "syx", // 十一选5
+    34: "syx", // 11选5
     46: "jcz", // 竞彩足球
     36: "jcl" // 竞彩篮球
   };
