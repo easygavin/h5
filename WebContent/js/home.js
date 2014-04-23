@@ -352,7 +352,7 @@ define(function (require, exports, module) {
   var showShortCutItems = function () {
     if (util.checkLogin(null)) {
       // 登录状态
-      $(".hidden").show();
+      $(".side li.hidden").show();
 
       // 保存登录成功信息
       var user = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
@@ -439,7 +439,7 @@ define(function (require, exports, module) {
   var switchFlashShow = function () {
     if (noticeSwitch) {
       // 开启
-      $(".close").html("&#xf005;");
+      $(".close").html("&#xf064;");
       if (imageNotices.length) {
         $(".bunner").css({"height": "8em"});
         if (imageNotices.length > 1) {
@@ -453,7 +453,7 @@ define(function (require, exports, module) {
       }
     } else {
       // 关闭
-      $(".close").html("&#xf004;");
+      $(".close").html("&#xf067;");
       if (imageNotices.length) {
         $(".bunner").css({"height": "1.5em"});
         if (this.noticeTimer != null) {

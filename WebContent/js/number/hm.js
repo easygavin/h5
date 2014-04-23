@@ -27,6 +27,8 @@ define(function (require, exports, module) {
   var projectOpenState = "2";
   // 最小购买份数
   var minBuy = 1;
+  // 最小保底金额
+  var minHold = 0;
   // 购买成功后返回的结果集
   var result = {};
   /**
@@ -73,7 +75,6 @@ define(function (require, exports, module) {
       lotConfig = {}, params = {}, projectBuy = 1,
         projectHold = 0, projectCommissions = "5%",
         projectOpenState = "2";
-      minBuy = 1;
     }
   };
 
@@ -92,16 +93,16 @@ define(function (require, exports, module) {
 
       var playMode = lotConfig.modes.list[params.mode].name;
 
+      // 最小购买金额
+      minBuy = Math.ceil(parseInt(params.projectCount, 10) * 0.05);
+      // 最小保底金额
+      minHold = Math.ceil(parseInt(params.projectCount, 10) * 0.05);
+
+      projectBuy = Math.ceil(parseInt(params.projectCount, 10) * 0.1);
+
       $("#projectCount").text(params.projectCount + "元");
       $("#eachMoney").text(params.eachMoney + "元");
       $("#playMode").text(playMode);
-
-      // 预期购买
-      var expectBuy = Math.ceil(parseInt(params.projectCount, 10) * 0.05);
-      if (expectBuy > projectBuy) {
-        minBuy = expectBuy;
-        projectBuy = minBuy;
-      }
 
       $("#projectBuy").val(projectBuy);
       $("#projectHold").val(projectHold);
@@ -163,6 +164,7 @@ define(function (require, exports, module) {
       this.value = this.value.replace(/\D/g, '');
       var $projectBuy = $(this);
       projectBuy = $projectBuy.val();
+      var intProjectHold = parseInt(projectHold,10);
 
       if ($.trim(projectBuy) == "") {
         projectBuy = 0;
@@ -170,9 +172,13 @@ define(function (require, exports, module) {
         if ($.trim(projectBuy) != "" && (isNaN(projectBuy) || projectBuy < 1)) {
           projectBuy = 1;
           $projectBuy.val(1);
-        } else if (projectBuy > params.projectCount) {
+        } else if (intProjectHold == 0 && projectBuy > params.projectCount) {
           page.toast("认购金额不能超过总金额");
           projectBuy = params.projectCount;
+          $projectBuy.val(projectBuy);
+        } else if ((intProjectHold + parseInt(projectBuy, 10)) > params.projectCount) {
+          page.toast("保底金额+认购金额不能大于总金额");
+          projectBuy = params.projectCount - projectHold;
           $projectBuy.val(projectBuy);
         }
       }
@@ -191,6 +197,7 @@ define(function (require, exports, module) {
       this.value = this.value.replace(/\D/g, '');
       var $projectHold = $(this);
       projectHold = $projectHold.val();
+      var intProjectBuy = parseInt(projectBuy,10);
 
       if ($.trim(projectHold) == "") {
         projectHold = 0;
@@ -198,7 +205,7 @@ define(function (require, exports, module) {
         if ($.trim(projectHold) != "" && (isNaN(projectHold) || projectHold < 1)) {
           projectHold = 0;
           $projectHold.val(0);
-        } else if ((parseInt(projectHold,10) + projectBuy) > params.projectCount) {
+        } else if (projectHold > 0 && (parseInt(projectHold,10) + intProjectBuy) > params.projectCount) {
           page.toast("保底金额+认购金额不能大于总金额");
           projectHold = params.projectCount - projectBuy;
           $projectHold.val(projectHold);
@@ -233,7 +240,8 @@ define(function (require, exports, module) {
     projectBuy = $projectBuy.val();
 
     if ($.trim(projectBuy) == "" || isNaN(projectBuy) || projectBuy < minBuy) {
-      projectBuy = 0;
+      projectBuy = minBuy;
+      $projectBuy.val(projectBuy);
       page.toast("认购金额不能低于总金额的5%");
 
       // 显示付款信息
@@ -247,6 +255,14 @@ define(function (require, exports, module) {
 
     if ($.trim(projectHold) == "" || isNaN(projectHold) || projectHold < 0) {
       projectHold = 0;
+      $projectHold.val(projectHold);
+      // 显示付款信息
+      showPayInfo();
+      return false;
+    } else if (projectHold > 0 && projectHold < minHold) {
+      projectHold = minHold;
+      $projectHold.val(projectHold);
+      page.toast("保底金额不能低于总金额的5%");
 
       // 显示付款信息
       showPayInfo();

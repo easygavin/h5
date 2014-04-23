@@ -76,7 +76,7 @@ define(function (require, exports, module) {
 
 
     //当点击加载更多按钮的时候.触发
-    $('.loadText').on('click',function () {
+    $('.loadText').on('click', function () {
       var intRequestPage = parseInt(pageNo, 10);
       if (intRequestPage < pages) {
         pageNo = (intRequestPage + 1) + "";
@@ -87,7 +87,7 @@ define(function (require, exports, module) {
 
 
     //点击尚未使用的优惠券编号时,跳转到充值页.自动填充优惠券选项卡.
-    $('.bb1').on('click','i', function (e) {
+    $('.bb1').on('click', 'i', function (e) {
       var targetId = $(e.target).attr('id');
       if (targetId != 'undefined' && targetId != '') {
         var couponCode = targetId.split('_')[1];
@@ -116,7 +116,7 @@ define(function (require, exports, module) {
 
     if (!tkn) {
       // 尚未登录，弹出提示框
-      page.init('login',{},1);
+      page.init('login', {}, 1);
       return false;
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
@@ -145,6 +145,10 @@ define(function (require, exports, module) {
    */
   var showCouponItem = function (data) {
     pages = parseInt((parseInt(data.count) + pageSize - 1) / pageSize);
+    if (pages <= 0) {
+      page.toast('您尚未获得优惠券');
+      return false;
+    }
     if (pageNo < pages) {
       $(".loadText").text("查看更多");
     } else {

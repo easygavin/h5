@@ -85,28 +85,30 @@ define(function (require, exports, module) {
   var bindEvent = function () {
     // 返回
     $('.back').on('click', function () {
-      canBack ? page.goBack() : page.init('home',{},0);
+      canBack ? page.goBack() : page.init('home', {}, 0);
     });
-    $('#main').on('click', 'tr', function () {
-      var $fm = $(this).find(".fm");
-      if ($fm.length) {
-        // 开奖列表
-        var lotteryType = $fm.attr("id").split("_")[1];
-        var lot = config.lotteryIdToStr[lotteryType];
-        if (lot !== null && typeof lot != "undefined" && $.trim(lot) != "") {
-          if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
-            lot == "syx" || lot == "syy") {
-            page.init("number/openLott", {lot: lot}, 1);
-          } else if (lot == "jcl") {
-            // 竞彩篮球
-            page.init('jcl/lottery_list', {lotteryType : lotteryType}, 1);
-          } else if (lot == "jcz") {
-            // 竞彩足球
-            page.init('jcz/lottery_list', {lotteryType : lotteryType}, 1);
+
+    $(document).off("click", ".kjList tr").
+      on("click", ".kjList tr", function (e) {
+        var $fm = $(this).find(".fm");
+        if ($fm.length) {
+          // 开奖列表
+          var lotteryType = $fm.attr("id").split("_")[1];
+          var lot = config.lotteryIdToStr[lotteryType];
+          if (lot !== null && typeof lot != "undefined" && $.trim(lot) != "") {
+            if (lot == "ssq" || lot == "dlt" || lot == "f3d" || lot == "pl3" ||
+              lot == "syx" || lot == "syy") {
+              page.init("number/openLott", {lot: lot}, 1);
+            } else if (lot == "jcl") {
+              // 竞彩篮球
+              page.init('jcl/lottery_list', {lotteryType: lotteryType}, 1);
+            } else if (lot == "jcz") {
+              // 竞彩足球
+              page.init('jcz/lottery_list', {lotteryType: lotteryType}, 1);
+            }
           }
         }
-      }
-    });
+      });
   };
   return {init: init};
 });

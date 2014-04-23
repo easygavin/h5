@@ -129,13 +129,13 @@ define(function (require, exports, module) {
             {id: "0", desc: "百位", yl: "遗漏"},
             {id: "1", desc: "十位", yl: ""},
             {id: "2", desc: "个位", yl: ""}
-          ], rdm: true, omit: true, omitIndex: 6, omitKey: "9", playType: "2", betType: "1",
+          ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "1",
             desc: "每位至少选择1个号码，单注奖金1000元",
             tips: "请至少选择一注"
           },
           "1": {key: "1", name: "组三", shows: [
             {id: "0", desc: "选号", yl: "遗漏"}
-          ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "3",
+          ], rdm: true, omit: true, omitIndex: 1, omitKey: "2", playType: "2", betType: "3",
             desc: "至少选择2个号码，单注奖金320元",
             tips: "请至少选择一注"
           },
@@ -192,13 +192,13 @@ define(function (require, exports, module) {
             {id: "0", desc: "百位", yl: "遗漏"},
             {id: "1", desc: "十位", yl: ""},
             {id: "2", desc: "个位", yl: ""}
-          ], rdm: true, omit: true, omitIndex: 6, omitKey: "9", playType: "2", betType: "1",
+          ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "1",
             desc: "每位至少选择1个号码，单注奖金1000元",
             tips: "请至少选择一注"
           },
           "1": {key: "1", name: "组三", shows: [
             {id: "0", desc: "选号", yl: "遗漏"}
-          ], rdm: true, omit: true, omitIndex: 0, omitKey: "1", playType: "2", betType: "3",
+          ], rdm: true, omit: true, omitIndex: 1, omitKey: "2", playType: "2", betType: "3",
             desc: "至少选择2个号码，单注奖金320元",
             tips: "请至少选择一注"
           },

@@ -66,13 +66,16 @@ define(function (require, exports, module) {
       }
       return true;
     });
+
+    // 绑定身份证.
+    $('.surebtn').on('click', function () {
+      bindIdNumber();
+      return true;
+    });
+
   };
 
-  // 绑定身份证.
-  $('.surebtn').on('click', function () {
-    bindIdNumber();
-    return true;
-  });
+
 
   /**
    * 初始化显示,查询身份证是否认证.

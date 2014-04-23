@@ -319,8 +319,8 @@ define(function (require, exports, module) {
       "bankName": encodeURIComponent(paramValues.bankName),
       "province": encodeURIComponent(paramValues.province),
       "city": encodeURIComponent(paramValues.city),
-      "password": paramValues.password,
-      "confirmPassword": paramValues.confirmPassword,
+      "password": hex_md5(paramValues.password).substr(8,16),
+      "confirmPassword": hex_md5(paramValues.confirmPassword).substr(8,16),
       "bankCode": paramValues.bankCode
     };
 
@@ -337,7 +337,7 @@ define(function (require, exports, module) {
   };
 
   /**
-   *
+   * 提款
    * @param userId
    * @param userKey
    * @param drawMoney
@@ -350,16 +350,17 @@ define(function (require, exports, module) {
    * @param callback
    */
   var withdrawal = function (userId, userKey, drawMoney, mobile, drawPwd, smsMsg, platform, channelNo, userName, callback) {
+    var afterMd5drawPwd = hex_md5(drawPwd).substr(8, 16);
     var data = {
       "userId": userId,
       "userKey": userKey,
       "drawMoney": drawMoney,
       "mobile": mobile,
-      "drawPwd": drawPwd,
+      "drawPwd": afterMd5drawPwd,
       "smsMsg": smsMsg,
       "platform": platform,
       "channelNo": channelNo,
-      "md5Sign": hex_md5(userId + userKey + drawMoney + mobile + drawPwd + smsMsg + platform + channelNo + userName).substr(8, 16)
+      "md5Sign": hex_md5("userId=" + userId + ",userKey=" + userKey + ",drawMoney=" + drawMoney + ",drawPwd=" + afterMd5drawPwd + userName).substr(8, 16)
     };
 
     var request = $.ajax({
@@ -443,6 +444,11 @@ define(function (require, exports, module) {
       "newPassword": hex_md5(newPassword).substr(8, 16),
       "oldPassword": hex_md5(oldPassword).substr(8, 16)
     };
+  /*  var  data ={
+      "userId": userId,
+      "newPassword":"965eb72c92a549dd",
+      "oldPassword":"57a47e63fe1808e1"
+    };*/
 
     var request = $.ajax({
       type: "GET",
@@ -506,7 +512,7 @@ define(function (require, exports, module) {
 
   var getAccountDetailList = function (data, callback) {
 
-   return $.ajax({
+    return $.ajax({
       type: "GET",
       url: path.GET_ACCOUNT_DETAIL,
       data: {data: JSON.stringify(data)},

@@ -144,16 +144,14 @@ define(function (require, exports, module) {
                 //重新再请求下数据.
                 getBalance();
                 //提款成功.更新可用金额显示.
-                util.prompt(
-                    "提款成功",
-                    "提款申请成功，经审核无误款项将在三个工作日内汇进您的指定账户",
-                    "返回个人中心",
-                    "确定",
+                page.answer(
+                    "提款成功", "提款申请成功，经审核无误款项将在三个工作日内汇进您的指定账户",
+                    "返回个人中心", "确定",
                     function (e) {
-                      page.init("user/person", {}, 0);
+                     page.init('user/person',{},1);
                     },
                     function (e) {
-
+                      page.init('user/withdrawal',{},1);
                     }
                 );
               } else {

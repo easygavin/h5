@@ -75,7 +75,7 @@ define(function (require, exports, module) {
       util.showLoading();
       var request = account.getUserBalance(requestType, userInfo.userId, userInfo.userKey, function (data) {
         util.hideLoading();
-        if (!_.isEmpty(data) && data.statusCode == '0') {
+        if (!_.isEmpty(data) && typeof data.statusCode != 'undefined' && data.statusCode == '0') {
           $("#trueName").html("账户名：" + userInfo.userName);
           var balance = parseFloat(data.userBalance).toFixed(2);
           $("#balance").html(balance <= 0 ? 0 : balance);
@@ -145,15 +145,17 @@ define(function (require, exports, module) {
       account.getUserBalance('1', userId, userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
-            page.init('user/withdrawal');
-          } else {
+            page.init('user/withdrawal',{},1);
+            //未绑定银行卡
+          } else if (typeof  data.statusCode != 'undefined' && data.statusCode == '-58') {
             page.toast(data.errorMsg);
+            page.init('user/bindBankCard',{},1)
           }
         } else {
           page.toast('查询失败,请稍后重试');
         }
       });
-    }else{
+    } else {
       page.init('login', {}, 1);
     }
   };

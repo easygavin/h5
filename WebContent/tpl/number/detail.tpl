@@ -7,7 +7,7 @@
 
   <p>方案金额：<%=totalAmount %>元</p>
 
-  <p>认购金额：<%=oneAmount %>元</p>
+  <p>认购金额：<%=(parseInt(oneAmount, 10) * buyVolume).toFixed(2) %>元</p>
 
   <p>方案状态：<%=projectState %>
     <% if (projectType == "1") { %>

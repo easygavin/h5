@@ -400,6 +400,7 @@ define(function (require, exports, module) {
                       page.init("user/person", {}, 0);
                     },
                     function (e) {
+                      page.init('charge/index',{},0);
                     }
                 );
               } else {
@@ -430,7 +431,7 @@ define(function (require, exports, module) {
                       page.init("user/person", {}, 0);
                     },
                     function (e) {
-                      page.goBack();
+                      page.init('charge/index',{},0);
                     }
                 );
               } else {

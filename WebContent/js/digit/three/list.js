@@ -517,6 +517,10 @@ define(function (require, exports, module) {
    * 进入合买页面
    */
   var toHm = function () {
+    if (!$("#protocol").prop("checked")) {
+      page.toast("请勾选同意合买代购协议!");
+      return false;
+    }
     var params = getBuyParams();
     params.lot = lot;
     params.mode = mode;

@@ -12,7 +12,7 @@ define(function (require, exports, module) {
   var SERVER_URL = "http://uatjc.ecp888.com/";
   /*
   * 中间件地址
-  * 内部测试环境： //192.168.1.60/
+  * 内部测试环境： http://192.168.1.115:8080/middle_web/
   * 东莞测试环境： //mw.cpocp.com/
   * */
   var MIDDLEWARE = "//mw.cpocp.com/";

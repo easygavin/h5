@@ -399,15 +399,14 @@ header a {
 .bunner .close {
   position: absolute;
   right: 0;
-  font-size: 0.8em;
-  padding: 0.3em 0;
+  padding: 0.1em 0.5em;
   color: #fff;
   z-index: 5
 }
 
 nav {
   width: 100%;
-  margin: 0.75em 0px;
+  margin: 0.75em 0;
   overflow: hidden;
   height: 2.571429em;
   line-height: 2.571429em;
@@ -432,7 +431,7 @@ nav li .focus {
   background: #f07e04;
 }
 
-#main li dt a:hover img, #main .ca_ul li div:hover, .rhj:hover, .zfmx:hover, .gcjl:hover, .bdyhk:hover, .bdphone:hover, .xgpsd:hover, .rgadress:hover, .zg:hover, .dx:hover {
+#main li dt a:hover img, #main .ca_ul li div:hover, .rhj:hover, .zfmx:hover, .gcjl:hover, .bdyhk:hover, .bdphone:hover, .xgpsd:hover, .rgadress:hover, .zg:hover,.all:hover,.yzj:hover,.wzj:hover, .dx:hover {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   -o-transform: scale(1.1);
@@ -745,7 +744,7 @@ a.right {
 }
 
 #main .ca_ul li {
-  width: 20.41666667%;
+  width: 26%;
   float: left;
   font-size: 0.875em;
   text-align: center;
@@ -754,6 +753,7 @@ a.right {
 
 #main .ca_ul li div {
   width: 75.51%;
+  margin: 0 auto;
   height: auto;
   padding: 0.75em;
   background: #257ab3;
@@ -765,7 +765,7 @@ a.right {
 }
 
 #main .ca_ul a {
-  width: 20.41666667%;
+  width: 26%;
   line-height: 2.8571429em;
   vertical-align: middle;
   text-align: center;
@@ -2191,32 +2191,6 @@ td.click {
 
 }
 
-/*
-@media screen and (max-device-width:1366px){
-body{font-size:250%}
-}
-@media screen and (max-device-width:1366px){
-body{font-size:250%}
-}
-@media screen and (max-device-width:1024px){
-body{font-size:150%}
-}
-@media screen and (max-device-width:768px){
-body{font-size:200%}
-}
-@media screen and (max-device-width:640px){
-body{font-size:140%}
-}
-
-@media screen and (max-device-width:480px){
-body{font-size:70%}
-.account li{width:6.5em;font-size:0.75em;text-align:center;float:left;margin:1.1em 1.5em 0 1.6em;height:8em}
-}
-@media screen and (max-device-width:320px){
-body{font-size:90%}
-.bets li{margin:0.4em;width:2.2em;height:2.2em;font:1.125em/2.2em "Verdana"}
-}*/
-
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
   body {
     font-size: 90%;
@@ -2503,14 +2477,3 @@ body{font-size:90%}
   font: 1.5em/2em "微软雅黑";
   color: red
 }
-
-/*
-#filterBtn:hover:after{
-  float: left;
-  margin-top: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,.5);
-  content: '  ';
-  z-index: 100;
-}*/

@@ -61,12 +61,16 @@ define(function (require, exports, module) {
       page.init("login", {}, 1);
       return false;
     }
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     var nickName = $('#nickName').val();
+    var pattern = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im;
     if (nickName == '' || nickName == null) {
       page.toast('请输入昵称');
       return false;
+    } else if (nickName.length < 2 || nickName.length >= 10 || pattern.test(nickName)) {
+      page.toast('昵称应为长度2-10的中英文字母或数字组成');
+      return false;
     }
+    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userKey) {
       var request = account.updateNickName(userInfo.userKey, nickName, function (data) {
         if (!_.isEmpty(data)) {
@@ -134,16 +138,40 @@ define(function (require, exports, module) {
     });
     util.addAjaxRequest(request);
   };
+
   /**
-   * 修改提款密码
+   * 查询用户是否绑定银行.
    */
-  var updateDrawPass = function () {
+  var queryExistsBind = function () {
 
     if (!tkn) {
       page.init("login", {}, 1);
       return false;
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+    if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
+      account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
+        if (!_.isEmpty(data) && typeof data.statusCode != 'undefined') {
+          if (data.statusCode == '0') {
+            updateDrawPass();
+          } else {
+            page.toast('您尚未绑定银行卡!');
+            return false;
+          }
+        } else {
+          page.toast('查询数据失败,请稍后重试');
+          return false;
+        }
+      });
+    } else {
+      page.init('login', {}, 1);
+    }
+  };
+
+  /**
+   * 修改提款密码
+   */
+  var updateDrawPass = function () {
     var userId = userInfo.userId, userKey = userInfo.userKey;
     var oldPassword = $('#oldDrawalPass').val(),
         newPassword = $('#newDrawalPass').val(),
@@ -158,7 +186,7 @@ define(function (require, exports, module) {
       return false;
     }
     if (confDrawalPass == '') {
-      page.toast('请输入确认提款密码');
+      page.toast('请确认提款密码');
       return false;
     }
     if (newPassword != confDrawalPass) {
@@ -205,7 +233,7 @@ define(function (require, exports, module) {
           break;
         //修改提款密码
         case 'setDrawalPass':
-          updateDrawPass();
+          queryExistsBind();
           break;
       }
     });

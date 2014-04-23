@@ -148,7 +148,7 @@ define(function (require, exports, module) {
 
             switch (from) {
               case "home":
-                page.goBack();
+                page.init("user/bindMobile", {}, 0);
                 break;
               case "login":
                 page.go(-2);

@@ -81,9 +81,9 @@ __p += '\r\n        <i class="cdd1049">' +
 ((__t = (desc )) == null ? '' : __t) +
 '</i>\r\n      ';
  } ;
-__p += '\r\n    </td>\r\n  </tr>\r\n  ';
+__p += '\r\n    </td>\r\n  </tr>\r\n</table>\r\n';
 };
-__p += '\r\n</table>\r\n';
+__p += '\r\n';
  });;
 
 

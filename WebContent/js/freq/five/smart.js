@@ -107,7 +107,7 @@ define(function (require, exports, module) {
       if (typeof data != "undefined") {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode === "0") {
-            if (typeof issue.issueNo != "undefined") {
+            if (typeof issue.issueNo != "undefined" && issue.issueNo != data.issueNo) {
               page.dialog(
                 issue.issueNo + "期已截止",
                 "起始期已经更新为" + data.issueNo + "期,请核对期号",
@@ -141,9 +141,9 @@ define(function (require, exports, module) {
 
     if (issue.endTime != null && typeof issue.endTime != "undefined"
       && $.trim(issue.endTime) != "") {
-      var endDate = new Date(issue.endTime);
+      var endDate = new Date(issue.endTime.replace(/-/g, "/"));
       console.log("endDate:" + endDate.getTime());
-      var serverDate = new Date(issue.serverTime);
+      var serverDate = new Date(issue.serverTime.replace(/-/g, "/"));
       console.log("serverDate:" + serverDate.getTime());
       seconds = (endDate.getTime() - serverDate.getTime()) / 1000;
       console.log("seconds:" + seconds);
@@ -288,7 +288,7 @@ define(function (require, exports, module) {
           count = 10;
           $issueInput.val(count);
         } else if (count > handleResult.leave) {
-          util.toast("离截止还剩" + handleResult.leave + "期可追");
+          page.toast("离截止还剩" + handleResult.leave + "期可追");
           count = handleResult.leave;
           $issueInput.val(count);
         }

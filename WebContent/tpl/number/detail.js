@@ -12,7 +12,7 @@ __p += '<div class="detail">\r\n  <p>方案编号：' +
 '</p>\r\n\r\n  <p>方案金额：' +
 ((__t = (totalAmount )) == null ? '' : __t) +
 '元</p>\r\n\r\n  <p>认购金额：' +
-((__t = (oneAmount )) == null ? '' : __t) +
+((__t = ((parseInt(oneAmount, 10) * buyVolume).toFixed(2) )) == null ? '' : __t) +
 '元</p>\r\n\r\n  <p>方案状态：' +
 ((__t = (projectState )) == null ? '' : __t) +
 '\r\n    ';

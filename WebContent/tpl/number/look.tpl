@@ -1,13 +1,46 @@
 <div class="detail">
   <p><%=issueTitle %>第<%=issueNo %>期</p>
+  <%
+  var numbers = lotteryNumber.split(","),
+  reds = [], blues = [];
+  switch(lot) {
+    case "ssq": // 双色球
+      if (numbers.length > 6) {
+        reds = numbers.slice(0, 6);
+        blues = numbers.slice(6, 7);
+      } else {
+        reds = numbers;
+      }
+      break;
+    case "dlt": // 大乐透
+      if (numbers.length > 6) {
+        reds = numbers.slice(0, 5);
+        blues = numbers.slice(5, 7);
+      } else {
+        reds = numbers;
+      }
+      break;
+    case "f3d": // 福彩3D
+    case "pl3": // 排列3
+      reds = numbers;
+    break;
+  }
+  %>
+  <p>开奖号码：
+    <% if (reds.length) { %>
+      <span class="cdd1049"><%=reds.join(" ")%></span>
+    <%} %>
 
-  <p>开奖号码：<%=lotteryNumber.replace(/,/g, ' ') %></p>
+    <% if (blues.length) { %>
+      <span class="c0cc"><%=blues.join(" ")%></span>
+    <%} %>
+  </p>
 
   <p>开奖时间：<%=openDate %></p>
 
-  <p>本期销量：<%=betAmount %></p>
+  <p>本期销量：<%=betAmount %>元</p>
 
-  <p>奖池滚存：<%=bonusAmount %></p>
+  <p>奖池滚存：<%=bonusAmount %>元</p>
 </div>
 
 <%
@@ -61,7 +94,7 @@ var levelMap = {
     <tr>
       <td>奖项</td>
       <td>中奖注数</td>
-      <td>每注奖金</td>
+      <td>每注奖金(元)</td>
     </tr>
     </thead>
     <tbody>

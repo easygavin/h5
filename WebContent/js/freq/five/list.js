@@ -539,6 +539,10 @@ define(function (require, exports, module) {
    * 进入智能追号
    */
   var toAppend = function () {
+    if (!$("#protocol").prop("checked")) {
+      page.toast("请勾选同意合买代购协议!");
+      return false;
+    }
     // 检查方案数
     bufferData = operateToLocal(2);
 
@@ -596,21 +600,6 @@ define(function (require, exports, module) {
     util.setLocalJson(util.keyMap.LOCAL_FIVE_SMART, opt);
 
     page.init(lotConfig.paths["smart"].js, {lot: lot}, 1);
-  };
-
-  /**
-   * 进入合买页面
-   */
-  var toHm = function () {
-    var params = getBuyParams();
-    params.lot = lot;
-    params.mode = mode;
-    params.projectCount = bets * price;
-    params.eachMoney = 1;
-
-    util.setLocalJson(util.keyMap.LOCAL_TO_HM, params);
-
-    page.init("number/hm", {}, 1);
   };
 
   /**
