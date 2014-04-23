@@ -105,7 +105,7 @@ define(function (require, exports, module) {
       $("#playMode").text(playMode);
 
       $("#projectBuy").val(projectBuy);
-      $("#projectHold").val(projectHold);
+      $("#projectHold").val(projectHold == 0 ? "" : projectHold);
       $("#showPer").text(projectCommissions);
 
       showOpenState();
@@ -182,7 +182,6 @@ define(function (require, exports, module) {
           $projectBuy.val(projectBuy);
         }
       }
-
       // 显示付款信息
       showPayInfo();
       return true;

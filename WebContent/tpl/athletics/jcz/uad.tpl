@@ -21,8 +21,8 @@
     </tr>
     <tr class="uad_bet">
       <%var uadOdds = spDatas.footwall.split('|');%>
-      <td class="odds_aud" id="uad_0" data-text="<%=uadOdds[0]%>"><%=uadOdds[0].replace('_',' ')%></td>
-      <td class="odds_aud" id="uad_1" data-text="<%=uadOdds[1]%>"><%=uadOdds[1].replace('_',' ')%></td>
+      <td class="odds_aud" data-result="uad_0" data-text="<%=uadOdds[0]%>"><%=uadOdds[0].replace('_',' ')%></td>
+      <td class="odds_aud" data-result="uad_1" data-text="<%=uadOdds[1]%>"><%=uadOdds[1].replace('_',' ')%></td>
     </tr>
     </tbody>
   </table>

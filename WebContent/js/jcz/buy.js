@@ -384,7 +384,7 @@ define(function (require, exports, module) {
    * 获取最小最大奖金
    */
   var getMinMaxPrize = function () {
-    $("#guessBonus").html(prizes.min + "~" + (prizes.max > 100000 ? "<br>" : "") + prizes.max);
+    $("#guessBonus").html(prizes.min + "~" + prizes.max);
   };
 
   /**
@@ -774,7 +774,7 @@ define(function (require, exports, module) {
     params.mode = mode;
     params.eachMoney = 1;
     params.issueNo = bufferData.issueNo; // 期号
-    params.lotteryId = lotteryMap[titleFlag].lotteryId; //彩种
+    params.lotteryType = lotteryMap[titleFlag].lotteryId; //彩种
     // 1 竞彩，2 单场
     params.passType = "1";
     // 默认2，奖金优化10，上下盘12
@@ -786,8 +786,8 @@ define(function (require, exports, module) {
 
     params.totalBet = totals.toString(); // 总注数
     params.totalBei = timesUnit; // 总倍数
-    params.projectCount = +totals * +timesUnit * +price;//方案总金额
-    params.totalAmount = params.projectCount;
+    params.projectCount = (+totals * +timesUnit * +price).toString();//方案总金额
+    params.totalAmount = params.projectCount.toString();
     util.setLocalJson(util.keyMap.LOCAL_TO_HM, params);
     page.init("jcz/hm", {}, 1);
   };

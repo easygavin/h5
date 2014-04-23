@@ -12,7 +12,7 @@ __p += '<div class="lotteryNum">\r\n  <p class="f16">方案编号:' +
 '</p>\r\n  <p>方案金额：' +
 ((__t = (totalAmount )) == null ? '' : __t) +
 '元</p>\r\n  <p>认购金额：' +
-((__t = (oneAmount )) == null ? '' : __t) +
+((__t = (oneAmount*userBuyVolume )) == null ? '' : __t) +
 '元</p>\r\n  <p>方案状态：' +
 ((__t = (projectState )) == null ? '' : __t) +
 '</p>\r\n  <p>奖金:<span class="cdd1049">' +

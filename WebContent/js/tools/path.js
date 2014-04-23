@@ -3,19 +3,15 @@
  */
 define(function (require, exports, module) {
 
-  // 管家测试："http://uatjc.ecp888.com/"
-  // 管家正式："http://gj.cpocp.com/"
-  // 中间件："http://mw.cpocp.com/"
-  // 公告正式："http://gj.caipiao123.com.cn/";
   var NOTICE_SERVER_URL = "http://gj.caipiao123.com.cn/";
 
-  var SERVER_URL = "http://uatjc.ecp888.com/";
   /*
+  * UAT环境 :     //uatjc.ecp888.com/
   * 中间件地址
   * 内部测试环境： http://192.168.1.115:8080/middle_web/
   * 东莞测试环境： //mw.cpocp.com/
   * */
-  var MIDDLEWARE = "//mw.cpocp.com/";
+  var MIDDLEWARE = "http://192.168.1.115:8080/middle_web/";
 
   module.exports = {
     // 用于设置图片路径

@@ -80,8 +80,12 @@ define(function (require, exports, module) {
       $(".title").text(params.title + "合买");
       $("#projectCount").text(params.projectCount + "元");
       $("#eachMoney").text(params.eachMoney + "元");
-      $("#projectBuy").val(projectBuy);
-      $("#projectHold").val(projectHold);
+      var expectBuy = Math.ceil(parseInt(params.projectCount, 10) * 0.05);
+      if (expectBuy > projectBuy) {
+        minBuy = expectBuy;
+        projectBuy = minBuy;
+      }
+      $("#projectBuy").val(Math.ceil(parseInt(params.projectCount, 10) * 0.1));
       $("#showPer").text(projectCommissions);
 
       showOpenState();
@@ -133,23 +137,24 @@ define(function (require, exports, module) {
       e.value = this.value.replace(/\D/g, '');
       var $projectBuy = $(this);
       projectBuy = $projectBuy.val();
-
+      var canBuyAccount = params.projectCount - projectHold;
       if ($.trim(projectBuy) == "") {
         projectBuy = 0;
       } else {
         if ($.trim(projectBuy) != "" && (isNaN(projectBuy) || projectBuy < 1)) {
           projectBuy = 1;
           $projectBuy.val(1);
-        } else if (projectBuy > params.projectCount) {
-          page.toast("认购金额不能超过总金额");
-          projectBuy = params.projectCount;
+        } else if (projectBuy > canBuyAccount) {
+          page.toast('认购金额不能大于总金额减去保底金额');
+          projectBuy = canBuyAccount;
           $projectBuy.val(projectBuy);
         }
       }
       // 显示付款信息
       showPayInfo();
     }).on('blur', function () {
-      this.value = this.value.replace(/\D/g, '');
+      this.value = this.value < minBuy ? minBuy : this.value.replace(/\D/g, '');
+      projectBuy = this.value;
       // 显示付款信息
       showPayInfo();
     });
@@ -157,24 +162,18 @@ define(function (require, exports, module) {
     $('#projectHold').on('keyup', function (e) {
       e.value = this.value.replace(/\D/g, '');
       var $projectHold = $(this);
-      projectHold = $projectHold.val();
-
-      if ($.trim(projectHold) == "") {
-        projectHold = 0;
-      } else {
-        if ($.trim(projectHold) != "" && (isNaN(projectHold) || projectHold < 1)) {
-          projectHold = 0;
-          $projectHold.val(0);
-        } else if ((projectHold + projectBuy) > params.projectCount) {
-          page.toast("保底金额+认购金额不能大于总金额");
-          projectHold = params.projectCount - projectBuy;
-          $projectHold.val(projectHold);
-        }
+      projectHold = $projectHold.val() == 0 ? '' : $projectHold.val();
+      if(projectHold == '' || isNaN(projectBuy)){
+        $projectHold.val(projectHold);
+      } else if (+projectHold > params.projectCount - projectBuy) {
+        page.toast("保底金额不能大于总金额减去认购金额");
+        projectHold = params.projectCount - projectBuy || '';
+        $projectHold.val(projectHold);
       }
       // 显示付款信息
       showPayInfo();
-    }).on("blur", function (e) {
-      e.value = this.value.replace(/\D/g, '');
+    }).on("blur", function () {
+      this.value = this.value.replace(/\D/g, '');
       // 显示付款信息
       showPayInfo();
     });
@@ -204,10 +203,8 @@ define(function (require, exports, module) {
     // 保底金额
     var $projectHold = $("#projectHold");
     projectHold = $projectHold.val();
-
-    if ($.trim(projectHold) == "" || isNaN(projectHold) || projectHold < 0) {
+    if (isNaN(projectHold) || projectHold < 0) {
       projectHold = 0;
-
       // 显示付款信息
       showPayInfo();
       return false;
@@ -219,10 +216,10 @@ define(function (require, exports, module) {
    * 购买付款
    */
   var toBuy = function () {
-    params.projectHold = projectHold;
+    params.projectHold = projectHold == '' ? 0 : projectHold;
     params.projectOpenState = projectOpenState;
     params.projectBuy = projectBuy;
-    params.projectCommissions = projectCommissions.replace('%','');
+    params.projectCommissions = projectCommissions.replace('%', '');
     // 显示遮住层
     util.showCover();
     util.showLoading();

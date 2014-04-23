@@ -125,7 +125,7 @@ define(function (require, exports, module) {
             var spfIds = [], $spf = $item.find(".spf_bet .click");
             if ($spf.length) {
               $spf.each(function (j, spf) {
-                spfIds.push($(spf).attr("id"));
+                spfIds.push($(spf).data('result'));
               });
               titleMap["spf"] = 1;
             }
@@ -135,7 +135,7 @@ define(function (require, exports, module) {
             var rqspfIds = [], $rqspf = $item.find(".rqspf_bet .click");
             if ($rqspf.length) {
               $rqspf.each(function (k, rqspf) {
-                rqspfIds.push($(rqspf).attr("id"));
+                rqspfIds.push($(rqspf).data('result'));
               });
               titleMap["rqspf"] = 1;
             }
@@ -145,7 +145,7 @@ define(function (require, exports, module) {
             var zjqIds = [], $zjq = $item.find(".zjq_bet .click");
             if ($zjq.length) {
               $zjq.each(function (d, zjq) {
-                zjqIds.push($(zjq).attr("id"));
+                zjqIds.push($(zjq).data('result'));
               });
               titleMap["zjq"] = 1;
             }
@@ -155,8 +155,7 @@ define(function (require, exports, module) {
             var bqcIds = [], $bqc = $item.find(".bqc_bet .click");
             if ($bqc.length) {
               $bqc.each(function (c, bqc) {
-                var bqcId = $(bqc).attr("id");
-                bqcIds.push(bqcId);
+                bqcIds.push($(bqc).data('result'));
               });
               titleMap["bqc"] = 1;
             }
@@ -166,7 +165,7 @@ define(function (require, exports, module) {
             var bfIds = [], $bf = $item.find(".bf_bet .click");
             if ($bf.length) {
               $bf.each(function (c, bf) {
-                bfIds.push($(bf).attr("id"));
+                bfIds.push($(bf).data('result'));
               });
               titleMap["bf"] = 1;
             }
@@ -176,7 +175,7 @@ define(function (require, exports, module) {
             var uadIds = [], $uad = $item.find('.uad_bet .click');
             if ($uad.length) {
               $uad.each(function (c, uad) {
-                uadIds.push($(uad).attr("id") + '_' + $(uad).data('text'));
+                uadIds.push($(uad).data('result') + '_' + $(uad).data('text'));
               });
               titleMap["uad"] = 1;
             }
@@ -236,7 +235,7 @@ define(function (require, exports, module) {
     },
     //添加赛事种类列表
     addLeagueItems : function () {
-      if(this.leagueMap){
+      if (this.leagueMap) {
         var htmlStr = '', $leagueBox = $('.leagueBox');
         _.map(this.leagueMap, function (value, key) {
           htmlStr += '<li class="item click" data-num="' + value + '">' + key + '[' + value + ']场</li>';
@@ -275,31 +274,33 @@ define(function (require, exports, module) {
         var matchId = item.matchId;
         var spfIds = item.spfIds, rqspfIds = item.rqspfIds, zjqIds = item.zjqIds, bqcIds = item.bqcIds, bfIds = item.bfIds, uadIds = item.uadIds;
         var $match = $('.match[ data-match-id=' + matchId + ']');
+
         if (zjqIds.length > 0 || bqcIds.length > 0 || bfIds.length > 0) {
           // 显示SP层
           self.showMoreOdds(matchId);
         }
         // 胜平负
         for (var j = 0, jLen = spfIds.length; j < jLen; j++) {
-          $match.find('#' + spfIds[j]).addClass("click");
+          $match.find('td[data-result=' + spfIds[j] + ']').addClass("click");
         }
         // 让球胜平负
-        for (var k = 0, kLen = rqspfIds.length; k < kLen; k++) {
-          $match.find('#' + rqspfIds[k]).addClass("click");
+        for (var j = 0, kLen = rqspfIds.length; j < kLen; j++) {
+          $match.find('td[data-result=' + rqspfIds[j] + ']').addClass("click");
         }
         // 总进球
-        for (var d = 0, dLen = zjqIds.length; d < dLen; d++) {
-          $match.find('#' + zjqIds[d]).addClass("click");
+        for (var j = 0, dLen = zjqIds.length; j < dLen; j++) {
+          $match.find('td[data-result=' + zjqIds[j] + ']').addClass("click");
         }
         // 半全场
-        for (var c = 0, cLen = bqcIds.length; c < cLen; c++) {
-          $match.find('#' + bqcIds[c]).addClass("click");
+        for (var j = 0, cLen = bqcIds.length; j < cLen; j++) {
+          $match.find('td[data-result=' + bqcIds[j] + ']').addClass("click");
         }
         // 比分
-        for (var f = 0, bLen = bfIds.length; f < bLen; f++) {
-          $match.find('#' + bfIds[f]).addClass("click");
+        for (var j = 0, bLen = bfIds.length; j < bLen; j++) {
+          $match.find('td[data-result=' + bfIds[j] + ']').addClass("click");
         }
         _.each(uadIds, function (i) {
+          $match.find('td[data-result=uad_' + i.split('_')[1]+']').addClass('click');
           $match.find('#uad_' + i.split('_')[1]).addClass('click');
         });
         if (spfIds.length || rqspfIds.length || zjqIds.length || bqcIds.length || bfIds.length) {
@@ -426,7 +427,7 @@ define(function (require, exports, module) {
           util.showCover();
           $('.leagueBox').toggle()
           selectLeagueElem = $(".leagueBox .click");
-        }else{
+        } else {
           this.addLeagueItems();
         }
       }.bind(this));

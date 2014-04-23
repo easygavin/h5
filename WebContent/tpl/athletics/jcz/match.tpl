@@ -23,16 +23,16 @@
     <tr class="spf_bet">
       <% var spfOdds = spDatas.spf.split(','); %>
       <td>0</td>
-      <td class="odds_spf" id="spf_0">胜<%=spfOdds[0]%></td>
-      <td class="odds_spf" id="spf_1">平<%=spfOdds[1]%></td>
-      <td class="odds_spf" id="spf_2">负<%=spfOdds[2]%></td>
+      <td class="odds_spf" data-result="spf_0">胜<%=spfOdds[0]%></td>
+      <td class="odds_spf" data-result="spf_1">平<%=spfOdds[1]%></td>
+      <td class="odds_spf" data-result="spf_2">负<%=spfOdds[2]%></td>
     </tr>
     <tr class="rqspf_bet">
       <% var rqspfOdds = spDatas.rqspf.split(',');%>
       <td><%=rqspfOdds[0] %></td>
-      <td class="odds_rqspf" id="rqspf_1">胜<%=rqspfOdds[1]%></td>
-      <td class="odds_rqspf" id="rqspf_2">平<%=rqspfOdds[2]%></td>
-      <td class="odds_rqspf" id="rqspf_3">负<%=rqspfOdds[3]%></td>
+      <td class="odds_rqspf" data-result="rqspf_1">胜<%=rqspfOdds[1]%></td>
+      <td class="odds_rqspf" data-result="rqspf_2">平<%=rqspfOdds[2]%></td>
+      <td class="odds_rqspf" data-result="rqspf_3">负<%=rqspfOdds[3]%></td>
     </tr>
     </tbody>
   </table>

@@ -19,11 +19,11 @@ __p += '<!--竞彩足球[上下盘]模板-->\r\n<div data-match-id="' +
 ((__t = (playAgainst.split('|').join('vs'))) == null ? '' : __t) +
 '</b>\r\n        <b class="fr">>&nbsp;&nbsp;</b>\r\n      </td>\r\n    </tr>\r\n    <tr class="uad_bet">\r\n      ';
 var uadOdds = spDatas.footwall.split('|');;
-__p += '\r\n      <td class="odds_aud" id="uad_0" data-text="' +
+__p += '\r\n      <td class="odds_aud" data-result="uad_0" data-text="' +
 ((__t = (uadOdds[0])) == null ? '' : __t) +
 '">' +
 ((__t = (uadOdds[0].replace('_',' '))) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_aud" id="uad_1" data-text="' +
+'</td>\r\n      <td class="odds_aud" data-result="uad_1" data-text="' +
 ((__t = (uadOdds[1])) == null ? '' : __t) +
 '">' +
 ((__t = (uadOdds[1].replace('_',' '))) == null ? '' : __t) +

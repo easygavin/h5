@@ -171,9 +171,11 @@ define(function (require, exports, module) {
     var $tr = $('<tr id="m_' + matchId + '" align="left"></tr>');
     var str = "";
     var teams = match.playAgainst.split("|");
-    str += "<td>" + match.number + "&nbsp;&nbsp;" + teams[0] + "&nbsp;&nbsp;" + match.spDatas.rfsf.split(',')[0] + "&nbsp;&nbsp;" + teams[1] + "<p class='cf60'>";
     // 胜负, 让分胜负, 大小分, 胜负差
     var sfIds = item.sfIds, rfsfIds = item.rfsfIds, dxfIds = item.dxfIds, sfcIds = item.sfcIds, spCount = 0;
+    var symbol = rfsfIds.length ? match.spDatas.rfsf.split(',')[0] : 'VS';
+    str += "<td>" + match.number + "&nbsp;&nbsp;" + teams[0] + "&nbsp;&nbsp;" +
+      symbol + "&nbsp;&nbsp;" + teams[1] + "<p class='cf60'>";
     // 收集SP值数组
     var itemSPArr = [];
     var agcgArr = [];
@@ -378,7 +380,7 @@ define(function (require, exports, module) {
         prizes = service.getMinMaxPrize(type, optArr, danNOs, spArr, timesUnit);
       }
     }
-    $("#guessBonus").html("奖金:" + prizes.min + "~" + (prizes.max > 10000 ? "<br>" : "") + prizes.max);
+    $("#guessBonus").html("奖金:" + prizes.min + "~" + prizes.max);
   };
 
   /**

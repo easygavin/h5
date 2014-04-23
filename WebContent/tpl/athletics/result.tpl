@@ -5,7 +5,7 @@
   <p class="bl3">发起人：<%=createUser %></p>
   <p>发起时间：<%=createDate %></p>
   <p>方案金额：<%=totalAmount %>元</p>
-  <p>认购金额：<%=oneAmount %>元</p>
+  <p>认购金额：<%=oneAmount*userBuyVolume %>元</p>
   <p>方案状态：<%=projectState %></p>
   <p>奖金:<span class="cdd1049"><%=+bonus?bonus+'元':bonus %></span></p>
 </div>
