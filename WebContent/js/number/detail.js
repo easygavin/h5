@@ -190,6 +190,7 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
+
     // 返回
     $(".back").on("click", function (e) {
       step < -1 ? page.go(step) : page.goBack();
@@ -211,7 +212,7 @@ define(function (require, exports, module) {
     });
 
     // 查看本单合买
-    $(document).on('click', "#hmOrder", function (e) {
+    $(".detailBox").on('click', "#hmOrder", function (e) {
       // 三个参数 lotteryType,requestType,projectId
       page.init('hm/hmdetail', {"lotteryType" : lotteryType, "projectId" : projectId, "requestType" : "1"}, 1);
     });

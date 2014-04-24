@@ -19,7 +19,7 @@ __p += '<div class="detail">\r\n  <p>方案编号：' +
  if (projectType == "1") { ;
 __p += '\r\n      <a id="hmOrder" class="clearall fr">查看本单合买</a>\r\n    ';
  } ;
-__p += '\r\n  </p>\r\n\r\n  <p>方案奖金：' +
+__p += '\r\n  </p>\r\n\r\n  <p>个人奖金：' +
 ((__t = (bonus + (isNaN(bonus) ? "" : "元") )) == null ? '' : __t) +
 '</p>\r\n</div>\r\n\r\n<div class="detailList bt3">\r\n  <ul>\r\n    ';
  if (hasWithdraw > 1) { ;

@@ -15,7 +15,7 @@
     <% } %>
   </p>
 
-  <p>方案奖金：<%=bonus + (isNaN(bonus) ? "" : "元") %></p>
+  <p>个人奖金：<%=bonus + (isNaN(bonus) ? "" : "元") %></p>
 </div>
 
 <div class="detailList bt3">

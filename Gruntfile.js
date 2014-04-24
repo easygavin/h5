@@ -127,5 +127,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   // 默认任务
-  grunt.registerTask('build', ['clean', 'htmlmin', 'cssmin:minify', 'uglify', 'jst', 'imagemin', 'copy']);
+  grunt.registerTask('build', ['htmlmin', 'cssmin:minify', 'uglify', 'jst', 'imagemin', 'copy']);
 };

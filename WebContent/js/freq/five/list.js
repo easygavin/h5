@@ -703,18 +703,25 @@ define(function (require, exports, module) {
         arr0 = attachZero(util.getSrand(1, 11, 8));
         break;
       case "8": // 前三直选
-        var randoms = attachZero(util.getSrand(1, 11, 3));
-        arr0.push(randoms[0]);
-        arr1.push(randoms[1]);
-        arr2.push(randoms[2]);
+        arr0 = util.getSrand(1, 11, 1);
+        do {
+          arr1 = util.getSrand(1, 11, 1);
+        } while(arr1[0] == arr0[0]);
+
+        do {
+          arr2[0] = util.getSrand(1, 11, 1);
+        } while(arr2[0] == arr0[0] || arr2[0] == arr1[0]);
+
         break;
       case "9": // 前三组选
         arr0 = attachZero(util.getSrand(1, 11, 3));
         break;
       case "10": // 前二直选
-        var randoms = attachZero(util.getSrand(1, 11, 2));
-        arr0.push(randoms[0]);
-        arr1.push(randoms[1]);
+        arr0 = util.getSrand(1, 11, 1);
+        do {
+          arr1 = util.getSrand(1, 11, 1);
+        } while(arr1[0] == arr0[0]);
+
         break;
       case "11": // 前二组选
         arr0 = attachZero(util.getSrand(1, 11, 2));

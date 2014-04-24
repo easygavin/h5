@@ -7,6 +7,10 @@ define(function (require, exports, module) {
   var canBack = 1;
   // 来源
   var from = "";
+  // 缓存数据
+  var bufferName = "";
+  var bufferPwd = "";
+  var bufferSure = "";
   /**
    * 初始化
    */
@@ -41,8 +45,22 @@ define(function (require, exports, module) {
    */
   var initShow = function () {
     $("#container").html(template);
+    // 显示缓存数据
+    showBuffer();
   };
 
+  /**
+   * 显示缓存数据
+   */
+  var showBuffer = function () {
+    if (canBack) {
+      bufferName = "", bufferPwd = "", bufferSure = "";
+    } else {
+      $(".username").val(bufferName);
+      $(".password").val(bufferPwd);
+      $(".nextpad").val(bufferSure);
+    }
+  };
   /**
    * 绑定事件
    */
@@ -63,13 +81,16 @@ define(function (require, exports, module) {
       if (canBack && from == "login") {
         page.goBack();
       } else {
-        page.init("login", {}, 1);
+        page.init("login", {from: "register"}, 1);
       }
       return true;
     });
 
     // 购彩协议
     $(".checked").on("click", function (e) {
+      bufferName = $(".username").val();
+      bufferPwd = $(".password").val();
+      bufferSure = $(".nextpad").val();
       page.init("protocol", {}, 1);
       return true;
     });
@@ -146,17 +167,7 @@ define(function (require, exports, module) {
 
             page.toast("注册成功");
 
-            switch (from) {
-              case "home":
-                page.init("user/bindMobile", {}, 0);
-                break;
-              case "login":
-                page.go(-2);
-                break;
-              case "":
-                page.init("user/bindMobile", {}, 0);
-                break;
-            }
+            page.init("user/bindMobile", {}, 0);
           } else {
             page.toast(data.errorMsg);
           }

@@ -113,6 +113,8 @@ define(function (require, exports, module) {
             if (canBack) {
               if (from === "home") {
                 page.init("home", {from: "login"}, 0);
+              }else if (from === "register") {
+                page.go(-2);
               } else {
                 page.goBack();
               }

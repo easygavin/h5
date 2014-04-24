@@ -24,7 +24,7 @@ define(function (require, exports, module) {
   // 合买方案提成
   var projectCommissions = "5%";
   // 方案公开方式
-  var projectOpenState = "2";
+  var projectOpenState = "1";
   // 最小购买份数
   var minBuy = 1;
   // 最小保底金额
@@ -74,7 +74,7 @@ define(function (require, exports, module) {
     if (canBack) {
       lotConfig = {}, params = {}, projectBuy = 1,
         projectHold = 0, projectCommissions = "5%",
-        projectOpenState = "2";
+        projectOpenState = "1";
     }
   };
 
@@ -252,9 +252,14 @@ define(function (require, exports, module) {
     var $projectHold = $("#projectHold");
     projectHold = $projectHold.val();
 
-    if ($.trim(projectHold) == "" || isNaN(projectHold) || projectHold < 0) {
+    if ($.trim(projectHold) == "" ) {
       projectHold = 0;
-      $projectHold.val(projectHold);
+      // 显示付款信息
+      showPayInfo();
+      return true;
+    } else if (isNaN(projectHold) || projectHold < 0) {
+      projectHold = 0;
+      page.toast("保底金额不能低于总金额的5%");
       // 显示付款信息
       showPayInfo();
       return false;

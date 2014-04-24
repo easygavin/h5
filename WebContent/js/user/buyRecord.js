@@ -262,7 +262,7 @@ define(function (require, exports, module) {
     $td.append($p1, $p2);
     if (parseInt(item.income, 10) > 0) {
       var $p3 = $("<p></p>");
-      $p3.html("<i>奖金：<i class='cf60'>" + parseFloat(item.income).toFixed(2) + "</i>元</i>");
+      $p3.html("<i>方案奖金：<i class='cf60'>" + parseFloat(item.income).toFixed(2) + "</i>元</i>");
       $td.append($p3);
     }
     $tr.append($td);

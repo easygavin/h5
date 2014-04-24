@@ -1,5 +1,5 @@
 <% _.each(data, function (d) { %>
-<table cellpadding="0" cellspacing="0" width="100%" class="line30 kjList">
+<table cellpadding="0" cellspacing="0" width="100%" class="line30 kjList bt4">
   <tr>
     <td>
       <i class="fl">第<%=d.issueNo %>期</i>

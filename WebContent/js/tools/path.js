@@ -11,7 +11,7 @@ define(function (require, exports, module) {
   * 内部测试环境： http://192.168.1.115:8080/middle_web/
   * 东莞测试环境： //mw.cpocp.com/
   * */
-  var MIDDLEWARE = "http://192.168.1.115:8080/middle_web/";
+  var MIDDLEWARE = "//mw.cpocp.com/";
 
   module.exports = {
     // 用于设置图片路径
