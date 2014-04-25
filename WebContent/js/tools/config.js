@@ -145,13 +145,13 @@ define(function (require, exports, module) {
             desc: "至少选择3个号码，单注奖金160元",
             tips: "请至少选择一注"
           },
-          /*"3": {key: "3", name: "直选胆拖", shows: [
+          "3": {key: "3", name: "直选胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
           ], rdm: false, omit: false, playType: "5", betType: "1",
             desc: "由1-2个胆拖加n个拖码组成",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },*/
+          },
           "4": {key: "4", name: "组三胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
@@ -208,13 +208,13 @@ define(function (require, exports, module) {
             desc: "至少选择3个号码，单注奖金160元",
             tips: "请至少选择一注"
           },
-          /*"3": {key: "3", name: "直选胆拖", shows: [
+          "3": {key: "3", name: "直选胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
           ], rdm: false, omit: false, playType: "5", betType: "1",
             desc: "由1-2个胆码加n个拖码组成",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },*/
+          },
           "4": {key: "4", name: "组三胆拖", shows: [
             {id: "0", desc: "胆", yl: ""},
             {id: "1", desc: "拖", yl: ""}
@@ -327,13 +327,13 @@ define(function (require, exports, module) {
             desc: "至少选择2个号码，单注奖金65元",
             tips: "请至少选择一注"
           },
-          /*"12": {key: "12", name: "前三直选胆拖", shows: [
+          "12": {key: "12", name: "前三直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "512", bonus: 1170, playType: "1", betType: "1",
             desc: "由1-2个胆码加n个拖码组成，单注奖金1170元",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },*/
+          },
           "13": {key: "13", name: "前三组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -341,13 +341,13 @@ define(function (require, exports, module) {
             desc: "由1-2个胆码加n个拖码组成，单注奖金195元",
             tips: "请至少选择一注,胆码不能超过2个球"
           },
-          /*"14": {key: "14", name: "前二直选胆拖", shows: [
+          "14": {key: "14", name: "前二直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "412", bonus: 130, playType: "1", betType: "1",
             desc: "由1个胆码加n个拖码组成，单注奖金130元",
             tips: "请至少选择一注,胆码不能超过1个球"
-          },*/
+          },
           "15": {key: "15", name: "前二组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -502,13 +502,13 @@ define(function (require, exports, module) {
             desc: "至少选择2个号码，单注奖金65元",
             tips: "请至少选择一注"
           },
-          /*"12": {key: "12", name: "前三直选胆拖", shows: [
+          "12": {key: "12", name: "前三直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "512", bonus: 1170, playType: "1", betType: "1",
             desc: "由1-2个胆码加n个拖码组成，单注奖金1170元",
             tips: "请至少选择一注,胆码不能超过2个球"
-          },*/
+          },
           "13": {key: "13", name: "前三组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
@@ -516,13 +516,13 @@ define(function (require, exports, module) {
             desc: "由1-2个胆码加n个拖码组成，单注奖金195元",
             tips: "请至少选择一注,胆码不能超过2个球"
           },
-          /*"14": {key: "14", name: "前二直选胆拖", shows: [
+          "14": {key: "14", name: "前二直选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}
           ], rdm: false, omit: false, ctxKey: "412", bonus: 130, playType: "1", betType: "1",
             desc: "由1个胆码加n个拖码组成，单注奖金130元",
             tips: "请至少选择一注,胆码不能超过1个球"
-          },*/
+          },
           "15": {key: "15", name: "前二组选胆拖", shows: [
             {id: "0", desc: "胆"},
             {id: "1", desc: "拖"}

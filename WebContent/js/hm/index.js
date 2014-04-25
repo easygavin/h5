@@ -31,7 +31,7 @@ define(function (require, exports, module) {
   var orderByName = 'percent';
 
   //排序方式{desc:升序,asc:降序}
-  var orderBy = 'asc';
+  var orderBy = 'desc'; //默认desc
 
   //请求页数
   var requestPage = 1;
@@ -303,9 +303,16 @@ define(function (require, exports, module) {
       case "53": // 竞彩蓝球混投
         prepend = "竞彩蓝球混投";
         break;
+      default :
+        prepend ="全部";
+        break;
     }
     $("#hmTitle").html(prepend);
   };
+
+  /**
+   * 下拉选项.
+   */
 
   /**
    * 绑定事件

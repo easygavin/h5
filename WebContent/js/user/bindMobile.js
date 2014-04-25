@@ -80,7 +80,7 @@ define(function (require, exports, module) {
         $('#captcha').val(displayNo).attr("disabled", true);
         $('#sendCaptcha').hide();
         $('.surebtn').html('返回');
-         bindFlag = true;
+        bindFlag = true;
       }
     }
 
@@ -147,7 +147,7 @@ define(function (require, exports, module) {
       page.init('login', {}, 1);
       return false;
     }
-    if(!bindFlag) {
+    if (!bindFlag) {
       var mobileNo = $('#mobileNo').val();
       var reg = new RegExp("^[0-9]*$");
       if (mobileNo == '') {
@@ -168,13 +168,13 @@ define(function (require, exports, module) {
       }
 
       if (!_.isEmpty(userInfo)) {
-        account.bindMobileNo(mobileNo, userInfo.userId, userInfo.userKey, captcha, function (data) {
+        var request = account.bindMobileNo(mobileNo, userInfo.userId, userInfo.userKey, captcha, function (data) {
           if (!_.isEmpty(data)) {
             if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
               userInfo.userMobile = mobileNo;
               util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
               page.toast('手机绑定成功');
-              page.goBack();
+              page.init('user/bindMobile',{},1);
             } else {
               page.toast(data.errorMsg);
             }
@@ -183,10 +183,11 @@ define(function (require, exports, module) {
             page.goBack();
           }
         });
+        util.addAjaxRequest(request);
       } else {
         page.init("login", {}, 1);
       }
-    }else {
+    } else {
       page.goBack();
     }
   };

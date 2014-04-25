@@ -18,14 +18,14 @@
       <%=arr[i].leagueMatch%><br>
       <%=arr[i].time%>
     </td>
-    <td class="bnone"><b class="f16 c257ab3"><%=player[0]%></b></td>
+    <td class="bnone"><b class="f16 c257ab3"><%=player[0].substring(0,4)%></b></td>
     <td class="bnone">
       <div class="lqkj">
         <div class="lqkjtitle <%=classArr[rsArr.indexOf(rs)] %>"><%=rs%></div>
         <p><%=arr[i].goalscore%></p>
       </div>
     </td>
-    <td class="bnone"><b class="f16 c257ab3"><%=player[1]%></b></td>
+    <td class="bnone"><b class="f16 c257ab3"><%=player[1].substring(0,4)%></b></td>
   </tr>
   <%}%>
   </tbody>

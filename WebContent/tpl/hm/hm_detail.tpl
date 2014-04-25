@@ -35,8 +35,8 @@
   </thead>
   <tbody>
 
-  <%if(typeof data.detail!='undefined'&&typeof data.detail.content!='undefined'){%>
-
+  <%
+  if(typeof data.detail!='undefined'){%>
   <%
   for(var i = 0, len = data.detail.length; i < len; i++) {
   var content = data.detail[i].content.replace(/{/g, '<span class="cdd1049">').replace(/}/g, '</span>').replace(/\n/g, '<br>');
@@ -61,16 +61,30 @@
 
   </tbody>
   <%}else if(display_flag='digit'){%>
-  <tr>
-    <td style='text-align:center;'><%=data.title%></td>
-  </tr>
-  <tr>
-    <td>
-      <div style='overflow:auto;height:200px;'>
-        <%=data.detail.replace(/\#/g,'<br>')%>
-      </div>
-    </td>
-  </tr>
+
+      <tr>
+        <td style='text-align:center;'><%=data.title%></td>
+      </tr>
+
+      <%if(data.detail!=''){%>
+          <tr>
+            <td>
+              <div style='overflow:auto;height:200px;'>
+                <%=data.detail.replace(/\#/g,'<br>')%>
+              </div>
+            </td>
+          </tr>
+      <%}else{%>
+            <tr>
+               <%if(data.openState=='2'){%>
+               <td class="cdd1049">跟单后公开</td>
+               <%}else if(data.openState=='3'){%>
+               <td class="cdd1049">截止后公开</td>
+               <%}else if(data.openState='4'){%>
+               <td class="cdd1049">不公开</td>
+               <%}%>
+             </tr>
+      <%}%>
   <%}%>
 </table>
 

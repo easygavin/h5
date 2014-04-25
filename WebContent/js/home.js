@@ -363,7 +363,7 @@ define(function (require, exports, module) {
           if (typeof data != "undefined") {
             if (typeof data.statusCode != "undefined") {
               if (data.statusCode == "0") {
-                $("#short_alias").html(user.userName + " <br>余额：<i class='cf60'>" + (parseFloat(data.userBalance).toFixed(2)) + "</i>元");
+                $("#short_alias").html(user.userName + " <br>可用余额：<i class='cf60'>" + (parseFloat(data.userBalance).toFixed(2)) + "</i>元");
               }
             }
           }

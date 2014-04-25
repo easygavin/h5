@@ -12,7 +12,7 @@ __p += '<div class="detail">\r\n  <p>方案编号：' +
 '</p>\r\n\r\n  <p>方案金额：' +
 ((__t = (totalAmount )) == null ? '' : __t) +
 '元</p>\r\n\r\n  <p>认购金额：' +
-((__t = ((parseInt(oneAmount, 10) * buyVolume).toFixed(2) )) == null ? '' : __t) +
+((__t = ((parseInt(oneAmount, 10) * userBuyVolume).toFixed(2) )) == null ? '' : __t) +
 '元</p>\r\n\r\n  <p>方案状态：' +
 ((__t = (projectState )) == null ? '' : __t) +
 '\r\n    ';
@@ -32,7 +32,7 @@ __p += '\r\n    <li class="title">\r\n      <p>' +
 '</p>\r\n    </li>\r\n    ';
  } ;
 __p += '\r\n    <li><p class="wb">' +
-((__t = (detail )) == null ? '' : __t) +
+((__t = (detail == "" ? "不公开" : detail )) == null ? '' : __t) +
 '</p></li>\r\n    ';
  if (openNumber) { ;
 __p += '\r\n    <li class="title"><p class="wb">\r\n      ' +

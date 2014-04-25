@@ -2,11 +2,7 @@
  * 竞彩足球历史开奖信息详情
  */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/jcz/detail.html'),
-    page = require('page'),
-    _ = require('underscore'),
-    service = require('services/jcz'),
-    util = require('util');
+  var view = require('/views/athletics/jcz/detail.html'), page = require('page'), _ = require('underscore'), service = require('services/jcz'), util = require('util');
   // 赛事开奖结果
   var matchResult = {};
   /**
@@ -16,12 +12,9 @@ define(function (require, exports, module) {
     // 加载模板内容
     $("#container").html(view);
     // 赛事开奖结果
-    matchResult = _.isEmpty(data) ? JSON.parse(util.unParam(location.search.substring(1)).data).matchResult : data;
+    matchResult = _.isEmpty(data) ? JSON.parse(util.unParam(location.hash.substring(1).split("?")[1]).data).matchResult : data;
     // 参数设置
-    var params = {};
-    if (matchResult != "undefined") {
-      params.matchResult = matchResult;
-    }
+    var params = $.extend(true, {} , matchResult);
     var tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
@@ -84,11 +77,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState(
-      {url: "jcz/detail", data: params},
-      "jcz/detail",
-        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcz/detail",
-      forward ? 1 : 0);
+    page.setHistoryState({url : "jcz/detail", data : params}, "jcz/detail", "#jcz/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
 
   };
 
@@ -147,5 +136,5 @@ define(function (require, exports, module) {
       page.init("jcz/mix_bet", {}, 1);
     });
   };
-  return {init: init};
+  return {init : init};
 });

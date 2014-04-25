@@ -163,7 +163,7 @@ define(function (require, exports, module) {
       "userId": userId,
       "userKey": userKey
     };
-    $.ajax({
+   return $.ajax({
       url: path.GET_CARD_ID,
       type: "GET",
       data: {data: JSON.stringify(data)},
@@ -191,7 +191,7 @@ define(function (require, exports, module) {
       "userKey": userKey
     };
 
-    $.ajax({
+   return $.ajax({
       url: path.BIND_PERSON_CARD,
       type: "GET",
       data: {data: JSON.stringify(data)},
@@ -245,7 +245,7 @@ define(function (require, exports, module) {
       "indentifyingCode": indentifyingCode
     };
 
-    $.ajax({
+   return $.ajax({
       type: "GET",
       url: path.VALIDATE_CODE,
       data: {data: JSON.stringify(data)},
@@ -494,7 +494,7 @@ define(function (require, exports, module) {
    */
   var getBuyRecordsList = function (data, callback) {
 
-    $.ajax({
+  return  $.ajax({
       type: "GET",
       url: path.BUY_AWARD,
       data: {data: JSON.stringify(data)},

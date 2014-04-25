@@ -49,15 +49,15 @@ define(function (require, exports, module) {
      * @param callback
 
      */
-    getHmDetail: function (lotteryType, requestType, projectId, requestUrl, userKey, userId, callback) {
+    getHmDetail: function (lotteryType, requestType, projectId, requestUrl, userId,userKey, callback) {
 
       var data = {
         "lotteryType": lotteryType,
         "requestType": requestType,
         "projectId": projectId,
         "requestUrl": requestUrl,
-        "userKey": "",
-        "userId": ""
+        "userKey": userKey,
+        "userId": userId
       };
 
       return $.ajax({

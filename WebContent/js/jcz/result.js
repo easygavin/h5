@@ -74,7 +74,10 @@ define(function (require, exports, module) {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
             require.async('/tpl/athletics/result', function (tpl) {
-              $('#main').html(tpl(data));
+              $('#main').html(tpl({
+                data:data,
+                hideString : util.hideString
+              }));
               $(".tzBox").text($.trim(data.title) + "投注");
             });
           } else if (data.statusCode == "off") {

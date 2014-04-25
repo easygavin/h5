@@ -76,7 +76,6 @@ define(function (require, exports, module) {
   };
 
 
-
   /**
    * 初始化显示,查询身份证是否认证.
    */
@@ -90,7 +89,7 @@ define(function (require, exports, module) {
     // 显示遮住层
     util.showLoading();
     if (!_.isEmpty(loginState) && loginState.userId && loginState.userKey) {
-      account.inspectUserIDCardState(loginState.userId, loginState.userKey, function (data) {
+      var request = account.inspectUserIDCardState(loginState.userId, loginState.userKey, function (data) {
         //隐藏遮盖层
         util.hideLoading();
         $('.surebtn').html('确认');
@@ -107,6 +106,7 @@ define(function (require, exports, module) {
           page.toast('查询信息出错,请稍后充值');
         }
       });
+      util.addAjaxRequest(request);
     } else {
       page.init('login', {}, 1);
     }
@@ -154,7 +154,7 @@ define(function (require, exports, module) {
       return false;
     }
     if (!_.isEmpty(loginState) && loginState.userId && loginState.userKey) {
-      account.bindIDCard(idNumber, realName, loginState.userId, loginState.userKey, function (data) {
+     var request = account.bindIDCard(idNumber, realName, loginState.userId, loginState.userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (data.statusCode == '0') {
             page.toast("绑定成功");
@@ -168,6 +168,7 @@ define(function (require, exports, module) {
           page.toast('绑定失败,请稍候重试');
         }
       });
+      util.addAjaxRequest(request);
     }
   };
 

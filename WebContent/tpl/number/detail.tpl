@@ -7,7 +7,7 @@
 
   <p>方案金额：<%=totalAmount %>元</p>
 
-  <p>认购金额：<%=(parseInt(oneAmount, 10) * buyVolume).toFixed(2) %>元</p>
+  <p>认购金额：<%=(parseInt(oneAmount, 10) * userBuyVolume).toFixed(2) %>元</p>
 
   <p>方案状态：<%=projectState %>
     <% if (projectType == "1") { %>
@@ -32,7 +32,7 @@
       <p><%=title %></p>
     </li>
     <% } %>
-    <li><p class="wb"><%=detail %></p></li>
+    <li><p class="wb"><%=detail == "" ? "不公开" : detail %></p></li>
     <% if (openNumber) { %>
     <li class="title"><p class="wb">
       <%=issueNo %>期开奖号码:

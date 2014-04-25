@@ -342,7 +342,7 @@ define(function (require, exports, module) {
         var flag = zfbCftWapInput();
         if (flag) {
           util.showLoading();
-          charge.zfbWap(parameterValues, function (data) {
+          var request = charge.zfbWap(parameterValues, function (data) {
             util.hideLoading();
             if (typeof  data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '0') {
@@ -355,6 +355,7 @@ define(function (require, exports, module) {
               util.toast("充值出错,请联系客服");
             }
           });
+          util.addAjaxRequest(request);
         }
       };
 
@@ -366,7 +367,7 @@ define(function (require, exports, module) {
         var flag = zfbCftWapInput();
         if (flag) {
           util.showLoading();
-          charge.cftWap(parameterValues, function (data) {
+          var request = charge.cftWap(parameterValues, function (data) {
             util.hideLoading();
             if (typeof  data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '0') {
@@ -378,6 +379,7 @@ define(function (require, exports, module) {
               page.toast("充值出错,请联系客服");
             }
           });
+          util.addAjaxRequest(request);
         }
       };
 
@@ -389,7 +391,7 @@ define(function (require, exports, module) {
         var flag = czkInput();
         if (flag) {
           util.showLoading();
-          charge.czk(parameterValues, function (data) {
+          var request = charge.czk(parameterValues, function (data) {
             util.hideLoading();
             if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '0') {
@@ -400,7 +402,7 @@ define(function (require, exports, module) {
                       page.init("user/person", {}, 0);
                     },
                     function (e) {
-                      page.init('charge/index',{},0);
+                      page.init('charge/index', {}, 0);
                     }
                 );
               } else {
@@ -410,6 +412,7 @@ define(function (require, exports, module) {
               page.toast("充值失败,请联系客服.");
             }
           });
+          util.addAjaxRequest(request);
         }
       };
 
@@ -420,7 +423,7 @@ define(function (require, exports, module) {
         var flag = ztkInput();
         if (flag) {
           util.showLoading();
-          charge.ztk(parameterValues, function (data) {
+          var request = charge.ztk(parameterValues, function (data) {
             util.hideLoading();
             if (typeof data != "undefined" && typeof data.statusCode != "undefined") {
               if (data.statusCode == '1') {
@@ -431,7 +434,7 @@ define(function (require, exports, module) {
                       page.init("user/person", {}, 0);
                     },
                     function (e) {
-                      page.init('charge/index',{},0);
+                      page.init('charge/index', {}, 0);
                     }
                 );
               } else {
@@ -441,6 +444,7 @@ define(function (require, exports, module) {
               page.toast("充值失败,请联系客服.");
             }
           });
+          util.addAjaxRequest(request);
         }
       };
 
@@ -512,7 +516,7 @@ define(function (require, exports, module) {
         });
 
         //充值卡充值[移动,联通,电信]
-        $('.loginbtn').on('click',function (e) {
+        $('.loginbtn').on('click', function (e) {
           ckzPay();
         });
 

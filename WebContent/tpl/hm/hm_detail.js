@@ -38,8 +38,9 @@ __p += '\r\n  <colgroup>\r\n    <col width=\'70%\'>\r\n    <col width=\'20%\'>\r
 '期<span class="fr">' +
 ((__t = (data.passWay)) == null ? '' : __t) +
 '</span></td>\r\n  </tr>\r\n  </thead>\r\n  <tbody>\r\n\r\n  ';
-if(typeof data.detail!='undefined'&&typeof data.detail.content!='undefined'){;
-__p += '\r\n\r\n  ';
+
+  if(typeof data.detail!='undefined'){;
+__p += '\r\n  ';
 
   for(var i = 0, len = data.detail.length; i < len; i++) {
   var content = data.detail[i].content.replace(/{/g, '<span class="cdd1049">').replace(/}/g, '</span>').replace(/\n/g, '<br>');
@@ -66,11 +67,25 @@ __p += '\r\n  </tr>\r\n  ';
 };
 __p += '\r\n\r\n  </tbody>\r\n  ';
 }else if(display_flag='digit'){;
-__p += '\r\n  <tr>\r\n    <td style=\'text-align:center;\'>' +
+__p += '\r\n\r\n      <tr>\r\n        <td style=\'text-align:center;\'>' +
 ((__t = (data.title)) == null ? '' : __t) +
-'</td>\r\n  </tr>\r\n  <tr>\r\n    <td>\r\n      <div style=\'overflow:auto;height:200px;\'>\r\n        ' +
+'</td>\r\n      </tr>\r\n\r\n      ';
+if(data.detail!=''){;
+__p += '\r\n          <tr>\r\n            <td>\r\n              <div style=\'overflow:auto;height:200px;\'>\r\n                ' +
 ((__t = (data.detail.replace(/\#/g,'<br>'))) == null ? '' : __t) +
-'\r\n      </div>\r\n    </td>\r\n  </tr>\r\n  ';
+'\r\n              </div>\r\n            </td>\r\n          </tr>\r\n      ';
+}else{;
+__p += '\r\n            <tr>\r\n               ';
+if(data.openState=='2'){;
+__p += '\r\n               <td class="cdd1049">跟单后公开</td>\r\n               ';
+}else if(data.openState=='3'){;
+__p += '\r\n               <td class="cdd1049">截止后公开</td>\r\n               ';
+}else if(data.openState='4'){;
+__p += '\r\n               <td class="cdd1049">不公开</td>\r\n               ';
+};
+__p += '\r\n             </tr>\r\n      ';
+};
+__p += '\r\n  ';
 };
 __p += '\r\n</table>\r\n\r\n<div class="w45"></div>';
 

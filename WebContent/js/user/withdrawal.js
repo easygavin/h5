@@ -67,7 +67,7 @@ define(function (require, exports, module) {
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       var userId = userInfo.userId, userKey = userInfo.userKey;
-      account.getUserBalance(requestType, userId, userKey, function (data) {
+     var request= account.getUserBalance(requestType, userId, userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
             userBankInfo = data;
@@ -95,6 +95,7 @@ define(function (require, exports, module) {
           page.toast("查询失败,请稍后重试");
         }
       });
+      util.addAjaxRequest(request);
     } else {
       page.init("login", {}, 1);
     }

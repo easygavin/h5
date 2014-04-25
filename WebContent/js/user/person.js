@@ -78,7 +78,7 @@ define(function (require, exports, module) {
         if (!_.isEmpty(data) && typeof data.statusCode != 'undefined' && data.statusCode == '0') {
           $("#trueName").html("账户名：" + userInfo.userName);
           var balance = parseFloat(data.userBalance).toFixed(2);
-          $("#balance").html(balance <= 0 ? 0 : balance);
+          $("#balance").html(balance <= 0 ? 0.00 : balance);
         } else if (data.statusCode == '0007') {
         } else {
           page.toast(data.errorMsg);
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     // 显示遮住层
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
-      account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
+      var request = account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
             //存储用户的真实姓名.在绑定银行卡页面需要.
@@ -125,6 +125,7 @@ define(function (require, exports, module) {
           page.toast('查询失败,请稍后重试!');
         }
       });
+      util.addAjaxRequest(request);
     } else {
       page.init('login', {}, 1);
     }
@@ -142,19 +143,20 @@ define(function (require, exports, module) {
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       var userId = userInfo.userId, userKey = userInfo.userKey;
-      account.getUserBalance('1', userId, userKey, function (data) {
+      var request = account.getUserBalance('1', userId, userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (typeof  data.statusCode != 'undefined' && data.statusCode == '0') {
-            page.init('user/withdrawal',{},1);
+            page.init('user/withdrawal', {}, 1);
             //未绑定银行卡
           } else if (typeof  data.statusCode != 'undefined' && data.statusCode == '-58') {
             page.toast(data.errorMsg);
-            page.init('user/bindBankCard',{},1)
+            page.init('user/bindBankCard', {}, 1)
           }
         } else {
           page.toast('查询失败,请稍后重试');
         }
       });
+      util.addAjaxRequest(request);
     } else {
       page.init('login', {}, 1);
     }
@@ -223,6 +225,19 @@ define(function (require, exports, module) {
           idState('withdrawal');
           break;
       }
+    });
+
+    //退出
+    $('#loginOut').on('click', function () {
+      util.clearLocalData(util.keyMap.LOCAL_USER_INFO_KEY);
+      util.clearLocalData(util.keyMap.USER_TRUE_NAME);
+      account.logout(userInfo.userId, userInfo.userKey, function () {
+        if (canBack) {
+          page.goBack();
+        } else {
+          page.init("home", {}, 1);
+        }
+      });
     });
   };
 

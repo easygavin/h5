@@ -2,13 +2,7 @@
  * 合买详情页
  */
 define(function (require, exports, module) {
-  var page = require('page'),
-      util = require('util'),
-      $ = require('zepto'),
-      _ = require('underscore'),
-      path = require('path'),
-      hm = require('services/hm'),
-      template = require("/views/hm/hmdetail.html");
+  var page = require('page'), util = require('util'), $ = require('zepto'), _ = require('underscore'), path = require('path'), hm = require('services/hm'), template = require("/views/hm/hmdetail.html");
 
   //彩种Id
   var lotteryType = '';
@@ -30,6 +24,7 @@ define(function (require, exports, module) {
   var totalResidue;
   //单份金额.
   var singleMoney;
+
   /**
    * 初始化
    */
@@ -63,8 +58,7 @@ define(function (require, exports, module) {
     //绑定事件
     bindEvent();
     // 处理返回
-    page.setHistoryState({url: "hm/hmdetail", data: params},
-        "hm/hmdetail", "#hm/hmdetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
+    page.setHistoryState({url : "hm/hmdetail", data : params}, "hm/hmdetail", "#hm/hmdetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -121,9 +115,15 @@ define(function (require, exports, module) {
    *获取方案详情
    */
   var getDetail = function () {
-    util.showLoading();
+
     if (lotteryType != '' && requestType != '' && projectId != '' && hmDetailUrl != '') {
-      hm.getHmDetail(lotteryType, requestType, projectId, hmDetailUrl, "", "", function (data) {
+      var userId = '', userKey = '';
+      if (tkn) {
+        var userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+        userId = userInfo.userId, userKey = userInfo.userKey;
+      }
+      util.showLoading();
+      var request = hm.getHmDetail(lotteryType, requestType, projectId, hmDetailUrl, userId, userKey, function (data) {
         // 隐藏加载标示
         util.hideLoading();
         if (typeof data != "undefined") {
@@ -131,11 +131,10 @@ define(function (require, exports, module) {
             if (data.statusCode == "0") {
               setPageInfo(data);
               require.async('/tpl/hm/hm_detail', function (tpl) {
-                $('#main').html(tpl(
-                    {
-                      data: data,
-                      display_flag: display_flag
-                    }));
+                $('#main').html(tpl({
+                    data : data,
+                    display_flag : display_flag
+                  }));
               });
             } else if (data.statusCode == "off") {
               page.init("login", {}, 1);
@@ -145,6 +144,7 @@ define(function (require, exports, module) {
           }
         }
       });
+      util.addAjaxRequest(request);
     }
   };
 
@@ -156,7 +156,8 @@ define(function (require, exports, module) {
     singleMoney = data.oneAmount;
     totalResidue = parseInt(data.totalCount, 10) - parseInt(data.buyVolume, 10);
     var residue = parseInt(data.totalCount) - parseInt(data.buyVolume);
-    $('#residue').val('剩' + residue + '份');
+    //$('#residue').val('剩' + residue + '份');
+    $('#residue').attr('placeholder', "剩" + residue + "份");
   };
 
   /**
@@ -192,7 +193,7 @@ define(function (require, exports, module) {
     requestPrams.lotteryType = lotteryType;    //彩种id
     requestPrams.purchaseMoney = singleMoney;  //每份金额
     requestPrams.projectId = projectId;        //方案Id
-    hm.joinHm(requestPrams,function (datas) {
+    hm.joinHm(requestPrams, function (datas) {
       if (!_.isEmpty(datas)) {
         if (typeof datas.statusCode != 'undefined' && datas.statusCode == '0') {
           page.toast('购买成功');
@@ -218,27 +219,16 @@ define(function (require, exports, module) {
       this.value = this.value.replace(/\D/g, '');
       var $residue = $(this);
       residue = $residue.val();
-      if ($.trim($residue) == "") {
+      if (residue == '' || isNaN(residue) || residue < 1) {
         residue = 1;
-      } else {
-        if ($.trim(residue) != '' && (isNaN(residue) || residue < 1)) {
-          residue = 1;
-          $residue.val(1);
-        } else if (residue > totalResidue) {
-          page.toast("亲，最多只能选择" + totalResidue + "份哦!");
-          $residue.val(totalResidue);
-          residue = totalResidue;
-        }
+      } else if (residue > totalResidue) {
+        page.toast("亲，最多只能选择" + totalResidue + "份哦!");
+        $residue.val(totalResidue);
+        residue = totalResidue;
       }
       $('#payMoney').html(residue + '份' + singleMoney * residue + '元');
     });
-
-    $('.a2').on('click', function () {
-      toBuy();
-      return true;
-    });
+    $('.a2').on('click', toBuy);
   };
-
-
-  return {init: init};
+  return {init : init};
 });

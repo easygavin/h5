@@ -288,7 +288,7 @@ define(function (require, exports, module) {
       page.init("jcl/intro", {}, 1);
     });
     // 关闭显示框
-    $('.cover').on('touchstart click', function () {
+    $('.cover').on('touchstart click', function (e) {
       $(".popup").hide();
       if ($(".leagueBox").is(":visible")) {
         hideLeagueBox();

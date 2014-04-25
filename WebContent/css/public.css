@@ -2220,7 +2220,6 @@ td.click {
 .panel {
   margin-top: 10px;
 }
-
 .leagueBox {
   display: none;
   overflow: hidden;
@@ -2465,4 +2464,12 @@ td.click {
 .tc_content {
   font: 1.5em/2em "微软雅黑";
   color: red
+}
+
+.hmHead{
+    position: absolute;
+    top: 0;
+    left: 1.5em;;
+    margin-right: 0.5em;
+    float: right;
 }

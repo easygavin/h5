@@ -6,10 +6,10 @@ define(function (require, exports, module) {
   var util = {};
   // Shake 参数
   var shake = {
-    SHAKE_THRESHOLD: 2000,
-    lastUpdate: 0,
-    x: 0, y: 0, z: 0,
-    last_x: 0, last_y: 0, last_z: 0
+    SHAKE_THRESHOLD : 2000,
+    lastUpdate : 0,
+    x : 0, y : 0, z : 0,
+    last_x : 0, last_y : 0, last_z : 0
   };
   // 名称空间
   var ecp = {};
@@ -27,13 +27,13 @@ define(function (require, exports, module) {
   util.token = "";
   // 关键字Map
   util.keyMap = {
-    LOCAL_USER_INFO_KEY: "local_user_info", // 本地登录用户信息
-    USER_TRUE_NAME: "user_true_name",  //用户真实姓名（在绑定身份证成功,个人中心点绑定银行卡→→保存,在绑定银行卡时使用）.
-    LOCAL_TO_HM: "local_to_hm", // 发起合买
-    LOCAL_FIVE_SMART: "local_five_smart", // 11选5智能追号
-    LOCAL_CUSTOM: "local_custom", // 用户定制彩种
-    LOCAL_JCL: 'local_jcl',// 竞彩篮球
-    LOCAL_JCZ: 'local_jcz' // 竞彩足球
+    LOCAL_USER_INFO_KEY : "local_user_info", // 本地登录用户信息
+    USER_TRUE_NAME : "user_true_name",  //用户真实姓名（在绑定身份证成功,个人中心点绑定银行卡→→保存,在绑定银行卡时使用）.
+    LOCAL_TO_HM : "local_to_hm", // 发起合买
+    LOCAL_FIVE_SMART : "local_five_smart", // 11选5智能追号
+    LOCAL_CUSTOM : "local_custom", // 用户定制彩种
+    LOCAL_JCL : 'local_jcl',// 竞彩篮球
+    LOCAL_JCZ : 'local_jcz' // 竞彩足球
   };
 
   /**
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
    */
   util.showCover = function () {
     var bodyHeight = Math.max(document.documentElement.clientHeight, document.body.scrollHeight);
-    $(".cover").css({"height": bodyHeight + "px"}).show();
+    $(".cover").css({"height" : bodyHeight + "px"}).show();
   };
 
   /**
@@ -407,13 +407,30 @@ define(function (require, exports, module) {
     this.clearIntervals();
     this.clearTimers();
   };
-  //阻止时间继续传递
-  util.preventEvent = function(e){
-    if(!e) return false;
-    if(e && e.stopPropagation){
+  /**
+   * @describe 隐藏字符串
+   * @param string {String} 需要被截取的字符串
+   * @param start  {Number} 起始位置
+   * @param end    {Number} 结束位置
+   * @return {String}
+   *
+   */
+  util.hideString = function (string, start, end) {
+    string = string.split('@')[0];
+    start = start || 0;
+    end = end || 4;
+    if((/^[0-9\u4e00-\u9faf]+$/).test(string)){
+      end = 2;
+    }
+    return string.substring(start, end) + '***';
+  };
+  //阻止事件继续传递
+  util.preventEvent = function (e) {
+    if (!e) return false;
+    if (e && e.stopPropagation) {
       e.preventDefault();
       e.stopPropagation();
-    }else{
+    } else {
       window.event.cancelBubble = true;
       window.event.returnValue = false;
       return false;

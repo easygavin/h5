@@ -571,20 +571,16 @@ define(function (require, exports, module) {
     // 倍数
     var $timesUnit = $("#timesUnit");
     timesUnit = $timesUnit.val();
-
     if ($.trim(timesUnit) == "" || isNaN(timesUnit) || timesUnit < 1) {
       timesUnit = 0;
       page.toast("请至少选择 1 注");
-
       // 显示付款信息
       showPayInfo();
       return false;
     }
-
-    var ways = $("#crossTxt").text();
-
-    if (ways == "过关方式") {
-      page.toast("请至少选择 1 注");
+    var ways = $(".ggbox").data('passType');
+    if (!ways) {
+      page.toast("请至少选择一种过关方式");
       return false;
     }
     return true;

@@ -12,7 +12,7 @@ define(function (require, exports, module) {
       self.canBack = forward || 0;
       self.type = 'op';
       self.forward = forward;
-      self.params = _.isEmpty(data) ? JSON.parse(util.unParam(location.search.substring(1)).data) : data;
+      self.params = _.isEmpty(data) ? JSON.parse(util.unParam(location.hash.substring(1).split("?")[1]).data) : data;
       self.infoMap = {};
       self.getData();
       self.events();

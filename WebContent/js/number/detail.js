@@ -146,12 +146,15 @@ define(function (require, exports, module) {
     hasWithdraw = isWithdraw + past + witdraw;
     data.hasWithdraw = hasWithdraw;
 
+    // 处理隐藏用户名
+    data.createUser = util.hideString(data.createUser);
+
     var title = data.title.replace('自购', '&nbsp;&nbsp;').replace('追号', '期可追');
     data.title = title;
 
     var detail = data.detail;
 
-    var detail = detail.replace(/{/g, '<span class="cdd1049">').replace(/}/g, '</span>').replace(/#/g, '<br>');
+    var detail = detail.toString().replace(/{/g, '<span class="cdd1049">').replace(/}/g, '</span>').replace(/#/g, '<br>');
     data.detail = detail;
 
     data.reds = [], data.blues = [];

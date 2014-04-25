@@ -55,37 +55,37 @@ define(function (require, exports, module) {
    * 修改昵称.
    */
 
-  var updateNickName = function () {
+  /*  var updateNickName = function () {
 
-    if (!tkn) {
-      page.init("login", {}, 1);
-      return false;
-    }
-    var nickName = $('#nickName').val();
-    var pattern = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im;
-    if (nickName == '' || nickName == null) {
-      page.toast('请输入昵称');
-      return false;
-    } else if (nickName.length < 2 || nickName.length >= 10 || pattern.test(nickName)) {
-      page.toast('昵称应为长度2-10的中英文字母或数字组成');
-      return false;
-    }
-    userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-    if (!_.isEmpty(userInfo) && userInfo.userKey) {
-      var request = account.updateNickName(userInfo.userKey, nickName, function (data) {
-        if (!_.isEmpty(data)) {
-          if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
-            page.toast('修改成功');
-          } else {
-            page.toast(data.errorMsg);
-          }
-        } else {
-          page.toast('修改失败,请稍后重试');
-        }
-      });
-      util.addAjaxRequest(request);
-    }
-  };
+   if (!tkn) {
+   page.init("login", {}, 1);
+   return false;
+   }
+   var nickName = $('#nickName').val();
+   var pattern = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im;
+   if (nickName == '' || nickName == null) {
+   page.toast('请输入昵称');
+   return false;
+   } else if (nickName.length < 2 || nickName.length >= 10 ||pattern.test(nickName)) {
+   page.toast('昵称应为长度2-10的中英文字母或数字组成');
+   return false;
+   }
+   userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+   if (!_.isEmpty(userInfo) && userInfo.userKey) {
+   var request = account.updateNickName(userInfo.userKey, nickName, function (data) {
+   if (!_.isEmpty(data)) {
+   if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
+   page.toast('修改成功');
+   } else {
+   page.toast(data.errorMsg);
+   }
+   } else {
+   page.toast('修改失败,请稍后重试');
+   }
+   });
+   util.addAjaxRequest(request);
+   }
+   };*/
   /**
    * 修改登录密码
    */
@@ -121,7 +121,12 @@ define(function (require, exports, module) {
       return false;
     }
     if (newLoginPass != confLoginPass) {
-      page.toast("新密码必须与确认密码一致");
+      page.toast('新密码必须与确认密码一致');
+      return false;
+    }
+
+    if (oldLoginPass == newLoginPass) {
+      page.toast('新密码与原密码相同,修改失败');
       return false;
     }
 
@@ -150,7 +155,7 @@ define(function (require, exports, module) {
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
-      account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
+      var request = account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
         if (!_.isEmpty(data) && typeof data.statusCode != 'undefined') {
           if (data.statusCode == '0') {
             updateDrawPass();
@@ -163,6 +168,7 @@ define(function (require, exports, module) {
           return false;
         }
       });
+      util.addAjaxRequest(request);
     } else {
       page.init('login', {}, 1);
     }
@@ -193,7 +199,12 @@ define(function (require, exports, module) {
       page.toast('新密码与确认密码不一致');
       return false;
     }
-    account.updateWithDrawal(userId, newPassword, oldPassword, function (data) {
+
+    if (oldPassword == newPassword) {
+      page.toast('新密码与原密码相同,修改失败');
+      return false;
+    }
+    var request = account.updateWithDrawal(userId, newPassword, oldPassword, function (data) {
       if (!_.isEmpty(data)) {
         if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
           page.toast('修改成功');
@@ -204,6 +215,7 @@ define(function (require, exports, module) {
         page.toast('修改失败,请稍后重试');
       }
     });
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -223,10 +235,10 @@ define(function (require, exports, module) {
     $('#main').on('click', 'button', function (e) {
       var targetId = $(e.target).attr("id");
       switch (targetId) {
-        //修改昵称.
-        case 'setNickName':
-          updateNickName();
-          break;
+        /*        //修改昵称.
+         case 'setNickName':
+         updateNickName();
+         break;*/
         //修改登录密码.
         case 'setLoginPass':
           updateLoginPass();

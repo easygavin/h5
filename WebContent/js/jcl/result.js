@@ -37,7 +37,7 @@ define(function (require, exports, module) {
       if (typeof data.projectId != "undefined" && $.trim(data.projectId) != "") {
         projectId = data.projectId;
       }
-      if(data.backNum){
+      if (data.backNum) {
         backNum = data.backNum;
       }
     }
@@ -67,7 +67,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState({url: "jcl/result", data: params}, "jcl/result", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/result", forward ? 1 : 0);
+    page.setHistoryState({url : "jcl/result", data : params}, "jcl/result", (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/result", forward ? 1 : 0);
   };
 
   /**
@@ -81,7 +81,10 @@ define(function (require, exports, module) {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
             require.async('/tpl/athletics/result', function (tpl) {
-              $('#main').html(tpl(data));
+              $('#main').html(tpl({
+                data : data,
+                hideString : util.hideString
+              }));
               $(".tzBox").text($.trim(data.title) + "投注");
             });
           } else if (data.statusCode == "off") {
@@ -98,7 +101,7 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
     // 返回
-    $(".back").on('click', function(){
+    $(".back").on('click', function () {
       page.go(backNum);
     });
     // 去投注
@@ -109,5 +112,5 @@ define(function (require, exports, module) {
     });
   };
 
-  return {init: init};
+  return {init : init};
 });

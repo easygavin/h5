@@ -2,11 +2,7 @@
  * 竞彩篮球历史开奖信息详情
  */
 define(function (require, exports, module) {
-  var view = require('/views/athletics/jcl/detail.html'),
-    page = require('page'),
-    _ = require('underscore'),
-    service = require('services/jcl'),
-    util = require('util');
+  var view = require('/views/athletics/jcl/detail.html'), page = require('page'), _ = require('underscore'), service = require('services/jcl'), util = require('util');
   // 赛事开奖结果
   var matchResult = {};
   /**
@@ -16,12 +12,9 @@ define(function (require, exports, module) {
     // 加载模板内容
     $("#container").html(view);
     // 赛事开奖结果
-    matchResult = _.isEmpty(data) ? JSON.parse(util.unParam(location.search.substring(1)).data).matchResult : data;
+    matchResult = _.isEmpty(data) ? JSON.parse(util.unParam(location.hash.substring(1).split("?")[1]).data).matchResult : data;
     // 参数设置
-    var params = {};
-    if (matchResult != "undefined") {
-      params.matchResult = matchResult;
-    }
+    var params =  $.extend(true, {} , matchResult);
     var tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
@@ -35,36 +28,32 @@ define(function (require, exports, module) {
     var sf = result[0].sf;
     if (sf == "主胜") {
       $("#sf_1").addClass("rs_s");
-    }else {
+    } else {
       $("#sf_0").addClass("rs_f");
     }
     // 让分胜负
     var rfsf = result[1].rfsf;
     if (rfsf == "主胜") {
       $("#rfsf_1").addClass("rs_s");
-    }else {
+    } else {
       $("#rfsf_0").addClass("rs_f");
     }
     // 大小分
     var dxf = result[3].dxf;
     if (dxf == "大分") {
       $("#dxf_1").addClass("rs_s");
-    }else {
+    } else {
       $("#dxf_0").addClass("rs_f");
     }
     // 胜分差
     var sfc = result[2].sfc;
-    $(".sfc_tab").find('td[data-text^='+sfc+']').addClass("rs_s");
+    $(".sfc_tab").find('td[data-text^=' + sfc + ']').addClass("rs_s");
     // 请求数据
     getDetail();
     // 绑定事件
     bindEvent();
     // 处理返回
-    page.setHistoryState(
-      {url: "jcl/detail", data: params},
-      "jcl/detail",
-        (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : "") + "#jcl/detail",
-      forward ? 1 : 0);
+    page.setHistoryState({url : "jcl/detail", data : params}, "jcl/detail", "#jcl/detail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
 
   };
 
@@ -113,5 +102,5 @@ define(function (require, exports, module) {
       page.init("jcl/bet", {}, 1);
     });
   };
-  return {init: init};
+  return {init : init};
 });

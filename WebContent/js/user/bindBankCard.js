@@ -66,7 +66,7 @@ define(function (require, exports, module) {
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
-      account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
+      var request = account.getUserBalance(1, userInfo.userId, userInfo.userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (data.statusCode == '0') {
             //初始化页面数据
@@ -83,6 +83,7 @@ define(function (require, exports, module) {
           page.toast('查询数据失败,请稍后重试');
         }
       });
+      util.addAjaxRequest(request);
     } else {
       page.init('login', {}, 1);
     }
@@ -107,8 +108,10 @@ define(function (require, exports, module) {
     $('#city').html(data.city);
     $('#bankAccount').val(data.bankInfo);
     $('#bankNum').val(data.cardNo.substring(0, 10) + '******');
-    $('#bankPass').val('*******');
-    $('#bankPassConf').val('*******');
+    /*    $('#bankPass').val('*******');
+     $('#bankPassConf').val('*******');*/
+    $('#passTR').hide();
+    $('#confirmTR').hide();
     $('#main select').hide();
     $('#main input').attr('readonly', true);
     $('.selectbox i').hide();
@@ -298,7 +301,7 @@ define(function (require, exports, module) {
     } else {
       util.showLoading();
       if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
-        account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
+        var request = account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
           util.hideLoading();
           if (!_.isEmpty(data)) {
             if (data.statusCode && data.statusCode == '0') {
@@ -314,6 +317,7 @@ define(function (require, exports, module) {
             page.goBack();
           }
         });
+        util.addAjaxRequest(request);
       } else {
         page.init('login', {}, 1);
       }
