@@ -18,16 +18,23 @@ __p += '<!--竞彩足球[上下盘]模板-->\r\n<div data-match-id="' +
 ' <br>\r\n      </td>\r\n      <td colspan="3">\r\n        <b class="f16 c257ab3">' +
 ((__t = (playAgainst.split('|').join('vs'))) == null ? '' : __t) +
 '</b>\r\n      </td>\r\n      <td class="analyse">析</td>\r\n    </tr>\r\n    <tr class="uad_bet">\r\n      ';
-var uadOdds = spDatas.footwall.split('|');;
-__p += '\r\n      <td colspan="2" class="odds_aud" data-result="uad_0" data-text="' +
+
+        var uadOdds = spDatas.footwall.split('|');
+        if((uadOdds[0]+uadOdds[1]).indexOf('null')==-1){
+      ;
+__p += '\r\n        <td colspan="2" class="odds_aud" data-result="uad_0" data-text="' +
 ((__t = (uadOdds[0])) == null ? '' : __t) +
 '">' +
 ((__t = (uadOdds[0].replace('_',' '))) == null ? '' : __t) +
-'</td>\r\n      <td colspan="2" class="odds_aud" data-result="uad_1" data-text="' +
+'</td>\r\n        <td colspan="2" class="odds_aud" data-result="uad_1" data-text="' +
 ((__t = (uadOdds[1])) == null ? '' : __t) +
 '">' +
 ((__t = (uadOdds[1].replace('_',' '))) == null ? '' : __t) +
-'</td>\r\n    </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n\r\n';
+'</td>\r\n      ';
+}else{;
+__p += '\r\n        <td colspan="4">该玩法未开售</td>\r\n      ';
+};
+__p += '\r\n    </tr>\r\n    </tbody>\r\n  </table>\r\n</div>\r\n\r\n\r\n';
 
 }
 return __p

@@ -2,6 +2,7 @@
  * 合买大厅首页
  */
 define(function (require, exports, module) {
+
   var page = require('page');
   var util = require('util');
   var $ = require('zepto');
@@ -9,7 +10,6 @@ define(function (require, exports, module) {
   var hm = require('services/hm');
   var config = require('config');
   var template = require('/views/hm/index.html');
-
   var canBack = 1;
 
   //所有合买彩种.
@@ -19,7 +19,7 @@ define(function (require, exports, module) {
   //89_北单让球胜平负,92_北单比分
 
   //H5现支持彩种.
-  var lotteryTypeArray = '4|6|8|11|12|13|46|47|48|49|52|56|36|37|38|39|53';
+  var lotteryTypeArray = '4|11|12|13|46|47|48|49|52|56|36|37|38|39|53';
 
   // 请求彩种列表
   var typeArr = "";
@@ -62,7 +62,7 @@ define(function (require, exports, module) {
     initQuery();
 
     // 处理返回
-    page.setHistoryState({url : "hm/index", data : params}, "hm/index", "#hm/index" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
+    page.setHistoryState({url: "hm/index", data: params}, "hm/index", "#hm/index" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -106,22 +106,6 @@ define(function (require, exports, module) {
       loadingShow(0);
     });
     util.addAjaxRequest(request)
-  };
-
-  var addItem = function (dataList) {
-    pages = parseInt((parseInt(dataList.totalCount) + pagesize - 1) / pagesize, 10);
-    if (parseInt(requestPage, 10) < pages) {
-      $(".loadText").text("查看更多");
-    } else {
-      $(".loadText").text("");
-    }
-    var hm_list = require('/tpl/hm/hm_list');
-    var list = $('.bb1').html();
-    $(".bb1").html(list + hm_list({
-      honour: honour,
-      map: config.lotteryIdReflectStr,
-      data: dataList
-    }));
   };
 
   /**
@@ -224,11 +208,12 @@ define(function (require, exports, module) {
     } else {
       $(".loadText").text("");
     }
-    require.async('/tpl/hm/hm_list',function(tpl){
+    require.async('/tpl/hm/hm_list', function (tpl) {
       $(".bb1").html($('.bb1').html() + tpl({
-        honour : honour,
-        map : config.lotteryIdReflectStr,
-        data : dataList
+        honour: honour,
+        map: config.lotteryIdReflectStr,
+        hideString:util.hideString,
+        data: dataList
       }));
     });
   };
@@ -246,9 +231,9 @@ define(function (require, exports, module) {
    */
   var loadingShow = function (flag) {
     if (flag) {
-      $(".loadIcon").css({"visibility" : "visible"});
+      $(".loadIcon").css({"visibility": "visible"});
     } else {
-      $(".loadIcon").css({"visibility" : "hidden"});
+      $(".loadIcon").css({"visibility": "hidden"});
     }
   };
 
@@ -266,6 +251,9 @@ define(function (require, exports, module) {
         break;
       case "12": // 福彩3D
         prepend = "福彩3D";
+        break;
+      case "4": // 排列3
+        prepend = "排列3";
         break;
       case "14": // 幸运赛车
         prepend = "幸运赛车";
@@ -303,36 +291,39 @@ define(function (require, exports, module) {
       case "53": // 竞彩蓝球混投
         prepend = "竞彩蓝球混投";
         break;
+      case "36|37|38|39|53":
+        prepend='竞彩篮球';
+        break;
+      case "46|47|48|49|52|56":
+        prepend='竞彩足球';
+        break;
       default :
-        prepend ="全部";
+        prepend = "全部";
         break;
     }
     $("#hmTitle").html(prepend);
   };
-
-  /**
-   * 下拉选项.
-   */
-
   /**
    * 绑定事件
    */
   var bindEvent = function () {
+
     $('.back').on('click', function () {
       offBind();
       page.goBack();
     });
+
     // 排序方式.
     $('.jltab li').on('click', function () {
       var targetId = $(this).attr("id");
       switch (targetId) {
         case "byPercent":
           orderByName = 'percent';
-          orderBy = 'asc';
+          orderBy = 'desc';
           break;
         case "byTotalAmount":
           orderByName = 'totalAmount';
-          orderBy='desc';
+          orderBy = 'desc';
           break;
       }
       requestPage = "1";
@@ -340,14 +331,71 @@ define(function (require, exports, module) {
       initQuery();
     });
 
+    //显示选择框.
+    $('.hmHead').on('click', function () {
+      $(".hmSelectedBox").show();
+      util.showCover();
+    });
+
+    //选择彩种筛选.
+    $('.hmSelectedBox').on('click', function (e) {
+      $('.hmSelectedBox a').removeClass('click');
+      var $target = $(e.target).closest('a');
+      $target.addClass('click');
+      switch ($target.attr('id')) {
+        case 'ssq':
+          typeArr = '11';
+          break;
+        case 'dlt':
+          typeArr = '13';
+          break;
+        case '3d':
+          typeArr = '12';
+          break;
+        case 'jz':
+          typeArr = '46|47|48|49|52|56';
+          break;
+        case 'jl':
+          typeArr = '36|37|38|39|53';
+          break;
+        case 'pls':
+          typeArr = '4';
+          break;
+        case 'all':
+          typeArr='4|11|12|13|46|47|48|49|52|56|36|37|38|39|53';
+      }
+      requestPage = 1;
+
+      dataList = {};
+
+      $('.hmSelectedBox').hide();
+
+      util.hideCover();
+
+      showTitle();
+
+      clearItems();
+
+      getHmList();
+    });
+
+    // 关闭显示框.
+    $(".cover").off("click").on("click", function (e) {
+      $(".hmSelectedBox").hide();
+      util.hideCover();
+      return true;
+    });
+
+    //点击,跳转合买详情.
     $('.bb1').on('click', 'tr', function () {
       offBind();
       var $target = $(this);
       var id = $target.find('a').attr('id').split('_');
       //{lotteryType-彩种id,projectId-方案id,requestType-查询类型{0购彩方案详情，1合买方案详情}}
       var lotteryType = id[1], projectId = id[2];
-      page.init('hm/hmdetail', {"lotteryType" : lotteryType, "projectId" : projectId, "requestType" : "1"}, 1);
+      page.init('hm/hmdetail', {"lotteryType": lotteryType, "projectId": projectId, "requestType": "1","typeArr":typeArr,"requestPage":requestPage}, 0);
     });
+
     var timer = 0;
     $(window).on("scroll", function () {
       if (!timer) {
@@ -380,5 +428,5 @@ define(function (require, exports, module) {
     $(window).off("scroll");
   };
 
-  return {init : init};
+  return {init: init};
 });

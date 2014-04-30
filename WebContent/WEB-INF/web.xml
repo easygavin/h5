@@ -15,13 +15,6 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- 客户端充值内嵌.-->
-    <servlet>
-        <servlet-name>clientChargeServlet</servlet-name>
-        <servlet-class>com.h5.user.charge.servlet.client.ClientChargeServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
     <!--支付宝充值.-->
     <servlet>
         <servlet-name>zfbWap</servlet-name>
@@ -73,11 +66,6 @@
     <servlet-mapping>
         <servlet-name>zfbWapCallBack</servlet-name>
         <url-pattern>/zfbWapCallBack</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>clientChargeServlet</servlet-name>
-        <url-pattern>/clientCharge</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

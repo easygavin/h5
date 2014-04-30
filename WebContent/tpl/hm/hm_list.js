@@ -8,7 +8,7 @@ _.each(data.datas,function(data){;
 __p += '\r\n    <tr>\r\n      <td>\r\n        <div class="hmBox">\r\n\r\n          <p class="bl3"> <b class="c257ab3">' +
 ((__t = (map[data.lotteryType].title)) == null ? '' : __t) +
 '</b> </p>\r\n\r\n          <p>发起人：' +
-((__t = (data.createUserName)) == null ? '' : __t) +
+((__t = (hideString(data.createUserName))) == null ? '' : __t) +
 '&nbsp;\r\n            ' +
 ((__t = (honour(parseInt(data.goldStar),parseInt(data.silverStar)))) == null ? '' : __t) +
 '\r\n          </p>\r\n\r\n          <p>总金额：' +

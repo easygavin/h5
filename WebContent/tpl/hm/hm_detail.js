@@ -4,7 +4,7 @@ var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
 with (obj) {
 __p += '<div class="hmBox" style="font-size: 1.0em">\r\n  <p class="bl3">发起人：' +
-((__t = (data.createUser)) == null ? '' : __t) +
+((__t = (hideString(data.createUser))) == null ? '' : __t) +
 '</p>\r\n  <P>\r\n    中奖总金额：<i style="color:red">\r\n    ' +
 ((__t = (data.createUserWinAmount)) == null ? '' : __t) +
 '</i>元\r\n  </p>\r\n  <p>中奖次数：<i style="color:red">' +
@@ -87,7 +87,7 @@ __p += '\r\n             </tr>\r\n      ';
 };
 __p += '\r\n  ';
 };
-__p += '\r\n</table>\r\n\r\n<div class="w45"></div>';
+__p += '\r\n</table>\r\n';
 
 }
 return __p

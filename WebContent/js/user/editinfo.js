@@ -134,6 +134,13 @@ define(function (require, exports, module) {
       if (!_.isEmpty(data)) {
         if (typeof data.statusCode != 'undefined' && data.statusCode == '0') {
           page.toast('修改成功');
+        }else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+          page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+              function (e) {
+                page.init("login", {}, 1);
+              },
+              function (e) {
+              });
         } else {
           page.toast(data.errorMsg);
         }
@@ -159,8 +166,20 @@ define(function (require, exports, module) {
         if (!_.isEmpty(data) && typeof data.statusCode != 'undefined') {
           if (data.statusCode == '0') {
             updateDrawPass();
+          }else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
+          }else if (data.statusCode == '0007') {
+            page.toast('您尚未进行身份认证!');
+            page.init('user/authenticate', {}, 1);
+            return false;
           } else {
             page.toast('您尚未绑定银行卡!');
+            page.init('user/bindBankCard', {}, 1);
             return false;
           }
         } else {

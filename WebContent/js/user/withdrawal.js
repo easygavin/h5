@@ -87,6 +87,13 @@ define(function (require, exports, module) {
           } else if (data.statusCode == "0007") {
             page.toast(data.errorMsg);
             page.goBack();
+          }else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           } else {
             page.toast(data.errorMsg);
           }
@@ -177,7 +184,7 @@ define(function (require, exports, module) {
 
     // 提款须知.
     $('#notes').on('click', function () {
-      page.init('user/drawalnotes', {}, 0);
+      page.init('user/drawalnotes', {}, 1);
       return true;
     });
 

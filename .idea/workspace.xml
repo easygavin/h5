@@ -22,17 +22,7 @@
     <favorites_list name="h5" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="path.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/WebContent/js/tools/path.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="11" selection-start="15" selection-end="15" vertical-scroll-proportion="0.040584415" vertical-offset="0" max-vertical-offset="4175">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -42,13 +32,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$USER_HOME$/桌面/DPX/buy.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/ssq/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/digit/three/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/views/freq/five/ball.html" />
-        <option value="$PROJECT_DIR$/WebContent/js/main.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/protocol.js" />
         <option value="$PROJECT_DIR$/WebContent/js/tmp.js" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/intro.js" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/ball.js" />
@@ -59,20 +42,16 @@
         <option value="$PROJECT_DIR$/WebContent/js/freq/intro.js" />
         <option value="$PROJECT_DIR$/WebContent/js/gjj/bet.js" />
         <option value="$PROJECT_DIR$/WebContent/js/gjj/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/notice/detail.js" />
         <option value="$PROJECT_DIR$/WebContent/js/number/look.js" />
         <option value="$PROJECT_DIR$/WebContent/js/number/openLott.js" />
         <option value="$PROJECT_DIR$/WebContent/js/tools/page.js" />
         <option value="$PROJECT_DIR$/WebContent/js/gjj/intro.js" />
-        <option value="$PROJECT_DIR$/WebContent/views/home.html" />
         <option value="$PROJECT_DIR$/WebContent/index.html" />
         <option value="$PROJECT_DIR$/WebContent/tpl/openAll.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/css/public.css" />
         <option value="$PROJECT_DIR$/WebContent/js/openAll.js" />
         <option value="$PROJECT_DIR$/dist/js/tools/path.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/WebContent/tpl/number/look.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/list.js" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/ssq/list.js" />
         <option value="$PROJECT_DIR$/WebContent/js/digit/three/list.js" />
         <option value="$PROJECT_DIR$/WebContent/js/freq/five/smart.js" />
@@ -85,14 +64,25 @@
         <option value="$PROJECT_DIR$/WebContent/views/digit/ssq/list.html" />
         <option value="$PROJECT_DIR$/WebContent/views/digit/three/list.html" />
         <option value="$PROJECT_DIR$/WebContent/views/freq/five/list.html" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/hm.js" />
         <option value="$PROJECT_DIR$/WebContent/js/freq/five/ball.js" />
         <option value="$PROJECT_DIR$/WebContent/js/freq/five/list.js" />
-        <option value="$PROJECT_DIR$/WebContent/js/tools/config.js" />
         <option value="$PROJECT_DIR$/WebContent/tpl/number/detail.tpl" />
-        <option value="$PROJECT_DIR$/WebContent/js/number/detail.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/number/hm.js" />
+        <option value="$PROJECT_DIR$/WebContent/views/home.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/login.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/register.html" />
+        <option value="$PROJECT_DIR$/WebContent/js/digit/dlt/list.js" />
+        <option value="D:/Program Files/Apache Software Foundation/Apache2.2/htdocs/client/index.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/digit/ssq/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/digit/three/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/freq/five/ball.html" />
+        <option value="$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html" />
         <option value="$PROJECT_DIR$/WebContent/js/tools/path.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/number/detail.js" />
         <option value="$PROJECT_DIR$/WebContent/js/home.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/notice/detail.js" />
+        <option value="$PROJECT_DIR$/WebContent/js/tools/config.js" />
+        <option value="$PROJECT_DIR$/WebContent/css/public.css" />
       </list>
     </option>
   </component>
@@ -145,6 +135,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -192,6 +183,176 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gjj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="five" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="three" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ssq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dlt" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -293,7 +454,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
+              <option name="myItemId" value="number" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -315,13 +476,222 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="number" />
+              <option name="myItemId" value="notice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gjj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="five" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="three" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ssq" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="digit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dlt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h5" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebContent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -503,14 +873,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="770" extended-state="1" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1280" height="770" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32872504" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495935" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.298374" sideWeight="0.670418" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3219512" sideWeight="0.670418" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39910978" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -556,56 +926,6 @@
     </PATH>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/ball.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="568" column="24" selection-start="13081" selection-end="13081" vertical-scroll-proportion="0.0" vertical-offset="13927" max-vertical-offset="18075" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="22" selection-start="1953" selection-end="1953" vertical-scroll-proportion="0.0" vertical-offset="2002" max-vertical-offset="2450" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/charge/callback.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="29" selection-start="94" selection-end="94" vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="10975" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/freq/intro.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="26" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.0" vertical-offset="2239" max-vertical-offset="2950" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/bet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="285" column="25" selection-start="5627" selection-end="5627" vertical-scroll-proportion="0.0" vertical-offset="7039" max-vertical-offset="9450" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="260" column="27" selection-start="5410" selection-end="5410" vertical-scroll-proportion="0.0" vertical-offset="6414" max-vertical-offset="10900" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/jcl/hm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="48" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0" vertical-offset="14" max-vertical-offset="6575" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/notice/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="29" selection-start="90" selection-end="90" vertical-scroll-proportion="0.0" vertical-offset="39" max-vertical-offset="4875" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="27" selection-start="121" selection-end="121" vertical-scroll-proportion="0.10116086" vertical-offset="64" max-vertical-offset="6225" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/intro.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="25" selection-start="1332" selection-end="1332" vertical-scroll-proportion="3.150912" vertical-offset="0" max-vertical-offset="2525" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="22" selection-start="382" selection-end="382" vertical-scroll-proportion="0.3954306" vertical-offset="0" max-vertical-offset="1575" />
@@ -614,11 +934,6 @@
     <entry file="file://$PROJECT_DIR$/WebContent/views/cusLott.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="0" selection-start="297" selection-end="297" vertical-scroll-proportion="0.53608245" vertical-offset="138" max-vertical-offset="775" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/openAll.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="7" selection-start="1799" selection-end="1799" vertical-scroll-proportion="0.4610282" vertical-offset="1922" max-vertical-offset="2975" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dist/js/tools/path.js">
@@ -631,50 +946,14 @@
         <state line="9" column="43" selection-start="207" selection-end="207" vertical-scroll-proportion="0.36525974" vertical-offset="0" max-vertical-offset="1050" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/css/public.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="283" column="5" selection-start="4601" selection-end="4605" vertical-scroll-proportion="0.4145937" vertical-offset="6825" max-vertical-offset="62100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/freq/five/smart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="27" selection-start="123" selection-end="123" vertical-scroll-proportion="-0.8217993" vertical-offset="600" max-vertical-offset="14900" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/three/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="522" column="5" selection-start="11111" selection-end="11111" vertical-scroll-proportion="0.76451075" vertical-offset="12589" max-vertical-offset="16500" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="499" column="5" selection-start="10707" selection-end="10707" vertical-scroll-proportion="0.6965174" vertical-offset="12055" max-vertical-offset="15775" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="975">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.12886597" vertical-offset="75" max-vertical-offset="775">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/number/look.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="29" selection-start="92" selection-end="92" vertical-scroll-proportion="0.0" vertical-offset="339" max-vertical-offset="3425" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/views/number/hm.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="80" selection-start="947" selection-end="947" vertical-scroll-proportion="16.911764" vertical-offset="1425" max-vertical-offset="2300" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/number/openLott.js">
@@ -685,11 +964,6 @@
     <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/openLott.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="41" selection-start="170" selection-end="170" vertical-scroll-proportion="0.17182131" vertical-offset="0" max-vertical-offset="1375" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/openAll.tpl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="76" selection-start="1329" selection-end="1332" vertical-scroll-proportion="0.49560633" vertical-offset="993" max-vertical-offset="1975" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/login.js">
@@ -732,11 +1006,6 @@
         <state line="50" column="58" selection-start="1202" selection-end="1202" vertical-scroll-proportion="0.48330405" vertical-offset="975" max-vertical-offset="2350" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="313" column="27" selection-start="6905" selection-end="6905" vertical-scroll-proportion="0.70149255" vertical-offset="7402" max-vertical-offset="16050" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/protocol.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="50" column="24" selection-start="906" selection-end="906" vertical-scroll-proportion="0.25373134" vertical-offset="1097" max-vertical-offset="1700" />
@@ -750,11 +1019,6 @@
     <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/detail_issue.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="616" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/number/hm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="261" column="35" selection-start="6321" selection-end="6321" vertical-scroll-proportion="0.50248754" vertical-offset="6222" max-vertical-offset="8475" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/ball.js">
@@ -779,55 +1043,152 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/tools/util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="417" column="28" selection-start="8729" selection-end="8737" vertical-scroll-proportion="0.37810946" vertical-offset="10197" max-vertical-offset="11625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/number/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="0" selection-start="3656" selection-end="3656" vertical-scroll-proportion="0.58043116" vertical-offset="3325" max-vertical-offset="6375" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="411" column="22" selection-start="15859" selection-end="15859" vertical-scroll-proportion="0.49751243" vertical-offset="9975" max-vertical-offset="17925">
-          <folding />
-        </state>
+        <state line="417" column="28" selection-start="8729" selection-end="8737" vertical-scroll-proportion="0.37810946" vertical-offset="10197" max-vertical-offset="11625" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/services/digit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="36" selection-start="3492" selection-end="3492" vertical-scroll-proportion="0.7048093" vertical-offset="3075" max-vertical-offset="16950">
-          <folding />
-        </state>
+        <state line="140" column="36" selection-start="3492" selection-end="3492" vertical-scroll-proportion="0.7048093" vertical-offset="3075" max-vertical-offset="16950" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/桌面/DPX/h5网站/html5彩票直通车(8)/html5彩票直通车/css/public.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="452" column="0" selection-start="21041" selection-end="23787" vertical-scroll-proportion="0.91708124" vertical-offset="10747" max-vertical-offset="11450" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/three/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="579" column="18" selection-start="12620" selection-end="12620" vertical-scroll-proportion="0.20242214" vertical-offset="14358" max-vertical-offset="16500" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/number/hm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="16" selection-start="385" selection-end="385" vertical-scroll-proportion="0.6633499" vertical-offset="0" max-vertical-offset="8475" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="5" selection-start="839" selection-end="839" vertical-scroll-proportion="1.0146104" vertical-offset="0" max-vertical-offset="1200" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/views/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="18" selection-start="614" selection-end="614" vertical-scroll-proportion="0.3075571" vertical-offset="700" max-vertical-offset="4500">
-          <folding />
-        </state>
+        <state line="121" column="75" selection-start="3143" selection-end="3143" vertical-scroll-proportion="2.6362038" vertical-offset="1525" max-vertical-offset="4500" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/js/home.js">
+    <entry file="file://$PROJECT_DIR$/WebContent/views/number/hm.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="365" column="63" selection-start="9584" selection-end="9584" vertical-scroll-proportion="0.5916955" vertical-offset="8783" max-vertical-offset="18225">
-          <folding />
-        </state>
+        <state line="33" column="33" selection-start="866" selection-end="866" vertical-scroll-proportion="1.4499121" vertical-offset="0" max-vertical-offset="2300" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/detail.tpl">
+    <entry file="file://$PROJECT_DIR$/WebContent/views/register.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="22" selection-start="64" selection-end="74" vertical-scroll-proportion="-1.1477664" vertical-offset="743" max-vertical-offset="1325">
-          <folding />
-        </state>
+        <state line="22" column="68" selection-start="650" selection-end="650" vertical-scroll-proportion="0.5584192" vertical-offset="225" max-vertical-offset="975" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="66" selection-start="454" selection-end="454" vertical-scroll-proportion="0.44158074" vertical-offset="143" max-vertical-offset="725" />
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Apache Software Foundation/Apache2.2/htdocs/client/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="122" selection-start="3838" selection-end="3838" vertical-scroll-proportion="0.57644993" vertical-offset="2522" max-vertical-offset="3275" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/dlt/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="399" column="18" selection-start="8597" selection-end="8597" vertical-scroll-proportion="0.3857868" vertical-offset="9747" max-vertical-offset="16050" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/digit/ssq/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="11" selection-start="471" selection-end="476" vertical-scroll-proportion="0.33217993" vertical-offset="558" max-vertical-offset="15775" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/ssq/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="32" selection-start="741" selection-end="741" vertical-scroll-proportion="0.8347979" vertical-offset="225" max-vertical-offset="10400" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/three/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="34" selection-start="765" selection-end="765" vertical-scroll-proportion="0.5711775" vertical-offset="375" max-vertical-offset="5150" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/freq/five/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="34" selection-start="730" selection-end="730" vertical-scroll-proportion="0.6544118" vertical-offset="294" max-vertical-offset="5400" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/views/digit/dlt/ball.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="33" selection-start="707" selection-end="707" vertical-scroll-proportion="0.5625" vertical-offset="344" max-vertical-offset="11850" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/js/tools/path.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="11" selection-start="15" selection-end="15" vertical-scroll-proportion="0.040584415" vertical-offset="0" max-vertical-offset="4175">
-          <folding />
+        <state line="3" column="44" selection-start="64" selection-end="64" vertical-scroll-proportion="0.08460237" vertical-offset="25" max-vertical-offset="4125" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/number/detail.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="23" selection-start="532" selection-end="539" vertical-scroll-proportion="0.5154639" vertical-offset="300" max-vertical-offset="1325" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/number/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="214" column="36" selection-start="5410" selection-end="5410" vertical-scroll-proportion="0.70242214" vertical-offset="4944" max-vertical-offset="6450" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/openAll.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="7" selection-start="1799" selection-end="1799" vertical-scroll-proportion="0.0" vertical-offset="2147" max-vertical-offset="2975" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/tpl/openAll.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="76" selection-start="1329" selection-end="1332" vertical-scroll-proportion="-14.911765" vertical-offset="768" max-vertical-offset="1975" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/bet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9450" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/gjj/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="403" column="27" selection-start="8542" selection-end="8544" vertical-scroll-proportion="0.0" vertical-offset="9675" max-vertical-offset="10900" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="577" column="36" selection-start="15040" selection-end="15165" vertical-scroll-proportion="-13.68" vertical-offset="14083" max-vertical-offset="18475" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/tools/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="678" column="21" selection-start="26723" selection-end="26723" vertical-scroll-proportion="3.6401327" vertical-offset="14755" max-vertical-offset="17950" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/css/public.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="473" column="18" selection-start="7254" selection-end="7254" vertical-scroll-proportion="0.45273632" vertical-offset="11552" max-vertical-offset="62750">
+          <folding>
+            <marker date="1398821000515" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1398821000515" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/js/notice/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="177" column="57" selection-start="4359" selection-end="4359" vertical-scroll-proportion="-0.077943616" vertical-offset="4472" max-vertical-offset="5075">
+          <folding>
+            <marker date="1398763917729" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1398763917729" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1398763917729" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

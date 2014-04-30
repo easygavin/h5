@@ -121,7 +121,7 @@ define(function (require, exports, module) {
 
     $(window).off("message").
       on("message", function (e) {
-        if (e.origin === "http://gj.caipiao123.com.cn") {
+        if (e.origin === "http://gg.ecp888.com") {
           var height = parseInt(e.data, 10) + 40;
           $("#noticeFrame").css({"height": height + "px"});
         }
@@ -171,10 +171,18 @@ define(function (require, exports, module) {
 
               break;
             case "46": // 竞彩足球
-              console.log("[notice detail] : to jcz");
+              util.clearLocalData(util.keyMap.LOCAL_JCZ);
+              page.init('jcz/mix_bet', {}, 1);
               break;
             case "36": // 竞彩篮球
-              console.log("[notice detail] : to jcl");
+              util.clearLocalData(util.keyMap.LOCAL_JCL);
+              page.init('jcl/bet', {}, 1);
+              break;
+            case "50": // 冠军竞猜
+              var key = config.lotteryIdToStr[result.lotteryId];
+              var lotConfig = config.lotteryMap[key];
+              util.clearLocalData(lotConfig.localKey);
+              page.init("gjj/bet", {}, 1);
               break;
           }
           break;

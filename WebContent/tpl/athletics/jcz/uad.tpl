@@ -21,9 +21,15 @@
       <td class="analyse">析</td>
     </tr>
     <tr class="uad_bet">
-      <%var uadOdds = spDatas.footwall.split('|');%>
-      <td colspan="2" class="odds_aud" data-result="uad_0" data-text="<%=uadOdds[0]%>"><%=uadOdds[0].replace('_',' ')%></td>
-      <td colspan="2" class="odds_aud" data-result="uad_1" data-text="<%=uadOdds[1]%>"><%=uadOdds[1].replace('_',' ')%></td>
+      <%
+        var uadOdds = spDatas.footwall.split('|');
+        if((uadOdds[0]+uadOdds[1]).indexOf('null')==-1){
+      %>
+        <td colspan="2" class="odds_aud" data-result="uad_0" data-text="<%=uadOdds[0]%>"><%=uadOdds[0].replace('_',' ')%></td>
+        <td colspan="2" class="odds_aud" data-result="uad_1" data-text="<%=uadOdds[1]%>"><%=uadOdds[1].replace('_',' ')%></td>
+      <%}else{%>
+        <td colspan="4">该玩法未开售</td>
+      <%}%>
     </tr>
     </tbody>
   </table>

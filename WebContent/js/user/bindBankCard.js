@@ -75,6 +75,13 @@ define(function (require, exports, module) {
             //0007尚未绑定身份证.
             page.toast("您尚未进行身份验证");
             page.goBack();
+          }else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           } else {
             //已经绑定身份证了,但尚未绑定银行卡
             queryInfo();

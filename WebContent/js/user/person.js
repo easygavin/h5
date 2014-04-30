@@ -80,6 +80,13 @@ define(function (require, exports, module) {
           var balance = parseFloat(data.userBalance).toFixed(2);
           $("#balance").html(balance <= 0 ? 0.00 : balance);
         } else if (data.statusCode == '0007') {
+        } else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+          page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+              function (e) {
+                page.init("login", {}, 1);
+              },
+              function (e) {
+              });
         } else {
           page.toast(data.errorMsg);
         }
@@ -101,7 +108,6 @@ define(function (require, exports, module) {
       return false;
     }
     userInfo = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
-    // 显示遮住层
     if (!_.isEmpty(userInfo) && userInfo.userId && userInfo.userKey) {
       var request = account.inspectUserIDCardState(userInfo.userId, userInfo.userKey, function (data) {
         if (!_.isEmpty(data)) {
@@ -118,6 +124,13 @@ define(function (require, exports, module) {
           } else if (data.statusCode == '0007') {
             page.toast('暂未进行身份认证');
             page.init('user/authenticate', {}, 1);
+          } else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           } else {
             page.toast(data.errorMsg);
           }
@@ -151,6 +164,13 @@ define(function (require, exports, module) {
           } else if (typeof  data.statusCode != 'undefined' && data.statusCode == '-58') {
             page.toast(data.errorMsg);
             page.init('user/bindBankCard', {}, 1)
+          }else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           }
         } else {
           page.toast('查询失败,请稍后重试');
@@ -232,11 +252,7 @@ define(function (require, exports, module) {
       util.clearLocalData(util.keyMap.LOCAL_USER_INFO_KEY);
       util.clearLocalData(util.keyMap.USER_TRUE_NAME);
       account.logout(userInfo.userId, userInfo.userKey, function () {
-        if (canBack) {
-          page.goBack();
-        } else {
-          page.init("home", {}, 1);
-        }
+        page.init("login", {}, 0);
       });
     });
   };

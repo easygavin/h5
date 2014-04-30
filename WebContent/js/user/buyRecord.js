@@ -17,7 +17,7 @@ define(function (require, exports, module) {
   // 竞彩篮球胜负|竞彩篮球让分胜负|竞彩篮球胜分差||竞彩篮球大小分|竞彩篮球混投
   // 竞彩足球胜平负|竞彩足球让球胜平负|竞彩足球比分|竞彩足球总进球|竞彩足球半全场|竞彩足球混投|让球胜平负
   //var lotteryTypeArray = "11|13|31|12|14|36|37|38|39|53|46|56|47|48|49|52|56";
-  var lotteryTypeArray = "4|11|13|30|34|31|12|36|37|38|39|53|46|56|47|48|49|52|56";
+  var lotteryTypeArray = "4|11|13|34|31|12|36|37|38|39|53|46|56|47|48|49|52|56";
 
   // 请求彩种列表
   var typeArr = "";
@@ -96,7 +96,7 @@ define(function (require, exports, module) {
       case "13": // 大乐透
         prepend = "大乐透";
         break;
-      case "30":
+     /* case "30":*/
       case "34":
         prepend = "11选5";
         break;
@@ -172,6 +172,13 @@ define(function (require, exports, module) {
         if (typeof data.statusCode != "undefined") {
           if (data.statusCode == "0") {
             showItems(data);
+          }else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           } else {
             page.toast(data.errorMsg);
           }
@@ -339,7 +346,7 @@ define(function (require, exports, module) {
       if (params.length == 3) {
         offBind();
         var lotteryType = params[1], requestType = "0", projectId = params[2];
-        if (lotteryType == "11" || lotteryType == "12" || lotteryType == "13" || /*lotteryType == "14" ||*/ lotteryType == "4" || lotteryType == "31" || lotteryType == "30" || lotteryType == "34") {
+        if (lotteryType == "11" || lotteryType == "12" || lotteryType == "13" || /*lotteryType == "14" ||*/ lotteryType == "4" || lotteryType == "31" /*|| lotteryType == "30"*/ || lotteryType == "34") {
           // 数字彩，高频彩
           page.init("number/detail", {lotteryType: lotteryType, requestType: requestType, projectId: projectId}, 1);
         } else if (lotteryType == "36" || lotteryType == "37" || lotteryType == "38" || lotteryType == "39" || lotteryType == "53") {

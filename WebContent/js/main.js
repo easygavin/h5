@@ -3,12 +3,9 @@ define(function (require, exports, module) {
   var page = require('page');
   var util = require('util');
   var fastClick = require('fastclick');
-
   // 页面加载完毕
   $(document).ready(function () {
-
     fastClick.attach(document.body);
-
     // 加载图标
     util.showLoading();
     // 参数处理
@@ -20,6 +17,13 @@ define(function (require, exports, module) {
       hashName = hashArr[0];
       if (hashArr.length > 1) {
         var searchData = util.unParam(hashArr[1]);
+
+        if(searchData.channelNo && 'undefined' != searchData.channelNo){
+          sessionStorage.setItem('channel', searchData.channelNo);
+        }
+        if(searchData.platform && 'undefined' != searchData.platform){
+          sessionStorage.setItem('platform',searchData.platform);
+        }
         if (typeof searchData["data"] != "undefined") {
           console.log(searchData["data"]);
           dataObj = JSON.parse(decodeURIComponent(searchData["data"]));

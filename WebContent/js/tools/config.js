@@ -675,7 +675,8 @@ define(function (require, exports, module) {
     31: "syy", // 十一运夺金
     34: "syx", // 11选5
     46: "jcz", // 竞彩足球
-    36: "jcl" // 竞彩篮球
+    36: "jcl", // 竞彩篮球
+    50: "gjj" // 冠军竞猜
   };
 
   //所有合买彩种.

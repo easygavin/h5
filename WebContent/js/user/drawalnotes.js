@@ -45,11 +45,7 @@ define(function (require, exports, module) {
    */
   var bindEvent = function () {
     $('.back').on('click', function () {
-      if (canBack) {
         page.goBack();
-      } else {
-        page.init("home", {}, 0);
-      }
     });
 
     // 我已阅读.

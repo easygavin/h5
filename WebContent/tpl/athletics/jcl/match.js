@@ -18,28 +18,42 @@ __p += '<!--竞彩篮球对阵模板-->\r\n<div id="' +
 ' <br>\r\n        <i class="fm arr"></i>\r\n      </td>\r\n      <td colspan="3" class="c257ab3">\r\n        <b class="f16">' +
 ((__t = (playAgainst.split('|').join('</b>vs<b class="f16">'))) == null ? '' : __t) +
 '</b>\r\n      </td>\r\n    </tr>\r\n    <tr class="footballTz">\r\n      ';
- var sfOdds = spDatas.sf.split(','); ;
-__p += '\r\n      <td class="tab">0</td>\r\n      <td id="sf_0-' +
+
+        var sfOdds = spDatas.sf.split(',');
+        if((sfOdds[0]+sfOdds[1]).indexOf('null')==-1){
+      ;
+__p += '\r\n        <td class="tab">0</td>\r\n        <td id="sf_0-' +
 ((__t = (matchId)) == null ? '' : __t) +
 '">主胜<br>' +
-((__t = (sfOdds[0]||'--')) == null ? '' : __t) +
-'</td>\r\n      <td id="sf_1-' +
+((__t = (sfOdds[0])) == null ? '' : __t) +
+'</td>\r\n        <td id="sf_1-' +
 ((__t = (matchId)) == null ? '' : __t) +
 '">客胜<br>' +
-((__t = (sfOdds[1]||'--')) == null ? '' : __t) +
-'</td>\r\n    </tr>\r\n    <tr class="lYTable">\r\n      ';
- var rfsfOdds = spDatas.rfsf.split(','); ;
-__p += '\r\n      <td class="tab">让分<br>' +
-((__t = (rfsfOdds[0]||'--')) == null ? '' : __t) +
-'</td>\r\n      <td id="rfsf_1-' +
+((__t = (sfOdds[1])) == null ? '' : __t) +
+'</td>\r\n      ';
+}else{;
+__p += '\r\n        <td class="tab" colspan="3">该玩法未开售</td>\r\n      ';
+};
+__p += '\r\n    </tr>\r\n    <tr class="lYTable">\r\n      ';
+
+        var rfsfOdds = spDatas.rfsf.split(',');
+        if((rfsfOdds[0]+rfsfOdds[1]+rfsfOdds[2]).indexOf('null')==-1){
+      ;
+__p += '\r\n        <td class="tab">让分<br>' +
+((__t = (rfsfOdds[0])) == null ? '' : __t) +
+'</td>\r\n        <td id="rfsf_1-' +
 ((__t = (matchId)) == null ? '' : __t) +
 '">让分主胜<br>' +
-((__t = (rfsfOdds[1]||'--')) == null ? '' : __t) +
-'</td>\r\n      <td id="rfsf_2-' +
+((__t = (rfsfOdds[1])) == null ? '' : __t) +
+'</td>\r\n        <td id="rfsf_2-' +
 ((__t = (matchId)) == null ? '' : __t) +
 '">让分客胜<br>' +
-((__t = (rfsfOdds[2]||'--')) == null ? '' : __t) +
-'</td>\r\n    </tr>\r\n  </table>\r\n</div>';
+((__t = (rfsfOdds[2])) == null ? '' : __t) +
+'</td>\r\n      ';
+}else{;
+__p += '\r\n        <td  class="tab" colspan="3">该玩法未开售</td>\r\n      ';
+};
+__p += '\r\n    </tr>\r\n  </table>\r\n</div>';
 
 }
 return __p

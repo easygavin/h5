@@ -99,6 +99,15 @@ define(function (require, exports, module) {
             //存储用户的真实姓名.在绑定银行卡页面需要.
             util.setLocalJson(util.keyMap.USER_TRUE_NAME, data.name);
           } else if (data.statusCode == '0007') {
+            //1,{"statusCode":"0007","errorMsg":"用户信息不存在!"}
+            //2,{"statusCode":"0007","name":null,"errorMsg":"该用户未绑定身份证信息","personCardId":null}
+          } else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           } else {
             page.toast(data.errorMsg);
           }
@@ -124,7 +133,7 @@ define(function (require, exports, module) {
     }
 
     if (idNumber.length >= 13) {
-      $("#idNumber").val(idNumber.substring(0, 12) + "******").attr("readonly", true);
+      $("#idNumber").val("******"+idNumber.substring(6, 12) + "******").attr("readonly", true);
     } else {
       $("#idNumber").val(idNumber).attr("readonly", true);
     }
@@ -154,7 +163,7 @@ define(function (require, exports, module) {
       return false;
     }
     if (!_.isEmpty(loginState) && loginState.userId && loginState.userKey) {
-     var request = account.bindIDCard(idNumber, realName, loginState.userId, loginState.userKey, function (data) {
+      var request = account.bindIDCard(idNumber, realName, loginState.userId, loginState.userKey, function (data) {
         if (!_.isEmpty(data)) {
           if (data.statusCode == '0') {
             page.toast("绑定成功");

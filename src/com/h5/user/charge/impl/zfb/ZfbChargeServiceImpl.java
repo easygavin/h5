@@ -13,7 +13,6 @@ import java.net.URLEncoder;
  * @author heming
  */
 public class ZfbChargeServiceImpl implements ZfbChargeService {
-
     /**
      * 支付宝WAP充值.
      * @param jsonObject 前台json数据
@@ -21,15 +20,17 @@ public class ZfbChargeServiceImpl implements ZfbChargeService {
 
     @Override
     public JSONObject zfbWapCharge(JSONObject jsonObject) {
-
+        System.out.println("zfbWapChargeServiceImpl jsonObject========== "+jsonObject.toString());
         //本地接口请求url.
         String localRequestUrl = Common.getZfbWapUrl();
         //以jason数据返回到前台.
         JSONObject returnResult = new JSONObject();
         try {
             String requestUrl = localRequestUrl +"?data="+ URLEncoder.encode(jsonObject.toString(), "UTF-8");
+            System.out.println("zfbWapChargeServiceImpl requestUrl========== "+requestUrl);
             //本地响应请求,返回结果.(先转换为string,在object.fromObject.)
             String localResponse = TransportUrl.getLocalResponse(requestUrl).toString();
+            System.out.println("zfbWapChargeServiceImpl localResponse========== "+localResponse);
             if (null != localResponse && !"".equals(localResponse)) {
                 //解析返回的json格式的数据.
                 return JSONObject.fromObject(localResponse);
@@ -39,7 +40,7 @@ public class ZfbChargeServiceImpl implements ZfbChargeService {
                 returnResult.put("errorMsg", "充值失败,请联系客服");
             }
         } catch (UnsupportedEncodingException e) {
-            //try{}catch{} 异常返回.
+            System.out.println("zfbWapChargeServiceImpl Exception: "+e.getMessage());
             returnResult.put("statusCode", "-2");
             returnResult.put("errorMsg", "充值失败,请联系客服");
         }

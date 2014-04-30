@@ -3,19 +3,18 @@
  */
 define(function (require, exports, module) {
 
-  var NOTICE_SERVER_URL = "http://gj.caipiao123.com.cn/";
-
   /*
   * UAT环境 :     //uatjc.ecp888.com/
   * 中间件地址
-  * 内部测试环境： http://192.168.1.115:8080/middle_web/
+  * 郑威：//192.168.1.115:8080/middle_web/
+  * 内部测试环境： //192.168.1.60/
   * 东莞测试环境： //mw.cpocp.com/
+  * 正式环境      //mw.ecp888.com/
   * */
   var MIDDLEWARE = "http://192.168.1.115:8080/middle_web/";
 
   module.exports = {
-    // 用于设置图片路径
-    NOTICE_SERVER_URL: NOTICE_SERVER_URL,
+    NOTICE_SERVER_URL: "http://gg.ecp888.com",
     // 客户端激活接口
     USER_ACTIVE: MIDDLEWARE + "gjdigit/user/reg/0/saveClientActiveRecord.shtml",
     // 用户登录接口
@@ -140,14 +139,14 @@ define(function (require, exports, module) {
     //参与合买接口{所有彩种共一个接口}
     JOIN_HM_ACTION:MIDDLEWARE+"gjjczq!subscribe.shtml",
     // 活动公告列表接口
-    NOTICE_LIST: NOTICE_SERVER_URL + "gjgonggao/app/notic_app!index.shtml",
+    NOTICE_LIST: MIDDLEWARE + "gjgonggao/app/notic_app!index.shtml",
     // 活动公告详情接口
-    NOTICE_DETAIL: NOTICE_SERVER_URL + "gjgonggao/app/notic_app!show.shtml",
+    NOTICE_DETAIL: MIDDLEWARE + "gjgonggao/app/notic_app!show.shtml",
 
-    // 渠道号/推荐人
-    channelNo: "H5",
+    // 渠道号
+    channelNo: sessionStorage.getItem('channel') || 'H5',
     // 平台类型
-    platform: "e",
+    platform: sessionStorage.getItem('platform') || "210",
     // 手机型号
     cellphoneType: "sdk",
     // sim 卡号

@@ -18,24 +18,38 @@ __p += '<!--竞彩篮球对阵模板-->\r\n<div data-match-id="' +
 ' <br>\r\n        <i class="fm arr"></i>\r\n      </td>\r\n      <td class="c257ab3" colspan="3">\r\n        <b class="f16">' +
 ((__t = (playAgainst.split('|').join('vs'))) == null ? '' : __t) +
 '</b>\r\n      </td>\r\n      <td class="analyse">析</td>\r\n    </tr>\r\n    <tr class="spf_bet">\r\n      ';
- var spfOdds = spDatas.spf.split(','); ;
-__p += '\r\n      <td>0</td>\r\n      <td class="odds_spf" data-result="spf_0">胜' +
+
+        var spfOdds = spDatas.spf.split(',');
+        if((spfOdds[0] + spfOdds[1] + spfOdds[2]).indexOf('null')!=-1){
+      ;
+__p += '\r\n        <td colspan="4">该玩法未开售</td>\r\n      ';
+}else{;
+__p += '\r\n        <td>0</td>\r\n        <td class="odds_spf" data-result="spf_0">胜' +
 ((__t = (spfOdds[0])) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_spf" data-result="spf_1">平' +
+'</td>\r\n        <td class="odds_spf" data-result="spf_1">平' +
 ((__t = (spfOdds[1])) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_spf" data-result="spf_2">负' +
+'</td>\r\n        <td class="odds_spf" data-result="spf_2">负' +
 ((__t = (spfOdds[2])) == null ? '' : __t) +
-'</td>\r\n    </tr>\r\n    <tr class="rqspf_bet">\r\n      ';
- var rqspfOdds = spDatas.rqspf.split(',');;
-__p += '\r\n      <td>' +
+'</td>\r\n      ';
+};
+__p += '\r\n    </tr>\r\n    <tr class="rqspf_bet">\r\n      ';
+
+        var rqspfOdds = spDatas.rqspf.split(',');
+        if((rqspfOdds[1] + rqspfOdds[1] + rqspfOdds[2] + rqspfOdds[3]).indexOf('null')!=-1){
+      ;
+__p += '\r\n        <td colspan="4">该玩法未开售</td>\r\n      ';
+}else{;
+__p += '\r\n        <td>' +
 ((__t = (rqspfOdds[0] )) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_rqspf" data-result="rqspf_1">胜' +
+'</td>\r\n        <td class="odds_rqspf" data-result="rqspf_1">胜' +
 ((__t = (rqspfOdds[1])) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_rqspf" data-result="rqspf_2">平' +
+'</td>\r\n        <td class="odds_rqspf" data-result="rqspf_2">平' +
 ((__t = (rqspfOdds[2])) == null ? '' : __t) +
-'</td>\r\n      <td class="odds_rqspf" data-result="rqspf_3">负' +
+'</td>\r\n        <td class="odds_rqspf" data-result="rqspf_3">负' +
 ((__t = (rqspfOdds[3])) == null ? '' : __t) +
-'</td>\r\n    </tr>\r\n    </tbody>\r\n  </table>\r\n</div>';
+'</td>\r\n      ';
+};
+__p += '\r\n    </tr>\r\n    </tbody>\r\n  </table>\r\n</div>';
 
 }
 return __p

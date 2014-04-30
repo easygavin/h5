@@ -51,11 +51,7 @@ define(function (require, exports, module) {
     bindEvent();
 
     // 处理返回
-    page.setHistoryState(
-      {url: "jcl/bet", data: params},
-      "jcl/bet",
-      "#jcl/bet"+ (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""),
-      canBack);
+    page.setHistoryState({url : "jcl/bet", data : params}, "jcl/bet", "#jcl/bet" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), canBack);
   };
 
   /**
@@ -108,7 +104,7 @@ define(function (require, exports, module) {
   var handleBetList = function () {
     // 隐藏加载标示
     util.hideLoading();
-    if(!betList.datas.length){
+    if (!betList.datas.length) {
       $("#JMIssueNo").text("本期暂无比赛可投注");
       return false;
     }
@@ -249,8 +245,6 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    // fastclick events
-    fastClick.attach(document.body);
     // 返回
     $('.back').on('click', page.goBack);
     // 右菜单
@@ -262,7 +256,7 @@ define(function (require, exports, module) {
     $('#filterBtn').on('click', showLeagueBox);
     //去合买
     $('#hm_menu').on('click', function () {
-      page.init('hm/index', {lotteryTypeArray: '36|37|38|39|53'}, 1);
+      page.init('hm/index', {lotteryTypeArray : '36|37|38|39|53'}, 1);
     });
     // 购彩记录
     $('#gc_menu').on('click', function () {
@@ -275,12 +269,12 @@ define(function (require, exports, module) {
           $(".popup").hide();
         });
       }
-      page.init("user/buyRecord", {lotteryTypeArray: "36|37|38|39|53"}, 1);
+      page.init("user/buyRecord", {lotteryTypeArray : "36|37|38|39|53"}, 1);
     });
     // 开奖信息
     $('#kj_menu').on('click', function () {
       util.hideCover();
-      page.init("jcl/lottery_list", {lotteryType: 36}, 1);
+      page.init("jcl/lottery_list", {lotteryType : 36}, 1);
     });
     // 玩法介绍
     $('#wf_menu').on('click', function () {
@@ -565,5 +559,5 @@ define(function (require, exports, module) {
     $("#total").text(total);
   };
 
-  return {init: init};
+  return {init : init};
 });

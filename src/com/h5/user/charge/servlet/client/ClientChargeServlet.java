@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Title 内嵌客户端 Servlet
+ *
  * @author heming
  */
 public class ClientChargeServlet extends HttpServlet {
@@ -21,9 +22,17 @@ public class ClientChargeServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=utf-8");
         String userToken = request.getParameter("userToken");
-       // if (token == null && !"".equals(token)) {
-            //response.sendRedirect("#charge/index?userToken=" + 124);
-            response.sendRedirect("?userToken="+userToken+"#charge/index");
-        //}
+        String platform = request.getParameter("platform");
+        String channelNo = request.getParameter("channelNo");
+        if (userToken != null && !"".equals(userToken) && platform != null && !"".equals(platform) && channelNo != null && !"".equals(channelNo)) {
+            StringBuilder builder = new StringBuilder("?userToken=");
+            builder.append(userToken);
+            builder.append("&platform=");
+            builder.append(platform);
+            builder.append("&channelNo=");
+            builder.append(channelNo);
+            builder.append("#charge/index");
+            response.sendRedirect(builder.toString());
+        }
     }
 }

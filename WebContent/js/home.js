@@ -109,6 +109,8 @@ define(function (require, exports, module) {
     // 焦点菜单
     if (from === "login") {
       data.menus.def = "custom";
+      // 清空再标示为登录
+      from = "";
     } else if (menuId !== "") {
       data.menus.def = menuId;
     }
@@ -179,7 +181,8 @@ define(function (require, exports, module) {
                 }
 
                 var $li = $("#" + key);
-                $li.find(".pool").text(pool);
+                // 零时用**取代无法获取奖池信息问题
+                $li.find(".pool").text(pool || "**");
                 $li.find(".endTime").text(endTime);
               }
             }
@@ -427,9 +430,13 @@ define(function (require, exports, module) {
       require.async("tools/slider", function () {
         // 滑动
         slider = new Slider({items: $(".notice").toArray(), width: 100, duration: 300});
-        switchFlashShow();
-        itemFocus();
       });
+    }
+
+    // 公告高度
+    if (imageNotices.length) {
+      switchFlashShow();
+      itemFocus();
     }
   }
 
@@ -499,7 +506,7 @@ define(function (require, exports, module) {
     for (var i = 0, len = data.notices.length; i < len; i++) {
       if (typeof data.notices[i].lotteryId != "undefined" && data.notices[i].lotteryId != "") {
         var lottId = data.notices[i].lotteryId, key = config.lotteryIdToStr[lottId];
-        var lotConfig = config.lotteryMap[key];
+        var lotConfig = config.lotteryMap[key] || {type: "", name: "资讯"};
         data.notices[i].lottName = lotConfig.name;
         switch (lotConfig.type) {
           case "digit":
@@ -510,6 +517,9 @@ define(function (require, exports, module) {
             break;
           case "jc":
             data.notices[i].type = "竞彩";
+            break;
+          default :
+            data.notices[i].type = "资讯";
             break;
         }
       } else {

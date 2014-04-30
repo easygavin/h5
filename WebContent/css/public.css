@@ -335,7 +335,6 @@ header div {
 header a {
   color: #fff;
   margin-right: 0.5em;
-  font-size: 1.125em;
 }
 
 .bunner {
@@ -420,7 +419,7 @@ nav li .focus {
   background: #f07e04;
 }
 
-#main li dt a:hover img, #main .ca_ul li div:hover, .rhj:hover, .zfmx:hover, .gcjl:hover, .bdyhk:hover, .bdphone:hover, .xgpsd:hover, .rgadress:hover, .zg:hover,.all:hover,.yzj:hover,.wzj:hover, .dx:hover {
+#main li dt a:hover img, #main .ca_ul li div:hover, .rhj:hover, .zfmx:hover, .gcjl:hover, .bdyhk:hover, .bdphone:hover, .xgpsd:hover, .rgadress:hover, .zg:hover, .all:hover, .yzj:hover, .wzj:hover, .dx:hover {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   -o-transform: scale(1.1);
@@ -442,7 +441,6 @@ nav li .focus {
   position: absolute;
   left: 0.5em;
   top: 0;
-  float: left;
 }
 
 .logo {
@@ -468,7 +466,12 @@ nav li .focus {
   color: #c16505;
   background-color: #fff;
   width: 3em;
-  text-align: center;
+  text-align: right;
+  font-size: 1.8em;
+}
+
+.delete{
+  font-size: 1.8em;
 }
 
 .back {
@@ -540,8 +543,6 @@ nav li .focus {
 }
 
 a.up, a.down {
-  font-size: 0.8em;
-  line-height: 3em;
 }
 
 a.right {
@@ -623,7 +624,7 @@ a.right {
 }
 
 #main .index li {
-  border-bottom: 0.1875em solid #257ab3;
+  border-bottom: 1px solid #ccc;
 }
 
 #main .index li .smbg {
@@ -639,7 +640,8 @@ a.right {
   width: 33.5%;
   float: left;
   overflow: hidden;
-  margin:0.5em;
+  max-width:8em;
+  margin:0.9em;
 }
 
 #main li dt p {
@@ -650,8 +652,7 @@ a.right {
   display: inline-block;
   color: #fff;
   font-size: 0.875em;
-  margin: 8.33333%;
-  width: 83.3333333%;
+  width: 100%;
   background: #257ab3;
   text-align: center;
 }
@@ -666,11 +667,9 @@ a.right {
 }
 
 #main li dd {
-  padding: 3% 3.333% 2% 2%;
+  padding:1em;
   font-size: 0.875em;
   line-height: 2em;
-  width: 56.83%;
-  float: right;
 }
 
 #main .index li dd p {
@@ -1029,7 +1028,6 @@ html.mm-opened .side {
   left: 0;
   background: #1e2225;
   z-index: 1;
-  box-shadow: -10px -5px 20px #000 inset;
   color: #fff;
   font-size: 1.1em;
   overflow-y: auto;
@@ -1164,7 +1162,7 @@ html.mm-opened .side {
 }
 
 .inutext {
-  border-radius: 0;
+  width: 100%;
   font: 0.875em/2.7142857em "微软雅黑";
   height: 2.7142857em;
   background: #e9e9e9;
@@ -1281,14 +1279,14 @@ footer a.btn2 {
 /*双色球*/
 .lotteryNum {
   background: #eee;
-  border-bottom: 1px dashed #ccc;
+  border-bottom: 1px dotted #ddd;
   line-height: 2em;
   position: relative;
   padding: 0.5em 0.625em;
 }
 
 .lotteryNum b {
-  margin: 0 0.1em;
+  margin: 0 0.0.5em;
 }
 
 #lastNo {
@@ -1308,13 +1306,12 @@ footer a.btn2 {
 .gmButton {
   background: #f07e04;
   width: 6em;
-  height: 2.4em;
+  height: 2.6em;
   font-size: 0.8em;
   text-align: center;
   color: #fff;
-  line-height: 2.4em;
+  line-height: 2.6em;
   border-radius: 3px;
-  margin-right: 1em;
   padding: 0;
 }
 
@@ -1393,7 +1390,7 @@ footer a.btn2 {
 }
 
 .chose {
-  width: 7.142857em;
+  width: 6em;
   height: 2.7142857em;
   line-height: 2.7142857em;
   font-size: 0.875em;
@@ -1404,13 +1401,13 @@ footer a.btn2 {
 }
 
 .hmchose {
-  width: 20%;
+  width: 6em;
   height: 2.7142857em;
   line-height: 2.7142857em;
   font-size: 0.875em;
   text-align: center;
   border: 2px solid #2779b5;
-  margin-right: 0.5em;
+  margin-right: 0.25em;
 }
 
 .gmchose .click,
@@ -1420,7 +1417,7 @@ footer a.btn2 {
 }
 
 .clearall {
-  width: 7.142857em;
+  width: 6em;
   height: 3em;
   line-height: 3em;
   font-size: 0.875em;
@@ -1526,7 +1523,7 @@ footer a.btn2 {
   line-height: 2em;
   padding-top: 0.3em;
   position: relative;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .rightJ {
@@ -1544,6 +1541,7 @@ footer a.btn2 {
   background: #eee;
   border-bottom: 1px dashed #ccc;
   line-height: 1.5em;
+  font-size: 0.9em;
   position: relative;
   padding: 0.5em 0;
 }
@@ -1593,7 +1591,7 @@ footer a.btn2 {
 }
 
 .jsBox {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -1742,15 +1740,15 @@ td.click {
 .popup {
   top: 4em;
   right: 4%;
-  width: 8.5em;
+  width: 7.1em;
 }
 
 .menuBox a, .popup a, .tabcontent a {
   background: #fff;
   color: #666;
-  width: 6.6em;
+  width: 6.4em;
   float: left;
-  margin: 0.5em;
+  margin: 0.25em;
   box-shadow: 0 3px 0 #ddd;
 }
 
@@ -2175,38 +2173,38 @@ td.click {
 
 @media screen and (max-width: 320px) {
   body {
-    font-size: 90%;
+    font-size: 100%;
   }
 
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
   body {
-    font-size: 90%;
+    font-size: 100%;
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 320px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 320px), only screen and (                min-resolution: 192dpi) and (min-width: 320px), only screen and (                min-resolution: 2dppx)  and (min-width: 320px) {
   body {
-    font-size: 80%;
+    font-size: 100%;
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 480px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 480px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 480px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 480px), only screen and (                min-resolution: 192dpi) and (min-width: 480px), only screen and (                min-resolution: 2dppx)  and (min-width: 480px) {
   body {
-    font-size: 130%;
+    font-size: 140%;
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 700px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 700px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 700px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px), only screen and (                min-resolution: 192dpi) and (min-width: 700px), only screen and (                min-resolution: 2dppx)  and (min-width: 700px) {
   body {
-    font-size: 170%;
+    font-size: 180%;
   }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 1000px), only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1000px), only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1000px), only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1000px), only screen and (                min-resolution: 192dpi) and (min-width: 1000px), only screen and (                min-resolution: 2dppx)  and (min-width: 1000px) {
   body {
-    font-size: 220%;
+    font-size: 230%;
   }
 }
 
@@ -2220,17 +2218,18 @@ td.click {
 .panel {
   margin-top: 10px;
 }
+
 .leagueBox {
   display: none;
   overflow: hidden;
   position: fixed !important;
   top: 85px;
-  left: 5%;
-  width: 88%;
+  left: 2%;
+  width: 92%;
   background: #1E6496;
   padding: 0.192em 0.577em;
   z-index: 30;
-  font-size: 0.8em;
+  font-size: 1.4em;
   color: #ffffff;
 }
 
@@ -2279,7 +2278,9 @@ td.click {
   text-align: center;
 
 }
-
+.spf_bet,.rqspf_bet{
+  line-height: 3.4em;
+}
 .ath_lot_tab thead td {
   padding: 0.5em 0;
   background: #1E6496;
@@ -2466,10 +2467,38 @@ td.click {
   color: red
 }
 
-.hmHead{
-    position: absolute;
-    top: 0;
-    left: 1.5em;;
-    margin-right: 0.5em;
-    float: right;
+.hmHead {
+  position: absolute;
+  top: 0;
+  left: 1.5em;;
+  margin-left: 4.5em;
+  float: right;
 }
+.hmSelectedBox{
+    border-bottom: 1px solid #aaa;
+    line-height: 2.3142857em;
+    font-size: 0.875em;
+    background: #fff;
+    position: absolute;
+    box-shadow: 3px 3px 3px #999;
+    display: none;
+    z-index: 30;
+    top: 3.3em;
+    left:0;
+    width: 100%;
+    text-align:left;
+    padding:0.25em 0;
+}
+.hmSelectedBox a{
+    background: #257AB3;
+    color: #fff;
+    width: 5.6em;
+    margin: 0.5em;
+    text-align:center
+}
+
+.hmSelectedBox a.click{
+    background: #f07e04;
+    color: #fff;
+}
+

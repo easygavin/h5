@@ -1,5 +1,5 @@
 <div class="hmBox" style="font-size: 1.0em">
-  <p class="bl3">发起人：<%=data.createUser%></p>
+  <p class="bl3">发起人：<%=hideString(data.createUser)%></p>
   <P>
     中奖总金额：<i style="color:red">
     <%=data.createUserWinAmount%></i>元
@@ -87,5 +87,3 @@
       <%}%>
   <%}%>
 </table>
-
-<div class="w45"></div>

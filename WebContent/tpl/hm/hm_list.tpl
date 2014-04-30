@@ -5,7 +5,7 @@
 
           <p class="bl3"> <b class="c257ab3"><%=map[data.lotteryType].title%></b> </p>
 
-          <p>发起人：<%=data.createUserName%>&nbsp;
+          <p>发起人：<%=hideString(data.createUserName)%>&nbsp;
             <%=honour(parseInt(data.goldStar),parseInt(data.silverStar))%>
           </p>
 

@@ -358,6 +358,26 @@ define(function (require, exports, module) {
     ajaxRequests = [];
   };
 
+  //是不是移动端
+  util.isMobile=function(){
+    return !!navigator.userAgent.match(/AppleWebKit.*Mobile./);
+  };
+  //是不是ipad
+  util.isIpad=function(){
+    return /iPad/.test(navigator.userAgent);
+  };
+  //是不是android
+  util.isAndroid=function(){
+    return (/android/gi).test(navigator.appVersion);
+  };
+  //是不是苹果设备
+  util.isApple=function(){
+    return (/iphone|ipad|hp-tablet/gi).test(navigator.appVersion);
+  };
+  //是不是原生的浏览器
+  util.isNativeBrowser=function(){
+    return !isNaN(navigator.appVersion.split("(")[0]);
+  };
   /**
    * 添加Interval对象
    * @param i
@@ -408,7 +428,7 @@ define(function (require, exports, module) {
     this.clearTimers();
   };
   /**
-   * @describe 隐藏字符串
+   * @describe 隐藏字符串 针对用户名
    * @param string {String} 需要被截取的字符串
    * @param start  {Number} 起始位置
    * @param end    {Number} 结束位置
@@ -416,6 +436,11 @@ define(function (require, exports, module) {
    *
    */
   util.hideString = function (string, start, end) {
+    var localData = util.getLocalJson(util.keyMap.LOCAL_USER_INFO_KEY);
+
+    if(localData && string == localData.userName) {
+      return string;
+    }
     string = string.split('@')[0];
     start = start || 0;
     end = end || 4;

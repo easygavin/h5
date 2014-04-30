@@ -79,7 +79,10 @@ define(function (require, exports, module) {
         //显示绑定号码,隐藏发送验证码按钮.
         $('#captcha').val(displayNo).attr("disabled", true);
         $('#sendCaptcha').hide();
+        $('#mt').html('');
+        $('#ym').html('');
         $('.surebtn').html('返回');
+        $('#pass').hide();
         bindFlag = true;
       }
     }
@@ -108,6 +111,13 @@ define(function (require, exports, module) {
             seconds = 60;
             //倒计时60秒
             countSec();
+          } else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+            page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                function (e) {
+                  page.init("login", {}, 1);
+                },
+                function (e) {
+                });
           } else {
             page.toast(data.errorMsg);
           }
@@ -174,7 +184,14 @@ define(function (require, exports, module) {
               userInfo.userMobile = mobileNo;
               util.setLocalJson(util.keyMap.LOCAL_USER_INFO_KEY, userInfo);
               page.toast('手机绑定成功');
-              page.init('user/bindMobile',{},1);
+              page.init('user/bindMobile', {}, 1);
+            } else if (data.statusCode == '-2' || data.errorMsg.indexOf('token失效') != -1) {
+              page.answer("", "因长时间未进行操作,请重新登录", "登录", "取消",
+                  function (e) {
+                    page.init("login", {}, 1);
+                  },
+                  function (e) {
+                  });
             } else {
               page.toast(data.errorMsg);
             }

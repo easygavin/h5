@@ -300,7 +300,7 @@ define(function (require, exports, module) {
           if (data.statusCode == "0") {
             result = data;
             page.answer(
-              "双色球 第 " + params.issueNo + " 期发起合买成功",
+              lotConfig.name +" 第 " + params.issueNo + " 期发起合买成功",
               "编号:" + data.lotteryNo + "<br>" + "账号余额:" + data.userBalance + " 元",
               "查看方案",
               "确定",

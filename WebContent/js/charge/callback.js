@@ -2,7 +2,6 @@
  * 充值响应页面.
  */
 define(function (require, exports, module) {
-
   var page = require('page'),
       util = require('util'),
       $ = require('zepto'),
@@ -10,7 +9,6 @@ define(function (require, exports, module) {
       config = require('config'),
       digitService = require('services/digit'),
       template = require("/views/charge/callback.html");
-
   var canBack = 1;
 
   //服务器跳转传递来的参数,用来判断是哪种充值方式.{0:支付宝,1:财付通}
@@ -34,7 +32,7 @@ define(function (require, exports, module) {
 
   // 上期开奖Map
   var openLotMap = {};
-
+  var platform = sessionStorage.getItem('platform') || 210;
   /**
    * 初始化
    */
@@ -108,8 +106,26 @@ define(function (require, exports, module) {
     // 返回
     $('.back,#toIndex_s,#toIndex_e').on('click', function (e) {
       //后退
-      page.init('home', {"token": userInfo.token}, 0);
-      return true;
+      if(210 == platform){
+        page.init('home', {"token": userInfo.token}, 0);
+      }else{
+        switch (platform){
+          case '202':
+          case '2':
+          case 'd':
+          case 'e':
+            appUrl = '';
+            break;
+          case '203':
+          case '3':
+          case 'e':
+            window.location.href='com.ecp.LotteryNew//0';
+            break;
+        }
+        window.opener = null;
+        window.open('','_self').close();//关闭窗口
+      }
+
     });
 
     $('.index').on('click',function (e) {
@@ -305,6 +321,7 @@ define(function (require, exports, module) {
         }
       }
     });
+    util.addAjaxRequest(request);
   };
 
   /**
@@ -328,7 +345,7 @@ define(function (require, exports, module) {
    * 显示定制彩种
    */
   var showCustomLott = function () {
-    if (!hasLogin) {
+    if (!hasLogin || 210 != platform) {
       //showNoCustomLott(); show nothing
     } else {
       var customLott = util.getLocalString(util.keyMap.LOCAL_CUSTOM);

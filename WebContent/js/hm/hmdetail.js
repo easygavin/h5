@@ -24,6 +24,10 @@ define(function (require, exports, module) {
   var totalResidue;
   //单份金额.
   var singleMoney;
+  //合买列表页面,传递过来的页码.
+  var requestPage;
+  //合买页面传递的彩种Id,
+  var typeArr;
 
   /**
    * 初始化
@@ -50,6 +54,14 @@ define(function (require, exports, module) {
         requestType = data.requestType;
         params.requestType = requestType;
       }
+      if (typeof data.requestPage != '' && $.trim(data.requestPage) != '') {
+        requestPage = data.requestPage;
+        params.requestPage = requestPage;
+      }
+      if (typeof data.typeArr != '' && $.trim(data.typeArr) != '') {
+        typeArr = data.typeArr;
+        params.typeArr = typeArr;
+      }
     }
     //获取接口地址.
     getHMInterfaceUrl();
@@ -58,7 +70,7 @@ define(function (require, exports, module) {
     //绑定事件
     bindEvent();
     // 处理返回
-    page.setHistoryState({url : "hm/hmdetail", data : params}, "hm/hmdetail", "#hm/hmdetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
+    page.setHistoryState({url: "hm/hmdetail", data: params}, "hm/hmdetail", "#hm/hmdetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -132,9 +144,10 @@ define(function (require, exports, module) {
               setPageInfo(data);
               require.async('/tpl/hm/hm_detail', function (tpl) {
                 $('#main').html(tpl({
-                    data : data,
-                    display_flag : display_flag
-                  }));
+                  data: data,
+                  display_flag: display_flag,
+                  hideString: util.hideString
+                }));
               });
             } else if (data.statusCode == "off") {
               page.init("login", {}, 1);
@@ -211,7 +224,15 @@ define(function (require, exports, module) {
    * 绑定事件
    */
   var bindEvent = function () {
-    $('.back').on('click', page.goBack);
+
+    $('.back').on('click', function () {
+      if (typeArr && requestPage) {
+        page.init('hm/index', {'lotteryTypeArray': typeArr, 'requestPage': requestPage}, 0);
+      }else{
+        page.goBack();
+      }
+      return true;
+    });
     /**
      * 份数输入框的变化.
      */
@@ -230,5 +251,5 @@ define(function (require, exports, module) {
     });
     $('.a2').on('click', toBuy);
   };
-  return {init : init};
+  return {init: init};
 });

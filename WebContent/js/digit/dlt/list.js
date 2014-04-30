@@ -282,7 +282,7 @@ define(function (require, exports, module) {
           issueInput = 1;
           $issueInput.val(1);
         } else if (issueInput > 50) {
-          page.toast("亲，最多只能追50期哦");
+          page.toast("追号期数不能大于50期");
           issueInput = 50;
           $issueInput.val(50);
         }
@@ -393,7 +393,7 @@ define(function (require, exports, module) {
     });
 
     // 是否追加
-    $("#addtionSupper").on("change", function (e) {
+    $("#addtionSupper").on("click", function (e) {
       if ($(this).prop("checked")) {
         price = 3;
       } else {

@@ -20,7 +20,7 @@ define(function (require, exports, module) {
       self.params = data;
       self.getData();
       self.events();
-      page.setHistoryState({url: "jcz/analyse", data: self.params}, "jcz/analyse", (JSON.stringify(self.params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(self.params)) : "") + "#jcz/analyse", self.canBack ? 1 : 0);
+      page.setHistoryState({url: "jcz/analyse", data: self.params}, "jcz/analyse", "#jcz/analyse"+(JSON.stringify(self.params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(self.params)) : ""), self.canBack ? 1 : 0);
     },
     getData: function () {
       util.showLoading();

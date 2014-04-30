@@ -200,17 +200,20 @@ define(function (require, exports, module) {
     });
 
     // 下拉图标
-    $('.detailBox').on('click', "#pullBtn", function () {
-      if ($(this).hasClass("down")) {
-        $(this).removeClass("down").addClass("up").html("&#xf060;");
-        if (allIssue != null && typeof allIssue != "undefined" && allIssue.length) {
-          $("#allIssueList").show();
+    $('.detailBox').on('click', ".title", function () {
+      var $pullBtn = $(this).find("#pullBtn");
+      if ($pullBtn.length) {
+        if ($pullBtn.hasClass("down")) {
+          $pullBtn.removeClass("down").addClass("up").html("&#xf060;");
+          if (allIssue != null && typeof allIssue != "undefined" && allIssue.length) {
+            $("#allIssueList").show();
+          } else {
+            getAllIssue();
+          }
         } else {
-          getAllIssue();
+          $pullBtn.removeClass("up").addClass("down").html("&#xf003;");
+          $("#allIssueList").hide();
         }
-      } else {
-        $(this).removeClass("up").addClass("down").html("&#xf003;");
-        $("#allIssueList").hide();
       }
     });
 
