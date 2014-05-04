@@ -63,7 +63,7 @@
   <%}else if(display_flag='digit'){%>
 
       <tr>
-        <td style='text-align:center;'><%=data.title%></td>
+        <td style='text-align:center;'><%=data.title.replace('追号', '期可追')%></td>
       </tr>
 
       <%if(data.detail!=''){%>

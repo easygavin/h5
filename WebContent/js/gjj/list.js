@@ -231,11 +231,10 @@ define(function (require, exports, module) {
     });
 
     // 加倍
-    $("#timesInput").on("keyup",function (e) {
+    $("#timesInput").on("keyup change",function () {
       this.value = this.value.replace(/\D/g, '');
       var $timesInput = $(this);
       timesInput = $timesInput.val();
-
       if ($.trim(timesInput) == "") {
         timesInput = 0;
       } else {
@@ -248,14 +247,11 @@ define(function (require, exports, module) {
           $timesInput.val(10000);
         }
       }
-
       // 显示付款信息
       showPayInfo();
-      return true;
     }).on("blur", function (e) {
-        this.value = this.value.replace(/\D/g, '');
-
-      });
+      this.value = this.value.replace(/\D/g, '');
+   });
 
     // 平均优化
     $("#avgSet").on("click", function (e) {

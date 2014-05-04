@@ -174,18 +174,23 @@ define(function (require, exports, module) {
                 if (items[i].bonuspoolAmount != null && typeof items[i].bonuspoolAmount != "undefined" && items[i].bonuspoolAmount != "") {
                   pool = items[i].bonuspoolAmount;
                 }
-
                 // 截止时间
                 if (items[i].endTime != null && typeof items[i].endTime != "undefined" && items[i].endTime != "") {
                   endTime = items[i].endTime;
                 }
-
                 var $li = $("#" + key);
                 // 零时用**取代无法获取奖池信息问题
-                $li.find(".pool").text(pool || "**");
+                var $pool = $li.find(".pool");
+                if(pool){
+                  $pool.text(pool);
+                }else{
+                  $li.find('.pool-info').hide();
+                }
                 $li.find(".endTime").text(endTime);
               }
             }
+          }else{
+            $('.pool-info').hide();
           }
         }
       }
@@ -423,7 +428,7 @@ define(function (require, exports, module) {
     slider = null;
     $("#slides").empty();
     for (var i = 0, len = imageNotices.length; i < len; i++) {
-      $("#slides").append("<img id='img_" + notices[i].noticeId + "' src='" + path.NOTICE_SERVER_URL + notices[i].htmlUrl + "' width='100%' class='notice' style='top:0;left:" + (i * 100) + "%;'>");
+      $("#slides").append("<img id='img_" + imageNotices[i].noticeId + "' src='" + path.NOTICE_SERVER_URL + imageNotices[i].htmlUrl + "' width='100%' class='notice' style='top:0;left:" + (i * 100) + "%;'>");
     }
 
     if (imageNotices.length > 1) {

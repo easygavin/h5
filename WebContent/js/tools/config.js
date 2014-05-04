@@ -601,6 +601,7 @@ define(function (require, exports, module) {
     },
     gjj: { // 冠军竞猜
       key: "gjj",
+      lotteryId: '50',
       name: "冠军竞猜",
       desc: "返奖率高达69%",
       logo: "images/gjj.png",
@@ -674,8 +675,17 @@ define(function (require, exports, module) {
     13: "dlt", // 大乐透
     31: "syy", // 十一运夺金
     34: "syx", // 11选5
-    46: "jcz", // 竞彩足球
-    36: "jcl", // 竞彩篮球
+    46: "jcz", // 竞彩足球胜平负
+    47: "jcz", // 竞彩足球比分
+    48: "jcz", // 竞彩足球总进球
+    49: "jcz", // 竞彩足球半全场
+    56: "jcz", // 竞彩足球让球胜平负
+    52: "jcz", // 竞彩足球混投
+    36: "jcl", // 竞彩篮球胜负
+    37: "jcl", // 竞彩篮球让分胜负
+    38: "jcl", // 竞彩篮球胜分差
+    39: "jcl", // 竞彩篮球大小分
+    53: "jcl", // 竞彩篮球混投
     50: "gjj" // 冠军竞猜
   };
 

@@ -299,9 +299,9 @@ define(function (require, exports, module) {
         for (var j = 0, bLen = bfIds.length; j < bLen; j++) {
           $match.find('td[data-result=' + bfIds[j] + ']').addClass("click");
         }
-        _.each(uadIds, function (i) {
-          $match.find('td[data-result=uad_' + i.split('_')[1]+']').addClass('click');
-          $match.find('#uad_' + i.split('_')[1]).addClass('click');
+        _.each(uadIds, function (j) {
+          $match.find('td[data-result=uad_' + j.split('_')[1]+']').addClass('click');
+          $match.find('#uad_' + j.split('_')[1]).addClass('click');
         });
         if (spfIds.length || rqspfIds.length || zjqIds.length || bqcIds.length || bfIds.length) {
           $match.addClass('on_show');
@@ -419,7 +419,6 @@ define(function (require, exports, module) {
       this.$page.on('click', '.more', function () {
         $('.popup').toggle();
         util.showCover();
-        return false;
       }.bind(this));
       //打开赛事筛选
       this.$page.on('click', '#filterBtn', function () {
@@ -432,11 +431,20 @@ define(function (require, exports, module) {
         }
       }.bind(this));
       //赛事筛选
-      $(".leagueBox").on('click', '.item', function (e) {
-        var $tar = $(e.target);
+      $(".leagueBox").on('click', '.icon .item', function (e) {
+        var $tar = $(e.currentTarget),
+          num = 0 ,
+          self = this;
+        if($tar.hasClass('click')){
+          num = -$tar.data('num');
+        }else{
+          num = $tar.data('num');
+        }
         $tar.toggleClass('click');
-        var num = $tar.hasClass('click') ? $tar.data('num') : -$tar.data('num');
-        this.updateSelMatLen(num, true);
+        setTimeout(function () {
+          self.updateSelMatLen(num, true).bind(this);
+        }, 25);
+
       }.bind(this));
       //赛事筛选-全选
       $('.leagueBox').on('click', '.selAll', function (e) {

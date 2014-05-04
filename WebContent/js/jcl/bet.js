@@ -268,8 +268,9 @@ define(function (require, exports, module) {
         }, function () {
           $(".popup").hide();
         });
+      }else{
+        page.init("user/buyRecord", {lotteryTypeArray : "36|37|38|39|53"}, 1);
       }
-      page.init("user/buyRecord", {lotteryTypeArray : "36|37|38|39|53"}, 1);
     });
     // 开奖信息
     $('#kj_menu').on('click', function () {

@@ -86,8 +86,8 @@ define(function (require, exports, module) {
         projectBuy = minBuy;
       }
       $("#projectBuy").val(Math.ceil(parseInt(params.projectCount, 10) * 0.1));
+      $("#projectBuyShow").text(Math.ceil(parseInt(params.projectCount, 10) * 0.1));
       $("#showPer").text(projectCommissions);
-
       showOpenState();
 
       showPayInfo();
@@ -99,7 +99,6 @@ define(function (require, exports, module) {
    */
   var showPayInfo = function () {
     $("#projectCountShow").text(params.projectCount);
-    $("#projectBuyShow").text(projectBuy);
     $("#projectHoldShow").text(projectHold);
   };
 

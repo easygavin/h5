@@ -68,7 +68,7 @@ __p += '\r\n  </tr>\r\n  ';
 __p += '\r\n\r\n  </tbody>\r\n  ';
 }else if(display_flag='digit'){;
 __p += '\r\n\r\n      <tr>\r\n        <td style=\'text-align:center;\'>' +
-((__t = (data.title)) == null ? '' : __t) +
+((__t = (data.title.replace('追号', '期可追'))) == null ? '' : __t) +
 '</td>\r\n      </tr>\r\n\r\n      ';
 if(data.detail!=''){;
 __p += '\r\n          <tr>\r\n            <td>\r\n              <div style=\'overflow:auto;height:200px;\'>\r\n                ' +

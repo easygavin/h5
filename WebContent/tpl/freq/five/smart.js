@@ -7,7 +7,7 @@ with (obj) {
  _.each(items, function (i, index) { ;
 __p += '\r\n  <tr>\r\n    <td>' +
 ((__t = (i.issueNo.substring(4) )) == null ? '' : __t) +
-'</td>\r\n    <td><input type="number" class="shoutinp" value="' +
+'</td>\r\n    <td><input type="tel" class="shoutinp" value="' +
 ((__t = (i.muls )) == null ? '' : __t) +
 '" maxlength="4" id="i_' +
 ((__t = (index )) == null ? '' : __t) +

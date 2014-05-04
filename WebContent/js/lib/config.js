@@ -14,7 +14,7 @@ seajs.config({
     'path': 'tools/path'
   },
   map: [
-    [/^(.*\.(?:css|js|tpl))(.*)$/i, '$1?v=1.0']
+    [/^(.*\.(?:css|js|tpl))(.*)$/i, '$1?v=1.0.30']
   ],
   preload: [
     'lib/seajs-text'

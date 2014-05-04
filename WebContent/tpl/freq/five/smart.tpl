@@ -1,7 +1,7 @@
 <% _.each(items, function (i, index) { %>
   <tr>
     <td><%=i.issueNo.substring(4) %></td>
-    <td><input type="number" class="shoutinp" value="<%=i.muls %>" maxlength="4" id="i_<%=index %>"></td>
+    <td><input type="tel" class="shoutinp" value="<%=i.muls %>" maxlength="4" id="i_<%=index %>"></td>
     <td><%=i.totalPay %></td>
     <td class="cdd1049">
       <%=i.minIncome %>

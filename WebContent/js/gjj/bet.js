@@ -25,7 +25,8 @@ define(function (require, exports, module) {
   var betList = {};
   // 赛事Map
   var matchMap = {};
-
+  // 登录标示
+  var tkn = "";
   /**
    * 初始化
    */
@@ -34,7 +35,7 @@ define(function (require, exports, module) {
 
     // 参数设置
     var params = {};
-    var tkn = util.checkLogin(data);
+    tkn = util.checkLogin(data);
     if (tkn) {
       params.token = tkn;
     }
@@ -231,6 +232,12 @@ define(function (require, exports, module) {
         switch (id) {
           case "gc_menu":
             // 购彩记录
+            if (!tkn) {
+              page.codeHandler({statusCode: "off"});
+            } else {
+              // 购彩记录
+              page.init("user/buyRecord", {lotteryTypeArray: lotConfig.lotteryId}, 1);
+            }
             break;
           case "wf_menu":
             util.hideCover();
@@ -286,7 +293,7 @@ define(function (require, exports, module) {
     $(".bets").on("click", function (e) {
       var $matchSp = $(e.target).closest(".matchSp");
 
-      if ($matchSp.length) {
+      if ($matchSp.length && !$matchSp.hasClass("rs_u")) {
         if ($matchSp.hasClass("click")) {
           $matchSp.removeClass("click");
         } else {

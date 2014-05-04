@@ -170,11 +170,20 @@ define(function (require, exports, module) {
               page.init(lotConfig.paths["ball"].js, {lot: lotConfig.key}, 1);
 
               break;
-            case "46": // 竞彩足球
+            case "46": // 竞彩足球胜平负
+            case "47": // 竞彩足球比分
+            case "48": // 竞彩足球总进球
+            case "49": // 竞彩足球半全场
+            case "56": // 竞彩足球让球胜平负
+            case "52": // 竞彩足球混投
               util.clearLocalData(util.keyMap.LOCAL_JCZ);
               page.init('jcz/mix_bet', {}, 1);
               break;
-            case "36": // 竞彩篮球
+            case "36": // 竞彩篮球胜负
+            case "37": // 竞彩篮球让分胜负
+            case "38": // 竞彩篮球胜分差
+            case "39": // 竞彩篮球大小分
+            case "53": // 竞彩篮球混投
               util.clearLocalData(util.keyMap.LOCAL_JCL);
               page.init('jcl/bet', {}, 1);
               break;

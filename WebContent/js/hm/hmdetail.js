@@ -70,7 +70,7 @@ define(function (require, exports, module) {
     //绑定事件
     bindEvent();
     // 处理返回
-    page.setHistoryState({url: "hm/hmdetail", data: params}, "hm/hmdetail", "#hm/hmdetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
+    page.setHistoryState({url : "hm/hmdetail", data : params}, "hm/hmdetail", "#hm/hmdetail" + (JSON.stringify(params).length > 2 ? "?data=" + encodeURIComponent(JSON.stringify(params)) : ""), forward ? 1 : 0);
     // 隐藏加载标示
     util.hideLoading();
   };
@@ -144,9 +144,9 @@ define(function (require, exports, module) {
               setPageInfo(data);
               require.async('/tpl/hm/hm_detail', function (tpl) {
                 $('#main').html(tpl({
-                  data: data,
-                  display_flag: display_flag,
-                  hideString: util.hideString
+                  data : data,
+                  display_flag : display_flag,
+                  hideString : util.hideString
                 }));
               });
             } else if (data.statusCode == "off") {
@@ -204,13 +204,12 @@ define(function (require, exports, module) {
     requestPrams.userKey = userInfo.userKey;   //UserKey
     requestPrams.userId = userInfo.userId;     //UserId
     requestPrams.lotteryType = lotteryType;    //彩种id
-    requestPrams.purchaseMoney = singleMoney;  //每份金额
+    requestPrams.purchaseMoney = singleMoney * residue;  //每份金额
     requestPrams.projectId = projectId;        //方案Id
     hm.joinHm(requestPrams, function (datas) {
       if (!_.isEmpty(datas)) {
         if (typeof datas.statusCode != 'undefined' && datas.statusCode == '0') {
           page.toast('购买成功');
-          page.goBack();
         } else {
           page.toast(datas.errorMsg);
         }
@@ -227,8 +226,8 @@ define(function (require, exports, module) {
 
     $('.back').on('click', function () {
       if (typeArr && requestPage) {
-        page.init('hm/index', {'lotteryTypeArray': typeArr, 'requestPage': requestPage}, 0);
-      }else{
+        page.init('hm/index', {'lotteryTypeArray' : typeArr, 'requestPage' : requestPage}, 0);
+      } else {
         page.goBack();
       }
       return true;
@@ -251,5 +250,5 @@ define(function (require, exports, module) {
     });
     $('.a2').on('click', toBuy);
   };
-  return {init: init};
+  return {init : init};
 });
